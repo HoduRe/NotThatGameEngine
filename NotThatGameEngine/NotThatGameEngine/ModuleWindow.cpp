@@ -1,10 +1,6 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleWindow.h"
-#include "glew-2.1.0/include/GL/glew.h"
-
-#pragma comment( lib, "glew-2.1.0/lib/Release/Win32/glew32.lib")
-#pragma comment( lib, "glew-2.1.0/lib/Release/Win32/glew32s.lib")
 
 ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -34,8 +30,8 @@ bool ModuleWindow::Init()
 		Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 
 		//Use OpenGL 2.1
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 
 		if(WIN_FULLSCREEN == true)
 		{
