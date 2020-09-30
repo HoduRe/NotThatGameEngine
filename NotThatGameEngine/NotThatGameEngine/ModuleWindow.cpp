@@ -1,6 +1,10 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleWindow.h"
+#include "glew-2.1.0/include/GL/glew.h"
+
+#pragma comment( lib, "glew-2.1.0/lib/Release/Win32/glew32.lib")
+#pragma comment( lib, "glew-2.1.0/lib/Release/Win32/glew32s.lib")
 
 ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
