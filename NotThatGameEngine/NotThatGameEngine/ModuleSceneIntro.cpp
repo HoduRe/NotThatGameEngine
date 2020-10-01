@@ -30,5 +30,5 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update(float dt)
 {
 
-	return UPDATE_CONTINUE;
+	return update_status::UPDATE_CONTINUE;
 }

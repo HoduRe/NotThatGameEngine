@@ -23,7 +23,9 @@ update_status ModuleReset::Update(float dt) {
 		App->player->Start();
 		reset = false;
 	}
-	return UPDATE_CONTINUE;
+	return update_status::UPDATE_CONTINUE;
 }
 
 bool ModuleReset::CleanUp() { return true; }
+
+void ModuleReset::SetReset(bool state) { reset = state; }

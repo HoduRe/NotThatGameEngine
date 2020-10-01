@@ -14,7 +14,9 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-public:
+	void SetReset(bool state);
+
+private:
 	bool reset;
 };
 

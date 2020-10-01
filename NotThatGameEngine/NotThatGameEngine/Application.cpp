@@ -73,27 +73,27 @@ void Application::FinishUpdate()
 // Call PreUpdate, Update and PostUpdate on all modules
 update_status Application::Update()
 {
-	update_status ret = UPDATE_CONTINUE;
+	update_status ret = update_status::UPDATE_CONTINUE;
 	PrepareUpdate();
 	
 	int size = modules.size();
 
-	for (int i = 0; i < size && ret == UPDATE_CONTINUE; i++)
+	for (int i = 0; i < size && ret == update_status::UPDATE_CONTINUE; i++)
 	{
 		ret = modules[i]->PreUpdate(dt);
-		if (ret != UPDATE_CONTINUE) { i = size; }
+		if (ret != update_status::UPDATE_CONTINUE) { i = size; }
 	}
 
-	for (int i = 0; i < size && ret == UPDATE_CONTINUE; i++)
+	for (int i = 0; i < size && ret == update_status::UPDATE_CONTINUE; i++)
 	{
 		ret = modules[i]->Update(dt);
-		if (ret != UPDATE_CONTINUE) { i = size; }
+		if (ret != update_status::UPDATE_CONTINUE) { i = size; }
 	}
 
-	for (int i = 0; i < size && ret == UPDATE_CONTINUE; i++)
+	for (int i = 0; i < size && ret == update_status::UPDATE_CONTINUE; i++)
 	{
 		ret = modules[i]->PostUpdate(dt);
-		if (ret != UPDATE_CONTINUE) { i = size; }
+		if (ret != update_status::UPDATE_CONTINUE) { i = size; }
 	}
 
 	FinishUpdate();
