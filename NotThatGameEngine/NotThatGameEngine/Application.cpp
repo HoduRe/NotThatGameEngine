@@ -11,6 +11,7 @@ Application::Application()
 	physics = new ModulePhysics3D(this);
 	player = new ModulePlayer(this);
 	reset = new ModuleReset(this);
+	imGui = new ModuleImGui(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -30,6 +31,7 @@ Application::Application()
 
 	// Renderer last!
 	AddModule(renderer3D);
+	AddModule(imGui);
 }
 
 Application::~Application()

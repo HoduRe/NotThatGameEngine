@@ -4,6 +4,16 @@
 #include "glmath.h"
 #include "Light.h"
 
+#include "glew-2.1.0/include/GL/glew.h"
+
+#include "SDL\include\SDL_opengl.h"
+#include <gl/GL.h>
+#include <gl/GLU.h>
+
+#pragma comment( lib, "glew-2.1.0/lib/Release/Win32/glew32.lib")
+#pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
+#pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
+
 #define MAX_LIGHTS 8
 
 class ModuleRenderer3D : public Module
@@ -27,6 +37,5 @@ public:
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
 private:
-	bool show_demo_window;
 
 };

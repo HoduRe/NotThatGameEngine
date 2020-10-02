@@ -13,6 +13,7 @@
 #include "ModulePhysics3D.h"
 #include "ModulePlayer.h"
 #include "ModuleReset.h"
+#include "ModuleImGui.h"
 
 class Application
 {
@@ -26,6 +27,7 @@ public:
 	ModulePhysics3D* physics;
 	ModulePlayer* player;
 	ModuleReset* reset;
+	ModuleImGui* imGui;
 
 private:
 

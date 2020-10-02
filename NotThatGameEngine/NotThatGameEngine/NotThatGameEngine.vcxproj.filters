@@ -84,6 +84,9 @@
     <ClCompile Include="imgui_demo.cpp">
       <Filter>ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleImGui.cpp">
+      <Filter>Archivos de recursos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ModuleAudio.h">
@@ -131,9 +134,6 @@
     <ClInclude Include="Globals.h">
       <Filter>Utility</Filter>
     </ClInclude>
-    <ClInclude Include="p2Point.h">
-      <Filter>Utility</Filter>
-    </ClInclude>
     <ClInclude Include="imconfig.h">
       <Filter>ImGui</Filter>
     </ClInclude>
@@ -160,6 +160,9 @@
     </ClInclude>
     <ClInclude Include="imgui_impl_opengl3.h">
       <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleImGui.h">
+      <Filter>Archivos de recursos</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
