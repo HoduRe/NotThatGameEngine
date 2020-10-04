@@ -17,7 +17,15 @@ public:
 
 
 private:
-	bool show_demo_window;
+	char* SDL;
+	char* GLEW;
+	char* ImGui;
+	char* MathGeoLib;
+
+
+	update_status DefaultMenus(bool* demoMenu);
+	void SetMainMenuBar(bool* demoMenu);
+	void AboutMenu(bool* aboutMenu);
 
 };
 
