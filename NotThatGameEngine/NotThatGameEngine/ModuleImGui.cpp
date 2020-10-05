@@ -27,10 +27,25 @@ bool ModuleImGui::Init()
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 	ImGui_ImplOpenGL3_Init("#version 130");
 
-	SDL = (char*)"SDL ";
-	GLEW = (char*)"GLEW ";
-	ImGui = (char*)"ImGui ";
-	MathGeoLib = (char*)"MathGeoLib ";
+	// Dynamically showing the version of the libs
+	SDL_version version;
+	SDL_GetVersion(&version);
+	char* glewVersion = (char*)glewGetString(GLEW_VERSION);
+
+	static std::string preSDL = "SDL ";
+	static std::string preGLEW = "GLEW ";
+	static std::string preImGui = "ImGui ";
+	static std::string preMathGeoLib = "MathGeoLib ";
+
+	const char* preImGuivers = ImGui::GetVersion();
+
+	strcat_s((char*)preGLEW.c_str(), preGLEW.size() + 1 + strlen(glewVersion), glewVersion);
+	strcat_s((char*)preImGui.c_str(), preImGui.size() + 1 + strlen(preImGuivers), preImGuivers);
+
+	SDL = (char*)preSDL.c_str();
+	GLEW = (char*) preGLEW.c_str();
+	ImGui = (char*)preImGui.c_str();
+	MathGeoLib = (char*)preMathGeoLib.c_str();
 
 	return ret;
 }
@@ -44,7 +59,12 @@ bool ModuleImGui::Start()
 // ---------------------------------------------------------
 update_status ModuleImGui::PreUpdate(float dt)
 {
+	ImVec4 clear_color = ImVec4(0.0f, 0.15f, 0.10f, 1.00f);
 
+	glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadMatrixf(App->camera->GetViewMatrix());
 
 	return update_status::UPDATE_CONTINUE;
 }
@@ -60,8 +80,8 @@ update_status ModuleImGui::Update(float dt)
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
 
-//	ImGui::SetNextWindowPos(ImVec2(SCREEN_WIDTH - 220, 0));		// Cuando cierro la ventana de demo, la ventana de close app se teleporta a su posición inicial: sustitye esto por código que solo lo setea al compilar
-//	ImGui::SetNextWindowSize(ImVec2(180, 70));					// Lo más probable es que haya un buffer de siguiente nuevo me lo pones a esta posición, y al quitar el anterior, se mueve el de close app en la lista, y se lee como "nuevo"
+	//	ImGui::SetNextWindowPos(ImVec2(SCREEN_WIDTH - 220, 0));		// Cuando cierro la ventana de demo, la ventana de close app se teleporta a su posición inicial: sustitye esto por código que solo lo setea al compilar
+	//	ImGui::SetNextWindowSize(ImVec2(180, 70));					// Lo más probable es que haya un buffer de siguiente nuevo me lo pones a esta posición, y al quitar el anterior, se mueve el de close app en la lista, y se lee como "nuevo"
 
 	ret = DefaultMenus(&showDemoWindow);
 	SetMainMenuBar(&showDemoWindow);
@@ -75,13 +95,10 @@ update_status ModuleImGui::Update(float dt)
 update_status ModuleImGui::PostUpdate(float dt)
 {
 	update_status ret = update_status::UPDATE_CONTINUE;
-	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 	// Rendering
 	ImGui::Render();
 	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-	glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
-	glClear(GL_COLOR_BUFFER_BIT);
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 	SDL_GL_SwapWindow(App->window->window);	// Swaps current window with the other OpenGL (by default it uses double-buffered contexts)
@@ -103,16 +120,51 @@ bool ModuleImGui::CleanUp()
 update_status ModuleImGui::DefaultMenus(bool* demoMenu)
 {
 	update_status ret = update_status::UPDATE_CONTINUE;
-	static bool close_app_window = true;
+	static bool defaultButtonsMenu = true;
 
 	if (*demoMenu) {		// DEMO WINDOW
 		ImGui::ShowDemoWindow(demoMenu);
 	}
 
-	if (close_app_window) {		// CLOSE APP BUTTON
-		ImGui::Begin("Close app", &close_app_window);
-		if (ImGui::Button("Close Button"))
-			ret = update_status::UPDATE_STOP;
+	if (defaultButtonsMenu) {		// CLOSE APP BUTTON
+		ImGui::Begin("Default buttons", &defaultButtonsMenu);
+		if (ImGui::Button("Close App")) { ret = update_status::UPDATE_STOP; }
+
+		if (ImGui::Button("Depth test")) {
+			if (glIsEnabled(GL_DEPTH_TEST)) { glDisable(GL_DEPTH_TEST); }
+			else { glEnable(GL_DEPTH_TEST); }
+		}
+
+		if (ImGui::Button("Cull face")) {
+			if (glIsEnabled(GL_CULL_FACE)) { glDisable(GL_CULL_FACE); }
+			else { glEnable(GL_CULL_FACE); }
+		}
+
+		if (ImGui::Button("Lighting")) {
+			if (glIsEnabled(GL_LIGHTING)) { glDisable(GL_LIGHTING); }
+			else { glEnable(GL_LIGHTING); }
+		}
+
+		if (ImGui::Button("Color material")) {
+			if (glIsEnabled(GL_COLOR_MATERIAL)) { glDisable(GL_COLOR_MATERIAL); }
+			else { glEnable(GL_COLOR_MATERIAL); }
+		}
+
+		if (ImGui::Button("Texture")) {
+			if (glIsEnabled(GL_TEXTURE_2D)) { glDisable(GL_TEXTURE_2D); }
+			else { glEnable(GL_TEXTURE_2D); }
+		}
+
+		if (ImGui::Button("Fog")) {
+			if (!glIsEnabled(GL_FOG)) { glEnable(GL_FOG); }
+			else { glDisable(GL_FOG); }
+		}
+
+		if (ImGui::Button("Limited colors")) {
+			if (glIsEnabled(GL_MINMAX)) { glDisable(GL_MINMAX); }
+			else { glEnable(GL_MINMAX); }
+		}
+
 		ImGui::End();
 	}
 
@@ -128,7 +180,7 @@ void ModuleImGui::SetMainMenuBar(bool* demoMenu)
 
 		if (ImGui::BeginMenu("Dev Help")) {
 
-			if (ImGui::MenuItem("Gui Demo")) { *demoMenu = ! *demoMenu; }
+			if (ImGui::MenuItem("Gui Demo")) { *demoMenu = !*demoMenu; }
 
 			if (ImGui::MenuItem("Documentation")) { ShellExecuteA(0, "open", "https://github.com/ferba93/NotThatGameEngine/wiki", NULL, NULL, SW_SHOWNORMAL); }
 
@@ -152,9 +204,9 @@ void ModuleImGui::AboutMenu(bool* aboutMenu) {
 
 	ImGui::Begin("About", aboutMenu);
 	ImGui::Text("NotThatGameEngine\n\nAn attempt to create a usable game engine >:3\nBy Ferran-Roger Basart i Bosch:");
-	if(ImGui::Button("GitHub")){ ShellExecuteA(0, "open", "https://github.com/ferba93/", NULL, NULL, SW_SHOWNORMAL); }
+	if (ImGui::Button("GitHub")) { ShellExecuteA(0, "open", "https://github.com/ferba93/", NULL, NULL, SW_SHOWNORMAL); }
 	ImGui::Text("\n\nLIBRARIES:");
-	if(ImGui::Button (SDL)){ ShellExecuteA(0, "open", "https://www.libsdl.org/", NULL, NULL, SW_SHOWNORMAL); }
+	if (ImGui::Button(SDL)) { ShellExecuteA(0, "open", "https://www.libsdl.org/", NULL, NULL, SW_SHOWNORMAL); }
 	if (ImGui::Button(GLEW)) { ShellExecuteA(0, "open", "http://glew.sourceforge.net/index.html", NULL, NULL, SW_SHOWNORMAL); }
 	if (ImGui::Button(ImGui)) { ShellExecuteA(0, "open", "https://github.com/ocornut/imgui", NULL, NULL, SW_SHOWNORMAL); }
 	if (ImGui::Button(MathGeoLib)) { ShellExecuteA(0, "open", "https://github.com/juj/MathGeoLib", NULL, NULL, SW_SHOWNORMAL); }
