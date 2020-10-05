@@ -35,8 +35,8 @@ bool ModuleCamera3D::CleanUp()
 // -----------------------------------------------------------------
 update_status ModuleCamera3D::Update(float dt)
 {
-/*	float matrix[16];
-	App->player->vehicle->GetTransform(matrix);
+	float matrix[16];
+	//App->player->vehicle->GetTransform(matrix);
 	vec3 car(matrix[12], matrix[13] + 5, matrix[14]);
 	vec3 newPosition(matrix[12], matrix[13] + 5, matrix[14] - 18);
 
@@ -85,7 +85,7 @@ update_status ModuleCamera3D::Update(float dt)
 	LookAt(Reference);
 
 	// Recalculate matrix -------------
-	CalculateViewMatrix();*/
+	CalculateViewMatrix();
 
 	return update_status::UPDATE_CONTINUE;
 }
