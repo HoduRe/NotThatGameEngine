@@ -18,14 +18,15 @@ public:
 
 private:
 	char* SDL;
-	char* GLEW;
-	char* ImGui;
+	std::string GLEW;
+	std::string ImGui;
 	char* MathGeoLib;
 
 
 	update_status DefaultMenus(bool* demoMenu);
 	void SetMainMenuBar(bool* demoMenu);
 	void AboutMenu(bool* aboutMenu);
+	void FPSMenu();
 
 };
 

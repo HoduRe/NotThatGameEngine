@@ -9,7 +9,8 @@
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
 
-ModuleImGui::ModuleImGui(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleImGui::ModuleImGui(Application* app, bool start_enabled) : Module(app, start_enabled), SDL(nullptr), MathGeoLib(nullptr)
+
 {}
 
 // Destructor
@@ -28,24 +29,16 @@ bool ModuleImGui::Init()
 	ImGui_ImplOpenGL3_Init("#version 130");
 
 	// Dynamically showing the version of the libs
-	SDL_version version;
-	SDL_GetVersion(&version);
+	GLEW = "GLEW ";
 	char* glewVersion = (char*)glewGetString(GLEW_VERSION);
+	strcat_s((char*)GLEW.c_str(), GLEW.size() + 1 + strlen(glewVersion), glewVersion);
 
-	static std::string preSDL = "SDL ";
-	static std::string preGLEW = "GLEW ";
-	static std::string preImGui = "ImGui ";
-	static std::string preMathGeoLib = "MathGeoLib ";
-
+	ImGui = "ImGui ";
 	const char* preImGuivers = ImGui::GetVersion();
+	strcat_s((char*)ImGui.c_str(), ImGui.size() + 1 + strlen(preImGuivers), preImGuivers);
 
-	strcat_s((char*)preGLEW.c_str(), preGLEW.size() + 1 + strlen(glewVersion), glewVersion);
-	strcat_s((char*)preImGui.c_str(), preImGui.size() + 1 + strlen(preImGuivers), preImGuivers);
-
-	SDL = (char*)preSDL.c_str();
-	GLEW = (char*) preGLEW.c_str();
-	ImGui = (char*)preImGui.c_str();
-	MathGeoLib = (char*)preMathGeoLib.c_str();
+	SDL = (char*)"SDL 2.0.12";
+	MathGeoLib = (char*)"MathGeoLib 1.5";
 
 	return ret;
 }
@@ -85,6 +78,7 @@ update_status ModuleImGui::Update(float dt)
 
 	ret = DefaultMenus(&showDemoWindow);
 	SetMainMenuBar(&showDemoWindow);
+	FPSMenu();
 
 	ImGui::EndFrame();
 
@@ -207,12 +201,34 @@ void ModuleImGui::AboutMenu(bool* aboutMenu) {
 	if (ImGui::Button("GitHub")) { ShellExecuteA(0, "open", "https://github.com/ferba93/", NULL, NULL, SW_SHOWNORMAL); }
 	ImGui::Text("\n\nLIBRARIES:");
 	if (ImGui::Button(SDL)) { ShellExecuteA(0, "open", "https://www.libsdl.org/", NULL, NULL, SW_SHOWNORMAL); }
-	if (ImGui::Button(GLEW)) { ShellExecuteA(0, "open", "http://glew.sourceforge.net/index.html", NULL, NULL, SW_SHOWNORMAL); }
-	if (ImGui::Button(ImGui)) { ShellExecuteA(0, "open", "https://github.com/ocornut/imgui", NULL, NULL, SW_SHOWNORMAL); }
+	if (ImGui::Button(GLEW.c_str())) { ShellExecuteA(0, "open", "http://glew.sourceforge.net/index.html", NULL, NULL, SW_SHOWNORMAL); }
+	if (ImGui::Button(ImGui.c_str())) { ShellExecuteA(0, "open", "https://github.com/ocornut/imgui", NULL, NULL, SW_SHOWNORMAL); }
 	if (ImGui::Button(MathGeoLib)) { ShellExecuteA(0, "open", "https://github.com/juj/MathGeoLib", NULL, NULL, SW_SHOWNORMAL); }
 	ImGui::Text("\n\nLICENSE:\n\nMIT License\n\nCopyright(c) 2020 Ferran - Roger Basart i Bosch\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this softwareand associated documentation files(the 'Software'), \nto deal in the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and /or sell\ncopies of the Software, and to permit persons to whom the Software is furnished\nto do so, subject to the following conditions : \n");
 	ImGui::Text("\tThe above copyright noticeand this permission notice shall be included in all\n\tcopies or substantial portions of the Software.\n");
 	ImGui::Text("THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,\nINCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.");
+	ImGui::End();
+}
+
+
+void ModuleImGui::FPSMenu() {
+
+	static bool fpsMenu = true;
+
+	ImGui::Begin("Configuration", &fpsMenu);
+
+	if (ImGui::BeginMenu("Application")) {
+		ImGui::EndMenu();
+	}
+
+	if (ImGui::BeginMenu("Window")) {
+		ImGui::EndMenu();
+	}
+
+	if (ImGui::BeginMenu("Hardware")) {
+		ImGui::EndMenu();
+	}
+
 	ImGui::End();
 }
 
