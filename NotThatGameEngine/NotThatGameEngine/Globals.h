@@ -23,6 +23,11 @@ enum class update_status
 	UPDATE_ERROR
 };
 
+enum class EVENT_ENUM
+{
+	NULL_EVENT
+};
+
 // Configuration -----------
 #define SCREEN_WIDTH 1600
 #define SCREEN_HEIGHT 900

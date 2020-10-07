@@ -87,6 +87,12 @@
     <ClCompile Include="ModuleImGui.cpp">
       <Filter>Archivos de recursos</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleEventManager.cpp">
+      <Filter>Archivos de recursos</Filter>
+    </ClCompile>
+    <ClCompile Include="Module.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ModuleAudio.h">
@@ -162,6 +168,9 @@
       <Filter>ImGui</Filter>
     </ClInclude>
     <ClInclude Include="ModuleImGui.h">
+      <Filter>Archivos de recursos</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleEventManager.h">
       <Filter>Archivos de recursos</Filter>
     </ClInclude>
   </ItemGroup>
