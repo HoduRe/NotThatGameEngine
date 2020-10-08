@@ -14,13 +14,13 @@ public:
 	void Start();
 	void Stop();
 
-	Uint32 Read();
+	float Read();
 
 private:
 
 	bool	running;
-	Uint32	started_at;
-	Uint32	stopped_at;
+	float	started_at;
+	float	stopped_at;
 };
 
 #endif //__TIMER_H__

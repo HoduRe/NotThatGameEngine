@@ -14,6 +14,7 @@
 #include "ModulePlayer.h"
 #include "ModuleReset.h"
 #include "ModuleImGui.h"
+#include "ModuleEventManager.h"
 
 class Application
 {
@@ -28,11 +29,14 @@ public:
 	ModulePlayer* player;
 	ModuleReset* reset;
 	ModuleImGui* imGui;
+	ModuleEventManager* eventManager;
+
+	Timer ms_timer;
 
 private:
 
-	Timer	ms_timer;
-	float	dt;
+	float dt;
+	bool userDt;	// User defines the dt
 	std::vector <Module*> modules;
 
 public:
@@ -43,6 +47,15 @@ public:
 	bool Init();
 	update_status Update();
 	bool CleanUp();
+
+	void UserDt(bool dt);
+	float framerate;
+
+	// Data storage of framerate and ms
+	std::vector<float> framerateVec;
+	std::vector<float> msVec;
+	int msVecCounter;
+	int framerateVecCounter;
 
 private:
 

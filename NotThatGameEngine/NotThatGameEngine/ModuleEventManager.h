@@ -24,10 +24,10 @@ class ModuleEventManager : public Module
 {
 public:
 	
-	ModuleEventManager(Application* app, bool start_enabled);
+	ModuleEventManager(Application* app, bool start_enabled = true);
 	virtual ~ModuleEventManager();
 
-	void GenerateEvent(EVENT_ENUM eventId, EVENT_ENUM eventTriggerId);
+	void GenerateEvent(EVENT_ENUM eventId, EVENT_ENUM eventTriggerId = EVENT_ENUM::NULL_EVENT);
 	bool EventRegister(EVENT_ENUM event, Module* mod);
 	bool EventUnRegister(EVENT_ENUM event, Module* mod);
 

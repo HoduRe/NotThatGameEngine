@@ -13,7 +13,7 @@ bool ModuleReset::Start() {
 	return true;
 }
 
-update_status ModuleReset::Update(float dt) {
+update_status ModuleReset::Update(float dt) {	// IF YOU ARE TO USE THIS, UPDATE WITH THE NEW MODULES
 	if (reset == true) {
 		App->player->CleanUp();
 		App->scene_intro->CleanUp();

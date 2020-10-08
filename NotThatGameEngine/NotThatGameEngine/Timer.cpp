@@ -26,11 +26,13 @@ void Timer::Stop()
 }
 
 // ---------------------------------------------
-Uint32 Timer::Read()
+float Timer::Read()
 {
+	float SDLTicks = SDL_GetTicks();
+	
 	if(running == true)
 	{
-		return SDL_GetTicks() - started_at;
+		return SDLTicks - started_at;
 	}
 	else
 	{

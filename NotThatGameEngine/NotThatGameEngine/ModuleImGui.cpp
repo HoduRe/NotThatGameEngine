@@ -5,12 +5,7 @@
 
 #include <shellapi.h>
 
-#include "imgui.h"
-#include "imgui_impl_sdl.h"
-#include "imgui_impl_opengl3.h"
-
-ModuleImGui::ModuleImGui(Application* app, bool start_enabled) : Module(app, start_enabled), SDL(nullptr), MathGeoLib(nullptr)
-
+ModuleImGui::ModuleImGui(Application* app, bool start_enabled) : Module(app, start_enabled), SDL(nullptr), MathGeoLib(nullptr), sliderDt(0.0f), appName("NotThatGameEngine")
 {}
 
 // Destructor
@@ -213,22 +208,49 @@ void ModuleImGui::AboutMenu(bool* aboutMenu) {
 void ModuleImGui::FPSMenu() {
 
 	static bool fpsMenu = true;
+	static char organization[25] = "UPC CITM";
+	char title[25];
 
-	ImGui::Begin("Configuration", &fpsMenu);
+	if (fpsMenu) {
+		ImGui::Begin("Configuration", &fpsMenu);
 
-	if (ImGui::BeginMenu("Application")) {
-		ImGui::EndMenu();
+		if (ImGui::BeginMenu("Options")) {
+			ImGui::EndMenu();
+		}
+
+		if (ImGui::CollapsingHeader("Application")) {
+
+			if (ImGui::InputText("App name", appName, IM_ARRAYSIZE(appName))) {
+				App->window->SetTitle(appName);
+			}
+
+			ImGui::InputText("Organization", organization, IM_ARRAYSIZE(organization));
+
+			if (ImGui::SliderFloat("Max FPS", &sliderDt, 0.0f, 80.0f, "%.0f")) {
+				if (sliderDt == 0) { App->UserDt(false); }
+				else { App->UserDt(true); }
+			}
+			//ImGui::Text();	// Limited frames
+			sprintf_s(title, 25, "Framerate %.1f", App->framerateVec.back());
+			ImGui::PlotHistogram("##framerate", &App->framerateVec[0], App->framerateVecCounter, 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+			sprintf_s(title, 25, "Miliseconds %0.1f", App->msVec.back());
+			ImGui::PlotHistogram("##miliseconds", &App->msVec[0], App->msVecCounter, 0, title, 0.0f, 40.0f, ImVec2(310, 100));
+		}
+
+		if (ImGui::CollapsingHeader("Window")) {
+		}
+
+		if (ImGui::CollapsingHeader("Hardware")) {
+		}
+
+		ImGui::End();
 	}
-
-	if (ImGui::BeginMenu("Window")) {
-		ImGui::EndMenu();
-	}
-
-	if (ImGui::BeginMenu("Hardware")) {
-		ImGui::EndMenu();
-	}
-
-	ImGui::End();
 }
+
+
+float ModuleImGui::GetSliderDt() { return sliderDt; }
+
+
+std::string ModuleImGui::AppName() { return appName; }
 
 
