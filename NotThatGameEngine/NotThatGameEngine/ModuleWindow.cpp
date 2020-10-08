@@ -1,11 +1,8 @@
 #include "Application.h"
 #include "ModuleWindow.h"
 
-ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled)
-{
-	window = NULL;
-	screen_surface = NULL;
-}
+ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled), window(NULL), screen_surface(NULL), width(SCREEN_WIDTH* SCREEN_SIZE), height(SCREEN_HEIGHT* SCREEN_SIZE)
+{}
 
 // Destructor
 ModuleWindow::~ModuleWindow()
@@ -24,8 +21,6 @@ bool ModuleWindow::Init()
 	else
 	{
 		//Create window
-		int width = SCREEN_WIDTH * SCREEN_SIZE;
-		int height = SCREEN_HEIGHT * SCREEN_SIZE;
 		Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 
 		if(WIN_FULLSCREEN == true)
@@ -61,6 +56,14 @@ bool ModuleWindow::Init()
 		}
 	}
 
+	App->eventManager->EventRegister(EVENT_ENUM::SCREEN_BRIGHTNESS, this);
+	App->eventManager->EventRegister(EVENT_ENUM::CHANGE_WINDOW_WIDTH, this);
+	App->eventManager->EventRegister(EVENT_ENUM::CHANGE_WINDOW_HEIGHT, this);
+	App->eventManager->EventRegister(EVENT_ENUM::FULLSCREEN, this);
+	App->eventManager->EventRegister(EVENT_ENUM::RESIZABLE_WINDOW, this);
+	App->eventManager->EventRegister(EVENT_ENUM::BORDERLESS_WINDOW, this);
+	App->eventManager->EventRegister(EVENT_ENUM::FULLDESKTOP_WINDOW, this);
+
 	return ret;
 }
 
@@ -78,7 +81,93 @@ bool ModuleWindow::CleanUp()
 	return true;
 }
 
+
+update_status ModuleWindow::PostUpdate(float dt) {
+
+	CheckListener(this);
+
+	return update_status::UPDATE_CONTINUE;
+}
+
+
 void ModuleWindow::SetTitle(const char* title)
 {
 	SDL_SetWindowTitle(window, title);
 }
+
+
+
+void ModuleWindow::ExecuteEvent(EVENT_ENUM eventId) {
+
+	switch (eventId) {
+
+	case EVENT_ENUM::SCREEN_BRIGHTNESS:
+
+		SDL_SetWindowBrightness(window, App->imGui->sliderBrightness);
+
+		break;
+
+	case EVENT_ENUM::CHANGE_WINDOW_WIDTH:
+
+		width = App->imGui->sliderWidth * SCREEN_SIZE;
+		SDL_SetWindowSize(window, width, height);
+
+		break;
+
+	case EVENT_ENUM::CHANGE_WINDOW_HEIGHT:
+
+		height = App->imGui->sliderHeight * SCREEN_SIZE;
+		SDL_SetWindowSize(window, width, height);
+
+		break;
+
+	case EVENT_ENUM::FULLSCREEN:
+
+		if (App->imGui->fullscreen) {
+			SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+			App->imGui->resizable = false;
+			App->imGui->fullDesktop = false;
+			App->imGui->borderless = false;
+		}
+
+		break;
+
+	case EVENT_ENUM::RESIZABLE_WINDOW:
+
+		if (App->imGui->resizable) {
+			SDL_SetWindowFullscreen(window, SDL_WINDOW_RESIZABLE);
+			App->imGui->fullscreen = false;
+			App->imGui->fullDesktop = false;
+			App->imGui->borderless = false;
+		}
+
+	case EVENT_ENUM::BORDERLESS_WINDOW:
+
+		if (App->imGui->borderless) {
+			SDL_SetWindowBordered(window, SDL_FALSE);
+			App->imGui->fullscreen = false;
+			App->imGui->fullDesktop = false;
+			App->imGui->resizable = false;
+		}
+		else {
+			SDL_SetWindowBordered(window, SDL_TRUE);
+		}
+
+	case EVENT_ENUM::FULLDESKTOP_WINDOW:
+
+		if (App->imGui->fullDesktop) {
+			SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+			App->imGui->fullscreen = false;
+			App->imGui->resizable = false;
+			App->imGui->borderless = false;
+		}
+
+		break;
+
+	default:
+		break;
+	}
+
+	App->renderer3D->OnResize(width, height);
+}
+

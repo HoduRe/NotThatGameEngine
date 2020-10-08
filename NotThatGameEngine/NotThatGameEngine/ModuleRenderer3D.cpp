@@ -116,7 +116,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 
 	// Debug
 
-
 	return update_status::UPDATE_CONTINUE;
 }
 
@@ -124,6 +123,8 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	update_status ret = update_status::UPDATE_CONTINUE;
+
+
 
 	return ret;
 }
@@ -149,3 +150,6 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
+
+
+

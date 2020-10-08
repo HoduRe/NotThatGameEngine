@@ -1,6 +1,6 @@
 #include "Application.h"
 
-Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter(0), framerate(0)
+Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter(0), framerate(0), consoleVecSize(0)
 {
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
@@ -68,8 +68,8 @@ void Application::PrepareUpdate()
 	float currentSec = ms_timer.Read() / 1000.0f;
 
 	if (userDt) {
-		framerate = imGui->GetSliderDt();
-		dt = 1 / imGui->GetSliderDt();
+		framerate = imGui->sliderDt;
+		dt = 1 / imGui->sliderDt;
 	}
 	else {
 		dt = currentSec;
@@ -164,4 +164,26 @@ void Application::UserDt(bool dt) {
 	userDt = dt;
 }
 
+
+void Application::log(const char file[], int line, const char* format, ...)
+{
+	char tmp_string[4096];
+	char tmp_string2[4096];
+	static va_list  ap;
+
+	// Construct the string from variable arguments
+	va_start(ap, format);
+	vsprintf_s(tmp_string, 4096, format, ap);
+	va_end(ap);
+	sprintf_s(tmp_string2, 4096, "\n%s(%d) : %s", file, line, tmp_string);
+	OutputDebugString(tmp_string2);
+
+	consoleVec.push_back(tmp_string2);
+	consoleVecSize++;
+
+	if (consoleVecSize >= 50) {
+		consoleVec.erase(consoleVec.begin());
+		consoleVecSize--;
+	}
+}
 

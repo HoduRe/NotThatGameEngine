@@ -5,7 +5,10 @@
 
 #include <shellapi.h>
 
-ModuleImGui::ModuleImGui(Application* app, bool start_enabled) : Module(app, start_enabled), SDL(nullptr), MathGeoLib(nullptr), sliderDt(0.0f), appName("NotThatGameEngine")
+ModuleImGui::ModuleImGui(Application* app, bool start_enabled) : Module(app, start_enabled), SDL(nullptr), MathGeoLib(nullptr), sliderDt(0.0f), appName("NotThatGameEngine"),
+	sliderBrightness(1.0f), sliderWidth(SCREEN_WIDTH * SCREEN_SIZE), sliderHeight(SCREEN_HEIGHT * SCREEN_SIZE),
+	fullscreen(WIN_FULLSCREEN), resizable(WIN_RESIZABLE), borderless(WIN_BORDERLESS), fullDesktop(WIN_FULLSCREEN_DESKTOP), refreshRate(0),
+	AVX(false), AVX2(false), AltiVec(false), MMX(false), RDTSC(false), SSE(false), SSE2(false), SSE3(false), SSE41(false), SSE42(false)
 {}
 
 // Destructor
@@ -35,6 +38,23 @@ bool ModuleImGui::Init()
 	SDL = (char*)"SDL 2.0.12";
 	MathGeoLib = (char*)"MathGeoLib 1.5";
 
+	//Get refresh rate
+	SDL_DisplayMode displayMode;
+	int numDisplayModes = SDL_GetNumDisplayModes(0);
+	SDL_GetDisplayMode(SDL_GetWindowDisplayIndex(App->window->window), SDL_GetWindowDisplayMode(App->window->window, &displayMode), &displayMode);
+	refreshRate = displayMode.refresh_rate;
+
+	AVX = SDL_HasAVX();
+	AVX2 = SDL_HasAVX2();
+	AltiVec = SDL_HasAltiVec();
+	MMX = SDL_HasMMX();
+	RDTSC = SDL_HasRDTSC();
+	SSE = SDL_HasSSE();
+	SSE2 = SDL_HasSSE2();
+	SSE3 = SDL_HasSSE3();
+	SSE41= SDL_HasSSE41();
+	SSE42 = SDL_HasSSE42();
+
 	return ret;
 }
 
@@ -61,6 +81,7 @@ update_status ModuleImGui::PreUpdate(float dt)
 update_status ModuleImGui::Update(float dt)
 {
 	update_status ret = update_status::UPDATE_CONTINUE;
+	update_status ret2 = update_status::UPDATE_CONTINUE;
 	static bool showDemoWindow = true;
 
 	// Start the Dear ImGui frame
@@ -71,13 +92,15 @@ update_status ModuleImGui::Update(float dt)
 	//	ImGui::SetNextWindowPos(ImVec2(SCREEN_WIDTH - 220, 0));		// Cuando cierro la ventana de demo, la ventana de close app se teleporta a su posición inicial: sustitye esto por código que solo lo setea al compilar
 	//	ImGui::SetNextWindowSize(ImVec2(180, 70));					// Lo más probable es que haya un buffer de siguiente nuevo me lo pones a esta posición, y al quitar el anterior, se mueve el de close app en la lista, y se lee como "nuevo"
 
-	ret = DefaultMenus(&showDemoWindow);
+	ret = DefaultButtons(&showDemoWindow);
 	SetMainMenuBar(&showDemoWindow);
-	FPSMenu();
+	ret2 = DefaultWindow();
+	ConsoleWindow();
 
 	ImGui::EndFrame();
 
-	return ret;
+	if (ret == update_status::UPDATE_CONTINUE && ret2 == update_status::UPDATE_CONTINUE) { return ret; }
+	else{ return update_status::UPDATE_STOP; }
 }
 
 // ---------------------------------------------------------
@@ -105,7 +128,7 @@ bool ModuleImGui::CleanUp()
 }
 
 
-update_status ModuleImGui::DefaultMenus(bool* demoMenu)
+update_status ModuleImGui::DefaultButtons(bool* demoMenu)
 {
 	update_status ret = update_status::UPDATE_CONTINUE;
 	static bool defaultButtonsMenu = true;
@@ -205,9 +228,11 @@ void ModuleImGui::AboutMenu(bool* aboutMenu) {
 }
 
 
-void ModuleImGui::FPSMenu() {
+update_status ModuleImGui::DefaultWindow() {
 
+	update_status ret = update_status::UPDATE_CONTINUE;
 	static bool fpsMenu = true;
+	static bool appActive = true;
 	static char organization[25] = "UPC CITM";
 	char title[25];
 
@@ -230,6 +255,8 @@ void ModuleImGui::FPSMenu() {
 				if (sliderDt == 0) { App->UserDt(false); }
 				else { App->UserDt(true); }
 			}
+			ImGui::Text("Limited frames: %.0f", App->framerate);
+
 			//ImGui::Text();	// Limited frames
 			sprintf_s(title, 25, "Framerate %.1f", App->framerateVec.back());
 			ImGui::PlotHistogram("##framerate", &App->framerateVec[0], App->framerateVecCounter, 0, title, 0.0f, 100.0f, ImVec2(310, 100));
@@ -238,17 +265,71 @@ void ModuleImGui::FPSMenu() {
 		}
 
 		if (ImGui::CollapsingHeader("Window")) {
+			if (ImGui::Checkbox("Active", &appActive)){
+				if (appActive == false) { ret = update_status::UPDATE_STOP; }
+			}
+			if (ImGui::SliderFloat("Brightness", &sliderBrightness, 0.0f, 1.0f)) {
+				App->eventManager->GenerateEvent(EVENT_ENUM::SCREEN_BRIGHTNESS);
+			}
+			if (ImGui::SliderInt("Width", &sliderWidth, 0, 1980)) {
+				App->eventManager->GenerateEvent(EVENT_ENUM::CHANGE_WINDOW_WIDTH);
+			}
+			if (ImGui::SliderInt("Height", &sliderHeight, 0, 1280)) {
+				App->eventManager->GenerateEvent(EVENT_ENUM::CHANGE_WINDOW_HEIGHT);
+			}
+			ImGui::Text("Refresh rate: %i", refreshRate);
+			if (ImGui::Checkbox("Fullscreen", &fullscreen)) {
+				App->eventManager->GenerateEvent(EVENT_ENUM::FULLSCREEN);
+			}
+			ImGui::SameLine();
+			if (ImGui::Checkbox("Resizable", &resizable)) {
+				App->eventManager->GenerateEvent(EVENT_ENUM::RESIZABLE_WINDOW);
+			}
+			if (ImGui::Checkbox("Borderless", &borderless)) {
+				App->eventManager->GenerateEvent(EVENT_ENUM::BORDERLESS_WINDOW);
+			}
+			ImGui::SameLine();
+			if (ImGui::Checkbox("Full desktop", &fullDesktop)) {
+				App->eventManager->GenerateEvent(EVENT_ENUM::FULLDESKTOP_WINDOW);
+			}
 		}
 
 		if (ImGui::CollapsingHeader("Hardware")) {
+			ImGui::Text("SDL 2.0.12");
+			ImGui::NewLine();
+			ImGui::Text("CPUs: %i (Cache: %i kb)", SDL_GetCPUCount(), SDL_GetCPUCacheLineSize());
+			ImGui::Text("System RAM: %.2f Gb)", (float)SDL_GetSystemRAM() * 0.0009765625);	// The long number is 1 / 1024, because function returns in Mb
+			if (AVX) { ImGui::Text("AVX  "); } ImGui::SameLine();
+			if (AVX2) { ImGui::Text("AVX2  "); } ImGui::SameLine();
+			if (AltiVec) { ImGui::Text("AltiVec  "); } ImGui::SameLine();
+			if (MMX) { ImGui::Text("MMX  "); } ImGui::SameLine();
+			if (RDTSC) { ImGui::Text("RDTSC  "); }
+			if (SSE) { ImGui::Text("SSE  "); } ImGui::SameLine();
+			if (SSE2) { ImGui::Text("SSE2  "); } ImGui::SameLine();
+			if (SSE3) { ImGui::Text("SSE3  "); } ImGui::SameLine();
+			if (SSE41) { ImGui::Text("SSE41  "); } ImGui::SameLine();
+			if (SSE42) { ImGui::Text("SSE42  "); }
 		}
 
 		ImGui::End();
 	}
+
+	return ret;
 }
 
 
-float ModuleImGui::GetSliderDt() { return sliderDt; }
+void ModuleImGui::ConsoleWindow() {
+	static bool consoleMenu = true;
+
+	if (consoleMenu) {
+		ImGui::Begin("Console", &consoleMenu);
+
+		for (int i = 0; i < App->consoleVecSize; i++) {
+			ImGui::Text(App->consoleVec[0].c_str());
+		}
+		ImGui::End();
+	}
+}
 
 
 std::string ModuleImGui::AppName() { return appName; }

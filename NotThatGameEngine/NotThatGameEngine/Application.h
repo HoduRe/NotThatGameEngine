@@ -16,6 +16,10 @@
 #include "ModuleImGui.h"
 #include "ModuleEventManager.h"
 
+
+#define LOG(format, ...) App->log(__FILE__, __LINE__, format, __VA_ARGS__);
+
+
 class Application
 {
 public:
@@ -49,7 +53,11 @@ public:
 	bool CleanUp();
 
 	void UserDt(bool dt);
+	void log(const char file[], int line, const char* format, ...);
+
 	float framerate;
+	std::vector<std::string> consoleVec;
+	int consoleVecSize;
 
 	// Data storage of framerate and ms
 	std::vector<float> framerateVec;
@@ -63,3 +71,4 @@ private:
 	void PrepareUpdate();
 	void FinishUpdate();
 };
+

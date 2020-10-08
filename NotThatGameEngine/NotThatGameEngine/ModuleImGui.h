@@ -19,21 +19,38 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
-	float GetSliderDt();
 	std::string AppName();
+	float sliderDt;
+	float sliderBrightness;
+	int sliderWidth;
+	int sliderHeight;
+	bool fullscreen;
+	bool resizable;
+	bool borderless;
+	bool fullDesktop;
 
 private:
 	char* SDL;
 	std::string GLEW;
 	std::string ImGui;
 	char* MathGeoLib;
-	float sliderDt = 0.0f;
 	char appName[30];
+	int refreshRate;
+	bool AVX;
+	bool AVX2;
+	bool AltiVec;
+	bool MMX;
+	bool RDTSC;
+	bool SSE;
+	bool SSE2;
+	bool SSE3;
+	bool SSE41;
+	bool SSE42;
 
-	update_status DefaultMenus(bool* demoMenu);
+	update_status DefaultButtons(bool* demoMenu);
 	void SetMainMenuBar(bool* demoMenu);
 	void AboutMenu(bool* aboutMenu);
-	void FPSMenu();
-
+	update_status DefaultWindow();
+	void ConsoleWindow();
 };
 
