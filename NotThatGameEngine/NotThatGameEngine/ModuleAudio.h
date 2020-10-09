@@ -26,6 +26,10 @@ public:
 
 private:
 
+
+public:
+	int sfxAdjustment;
+	int musicAdjustment;
 };
 
 #endif // __ModuleAudio_H__

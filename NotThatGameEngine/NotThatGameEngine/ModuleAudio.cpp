@@ -2,7 +2,7 @@
 #include "Application.h"
 #include "ModuleAudio.h"
 
-ModuleAudio::ModuleAudio(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleAudio::ModuleAudio(Application* app, bool start_enabled) : Module(app, start_enabled), sfxAdjustment(0), musicAdjustment(0)
 {}
 
 // Destructor

@@ -37,8 +37,8 @@ bool ModuleRenderer3D::Init()
 			printf("Error initializing GLEW! %s\n", glewGetErrorString(glewError));
 		}
 
-		//Use Vsync
-		if (VSYNC && SDL_GL_SetSwapInterval(1) < 0) {}
+		// Vsync
+		SDL_GL_SetSwapInterval(1);
 
 // OPENGL INITIALIZATION
 
@@ -123,8 +123,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	update_status ret = update_status::UPDATE_CONTINUE;
-
-
 
 	return ret;
 }

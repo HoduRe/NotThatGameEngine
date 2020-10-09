@@ -28,6 +28,7 @@ public:
 	bool resizable;
 	bool borderless;
 	bool fullDesktop;
+	bool vsync;
 
 private:
 	char* SDL;
@@ -46,9 +47,15 @@ private:
 	bool SSE3;
 	bool SSE41;
 	bool SSE42;
+	bool showDemoWindow;
+	bool defaultButtonsMenu;
+	bool aboutWindow;
+	bool configMenu;
+	bool appActive;
+	bool consoleMenu;
 
-	update_status DefaultButtons(bool* demoMenu);
-	void SetMainMenuBar(bool* demoMenu);
+	update_status DefaultButtons();
+	void SetMainMenuBar();
 	void AboutMenu(bool* aboutMenu);
 	update_status DefaultWindow();
 	void ConsoleWindow();

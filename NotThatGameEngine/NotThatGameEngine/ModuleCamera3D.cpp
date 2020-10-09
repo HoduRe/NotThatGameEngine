@@ -35,32 +35,37 @@ bool ModuleCamera3D::CleanUp()
 // -----------------------------------------------------------------
 update_status ModuleCamera3D::Update(float dt)
 {
-	float matrix[16];
-	//App->player->vehicle->GetTransform(matrix);
-	vec3 car(matrix[12], matrix[13] + 5, matrix[14]);
-	vec3 newPosition(matrix[12], matrix[13] + 5, matrix[14] - 18);
+	vec3 newPos(0, 0, 0);
+	float speed = 3.0f * dt;
+	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+		speed = 8.0f * dt;
 
-	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) != KEY_REPEAT) {
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed;
 
-		Reference = car;
-		Position = newPosition;
-		Position -= Reference;
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
 
-		X.Set(matrix[0], matrix[1], matrix[2]);
-		Z.Set(matrix[8], matrix[9], matrix[10]);
 
-		Position = Reference - Z * length(Position);
-	}
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
 
-	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT) {
+	Position += newPos;
+	Reference += newPos;
+
+	// Mouse motion ----------------
+
+	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	{
 		int dx = -App->input->GetMouseXMotion();
 		int dy = -App->input->GetMouseYMotion();
 
-		float Sensitivity = 0.5f;
+		float Sensitivity = 0.25f;
 
 		Position -= Reference;
 
-		if (dx != 0) {
+		if (dx != 0)
+		{
 			float DeltaX = (float)dx * Sensitivity;
 
 			X = rotate(X, DeltaX, vec3(0.0f, 1.0f, 0.0f));
@@ -68,21 +73,22 @@ update_status ModuleCamera3D::Update(float dt)
 			Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f));
 		}
 
-		if (dy != 0) {
+		if (dy != 0)
+		{
 			float DeltaY = (float)dy * Sensitivity;
 
 			Y = rotate(Y, DeltaY, X);
 			Z = rotate(Z, DeltaY, X);
 
-			if (Y.y < 0.0f) {
+			if (Y.y < 0.0f)
+			{
 				Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
 				Y = cross(Z, X);
 			}
 		}
+
 		Position = Reference + Z * length(Position);
 	}
-
-	LookAt(Reference);
 
 	// Recalculate matrix -------------
 	CalculateViewMatrix();

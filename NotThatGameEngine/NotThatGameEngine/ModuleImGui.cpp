@@ -6,9 +6,10 @@
 #include <shellapi.h>
 
 ModuleImGui::ModuleImGui(Application* app, bool start_enabled) : Module(app, start_enabled), SDL(nullptr), MathGeoLib(nullptr), sliderDt(0.0f), appName("NotThatGameEngine"),
-	sliderBrightness(1.0f), sliderWidth(SCREEN_WIDTH * SCREEN_SIZE), sliderHeight(SCREEN_HEIGHT * SCREEN_SIZE),
+	sliderBrightness(1.0f), sliderWidth(SCREEN_WIDTH * SCREEN_SIZE), sliderHeight(SCREEN_HEIGHT * SCREEN_SIZE), vsync(true),
 	fullscreen(WIN_FULLSCREEN), resizable(WIN_RESIZABLE), borderless(WIN_BORDERLESS), fullDesktop(WIN_FULLSCREEN_DESKTOP), refreshRate(0),
-	AVX(false), AVX2(false), AltiVec(false), MMX(false), RDTSC(false), SSE(false), SSE2(false), SSE3(false), SSE41(false), SSE42(false)
+	AVX(false), AVX2(false), AltiVec(false), MMX(false), RDTSC(false), SSE(false), SSE2(false), SSE3(false), SSE41(false), SSE42(false),
+	showDemoWindow(true), defaultButtonsMenu (true), aboutWindow (false), configMenu(true), appActive(true), consoleMenu (true)
 {}
 
 // Destructor
@@ -82,7 +83,7 @@ update_status ModuleImGui::Update(float dt)
 {
 	update_status ret = update_status::UPDATE_CONTINUE;
 	update_status ret2 = update_status::UPDATE_CONTINUE;
-	static bool showDemoWindow = true;
+	
 
 	// Start the Dear ImGui frame
 	ImGui_ImplOpenGL3_NewFrame();
@@ -92,8 +93,9 @@ update_status ModuleImGui::Update(float dt)
 	//	ImGui::SetNextWindowPos(ImVec2(SCREEN_WIDTH - 220, 0));		// Cuando cierro la ventana de demo, la ventana de close app se teleporta a su posición inicial: sustitye esto por código que solo lo setea al compilar
 	//	ImGui::SetNextWindowSize(ImVec2(180, 70));					// Lo más probable es que haya un buffer de siguiente nuevo me lo pones a esta posición, y al quitar el anterior, se mueve el de close app en la lista, y se lee como "nuevo"
 
-	ret = DefaultButtons(&showDemoWindow);
-	SetMainMenuBar(&showDemoWindow);
+	if (showDemoWindow) { ImGui::ShowDemoWindow(&showDemoWindow); }	// DEMO WINDOW
+	ret = DefaultButtons();
+	SetMainMenuBar();
 	ret2 = DefaultWindow();
 	ConsoleWindow();
 
@@ -128,14 +130,9 @@ bool ModuleImGui::CleanUp()
 }
 
 
-update_status ModuleImGui::DefaultButtons(bool* demoMenu)
+update_status ModuleImGui::DefaultButtons()
 {
 	update_status ret = update_status::UPDATE_CONTINUE;
-	static bool defaultButtonsMenu = true;
-
-	if (*demoMenu) {		// DEMO WINDOW
-		ImGui::ShowDemoWindow(demoMenu);
-	}
 
 	if (defaultButtonsMenu) {		// CLOSE APP BUTTON
 		ImGui::Begin("Default buttons", &defaultButtonsMenu);
@@ -183,15 +180,14 @@ update_status ModuleImGui::DefaultButtons(bool* demoMenu)
 }
 
 
-void ModuleImGui::SetMainMenuBar(bool* demoMenu)
+void ModuleImGui::SetMainMenuBar()
 {
-	static bool aboutWindow = false;
 
 	if (ImGui::BeginMainMenuBar()) {
 
-		if (ImGui::BeginMenu("Dev Help")) {
+		if (ImGui::BeginMenu("Dev Options")) {
 
-			if (ImGui::MenuItem("Gui Demo")) { *demoMenu = !*demoMenu; }
+			if (ImGui::MenuItem("Gui Demo")) { showDemoWindow = !showDemoWindow; }
 
 			if (ImGui::MenuItem("Documentation")) { ShellExecuteA(0, "open", "https://github.com/ferba93/NotThatGameEngine/wiki", NULL, NULL, SW_SHOWNORMAL); }
 
@@ -199,7 +195,13 @@ void ModuleImGui::SetMainMenuBar(bool* demoMenu)
 
 			if (ImGui::MenuItem("Report a bug")) { ShellExecuteA(0, "open", "https://github.com/ferba93/NotThatGameEngine/issues", NULL, NULL, SW_SHOWNORMAL); }
 
-			if (ImGui::MenuItem("About")) { if (!aboutWindow) { aboutWindow = !aboutWindow; } }
+			if (ImGui::MenuItem("App configuration")) { configMenu = !configMenu; }
+			
+			if (ImGui::MenuItem("General buttons")) { defaultButtonsMenu = !defaultButtonsMenu; }
+
+			if (ImGui::MenuItem("Console output")) { consoleMenu = !consoleMenu; }
+			
+			if (ImGui::MenuItem("About")) { aboutWindow = !aboutWindow; }
 
 			ImGui::EndMenu();
 		}
@@ -231,13 +233,11 @@ void ModuleImGui::AboutMenu(bool* aboutMenu) {
 update_status ModuleImGui::DefaultWindow() {
 
 	update_status ret = update_status::UPDATE_CONTINUE;
-	static bool fpsMenu = true;
-	static bool appActive = true;
 	static char organization[25] = "UPC CITM";
 	char title[25];
 
-	if (fpsMenu) {
-		ImGui::Begin("Configuration", &fpsMenu);
+	if (configMenu) {
+		ImGui::Begin("Configuration", &configMenu);
 
 		if (ImGui::BeginMenu("Options")) {
 			ImGui::EndMenu();
@@ -262,36 +262,22 @@ update_status ModuleImGui::DefaultWindow() {
 			ImGui::PlotHistogram("##framerate", &App->framerateVec[0], App->framerateVecCounter, 0, title, 0.0f, 100.0f, ImVec2(310, 100));
 			sprintf_s(title, 25, "Miliseconds %0.1f", App->msVec.back());
 			ImGui::PlotHistogram("##miliseconds", &App->msVec[0], App->msVecCounter, 0, title, 0.0f, 40.0f, ImVec2(310, 100));
+
+			if (ImGui::Checkbox("Vsync", &vsync)) { SDL_GL_SetSwapInterval(vsync); }
 		}
 
 		if (ImGui::CollapsingHeader("Window")) {
-			if (ImGui::Checkbox("Active", &appActive)){
-				if (appActive == false) { ret = update_status::UPDATE_STOP; }
-			}
-			if (ImGui::SliderFloat("Brightness", &sliderBrightness, 0.0f, 1.0f)) {
-				App->eventManager->GenerateEvent(EVENT_ENUM::SCREEN_BRIGHTNESS);
-			}
-			if (ImGui::SliderInt("Width", &sliderWidth, 0, 1980)) {
-				App->eventManager->GenerateEvent(EVENT_ENUM::CHANGE_WINDOW_WIDTH);
-			}
-			if (ImGui::SliderInt("Height", &sliderHeight, 0, 1280)) {
-				App->eventManager->GenerateEvent(EVENT_ENUM::CHANGE_WINDOW_HEIGHT);
-			}
+			if (ImGui::Checkbox("Active", &appActive)){ if (appActive == false) { ret = update_status::UPDATE_STOP; } }
+			if (ImGui::SliderFloat("Brightness", &sliderBrightness, 0.0f, 1.0f)) { App->eventManager->GenerateEvent(EVENT_ENUM::SCREEN_BRIGHTNESS); }
+			if (ImGui::SliderInt("Width", &sliderWidth, 0, 1980)) { App->eventManager->GenerateEvent(EVENT_ENUM::CHANGE_WINDOW_WIDTH); }
+			if (ImGui::SliderInt("Height", &sliderHeight, 0, 1280)) { App->eventManager->GenerateEvent(EVENT_ENUM::CHANGE_WINDOW_HEIGHT); }
 			ImGui::Text("Refresh rate: %i", refreshRate);
-			if (ImGui::Checkbox("Fullscreen", &fullscreen)) {
-				App->eventManager->GenerateEvent(EVENT_ENUM::FULLSCREEN);
-			}
+			if (ImGui::Checkbox("Fullscreen", &fullscreen)) { App->eventManager->GenerateEvent(EVENT_ENUM::FULLSCREEN); }
 			ImGui::SameLine();
-			if (ImGui::Checkbox("Resizable", &resizable)) {
-				App->eventManager->GenerateEvent(EVENT_ENUM::RESIZABLE_WINDOW);
-			}
-			if (ImGui::Checkbox("Borderless", &borderless)) {
-				App->eventManager->GenerateEvent(EVENT_ENUM::BORDERLESS_WINDOW);
-			}
+			if (ImGui::Checkbox("Resizable", &resizable)) { App->eventManager->GenerateEvent(EVENT_ENUM::RESIZABLE_WINDOW); }
+			if (ImGui::Checkbox("Borderless", &borderless)) { App->eventManager->GenerateEvent(EVENT_ENUM::BORDERLESS_WINDOW); }
 			ImGui::SameLine();
-			if (ImGui::Checkbox("Full desktop", &fullDesktop)) {
-				App->eventManager->GenerateEvent(EVENT_ENUM::FULLDESKTOP_WINDOW);
-			}
+			if (ImGui::Checkbox("Full desktop", &fullDesktop)) { App->eventManager->GenerateEvent(EVENT_ENUM::FULLDESKTOP_WINDOW); }
 		}
 
 		if (ImGui::CollapsingHeader("Hardware")) {
@@ -311,6 +297,11 @@ update_status ModuleImGui::DefaultWindow() {
 			if (SSE42) { ImGui::Text("SSE42  "); }
 		}
 
+		if (ImGui::CollapsingHeader("Audio")) {
+			ImGui::SliderInt("SFX volume", &App->audio->sfxAdjustment, 0, 255);
+			ImGui::SliderInt("Music volume", &App->audio->musicAdjustment, 0, 255);
+		}
+
 		ImGui::End();
 	}
 
@@ -319,7 +310,6 @@ update_status ModuleImGui::DefaultWindow() {
 
 
 void ModuleImGui::ConsoleWindow() {
-	static bool consoleMenu = true;
 
 	if (consoleMenu) {
 		ImGui::Begin("Console", &consoleMenu);
