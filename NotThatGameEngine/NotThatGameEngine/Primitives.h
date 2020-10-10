@@ -25,9 +25,9 @@ public:
 	PrimitiveEnum type;
 	int size;
 	int id;
-	std::vector<float> vertices;
-
+	
 private:
+	std::vector<float> vertices;
 
 };
 

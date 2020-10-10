@@ -33,8 +33,10 @@ bool ModuleRenderer3D::Init()
 		GLenum glewError = glewInit();
 		if (glewError != GLEW_OK)
 		{
-			printf("Error initializing GLEW! %s\n", glewGetErrorString(glewError));
+			LOG("Error initializing GLEW! %s\n", glewGetErrorString(glewError));
 		}
+
+		LOG("Love me!");
 
 		// Vsync
 		SDL_GL_SetSwapInterval(1);
@@ -96,9 +98,20 @@ bool ModuleRenderer3D::Init()
 
 	cube.SetVertices(vertices);
 
+	static float vertiices[] = { 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 2.0f, 2.0f, 0.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 2.0f, 0.0f,	// Front
+							0.0f, 0.0f, 2.0f, 2.0f, 2.0f, 2.0f, 0.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 0.0f, 0.0f, 2.0f, 2.0f, 0.0f, 2.0f, // Back
+							2.0f, 2.0f, 0.0f, 0.0f, 2.0f, 0.0f, 0.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 0.0f, 0.0f, 2.0f, 2.0f, // Up
+							2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 2.0f, 0.0f, 0.0f, 2.0f, 2.0f, 0.0f, 0.0f,  // Down
+							0.0f, 0.0f, 2.0f, 0.0f, 2.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 2.0f, 0.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.0f, // Right
+							2.0f, 0.0f, 2.0f, 2.0f, 0.0f, 0.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 0.0f, 0.0f, 2.0f, 2.0f, 0.0f // Left
+	};
+
+
+
 	glGenBuffers(1, (GLuint*)&cube.id);
 	glBindBuffer(GL_ARRAY_BUFFER, cube.id);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * cube.size, cube.GetVertices(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * cube.size, vertiices, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	return ret;
 }
@@ -137,52 +150,12 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	update_status ret = update_status::UPDATE_CONTINUE;
 
-	glLineWidth(2.0f);
-	glBegin(GL_TRIANGLES);
-	glVertex3f(0.0f, 0.0f, 0.0f);
-	glVertex3f(0.0f, 2.0f, 0.0f);
-	glVertex3f(2.0f, 2.0f, 0.0f);
-	glVertex3f(2.0f, 0.0f, 0.0f);
-	glVertex3f(0.0f, 0.0f, 0.0f);
-	glVertex3f(2.0f, 2.0f, 0.0f);
-	glVertex3f(0.0f, 0.0f, 2.0f);
-	glVertex3f(2.0f, 2.0f, 2.0f);
-	glVertex3f(0.0f, 2.0f, 2.0f);
-	glVertex3f(2.0f, 2.0f, 2.0f);
-	glVertex3f(0.0f, 0.0f, 2.0f);
-	glVertex3f(2.0f, 0.0f, 2.0f);
-	glVertex3f(2.0f, 2.0f, 0.0f);
-	glVertex3f(0.0f, 2.0f, 0.0f);
-	glVertex3f(0.0f, 2.0f, 2.0f);
-	glVertex3f(2.0f, 2.0f, 2.0f);
-	glVertex3f(2.0f, 2.0f, 0.0f);
-	glVertex3f(0.0f, 2.0f, 2.0f);
-	glVertex3f(2.0f, 0.0f, 0.0f);
-	glVertex3f(0.0f, 0.0f, 2.0f);
-	glVertex3f(0.0f, 0.0f, 0.0f);
-	glVertex3f(2.0f, 0.0f, 2.0f);
-	glVertex3f(0.0f, 0.0f, 2.0f);
-	glVertex3f(2.0f, 0.0f, 0.0f);
-	glVertex3f(0.0f, 0.0f, 2.0f);
-	glVertex3f(0.0f, 2.0f, 2.0f);
-	glVertex3f(0.0f, 0.0f, 0.0f);
-	glVertex3f(0.0f, 2.0f, 2.0f);
-	glVertex3f(0.0f, 2.0f, 0.0f);
-	glVertex3f(0.0f, 0.0f, 0.0f);
-	glVertex3f(2.0f, 0.0f, 2.0f);
-	glVertex3f(2.0f, 0.0f, 0.0f);
-	glVertex3f(2.0f, 2.0f, 2.0f);
-	glVertex3f(2.0f, 2.0f, 2.0f);
-	glVertex3f(2.0f, 0.0f, 0.0f);
-	glVertex3f(2.0f, 2.0f, 0.0f);
-	glEnd();
-	glLineWidth(1.0f);
-
-	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, cube.id);
+	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	glDrawArrays(GL_TRIANGLES, 0, 1);
+	glDrawArrays(GL_TRIANGLES, 0, cube.size);
 	glDisableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	return ret;
 }
