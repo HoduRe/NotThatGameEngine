@@ -1,6 +1,8 @@
 #ifndef __PRIMITIVES_H__
 #define __PRIMITIVES_H__
 
+#define MAX_VERTICES 1000
+
 #include <vector>
 
 enum class PrimitiveEnum {
@@ -16,18 +18,18 @@ class Primitives {
 public:
 
 	Primitives(PrimitiveEnum _type);
-	Primitives(PrimitiveEnum _type, std::vector<float> _vertices);
+	Primitives(PrimitiveEnum _type, float vertices[], int size);
 	~Primitives();
 
-	int SetVertices(std::vector<float> _vertices);	// Returns size
-	std::vector<float>* GetVertices();	// Returns vertex vector
+	int SetVertices(float _vertices[], int size);	// Returns size
+	float* GetVertices();	// Returns vertex vector
 
 	PrimitiveEnum type;
 	int size;
 	int id;
 	
 private:
-	std::vector<float> vertices;
+	float vertices[MAX_VERTICES];
 
 };
 
@@ -36,7 +38,7 @@ class Cube : public Primitives {
 public:
 
 	Cube();
-	Cube(std::vector<float> _vertices);
+	Cube(float vertices[], int size);
 	~Cube();
 
 private:
