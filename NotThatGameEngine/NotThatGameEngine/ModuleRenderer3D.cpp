@@ -1,9 +1,8 @@
 #include "Application.h"
 #include "ModuleRenderer3D.h"
 
-ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled), context(nullptr)
-{
-}
+ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled), context(nullptr), cube()
+{}
 
 // Destructor
 ModuleRenderer3D::~ModuleRenderer3D()
@@ -14,7 +13,7 @@ bool ModuleRenderer3D::Init()
 {
 	bool ret = true;
 
-// OPENGL - SDL CONFIGURATION
+	// OPENGL - SDL CONFIGURATION
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
@@ -40,7 +39,7 @@ bool ModuleRenderer3D::Init()
 		// Vsync
 		SDL_GL_SetSwapInterval(1);
 
-// OPENGL INITIALIZATION
+		// OPENGL INITIALIZATION
 
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -87,7 +86,7 @@ bool ModuleRenderer3D::Init()
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	static std::vector<float> vertices = { 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 2.0f, 2.0f, 0.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 2.0f, 0.0f,	// Front
+	std::vector<float> vertices = { 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 2.0f, 2.0f, 0.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 2.0f, 0.0f,	// Front
 								0.0f, 0.0f, 2.0f, 2.0f, 2.0f, 2.0f, 0.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 0.0f, 0.0f, 2.0f, 2.0f, 0.0f, 2.0f, // Back
 								2.0f, 2.0f, 0.0f, 0.0f, 2.0f, 0.0f, 0.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 0.0f, 0.0f, 2.0f, 2.0f, // Up
 								2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 2.0f, 0.0f, 0.0f, 2.0f, 2.0f, 0.0f, 0.0f,  // Down
@@ -95,7 +94,11 @@ bool ModuleRenderer3D::Init()
 								2.0f, 0.0f, 2.0f, 2.0f, 0.0f, 0.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 0.0f, 0.0f, 2.0f, 2.0f, 0.0f // Left
 	};
 
-	cube = new Cube(&vertices);
+	cube.SetVertices(vertices);
+
+	glGenBuffers(1, (GLuint*)&cube.id);
+	glBindBuffer(GL_ARRAY_BUFFER, cube.id);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * cube.size, cube.GetVertices(), GL_STATIC_DRAW);
 
 	return ret;
 }
@@ -133,6 +136,53 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	update_status ret = update_status::UPDATE_CONTINUE;
+
+	glLineWidth(2.0f);
+	glBegin(GL_TRIANGLES);
+	glVertex3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(0.0f, 2.0f, 0.0f);
+	glVertex3f(2.0f, 2.0f, 0.0f);
+	glVertex3f(2.0f, 0.0f, 0.0f);
+	glVertex3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(2.0f, 2.0f, 0.0f);
+	glVertex3f(0.0f, 0.0f, 2.0f);
+	glVertex3f(2.0f, 2.0f, 2.0f);
+	glVertex3f(0.0f, 2.0f, 2.0f);
+	glVertex3f(2.0f, 2.0f, 2.0f);
+	glVertex3f(0.0f, 0.0f, 2.0f);
+	glVertex3f(2.0f, 0.0f, 2.0f);
+	glVertex3f(2.0f, 2.0f, 0.0f);
+	glVertex3f(0.0f, 2.0f, 0.0f);
+	glVertex3f(0.0f, 2.0f, 2.0f);
+	glVertex3f(2.0f, 2.0f, 2.0f);
+	glVertex3f(2.0f, 2.0f, 0.0f);
+	glVertex3f(0.0f, 2.0f, 2.0f);
+	glVertex3f(2.0f, 0.0f, 0.0f);
+	glVertex3f(0.0f, 0.0f, 2.0f);
+	glVertex3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(2.0f, 0.0f, 2.0f);
+	glVertex3f(0.0f, 0.0f, 2.0f);
+	glVertex3f(2.0f, 0.0f, 0.0f);
+	glVertex3f(0.0f, 0.0f, 2.0f);
+	glVertex3f(0.0f, 2.0f, 2.0f);
+	glVertex3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(0.0f, 2.0f, 2.0f);
+	glVertex3f(0.0f, 2.0f, 0.0f);
+	glVertex3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(2.0f, 0.0f, 2.0f);
+	glVertex3f(2.0f, 0.0f, 0.0f);
+	glVertex3f(2.0f, 2.0f, 2.0f);
+	glVertex3f(2.0f, 2.0f, 2.0f);
+	glVertex3f(2.0f, 0.0f, 0.0f);
+	glVertex3f(2.0f, 2.0f, 0.0f);
+	glEnd();
+	glLineWidth(1.0f);
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, cube.id);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+	glDrawArrays(GL_TRIANGLES, 0, 1);
+	glDisableClientState(GL_VERTEX_ARRAY);
 
 	return ret;
 }

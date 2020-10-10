@@ -37,7 +37,7 @@ public:
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
-	Cube* cube;
+	Cube cube;
 
 private:
 

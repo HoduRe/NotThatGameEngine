@@ -15,15 +15,19 @@ class Primitives {
 
 public:
 
-	Primitives(PrimitiveEnum _type, std::vector<float>* vertices);
+	Primitives(PrimitiveEnum _type);
+	Primitives(PrimitiveEnum _type, std::vector<float> _vertices);
 	~Primitives();
 
+	int SetVertices(std::vector<float> _vertices);	// Returns size
+	std::vector<float>* GetVertices();	// Returns vertex vector
+
 	PrimitiveEnum type;
+	int size;
+	int id;
+	std::vector<float> vertices;
 
 private:
-
-	float* vertices;
-	int size;
 
 };
 
@@ -31,7 +35,8 @@ class Cube : public Primitives {
 
 public:
 
-	Cube(std::vector<float>* vertices);
+	Cube();
+	Cube(std::vector<float> _vertices);
 	~Cube();
 
 private:
@@ -43,7 +48,7 @@ class Sphere : public Primitives {
 
 public:
 
-	Sphere(float* vertexs[]);
+	Sphere(float vertexs);
 	~Sphere();
 
 private:
@@ -55,7 +60,7 @@ class Pyramid : public Primitives {
 
 public:
 
-	Pyramid(float* vertexs[]);
+	Pyramid(float* vertexs);
 	~Pyramid();
 
 private:
@@ -67,7 +72,7 @@ class Cylinder : public Primitives {
 
 public:
 
-	Cylinder(float* vertexs[]);
+	Cylinder(float* vertexs);
 	~Cylinder();
 
 private:
