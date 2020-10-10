@@ -91,7 +91,7 @@ bool ModuleRenderer3D::Init()
 	std::vector<float> vertices = { 0.0f, 0.0f, 0.0f,   0.0f, 2.0f, 0.0f,   2.0f, 2.0f, 0.0f,   2.0f, 0.0f, 0.0f,   0.0f, 0.0f, 2.0f,   2.0f, 2.0f, 2.0f,   0.0f, 2.0f, 2.0f,   2.0f, 0.0f, 2.0f };
 
 
-	std::vector<int> index = { 0, 1, 2,   3, 0, 2,	// Front
+	std::vector<unsigned int> index = { 0, 1, 2,   3, 0, 2,	// Front
 								4, 5, 6,   5, 4, 7,	// Back
 								2, 1, 6,   5, 2, 6, // Up
 								3, 4, 0,   7, 4, 3,	// Down
@@ -100,6 +100,7 @@ bool ModuleRenderer3D::Init()
 	};
 
 	cube.SetVertexVector(vertices);
+	cube.SetIndexVector(index);
 
 	glGenBuffers(1, (GLuint*)&cube.idVertex);
 	glBindBuffer(GL_ARRAY_BUFFER, cube.idVertex);
@@ -108,7 +109,7 @@ bool ModuleRenderer3D::Init()
 
 	glGenBuffers(1, (GLuint*)&cube.idIndex);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cube.idIndex);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * cube.sizeIndexVector, cube.GetIndexVector().data(), GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * cube.sizeIndexVector, cube.GetIndexVector().data(), GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	return ret;
@@ -153,11 +154,11 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cube.idIndex);
 
-	glDrawElements(GL_TRIANGLES, cube.sizeIndexVector, GL_INT, NULL);
+	glDrawElements(GL_TRIANGLES, cube.sizeIndexVector, GL_UNSIGNED_INT, NULL);
 
-	glDisableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glDisableClientState(GL_VERTEX_ARRAY);
 
 	return ret;
 }

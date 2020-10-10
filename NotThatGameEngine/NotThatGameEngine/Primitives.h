@@ -18,14 +18,14 @@ class Primitives {
 public:
 
 	Primitives(PrimitiveEnum _type);
-	Primitives(PrimitiveEnum _type, std::vector<float> _vertices, std::vector<int> _index);
+	Primitives(PrimitiveEnum _type, std::vector<float> _vertices, std::vector<unsigned int> _index);
 	~Primitives();
 
 	int SetVertexVector(std::vector<float> _vertices);	// Returns size
 	std::vector<float> GetVertexVector();	// Returns vertex vector
 
-	int SetIndexVector(std::vector<int> _vertices);	// Returns size
-	std::vector<int> GetIndexVector();	// Returns vertex vector
+	int SetIndexVector(std::vector<unsigned int> _vertices);	// Returns size
+	std::vector<unsigned int> GetIndexVector();	// Returns vertex vector
 
 	PrimitiveEnum type;
 	int sizeVertexVector;
@@ -35,7 +35,7 @@ public:
 	
 private:
 	std::vector<float> vertices;
-	std::vector<int> index;
+	std::vector<unsigned int> index;
 
 };
 
@@ -44,7 +44,7 @@ class Cube : public Primitives {
 public:
 
 	Cube();
-	Cube(std::vector<float> _vertices, std::vector<int> _index);
+	Cube(std::vector<float> _vertices, std::vector<unsigned int> _index);
 	~Cube();
 
 private:
