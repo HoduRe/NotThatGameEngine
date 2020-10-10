@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include "glmath.h"
 #include "Light.h"
+#include "Primitives.h"
 
 #include "glew-2.1.0/include/GL/glew.h"
 
@@ -35,6 +36,8 @@ public:
 	SDL_GLContext context;
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
+
+	Cube* cube;
 
 private:
 
