@@ -1,7 +1,7 @@
 #include "Application.h"
 #include "ModuleRenderer3D.h"
 
-ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled), context(nullptr), cube()
+ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled), context(nullptr)
 {}
 
 // Destructor
@@ -88,30 +88,6 @@ bool ModuleRenderer3D::Init()
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	std::vector<float> vertices = { 0.0f, 0.0f, 0.0f,   0.0f, 2.0f, 0.0f,   2.0f, 2.0f, 0.0f,   2.0f, 0.0f, 0.0f,   0.0f, 0.0f, 2.0f,   2.0f, 2.0f, 2.0f,   0.0f, 2.0f, 2.0f,   2.0f, 0.0f, 2.0f };
-
-
-	std::vector<unsigned int> index = { 0, 1, 2,   3, 0, 2,	// Front
-								4, 5, 6,   5, 4, 7,	// Back
-								2, 1, 6,   5, 2, 6, // Up
-								3, 4, 0,   7, 4, 3,	// Down
-								4, 6, 0,   6, 1, 0,	// Right
-								7, 3, 5,   5, 3, 2	// Left
-	};
-
-	cube.SetVertexVector(vertices);
-	cube.SetIndexVector(index);
-
-	glGenBuffers(1, (GLuint*)&cube.idVertex);
-	glBindBuffer(GL_ARRAY_BUFFER, cube.idVertex);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * cube.sizeVertexVector, cube.GetVertexVector().data(), GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	glGenBuffers(1, (GLuint*)&cube.idIndex);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cube.idIndex);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * cube.sizeIndexVector, cube.GetIndexVector().data(), GL_STATIC_DRAW);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
 	return ret;
 }
 
@@ -148,17 +124,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	update_status ret = update_status::UPDATE_CONTINUE;
-
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, cube.idVertex);
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cube.idIndex);
-
-	glDrawElements(GL_TRIANGLES, cube.sizeIndexVector, GL_UNSIGNED_INT, NULL);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glDisableClientState(GL_VERTEX_ARRAY);
 
 	return ret;
 }

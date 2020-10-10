@@ -15,6 +15,7 @@
 #include "ModuleReset.h"
 #include "ModuleImGui.h"
 #include "ModuleEventManager.h"
+#include "ModulePrimitives.h"
 
 
 #define LOG(format, ...) App->log(__FILE__, __LINE__, format, __VA_ARGS__);
@@ -34,6 +35,7 @@ public:
 	ModuleReset* reset;
 	ModuleImGui* imGui;
 	ModuleEventManager* eventManager;
+	ModulePrimitives* primitives;
 
 	Timer ms_timer;
 

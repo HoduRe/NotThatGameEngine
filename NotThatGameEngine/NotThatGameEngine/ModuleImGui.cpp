@@ -132,6 +132,8 @@ bool ModuleImGui::CleanUp()
 
 update_status ModuleImGui::DefaultButtons()
 {
+	static bool wireframe = false;
+
 	update_status ret = update_status::UPDATE_CONTINUE;
 
 	if (defaultButtonsMenu) {		// CLOSE APP BUTTON
@@ -171,6 +173,12 @@ update_status ModuleImGui::DefaultButtons()
 		if (ImGui::Button("Limited colors")) {
 			if (glIsEnabled(GL_MINMAX)) { glDisable(GL_MINMAX); }
 			else { glEnable(GL_MINMAX); }
+		}
+
+		if (ImGui::Button("Wireframe mode")) {
+			wireframe = !wireframe;
+			if (wireframe) { glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); }
+			else { glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); }
 		}
 
 		ImGui::End();

@@ -13,13 +13,13 @@ enum class PrimitiveEnum {
 	PRIMITIVE_CYLINDER
 };
 
-class Primitives {
+class PrimitivesF {
 
 public:
 
-	Primitives(PrimitiveEnum _type);
-	Primitives(PrimitiveEnum _type, std::vector<float> _vertices, std::vector<unsigned int> _index);
-	~Primitives();
+	PrimitivesF(PrimitiveEnum _type);
+	PrimitivesF(PrimitiveEnum _type, std::vector<float> _vertices, std::vector<unsigned int> _index);
+	~PrimitivesF();
 
 	int SetVertexVector(std::vector<float> _vertices);	// Returns size
 	std::vector<float> GetVertexVector();	// Returns vertex vector
@@ -27,61 +27,73 @@ public:
 	int SetIndexVector(std::vector<unsigned int> _vertices);	// Returns size
 	std::vector<unsigned int> GetIndexVector();	// Returns vertex vector
 
+	bool BlitPrimitive();
+
 	PrimitiveEnum type;
 	int sizeVertexVector;
 	int sizeIndexVector;
 	int idVertex;
 	int idIndex;
 	
-private:
+protected:
 	std::vector<float> vertices;
 	std::vector<unsigned int> index;
 
 };
 
-class Cube : public Primitives {
+class CubeF : public PrimitivesF {
 
 public:
 
-	Cube();
-	Cube(std::vector<float> _vertices, std::vector<unsigned int> _index);
-	~Cube();
+	CubeF();
+	CubeF(std::vector<float> _vertices, std::vector<unsigned int> _index);
+	~CubeF();
 
 private:
 
 
 };
 
-class Sphere : public Primitives {
+class SphereF : public PrimitivesF {
 
 public:
 
-	Sphere(float vertexs);
-	~Sphere();
+	SphereF();
+	SphereF(std::vector<float> _vertices, std::vector<unsigned int> _index);
+	SphereF(float radius, int stacks, int sectors, float scale);
+	~SphereF();
+
+	void SetAttributes(float radius, int stacks, int sectors, float scale);
+
+private:
+	
+	void CreateVectors(float radius, int stacks, int sectors, float scale);
+
+	float radius;
+	int sectors;
+	int stacks;
+	float scale;
+
+};
+
+class PyramidF : public PrimitivesF {
+
+public:
+
+	PyramidF(float* vertexs);
+	~PyramidF();
 
 private:
 
 
 };
 
-class Pyramid : public Primitives {
+class CylinderF : public PrimitivesF {
 
 public:
 
-	Pyramid(float* vertexs);
-	~Pyramid();
-
-private:
-
-
-};
-
-class Cylinder : public Primitives {
-
-public:
-
-	Cylinder(float* vertexs);
-	~Cylinder();
+	CylinderF(float* vertexs);
+	~CylinderF();
 
 private:
 

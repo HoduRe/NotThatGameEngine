@@ -33,9 +33,6 @@ public:
 
 	void CleanListenerMap();
 
-	bool Awake();
-	bool Start();
-
 	bool CleanUp();
 
 private:

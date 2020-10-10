@@ -13,6 +13,7 @@ Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter
 	reset = new ModuleReset(this);
 	imGui = new ModuleImGui(this);
 	eventManager = new ModuleEventManager(this);
+	primitives = new ModulePrimitives(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -26,13 +27,12 @@ Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter
 	AddModule(input);
 	AddModule(audio);
 	AddModule(physics);
-
-	// Scenes
 	AddModule(scene_intro);
 	AddModule(player);
 
 	// Renderer last!
 	AddModule(renderer3D);
+	AddModule(primitives);
 	AddModule(imGui);
 }
 

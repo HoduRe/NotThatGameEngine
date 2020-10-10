@@ -164,6 +164,7 @@
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModulePhysics3D.cpp" />
     <ClCompile Include="ModulePlayer.cpp" />
+    <ClCompile Include="ModulePrimitives.cpp" />
     <ClCompile Include="ModuleRenderer3D.cpp" />
     <ClCompile Include="ModuleReset.cpp" />
     <ClCompile Include="ModuleSceneIntro.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="ModuleInput.h" />
     <ClInclude Include="ModulePhysics3D.h" />
     <ClInclude Include="ModulePlayer.h" />
+    <ClInclude Include="ModulePrimitives.h" />
     <ClInclude Include="ModuleRenderer3D.h" />
     <ClInclude Include="ModuleReset.h" />
     <ClInclude Include="ModuleSceneIntro.h" />

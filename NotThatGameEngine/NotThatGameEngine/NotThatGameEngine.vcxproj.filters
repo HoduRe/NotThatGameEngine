@@ -96,6 +96,9 @@
     <ClCompile Include="Primitives.cpp">
       <Filter>Utility</Filter>
     </ClCompile>
+    <ClCompile Include="ModulePrimitives.cpp">
+      <Filter>Archivos de recursos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ModuleAudio.h">
@@ -178,6 +181,9 @@
     </ClInclude>
     <ClInclude Include="Primitives.h">
       <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="ModulePrimitives.h">
+      <Filter>Archivos de recursos</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -27,25 +27,6 @@ ModuleEventManager::~ModuleEventManager()
 {}
 
 
-// Called before render is available
-bool ModuleEventManager::Awake()
-{
-	bool ret = true;
-
-	return ret;
-}
-
-
-// Called before the first frame
-bool ModuleEventManager::Start()
-{
-	bool ret = true;
-
-
-	return ret;
-}
-
-
 //// Called before quitting
 bool ModuleEventManager::CleanUp()
 {
