@@ -88,32 +88,27 @@ bool ModuleRenderer3D::Init()
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	std::vector<float> vertices = { 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 2.0f, 2.0f, 0.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 2.0f, 0.0f,	// Front
-							0.0f, 0.0f, 2.0f, 2.0f, 2.0f, 2.0f, 0.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 0.0f, 0.0f, 2.0f, 2.0f, 0.0f, 2.0f, // Back
-							2.0f, 2.0f, 0.0f, 0.0f, 2.0f, 0.0f, 0.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 0.0f, 0.0f, 2.0f, 2.0f, // Up
-							2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 2.0f, 0.0f, 0.0f, 2.0f, 2.0f, 0.0f, 0.0f,  // Down
-							0.0f, 0.0f, 2.0f, 0.0f, 2.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 2.0f, 0.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.0f, // Right
-							2.0f, 0.0f, 2.0f, 2.0f, 0.0f, 0.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 0.0f, 0.0f, 2.0f, 2.0f, 0.0f // Left
+	std::vector<float> vertices = { 0.0f, 0.0f, 0.0f,   0.0f, 2.0f, 0.0f,   2.0f, 2.0f, 0.0f,   2.0f, 0.0f, 0.0f,   0.0f, 0.0f, 2.0f,   2.0f, 2.0f, 2.0f,   0.0f, 2.0f, 2.0f,   2.0f, 0.0f, 2.0f };
+
+
+	std::vector<int> index = { 0, 1, 2,   3, 0, 2,	// Front
+								4, 5, 6,   5, 4, 7,	// Back
+								2, 1, 6,   5, 2, 6, // Up
+								3, 4, 0,   7, 4, 3,	// Down
+								4, 6, 0,   6, 1, 0,	// Right
+								7, 3, 5,   5, 3, 2	// Left
 	};
 
-/*	std::vector<uint> index = { 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 2.0f, 2.0f, 0.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 2.0f, 0.0f,	// Front
-							0.0f, 0.0f, 2.0f, 2.0f, 2.0f, 2.0f, 0.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 0.0f, 0.0f, 2.0f, 2.0f, 0.0f, 2.0f, // Back
-							2.0f, 2.0f, 0.0f, 0.0f, 2.0f, 0.0f, 0.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 0.0f, 0.0f, 2.0f, 2.0f, // Up
-							2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 0.0f, 0.0f, 2.0f, 0.0f, 2.0f, 0.0f, 0.0f, 2.0f, 2.0f, 0.0f, 0.0f,  // Down
-							0.0f, 0.0f, 2.0f, 0.0f, 2.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.0f, 2.0f, 0.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.0f, // Right
-							2.0f, 0.0f, 2.0f, 2.0f, 0.0f, 0.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 0.0f, 0.0f, 2.0f, 2.0f, 0.0f // Left
-	};*/
+	cube.SetVertexVector(vertices);
 
-	cube.SetVertices(vertices);
-
-	glGenBuffers(1, (GLuint*)&cube.idBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, cube.idBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * cube.size, cube.GetVertices().data(), GL_STATIC_DRAW);
+	glGenBuffers(1, (GLuint*)&cube.idVertex);
+	glBindBuffer(GL_ARRAY_BUFFER, cube.idVertex);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * cube.sizeVertexVector, cube.GetVertexVector().data(), GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	glGenBuffers(1, (GLuint*)&cube.idIndexBuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cube.idIndexBuffer);
-//	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * cube.size, cube.GetVertices(), GL_STATIC_DRAW);
+	glGenBuffers(1, (GLuint*)&cube.idIndex);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cube.idIndex);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * cube.sizeIndexVector, cube.GetIndexVector().data(), GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	return ret;
@@ -153,12 +148,16 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	update_status ret = update_status::UPDATE_CONTINUE;
 
-	glBindBuffer(GL_ARRAY_BUFFER, cube.idBuffer);
 	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, cube.idVertex);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	glDrawArrays(GL_TRIANGLES, 0, cube.size);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cube.idIndex);
+
+	glDrawElements(GL_TRIANGLES, cube.sizeIndexVector, GL_INT, NULL);
+
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	return ret;
 }
