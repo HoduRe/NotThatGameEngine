@@ -2,19 +2,12 @@
 
 Primitives::Primitives(PrimitiveEnum _type, std::vector<float>* _vertices) : type(_type) {
 	size = _vertices->size();
+	vertices = new float[size];
 
-	float* arrayVertex = new float[size];
-	int i;
-	for (i = 0; i < size; i++) {
-		arrayVertex[i] = i+1;
+	for (int i = 0; i < size; i++) {
+		vertices = _vertices->data();
 	}
 
-	/*for (i = 0; i < size; i++) {
-		 
-		LOG("%d", arrayVertex[i]);
-	}*/
-
-	vertices = arrayVertex;
 }
 
 Primitives::~Primitives() {}
