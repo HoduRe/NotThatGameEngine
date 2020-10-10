@@ -1,37 +1,34 @@
 #include "Primitives.h"
 
-Primitives::Primitives(PrimitiveEnum _type) : type(_type), size(0), vertices(), id(0){}
+Primitives::Primitives(PrimitiveEnum _type) : type(_type), size(0), vertices(), idBuffer(0), idIndexBuffer(0) {}
 
 
-Primitives::Primitives(PrimitiveEnum _type, float _vertices[], int _size) : type(_type), id(0) {
+Primitives::Primitives(PrimitiveEnum _type, std::vector<float> _vertices) : type(_type), vertices(), idBuffer(0), idIndexBuffer(0) {
 
-	size = _size;
-	for (int i = 0; i < size; i++) {
-		vertices[i] = _vertices[i];
-	}
+	size = _vertices.size();
+	vertices = _vertices;
+
 }
 
 Primitives::~Primitives() {}
 
 
-int Primitives::SetVertices(float _vertices[], int _size) {
+int Primitives::SetVertices(std::vector<float> _vertices) {
 
-	size = _size;
-	for (int i = 0; i < size; i++) {
-		vertices[i] = _vertices[i];
-	}
+	size = _vertices.size();
+	vertices = _vertices;
 
 	return size;
 }
 
 
-float* Primitives::GetVertices() { return vertices; }
+std::vector<float> Primitives::GetVertices() { return vertices; }
 
 
 Cube::Cube() : Primitives(PrimitiveEnum::PRIMITIVE_CUBE){}
 
 
-Cube::Cube(float _vertices[], int _size) : Primitives (PrimitiveEnum::PRIMITIVE_CUBE, _vertices, _size){}
+Cube::Cube(std::vector<float> _vertices) : Primitives (PrimitiveEnum::PRIMITIVE_CUBE, _vertices){}
 
 
 Cube::~Cube(){}
