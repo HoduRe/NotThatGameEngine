@@ -198,8 +198,58 @@ void SphereF::CreateVertices(float _radius, int _stacks, int _sectors) {
 }
 
 // PYRAMID-------------------------------------------------------------------
+PyramidF::PyramidF() : PrimitivesF(PrimitiveEnum::PRIMITIVE_PYRAMID), height(0), baseEdgeLength(0){}
 
+
+PyramidF::PyramidF(std::vector<float> _vertices, std::vector<unsigned int> _index) : PrimitivesF(PrimitiveEnum::PRIMITIVE_PYRAMID, _vertices, _index),  height(0), baseEdgeLength(0){}
+
+
+PyramidF::PyramidF(float _height, float _baseEdgeLength) : PrimitivesF(PrimitiveEnum::PRIMITIVE_PYRAMID), height(0), baseEdgeLength(0) {
+	SetAttributes(_height, _baseEdgeLength);
+}
+
+
+PyramidF::~PyramidF() {}
+
+
+void PyramidF::SetAttributes(float _height, float _baseEdgeLength) {
+
+	vertices.push_back(0); vertices.push_back(0); vertices.push_back(0);
+	vertices.push_back(_baseEdgeLength); vertices.push_back(0); vertices.push_back(0);
+	vertices.push_back(_baseEdgeLength); vertices.push_back(0); vertices.push_back(_baseEdgeLength);
+	vertices.push_back(0); vertices.push_back(0); vertices.push_back(_baseEdgeLength);
+	vertices.push_back(_baseEdgeLength * 0.5); vertices.push_back(_height); vertices.push_back(_baseEdgeLength * 0.5);
+
+	
+	indices.push_back(0); indices.push_back(1);	indices.push_back(4);	// Front side
+	indices.push_back(1); indices.push_back(2);	indices.push_back(4);	// Right side
+	indices.push_back(2); indices.push_back(3);	indices.push_back(4);	// Back side
+	indices.push_back(3); indices.push_back(0);	indices.push_back(4);	// Left side
+	indices.push_back(0); indices.push_back(3);	indices.push_back(2);	indices.push_back(0); indices.push_back(2);	indices.push_back(1);	// Base
+
+
+	GLVertexBuffer();
+	GLIndexBuffer();
+}
 
 // CYLINDER-------------------------------------------------------------------
+CylinderF::CylinderF() : PrimitivesF(PrimitiveEnum::PRIMITIVE_CYLINDER), height(0), sectors(0) {}
 
+
+CylinderF::CylinderF(std::vector<float> _vertices, std::vector<unsigned int> _index) : PrimitivesF(PrimitiveEnum::PRIMITIVE_CYLINDER, _vertices, _index), height(0), sectors(0) {}
+
+
+CylinderF::CylinderF(float _height, float _baseEdgeLength) : PrimitivesF(PrimitiveEnum::PRIMITIVE_CYLINDER), height(0), sectors(0) {
+	SetAttributes(_height, _baseEdgeLength);
+}
+
+
+CylinderF::~CylinderF() {}
+
+
+void CylinderF::SetAttributes(float _height, int _sectors) {
+
+	GLVertexBuffer();
+	GLIndexBuffer();
+}
 

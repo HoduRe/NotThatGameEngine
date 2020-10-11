@@ -92,11 +92,17 @@ class PyramidF : public PrimitivesF {
 
 public:
 
-	PyramidF(float* vertexs);
+	PyramidF();
+	PyramidF(std::vector<float> _vertices, std::vector<unsigned int> _index);
+	PyramidF(float _height, float _baseEdgeLength);
 	~PyramidF();
+
+	void SetAttributes(float _height, float _baseEdgeLength);
 
 private:
 
+	float height;
+	float baseEdgeLength;
 
 };
 
@@ -104,11 +110,17 @@ class CylinderF : public PrimitivesF {
 
 public:
 
-	CylinderF(float* vertexs);
+	CylinderF();
+	CylinderF(std::vector<float> _vertices, std::vector<unsigned int> _index);
+	CylinderF(float _height, float _baseEdgeLength);
 	~CylinderF();
+
+	void SetAttributes(float _height, int _sectors);
 
 private:
 
+	float height;
+	int sectors;
 
 };
 

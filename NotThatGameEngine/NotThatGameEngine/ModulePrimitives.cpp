@@ -11,8 +11,9 @@ bool ModulePrimitives::Init() {
 
 	bool ret = true;
 
-	cube.SetAttributes(3);
+	//cube.SetAttributes(3.0f);
 	sphere.SetAttributes(2.0f, 3, 3);
+	//pyramid.SetAttributes(5.0f, 2.0f);
 
 	return ret;
 }
@@ -44,6 +45,7 @@ update_status ModulePrimitives::PostUpdate(float dt) {
 
 	cube.BlitPrimitive();
 	sphere.BlitPrimitive();
+	pyramid.BlitPrimitive();
 
 	return update_status::UPDATE_CONTINUE;
 }

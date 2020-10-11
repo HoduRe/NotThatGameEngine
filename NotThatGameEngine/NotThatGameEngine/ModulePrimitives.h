@@ -23,6 +23,7 @@ public:
 
 	CubeF cube;
 	SphereF sphere;
+	PyramidF pyramid;
 
 private:
 
