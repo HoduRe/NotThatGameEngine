@@ -22,21 +22,6 @@ bool ModulePrimitives::Init() {
 	cube.SetIndexVector(index);
 	sphere.SetAttributes(2.0f, 3, 3, 2.5f);
 
-	glGenBuffers(1, (GLuint*)&cube.idVertex);
-	glBindBuffer(GL_ARRAY_BUFFER, cube.idVertex);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * cube.sizeVertexVector, cube.GetVertexVector().data(), GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	glGenBuffers(1, (GLuint*)&cube.idIndex);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cube.idIndex);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * cube.sizeIndexVector, cube.GetIndexVector().data(), GL_STATIC_DRAW);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	glGenBuffers(1, (GLuint*)&sphere.idVertex);
-	glBindBuffer(GL_ARRAY_BUFFER, sphere.idVertex);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * sphere.sizeVertexVector, sphere.GetVertexVector().data(), GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
 	return ret;
 }
 
@@ -65,7 +50,7 @@ update_status ModulePrimitives::PostUpdate(float dt) {
 
 	CheckListener(this);
 
-	//cube.BlitPrimitive();
+	cube.BlitPrimitive();
 	sphere.BlitPrimitive();
 
 	return update_status::UPDATE_CONTINUE;

@@ -1,15 +1,19 @@
 #include "Primitives.h"
 
-PrimitivesF::PrimitivesF(PrimitiveEnum _type) : type(_type), sizeVertexVector(0), sizeIndexVector(0), idVertex(0), idIndex(0), vertices(), index() {}
+PrimitivesF::PrimitivesF(PrimitiveEnum _type) :
+	type(_type), sizeVertexVector(0), sizeIndexVector(0), sizeNormalVector(0), idVertex(0), idIndex(0), idNormal(0), vertices(), indices(), normals() {}
 
 
-PrimitivesF::PrimitivesF(PrimitiveEnum _type, std::vector<float> _vertices, std::vector<unsigned int> _indexBuffer) : type(_type), idVertex(0), idIndex(0), vertices(), index() {
+PrimitivesF::PrimitivesF(PrimitiveEnum _type, std::vector<float> _vertices, std::vector<unsigned int> _indexBuffer) :
+	type(_type), sizeNormalVector(0), idVertex(0), idIndex(0), idNormal(0), vertices(), indices(), normals() {
 
 	sizeVertexVector = _vertices.size();
 	sizeIndexVector = _indexBuffer.size();
 	vertices = _vertices;
-	index = _indexBuffer;
+	indices = _indexBuffer;
 
+	GLVertexBuffer();
+	GLIndexBuffer();
 }
 
 PrimitivesF::~PrimitivesF() {}
@@ -19,6 +23,8 @@ int PrimitivesF::SetVertexVector(std::vector<float> _vertices) {
 
 	sizeVertexVector = _vertices.size();
 	vertices = _vertices;
+
+	GLVertexBuffer();
 
 	return sizeVertexVector;
 }
@@ -30,13 +36,28 @@ std::vector<float> PrimitivesF::GetVertexVector() {	return vertices; }
 int PrimitivesF::SetIndexVector(std::vector<unsigned int> _indexBuffer) {
 
 	sizeIndexVector = _indexBuffer.size();
-	index = _indexBuffer;
+	indices = _indexBuffer;
+
+	GLIndexBuffer();
 
 	return sizeIndexVector;
 }
 
 
-std::vector<unsigned int> PrimitivesF::GetIndexVector() { return index; }
+std::vector<unsigned int> PrimitivesF::GetIndexVector() { return indices; }
+
+
+int PrimitivesF::SetNormalVector(std::vector<float> _normalBuffer) {
+	sizeNormalVector = _normalBuffer.size();
+	normals = _normalBuffer;
+
+	GLNormalBuffer();
+
+	return sizeNormalVector;
+}
+
+
+std::vector<float> PrimitivesF::GetNormalVector() { return normals; }
 
 
 bool PrimitivesF::BlitPrimitive() {
@@ -48,10 +69,18 @@ bool PrimitivesF::BlitPrimitive() {
 		glBindBuffer(GL_ARRAY_BUFFER, idVertex);
 		glVertexPointer(3, GL_FLOAT, 0, NULL);
 
+		if(sizeNormalVector != 0){
+			glEnableClientState(GL_NORMAL_ARRAY);
+			glBindBuffer(GL_NORMAL_ARRAY, idNormal);
+			glNormalPointer(GL_FLOAT, 0, NULL);
+		}
+
 		glDrawArrays(GL_TRIANGLES, 0, sizeVertexVector);
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_NORMAL_ARRAY, 0);
 		glDisableClientState(GL_VERTEX_ARRAY);
+		glDisableClientState(GL_NORMAL_ARRAY);
 	}
 	else {
 		glEnableClientState(GL_VERTEX_ARRAY);
@@ -59,14 +88,45 @@ bool PrimitivesF::BlitPrimitive() {
 		glVertexPointer(3, GL_FLOAT, 0, NULL);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idIndex);
 
+		if (sizeNormalVector != 0) {
+			glEnableClientState(GL_NORMAL_ARRAY); 
+			glBindBuffer(GL_NORMAL_ARRAY, idNormal);
+			glNormalPointer(GL_FLOAT, 0, NULL);
+		}
+
 		glDrawElements(GL_TRIANGLES, sizeIndexVector, GL_UNSIGNED_INT, NULL);
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		glDisableClientState(GL_VERTEX_ARRAY);
+		glDisableClientState(GL_NORMAL_ARRAY);
 	}
 
 	return ret;
+}
+
+
+void PrimitivesF::GLVertexBuffer() {
+	glGenBuffers(1, (GLuint*)&idVertex);
+	glBindBuffer(GL_ARRAY_BUFFER, idVertex);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * sizeVertexVector, GetVertexVector().data(), GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+
+void PrimitivesF::GLIndexBuffer() {
+	glGenBuffers(1, (GLuint*)&idIndex);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idIndex);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * sizeIndexVector, GetIndexVector().data(), GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+
+void PrimitivesF::GLNormalBuffer() {
+	glGenBuffers(1, (GLuint*)&idNormal);
+	glBindBuffer(GL_NORMAL_ARRAY, idNormal);
+	glBufferData(GL_NORMAL_ARRAY, sizeof(float) * sizeNormalVector, normals.data(), GL_STATIC_DRAW);
+	glBindBuffer(GL_NORMAL_ARRAY, 0);
 }
 
 
@@ -89,12 +149,8 @@ SphereF::SphereF() : PrimitivesF(PrimitiveEnum::PRIMITIVE_SPHERE), radius(0), st
 SphereF::SphereF(std::vector<float> _vertices, std::vector<unsigned int> _index) : PrimitivesF(PrimitiveEnum::PRIMITIVE_SPHERE, _vertices, _index), radius(0), stacks(0), sectors(0), scale(0.0f) {}
 
 
-SphereF::SphereF(float _radius, int _stacks, int _sectors, float _scale) : PrimitivesF(PrimitiveEnum::PRIMITIVE_SPHERE) {
-	radius = _radius;
-	stacks = _stacks;
-	sectors = _sectors;
-	scale = _scale;
-	CreateVectors(radius, stacks, sectors, scale);
+SphereF::SphereF(float _radius, int _stacks, int _sectors, float _scale) : PrimitivesF(PrimitiveEnum::PRIMITIVE_SPHERE), radius(_radius), stacks(_stacks), sectors(_sectors), scale(_scale) {
+	CreateVertices(_radius, _stacks, _sectors, _scale);
 }
 
 
@@ -106,11 +162,11 @@ void SphereF::SetAttributes(float _radius, int _stacks, int _sectors, float _sca
 	stacks = _stacks;
 	sectors = _sectors;
 	scale = _scale;
-	if (vertices.size() == 0 && index.size() == 0) { CreateVectors(radius, stacks, sectors, scale); }
+	if (vertices.size() == 0 && indices.size() == 0) { CreateVertices(radius, stacks, sectors, scale); }
 }
 
 
-void SphereF::CreateVectors(float _radius, int _stacks, int _sectors, float _scale) {
+void SphereF::CreateVertices(float _radius, int _stacks, int _sectors, float _scale) {
 
 	std::vector<int> points;
 
@@ -141,13 +197,16 @@ void SphereF::CreateVectors(float _radius, int _stacks, int _sectors, float _sca
 			points.push_back(y);
 			points.push_back(z);
 
+			// normalized vertex normal (nx, ny, nz)
+			nx = x * lengthInv;
+			ny = y * lengthInv;
+			nz = z * lengthInv;
+			normals.push_back(nx);
+			normals.push_back(ny);
+			normals.push_back(nz);
 		}
 	}
 
-	int size;/* = points.size();
-	for (int i = 0; i < size; i++) {
-		points[i] = points[i] * scale;
-	}*/
 
 	float k1, k2;
 	for (int i = 0; i < _stacks; ++i)
@@ -176,8 +235,13 @@ void SphereF::CreateVectors(float _radius, int _stacks, int _sectors, float _sca
 		}
 	}
 
-	size = vertices.size();
+	int size = vertices.size();
 	sizeVertexVector = size;
+
+	sizeNormalVector = normals.size();
+
+	GLVertexBuffer();
+	GLNormalBuffer();
 }
 
 // PYRAMID-------------------------------------------------------------------

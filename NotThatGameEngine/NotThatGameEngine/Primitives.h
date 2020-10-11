@@ -24,20 +24,30 @@ public:
 	int SetVertexVector(std::vector<float> _vertices);	// Returns size
 	std::vector<float> GetVertexVector();	// Returns vertex vector
 
-	int SetIndexVector(std::vector<unsigned int> _vertices);	// Returns size
-	std::vector<unsigned int> GetIndexVector();	// Returns vertex vector
+	int SetIndexVector(std::vector<unsigned int> _indexBuffer);	// Returns size
+	std::vector<unsigned int> GetIndexVector();	// Returns index vector
+
+	int SetNormalVector(std::vector<float> _normalBuffer);	// Returns size
+	std::vector<float> GetNormalVector();	// Returns normal vector
 
 	bool BlitPrimitive();
+
+	void GLVertexBuffer();
+	void GLIndexBuffer();
+	void GLNormalBuffer();
 
 	PrimitiveEnum type;
 	int sizeVertexVector;
 	int sizeIndexVector;
+	int sizeNormalVector;
 	int idVertex;
 	int idIndex;
+	int idNormal;
 	
 protected:
 	std::vector<float> vertices;
-	std::vector<unsigned int> index;
+	std::vector<unsigned int> indices;
+	std::vector<float> normals;
 
 };
 
@@ -67,7 +77,7 @@ public:
 
 private:
 	
-	void CreateVectors(float radius, int stacks, int sectors, float scale);
+	void CreateVertices(float radius, int stacks, int sectors, float scale);
 
 	float radius;
 	int sectors;
