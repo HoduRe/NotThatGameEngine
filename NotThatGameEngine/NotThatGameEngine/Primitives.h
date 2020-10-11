@@ -21,13 +21,13 @@ public:
 	PrimitivesF(PrimitiveEnum _type, std::vector<float> _vertices, std::vector<unsigned int> _index);
 	~PrimitivesF();
 
-	int SetVertexVector(std::vector<float> _vertices);	// Returns size
+	void SetVertexVector(std::vector<float> _vertices);	// Returns size
 	std::vector<float> GetVertexVector();	// Returns vertex vector
 
-	int SetIndexVector(std::vector<unsigned int> _indexBuffer);	// Returns size
+	void SetIndexVector(std::vector<unsigned int> _indexBuffer);	// Returns size
 	std::vector<unsigned int> GetIndexVector();	// Returns index vector
 
-	int SetNormalVector(std::vector<float> _normalBuffer);	// Returns size
+	void SetNormalVector(std::vector<float> _normalBuffer);	// Returns size
 	std::vector<float> GetNormalVector();	// Returns normal vector
 
 	bool BlitPrimitive();
@@ -57,11 +57,14 @@ public:
 
 	CubeF();
 	CubeF(std::vector<float> _vertices, std::vector<unsigned int> _index);
+	CubeF(float edgeLength, float scale);
 	~CubeF();
+
+	void SetAttributes(float _edgeLength);
 
 private:
 
-
+	float edgeLength;
 };
 
 class SphereF : public PrimitivesF {
@@ -70,19 +73,18 @@ public:
 
 	SphereF();
 	SphereF(std::vector<float> _vertices, std::vector<unsigned int> _index);
-	SphereF(float radius, int stacks, int sectors, float scale);
+	SphereF(float radius, int stacks, int sectors);
 	~SphereF();
 
-	void SetAttributes(float radius, int stacks, int sectors, float scale);
+	void SetAttributes(float radius, int stacks, int sectors);
 
 private:
 	
-	void CreateVertices(float radius, int stacks, int sectors, float scale);
+	void CreateVertices(float radius, int stacks, int sectors);
 
 	float radius;
 	int sectors;
 	int stacks;
-	float scale;
 
 };
 
