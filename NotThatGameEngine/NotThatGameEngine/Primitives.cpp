@@ -153,10 +153,10 @@ void CubeF::SetAttributes(float _edgeLength) {
 
 	indices.push_back(0); indices.push_back(2);	indices.push_back(1);	indices.push_back(0); indices.push_back(3);	indices.push_back(2);	// Up
 	indices.push_back(5); indices.push_back(7);	indices.push_back(4);	indices.push_back(5); indices.push_back(6);	indices.push_back(7);	// Down
-	indices.push_back(6); indices.push_back(3);	indices.push_back(0);	indices.push_back(6); indices.push_back(5);	indices.push_back(3);	// Front
-	indices.push_back(4); indices.push_back(1);	indices.push_back(2);	indices.push_back(4); indices.push_back(7);	indices.push_back(1);	// Back
-	indices.push_back(4); indices.push_back(2);	indices.push_back(3);	indices.push_back(4); indices.push_back(3);	indices.push_back(5);	// Right
-	indices.push_back(7); indices.push_back(6);	indices.push_back(0);	indices.push_back(7); indices.push_back(0);	indices.push_back(1);	// Left
+	indices.push_back(7); indices.push_back(3);	indices.push_back(0);	indices.push_back(7); indices.push_back(0);	indices.push_back(4);	// Front
+	indices.push_back(6); indices.push_back(1);	indices.push_back(2);	indices.push_back(6); indices.push_back(5);	indices.push_back(1);	// Back
+	indices.push_back(6); indices.push_back(2);	indices.push_back(3);	indices.push_back(6); indices.push_back(3);	indices.push_back(7);	// Right
+	indices.push_back(4); indices.push_back(0);	indices.push_back(1);	indices.push_back(4); indices.push_back(1);	indices.push_back(5);	// Left
 
 
 	GLVertexBuffer();
