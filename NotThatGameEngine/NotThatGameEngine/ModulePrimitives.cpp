@@ -1,7 +1,7 @@
 #include "Application.h"
 #include "ModulePrimitives.h"
 
-ModulePrimitives::ModulePrimitives(Application* app, bool start_enabled) : Module(app, start_enabled), cube(), sphere() {}
+ModulePrimitives::ModulePrimitives(Application* app, bool start_enabled) : Module(app, start_enabled) {}
 
 
 ModulePrimitives::~ModulePrimitives() {}
@@ -11,9 +11,15 @@ bool ModulePrimitives::Init() {
 
 	bool ret = true;
 
-	//cube.SetAttributes(3.0f);
-	sphere.SetAttributes(2.0f, 3, 3);
-	//pyramid.SetAttributes(5.0f, 2.0f);
+	CubeF cube(3.0f);
+	SphereF sphere(2.0f, 3, 3);
+	PyramidF pyramid(5.0f, 2.0f);
+	CylinderF cylinder(8.0f, 3.0f, 30);
+
+	primitives.push_back(cube);
+	primitives.push_back(sphere);
+	primitives.push_back(pyramid);
+	primitives.push_back(cylinder);
 
 	return ret;
 }
@@ -43,9 +49,9 @@ update_status ModulePrimitives::PostUpdate(float dt) {
 
 	CheckListener(this);
 
-	cube.BlitPrimitive();
-	sphere.BlitPrimitive();
-	pyramid.BlitPrimitive();
+	for (int i = 0; i < primitives.size(); i++) {
+		primitives[i].BlitPrimitive();
+	}
 
 	return update_status::UPDATE_CONTINUE;
 }

@@ -57,7 +57,7 @@ public:
 
 	CubeF();
 	CubeF(std::vector<float> _vertices, std::vector<unsigned int> _index);
-	CubeF(float edgeLength, float scale);
+	CubeF(float edgeLength);
 	~CubeF();
 
 	void SetAttributes(float _edgeLength);
@@ -112,14 +112,15 @@ public:
 
 	CylinderF();
 	CylinderF(std::vector<float> _vertices, std::vector<unsigned int> _index);
-	CylinderF(float _height, float _baseEdgeLength);
+	CylinderF(float _height, float _radius, float _baseEdgeLength);
 	~CylinderF();
 
-	void SetAttributes(float _height, int _sectors);
+	void SetAttributes(float _height, float _radius, int _sectors);
 
 private:
 
 	float height;
+	float radius;
 	int sectors;
 
 };

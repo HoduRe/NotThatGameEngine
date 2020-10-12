@@ -21,13 +21,12 @@ public:
 
 public:
 
-	CubeF cube;
-	SphereF sphere;
-	PyramidF pyramid;
-
 private:
 
 	void ExecuteEvent(EVENT_ENUM eventId);
+
+private:
+	std::vector<PrimitivesF> primitives;
 
 };
 
