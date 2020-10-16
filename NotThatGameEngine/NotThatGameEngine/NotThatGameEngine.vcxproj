@@ -160,6 +160,7 @@
     <ClCompile Include="ModuleAudio.cpp" />
     <ClCompile Include="ModuleCamera3D.cpp" />
     <ClCompile Include="ModuleEventManager.cpp" />
+    <ClCompile Include="ModuleFileLoad.cpp" />
     <ClCompile Include="ModuleImGui.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModulePhysics3D.cpp" />
@@ -186,10 +187,12 @@
     <ClInclude Include="imstb_textedit.h" />
     <ClInclude Include="imstb_truetype.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="MemLeaks.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="ModuleAudio.h" />
     <ClInclude Include="ModuleCamera3D.h" />
     <ClInclude Include="ModuleEventManager.h" />
+    <ClInclude Include="ModuleFileLoad.h" />
     <ClInclude Include="ModuleImGui.h" />
     <ClInclude Include="ModuleInput.h" />
     <ClInclude Include="ModulePhysics3D.h" />
@@ -199,6 +202,7 @@
     <ClInclude Include="ModuleReset.h" />
     <ClInclude Include="ModuleSceneIntro.h" />
     <ClInclude Include="ModuleWindow.h" />
+    <ClInclude Include="PathNode.h" />
     <ClInclude Include="Primitives.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>

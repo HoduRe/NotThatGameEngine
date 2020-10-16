@@ -27,27 +27,20 @@ public:
 	void SetIndexVector(std::vector<unsigned int> _indexBuffer);	// Returns size
 	std::vector<unsigned int> GetIndexVector();	// Returns index vector
 
-	void SetNormalVector(std::vector<float> _normalBuffer);	// Returns size
-	std::vector<float> GetNormalVector();	// Returns normal vector
-
 	bool BlitPrimitive();
 
 	void GLVertexBuffer();
 	void GLIndexBuffer();
-	void GLNormalBuffer();
 
 	PrimitiveEnum type;
 	int sizeVertexVector;
 	int sizeIndexVector;
-	int sizeNormalVector;
 	int idVertex;
 	int idIndex;
-	int idNormal;
 	
 protected:
 	std::vector<float> vertices;
 	std::vector<unsigned int> indices;
-	std::vector<float> normals;
 
 };
 

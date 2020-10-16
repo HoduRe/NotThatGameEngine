@@ -1,11 +1,11 @@
 #include "Primitives.h"
 
 PrimitivesF::PrimitivesF(PrimitiveEnum _type) :
-	type(_type), sizeVertexVector(0), sizeIndexVector(0), sizeNormalVector(0), idVertex(0), idIndex(0), idNormal(0), vertices(), indices(), normals() {}
+	type(_type), sizeVertexVector(0), sizeIndexVector(0), idVertex(0), idIndex(0), vertices(), indices() {}
 
 
 PrimitivesF::PrimitivesF(PrimitiveEnum _type, std::vector<float> _vertices, std::vector<unsigned int> _indexBuffer) :
-	type(_type), sizeNormalVector(0), idVertex(0), idIndex(0), idNormal(0), vertices(), indices(), normals() {
+	type(_type), idVertex(0), idIndex(0), vertices(), indices() {
 
 	vertices = _vertices;
 	indices = _indexBuffer;
@@ -37,16 +37,6 @@ void PrimitivesF::SetIndexVector(std::vector<unsigned int> _indexBuffer) {
 std::vector<unsigned int> PrimitivesF::GetIndexVector() { return indices; }
 
 
-void PrimitivesF::SetNormalVector(std::vector<float> _normalBuffer) {
-
-	normals = _normalBuffer;
-	GLNormalBuffer();
-}
-
-
-std::vector<float> PrimitivesF::GetNormalVector() { return normals; }
-
-
 bool PrimitivesF::BlitPrimitive() {
 	bool ret = true;
 
@@ -55,12 +45,6 @@ bool PrimitivesF::BlitPrimitive() {
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, idVertex);
 		glVertexPointer(3, GL_FLOAT, 0, NULL);
-
-		if (sizeNormalVector != 0) {
-			glEnableClientState(GL_NORMAL_ARRAY);
-			glBindBuffer(GL_NORMAL_ARRAY, idNormal);
-			glNormalPointer(GL_FLOAT, 0, NULL);
-		}
 
 		glDrawArrays(GL_TRIANGLES, 0, sizeVertexVector);
 
@@ -74,12 +58,6 @@ bool PrimitivesF::BlitPrimitive() {
 		glBindBuffer(GL_ARRAY_BUFFER, idVertex);
 		glVertexPointer(3, GL_FLOAT, 0, NULL);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idIndex);
-
-		if (sizeNormalVector != 0) {
-			glEnableClientState(GL_NORMAL_ARRAY);
-			glBindBuffer(GL_NORMAL_ARRAY, idNormal);
-			glNormalPointer(GL_FLOAT, 0, NULL);
-		}
 
 		glDrawElements(GL_TRIANGLES, sizeIndexVector, GL_UNSIGNED_INT, NULL);
 
@@ -112,17 +90,6 @@ void PrimitivesF::GLIndexBuffer() {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idIndex);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * sizeIndexVector, indices.data(), GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-}
-
-
-void PrimitivesF::GLNormalBuffer() {
-
-	sizeNormalVector = normals.size();
-
-	glGenBuffers(1, (GLuint*)&idNormal);
-	glBindBuffer(GL_NORMAL_ARRAY, idNormal);
-	glBufferData(GL_NORMAL_ARRAY, sizeof(float) * sizeNormalVector, normals.data(), GL_STATIC_DRAW);
-	glBindBuffer(GL_NORMAL_ARRAY, 0);
 }
 
 
@@ -202,7 +169,6 @@ void SphereF::CreateVertices(float _radius, int _stacks, int _sectors) {
 
 
 	GLVertexBuffer();
-	GLNormalBuffer();
 }
 
 // PYRAMID-------------------------------------------------------------------
@@ -267,7 +233,7 @@ void CylinderF::SetAttributes(float _height, float _radius, int _sectors) {
 	if (sectors < 3) { sectors = 3; }
 
 	// Create the inferior platform, including the central point (0.0f, 0.0f, 0.0f)
-	float angleDiversion = 2 * 3.14159265359 / sectors;
+	float angleDiversion = 2 * PI / sectors;
 	float vertex2;
 	float vertex3;
 	float secondVertex2;
@@ -309,7 +275,7 @@ void CylinderF::SetAttributes(float _height, float _radius, int _sectors) {
 		vertices.push_back(0.0f); vertices.push_back(height); vertices.push_back(0.0f);
 		vertices.push_back(secondVertex2); vertices.push_back(height); vertices.push_back(secondVertex3);
 		vertices.push_back(vertex2); vertices.push_back(height); vertices.push_back(vertex3);
-		
+
 		vertex2 = secondVertex2;
 		vertex3 = secondVertex3;
 
@@ -320,7 +286,7 @@ void CylinderF::SetAttributes(float _height, float _radius, int _sectors) {
 	float firstPointX;
 	float firstPointY;
 	float firstPointZ;
-	
+
 	float secondPointX;
 	float secondPointY;
 	float secondPointZ;

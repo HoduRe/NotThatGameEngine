@@ -27,6 +27,11 @@ bool ModulePrimitives::Init() {
 
 bool ModulePrimitives::CleanUp() {
 
+	for (int i = 0; i < primitives.size(); i++) {
+		glDeleteBuffers(1, (GLuint*)&primitives[i].idVertex);
+		glDeleteBuffers(1, (GLuint*)&primitives[i].idIndex);
+	}
+
 	return true;
 }
 

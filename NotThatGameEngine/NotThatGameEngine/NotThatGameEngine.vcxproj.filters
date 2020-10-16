@@ -99,6 +99,9 @@
     <ClCompile Include="ModulePrimitives.cpp">
       <Filter>Archivos de recursos</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleFileLoad.cpp">
+      <Filter>Archivos de recursos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ModuleAudio.h">
@@ -184,6 +187,15 @@
     </ClInclude>
     <ClInclude Include="ModulePrimitives.h">
       <Filter>Archivos de recursos</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleFileLoad.h">
+      <Filter>Archivos de recursos</Filter>
+    </ClInclude>
+    <ClInclude Include="MemLeaks.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="PathNode.h">
+      <Filter>Utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

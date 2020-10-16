@@ -11,10 +11,32 @@
 
 #define DEGTORAD 0.0174532925199432957f
 #define RADTODEG 57.295779513082320876f
-#define HAVE_M_PI
+#define PI 3.14159265359
 
+#define LIBRARY_PATH "Library/"
+#define FOLDERS_PATH "Library/Folders/"
+#define MESHES_PATH "Library/Meshes/"
+#define MATERIALS_PATH "Library/Materials/"
+#define TEXTURES_PATH "Library/Textures/"
+#define MODELS_PATH "Library/Models/"
+#define ANIMATIONS_PATH "Library/Animations/"
+#define BONES_PATH "Library/Bones/"
+#define PARTICLES_PATH "Library/ParticleSystems/"
+#define SHADERS_PATH "Library/Shaders/"
+#define SCENES_PATH "Library/Scenes/"
+
+// Deletes an array of buffers
+#define RELEASE_ARRAY( x )\
+	{\
+       if( x != nullptr )\
+       {\
+           delete[] x;\
+	       x = nullptr;\
+		 }\
+	 }
 
 typedef unsigned int uint;
+typedef unsigned __int64 uint64;
 
 enum class update_status
 {
