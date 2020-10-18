@@ -77,7 +77,7 @@ void PrimitivesF::GLVertexBuffer() {
 
 	glGenBuffers(1, (GLuint*)&idVertex);
 	glBindBuffer(GL_ARRAY_BUFFER, idVertex);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * sizeVertexVector, vertices.data(), GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
@@ -187,7 +187,6 @@ void SphereF::CreateVertices(float _radius, int _stacks, int _sectors) {
 		{
 			sectorAngle = j * sectorStep;
 
-			// vertex position (x, y, z)
 			Vertex vertex;
 			vertex.x = xy * cosf(sectorAngle);
 			vertex.y = xy * sinf(sectorAngle);
@@ -222,19 +221,18 @@ void SphereF::CreateVertices(float _radius, int _stacks, int _sectors) {
 		}
 	}
 
-	Vertex v1, v2, v3, v4;                          // 4 vertex positions and tex coords
-	std::vector<float> n;                           // 1 face normal
+	Vertex v1, v2, v3, v4;
+	std::vector<float> n;
 
 	int i, j, k, vi1, vi2;
-	int index = 0;                                  // index for vertex
+	int index = 0;
 	for (i = 0; i < _stacks; ++i)
 	{
-		vi1 = i * (_sectors + 1);                // index of tmpVertices
+		vi1 = i * (_sectors + 1);
 		vi2 = (i + 1) * (_sectors + 1);
 
 		for (j = 0; j < _sectors; ++j, ++vi1, ++vi2)
 		{
-			// get 4 vertices per sector
 			//  v1--v3
 			//  |    |
 			//  v2--v4
@@ -243,67 +241,37 @@ void SphereF::CreateVertices(float _radius, int _stacks, int _sectors) {
 			v3 = tmpVertices[vi1 + 1];
 			v4 = tmpVertices[vi2 + 1];
 
-			// if 1st stack and last stack, store only 1 triangle per sector
-			// otherwise, store 2 triangles (quad) per sector
 			if (i == 0) // a triangle for first stack ==========================
 			{
-				// put a triangle
-				vertices.push_back(v1.x);
-				vertices.push_back(v1.y);
-				vertices.push_back(v1.z);
-				vertices.push_back(v2.x);
-				vertices.push_back(v2.y);
-				vertices.push_back(v2.z);
-				vertices.push_back(v4.x);
-				vertices.push_back(v4.y);
-				vertices.push_back(v4.z);
+				tmpVertices.push_back(v1);
+				tmpVertices.push_back(v2);
+				tmpVertices.push_back(v4);
 
-				// put indices of 1 triangle
 				indices.push_back(index);
 				indices.push_back(index + 1);
 				indices.push_back(index + 2);
 
-				index += 3;     // for next
+				index += 3;
 			}
 			else if (i == (_stacks - 1)) // a triangle for last stack =========
 			{
-				// put a triangle
-				vertices.push_back(v1.x);
-				vertices.push_back(v1.y);
-				vertices.push_back(v1.z);
-				vertices.push_back(v2.x);
-				vertices.push_back(v2.y);
-				vertices.push_back(v2.z);
-				vertices.push_back(v3.x);
-				vertices.push_back(v3.y);
-				vertices.push_back(v3.z);
+				tmpVertices.push_back(v1);
+				tmpVertices.push_back(v2);
+				tmpVertices.push_back(v3);
 
-
-				// put indices of 1 triangle
 				indices.push_back(index);
 				indices.push_back(index + 1);
 				indices.push_back(index + 2);
 
-				index += 3;     // for next
+				index += 3;
 			}
 			else // 2 triangles for others ====================================
 			{
-				// put quad vertices: v1-v2-v3-v4
-				vertices.push_back(v1.x);
-				vertices.push_back(v1.y);
-				vertices.push_back(v1.z);
-				vertices.push_back(v2.x);
-				vertices.push_back(v2.y);
-				vertices.push_back(v2.z);
-				vertices.push_back(v3.x);
-				vertices.push_back(v3.y);
-				vertices.push_back(v3.z);
-				vertices.push_back(v4.x);
-				vertices.push_back(v4.y);
-				vertices.push_back(v4.z);
+				tmpVertices.push_back(v1);
+				tmpVertices.push_back(v2);
+				tmpVertices.push_back(v3);
+				tmpVertices.push_back(v4);
 
-
-				// put indices of quad (2 triangles)
 				indices.push_back(index);
 				indices.push_back(index + 1);
 				indices.push_back(index + 2);
@@ -311,12 +279,19 @@ void SphereF::CreateVertices(float _radius, int _stacks, int _sectors) {
 				indices.push_back(index + 1);
 				indices.push_back(index + 3);
 
-				index += 4;     // for next
+				index += 4;
 			}
 		}
 	}
 
+	for (int i = 0; i < tmpVertices.size(); i++) {
+		vertices.push_back(tmpVertices[i].x);
+		vertices.push_back(tmpVertices[i].y);
+		vertices.push_back(tmpVertices[i].z);
+	}
+
 	GLVertexBuffer();
+	GLIndexBuffer();
 }
 
 // PYRAMID-------------------------------------------------------------------
