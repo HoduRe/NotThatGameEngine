@@ -11,15 +11,10 @@ bool ModulePrimitives::Init() {
 
 	bool ret = true;
 
-	CubeF cube(3.0f);
-	SphereF sphere(2.0f, 3, 3);
-	PyramidF pyramid(5.0f, 2.0f);
-	CylinderF cylinder(8.0f, 3.0f, 30);
-
-	primitives.push_back(cube);
-	primitives.push_back(sphere);
-	primitives.push_back(pyramid);
-	primitives.push_back(cylinder);
+	//primitives.push_back(CubeF(3.0f));
+	primitives.push_back(SphereF(2.0f, 36, 18));
+	//primitives.push_back(PyramidF(5.0f, 2.0f));
+	//primitives.push_back(CylinderF(8.0f, 3.0f, 30));
 
 	return ret;
 }

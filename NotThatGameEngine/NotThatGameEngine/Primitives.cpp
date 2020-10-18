@@ -77,7 +77,7 @@ void PrimitivesF::GLVertexBuffer() {
 
 	glGenBuffers(1, (GLuint*)&idVertex);
 	glBindBuffer(GL_ARRAY_BUFFER, idVertex);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * sizeVertexVector, vertices.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
@@ -166,7 +166,155 @@ void SphereF::SetAttributes(float _radius, int _stacks, int _sectors) {
 
 void SphereF::CreateVertices(float _radius, int _stacks, int _sectors) {
 
+	struct Vertex
+	{
+		float x, y, z;
+	};
+	std::vector<Vertex> tmpVertices;
 
+	float x, y, z, xy;
+	float sectorStep = 2 * PI / _sectors;
+	float stackStep = PI / _stacks;
+	float sectorAngle, stackAngle;
+
+	for (int i = 0; i <= _stacks; ++i)
+	{
+		stackAngle = (PI / 2) - (i * stackStep);
+		xy = radius * cosf(stackAngle);
+		z = radius * sinf(stackAngle);
+
+		for (int j = 0; j <= _sectors; ++j)
+		{
+			sectorAngle = j * sectorStep;
+
+			// vertex position (x, y, z)
+			Vertex vertex;
+			vertex.x = xy * cosf(sectorAngle);
+			vertex.y = xy * sinf(sectorAngle);
+			vertex.z = z;
+			tmpVertices.push_back(vertex);
+
+		}
+
+		unsigned int k1, k2;
+		for (int i = 0; i < _stacks; ++i)
+		{
+			k1 = i * (_sectors + 1);
+			k2 = k1 + _sectors + 1;
+
+			for (int j = 0; j < _sectors; ++j, ++k1, ++k2)
+			{
+
+				if (i != 0)
+				{
+					indices.push_back(k1);
+					indices.push_back(k2);
+					indices.push_back(k1 + 1);
+				}
+
+				if (i != (_stacks - 1))
+				{
+					indices.push_back(k1 + 1);
+					indices.push_back(k2);
+					indices.push_back(k2 + 1);
+				}
+			}
+		}
+	}
+
+	Vertex v1, v2, v3, v4;                          // 4 vertex positions and tex coords
+	std::vector<float> n;                           // 1 face normal
+
+	int i, j, k, vi1, vi2;
+	int index = 0;                                  // index for vertex
+	for (i = 0; i < _stacks; ++i)
+	{
+		vi1 = i * (_sectors + 1);                // index of tmpVertices
+		vi2 = (i + 1) * (_sectors + 1);
+
+		for (j = 0; j < _sectors; ++j, ++vi1, ++vi2)
+		{
+			// get 4 vertices per sector
+			//  v1--v3
+			//  |    |
+			//  v2--v4
+			v1 = tmpVertices[vi1];
+			v2 = tmpVertices[vi2];
+			v3 = tmpVertices[vi1 + 1];
+			v4 = tmpVertices[vi2 + 1];
+
+			// if 1st stack and last stack, store only 1 triangle per sector
+			// otherwise, store 2 triangles (quad) per sector
+			if (i == 0) // a triangle for first stack ==========================
+			{
+				// put a triangle
+				vertices.push_back(v1.x);
+				vertices.push_back(v1.y);
+				vertices.push_back(v1.z);
+				vertices.push_back(v2.x);
+				vertices.push_back(v2.y);
+				vertices.push_back(v2.z);
+				vertices.push_back(v4.x);
+				vertices.push_back(v4.y);
+				vertices.push_back(v4.z);
+
+				// put indices of 1 triangle
+				indices.push_back(index);
+				indices.push_back(index + 1);
+				indices.push_back(index + 2);
+
+				index += 3;     // for next
+			}
+			else if (i == (_stacks - 1)) // a triangle for last stack =========
+			{
+				// put a triangle
+				vertices.push_back(v1.x);
+				vertices.push_back(v1.y);
+				vertices.push_back(v1.z);
+				vertices.push_back(v2.x);
+				vertices.push_back(v2.y);
+				vertices.push_back(v2.z);
+				vertices.push_back(v3.x);
+				vertices.push_back(v3.y);
+				vertices.push_back(v3.z);
+
+
+				// put indices of 1 triangle
+				indices.push_back(index);
+				indices.push_back(index + 1);
+				indices.push_back(index + 2);
+
+				index += 3;     // for next
+			}
+			else // 2 triangles for others ====================================
+			{
+				// put quad vertices: v1-v2-v3-v4
+				vertices.push_back(v1.x);
+				vertices.push_back(v1.y);
+				vertices.push_back(v1.z);
+				vertices.push_back(v2.x);
+				vertices.push_back(v2.y);
+				vertices.push_back(v2.z);
+				vertices.push_back(v3.x);
+				vertices.push_back(v3.y);
+				vertices.push_back(v3.z);
+				vertices.push_back(v4.x);
+				vertices.push_back(v4.y);
+				vertices.push_back(v4.z);
+
+
+				// put indices of quad (2 triangles)
+				indices.push_back(index);
+				indices.push_back(index + 1);
+				indices.push_back(index + 2);
+				indices.push_back(index + 2);
+				indices.push_back(index + 1);
+				indices.push_back(index + 3);
+
+				index += 4;     // for next
+			}
+		}
+	}
 
 	GLVertexBuffer();
 }

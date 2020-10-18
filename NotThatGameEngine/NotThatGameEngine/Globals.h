@@ -11,7 +11,7 @@
 
 #define DEGTORAD 0.0174532925199432957f
 #define RADTODEG 57.295779513082320876f
-#define PI 3.14159265359
+#define PI acos(-1)
 
 #define LIBRARY_PATH "Library/"
 #define FOLDERS_PATH "Library/Folders/"
