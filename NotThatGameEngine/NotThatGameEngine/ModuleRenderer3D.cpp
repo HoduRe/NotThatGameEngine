@@ -1,7 +1,7 @@
 #include "Application.h"
 #include "ModuleRenderer3D.h"
 
-ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled), context(nullptr)
+ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled), context(nullptr), frameBufferId(0), sceneTextureId(0)
 {}
 
 // Destructor
@@ -94,16 +94,13 @@ bool ModuleRenderer3D::Init()
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	glLoadIdentity();
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->camera->GetViewMatrix());
 
-	// Clear z-buffer
 	glClearDepth(1.0f);
-
-	// Clear screen color
 	glClearColor(0.f, 0.f, 0.f, 1.f);
 
 	// light 0 on cam pos
@@ -125,12 +122,28 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	update_status ret = update_status::UPDATE_CONTINUE;
 
+	DrawGrid();
+
+	glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+	glClearDepth(1.0f);
+	glClearColor(0.f, 0.f, 0.f, 1.f);
+
+	DrawGrid();
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 	return ret;
 }
 
 // Called before quitting
 bool ModuleRenderer3D::CleanUp()
 {
+	glDeleteTextures(1, &sceneTextureId);
+	glDeleteFramebuffers(1, &frameBufferId);
+
 	SDL_GL_DeleteContext(context);
 
 	return true;
@@ -148,7 +161,47 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
+	glGenFramebuffers(1, &frameBufferId);
+	glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
+
+	glGenTextures(1, &sceneTextureId);
+	glBindTexture(GL_TEXTURE_2D, sceneTextureId);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	glGenRenderbuffers(1, &depthStencilId);
+	glBindRenderbuffer(GL_RENDERBUFFER, depthStencilId);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depthStencilId);
+
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, sceneTextureId, 0);
+
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) { LOG("Scene buffer is not loaded properly."); }
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 }
 
 
+void ModuleRenderer3D::DrawGrid() {
+	glLineWidth(1.0f);
 
+	glBegin(GL_LINES);
+	glColor4f(0.8f, 0.8f, 0.8f, 0.8f);
+
+	float d = 40.0f;
+
+	for (float i = -d; i <= d; i += 2.0f)
+	{
+		glVertex3f(i, 0.0f, -d);
+		glVertex3f(i, 0.0f, d);
+		glVertex3f(-d, 0.0f, i);
+		glVertex3f(d, 0.0f, i);
+	}
+
+	glEnd();
+}

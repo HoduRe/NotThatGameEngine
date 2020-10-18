@@ -59,6 +59,7 @@ bool ModuleWindow::Init()
 	App->eventManager->EventRegister(EVENT_ENUM::SCREEN_BRIGHTNESS, this);
 	App->eventManager->EventRegister(EVENT_ENUM::CHANGE_WINDOW_WIDTH, this);
 	App->eventManager->EventRegister(EVENT_ENUM::CHANGE_WINDOW_HEIGHT, this);
+	App->eventManager->EventRegister(EVENT_ENUM::WINDOW_RESIZE, this);
 	App->eventManager->EventRegister(EVENT_ENUM::FULLSCREEN, this);
 	App->eventManager->EventRegister(EVENT_ENUM::RESIZABLE_WINDOW, this);
 	App->eventManager->EventRegister(EVENT_ENUM::BORDERLESS_WINDOW, this);
@@ -121,6 +122,12 @@ void ModuleWindow::ExecuteEvent(EVENT_ENUM eventId) {
 
 		break;
 
+	case EVENT_ENUM::WINDOW_RESIZE:
+
+		SDL_GetWindowSize(window, &width, &height);
+
+		break;
+
 	case EVENT_ENUM::FULLSCREEN:
 
 		if (App->imGui->fullscreen) {
@@ -170,4 +177,5 @@ void ModuleWindow::ExecuteEvent(EVENT_ENUM eventId) {
 
 	App->renderer3D->OnResize(width, height);
 }
+
 

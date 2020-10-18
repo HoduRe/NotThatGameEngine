@@ -28,12 +28,13 @@ public:
 	//The surface contained by the window
 	SDL_Surface* screen_surface;
 
+	int width;
+	int height;
+
 private:
 	void ExecuteEvent(EVENT_ENUM eventId);
 
 private:
-	int width;
-	int height;
 
 };
 

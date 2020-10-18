@@ -6,10 +6,10 @@
 #include <shellapi.h>
 
 ModuleImGui::ModuleImGui(Application* app, bool start_enabled) : Module(app, start_enabled), SDL(nullptr), MathGeoLib(nullptr), sliderDt(0.0f), appName("NotThatGameEngine"),
-	sliderBrightness(1.0f), sliderWidth(SCREEN_WIDTH * SCREEN_SIZE), sliderHeight(SCREEN_HEIGHT * SCREEN_SIZE), vsync(true),
-	fullscreen(WIN_FULLSCREEN), resizable(WIN_RESIZABLE), borderless(WIN_BORDERLESS), fullDesktop(WIN_FULLSCREEN_DESKTOP), refreshRate(0),
-	AVX(false), AVX2(false), AltiVec(false), MMX(false), RDTSC(false), SSE(false), SSE2(false), SSE3(false), SSE41(false), SSE42(false),
-	showDemoWindow(false), defaultButtonsMenu (false), aboutWindow (false), configMenu(false), appActive(false), consoleMenu (false)
+sliderBrightness(1.0f), sliderWidth(SCREEN_WIDTH* SCREEN_SIZE), sliderHeight(SCREEN_HEIGHT* SCREEN_SIZE), vsync(true),
+fullscreen(WIN_FULLSCREEN), resizable(WIN_RESIZABLE), borderless(WIN_BORDERLESS), fullDesktop(WIN_FULLSCREEN_DESKTOP), refreshRate(0),
+AVX(false), AVX2(false), AltiVec(false), MMX(false), RDTSC(false), SSE(false), SSE2(false), SSE3(false), SSE41(false), SSE42(false),
+showDemoWindow(false), defaultButtonsMenu(false), aboutWindow(false), configMenu(false), appActive(false), consoleMenu(false), sceneWindow(true)
 {}
 
 // Destructor
@@ -53,7 +53,7 @@ bool ModuleImGui::Init()
 	SSE = SDL_HasSSE();
 	SSE2 = SDL_HasSSE2();
 	SSE3 = SDL_HasSSE3();
-	SSE41= SDL_HasSSE41();
+	SSE41 = SDL_HasSSE41();
 	SSE42 = SDL_HasSSE42();
 
 	return ret;
@@ -83,26 +83,24 @@ update_status ModuleImGui::Update(float dt)
 {
 	update_status ret = update_status::UPDATE_CONTINUE;
 	update_status ret2 = update_status::UPDATE_CONTINUE;
-	
+
 
 	// Start the Dear ImGui frame
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
 
-	//	ImGui::SetNextWindowPos(ImVec2(SCREEN_WIDTH - 220, 0));		// Cuando cierro la ventana de demo, la ventana de close app se teleporta a su posición inicial: sustitye esto por código que solo lo setea al compilar
-	//	ImGui::SetNextWindowSize(ImVec2(180, 70));					// Lo más probable es que haya un buffer de siguiente nuevo me lo pones a esta posición, y al quitar el anterior, se mueve el de close app en la lista, y se lee como "nuevo"
-
 	if (showDemoWindow) { ImGui::ShowDemoWindow(&showDemoWindow); }	// DEMO WINDOW
 	ret = DefaultButtons();
 	SetMainMenuBar();
 	ret2 = DefaultWindow();
 	ConsoleWindow();
+	SceneWindow();
 
 	ImGui::EndFrame();
 
 	if (ret == update_status::UPDATE_CONTINUE && ret2 == update_status::UPDATE_CONTINUE) { return ret; }
-	else{ return update_status::UPDATE_STOP; }
+	else { return update_status::UPDATE_STOP; }
 }
 
 // ---------------------------------------------------------
@@ -195,6 +193,8 @@ void ModuleImGui::SetMainMenuBar()
 
 		if (ImGui::BeginMenu("Dev Options")) {
 
+			if (ImGui::MenuItem("Scene Window")) { sceneWindow = !sceneWindow; }
+
 			if (ImGui::MenuItem("Gui Demo")) { showDemoWindow = !showDemoWindow; }
 
 			if (ImGui::MenuItem("Documentation")) { ShellExecuteA(0, "open", "https://github.com/ferba93/NotThatGameEngine/wiki", NULL, NULL, SW_SHOWNORMAL); }
@@ -204,11 +204,11 @@ void ModuleImGui::SetMainMenuBar()
 			if (ImGui::MenuItem("Report a bug")) { ShellExecuteA(0, "open", "https://github.com/ferba93/NotThatGameEngine/issues", NULL, NULL, SW_SHOWNORMAL); }
 
 			if (ImGui::MenuItem("App configuration")) { configMenu = !configMenu; }
-			
+
 			if (ImGui::MenuItem("General buttons")) { defaultButtonsMenu = !defaultButtonsMenu; }
 
 			if (ImGui::MenuItem("Console output")) { consoleMenu = !consoleMenu; }
-			
+
 			if (ImGui::MenuItem("About")) { aboutWindow = !aboutWindow; }
 
 			ImGui::EndMenu();
@@ -275,7 +275,7 @@ update_status ModuleImGui::DefaultWindow() {
 		}
 
 		if (ImGui::CollapsingHeader("Window")) {
-			if (ImGui::Checkbox("Active", &appActive)){ if (appActive == false) { ret = update_status::UPDATE_STOP; } }
+			if (ImGui::Checkbox("Active", &appActive)) { if (appActive == false) { ret = update_status::UPDATE_STOP; } }
 			if (ImGui::SliderFloat("Brightness", &sliderBrightness, 0.0f, 1.0f)) { App->eventManager->GenerateEvent(EVENT_ENUM::SCREEN_BRIGHTNESS); }
 			if (ImGui::SliderInt("Width", &sliderWidth, 0, 1980)) { App->eventManager->GenerateEvent(EVENT_ENUM::CHANGE_WINDOW_WIDTH); }
 			if (ImGui::SliderInt("Height", &sliderHeight, 0, 1280)) { App->eventManager->GenerateEvent(EVENT_ENUM::CHANGE_WINDOW_HEIGHT); }
@@ -325,6 +325,21 @@ void ModuleImGui::ConsoleWindow() {
 		for (int i = 0; i < App->consoleVecSize; i++) {
 			ImGui::Text(App->consoleVec[0].c_str());
 		}
+		ImGui::End();
+	}
+}
+
+
+void ModuleImGui::SceneWindow() {
+
+	ImVec2 vec2(App->window->width * 0.75, App->window->height * 0.75);
+
+	if (sceneWindow) {
+
+		ImGui::Begin("Scene", &sceneWindow);
+
+		ImGui::Image((ImTextureID*)App->renderer3D->sceneTextureId, vec2);
+
 		ImGui::End();
 	}
 }

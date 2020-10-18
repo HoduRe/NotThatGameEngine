@@ -53,11 +53,13 @@ private:
 	bool configMenu;
 	bool appActive;
 	bool consoleMenu;
+	bool sceneWindow;
 
 	update_status DefaultButtons();
 	void SetMainMenuBar();
 	void AboutMenu(bool* aboutMenu);
 	update_status DefaultWindow();
 	void ConsoleWindow();
+	void SceneWindow();
 };
 

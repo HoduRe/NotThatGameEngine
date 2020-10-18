@@ -37,6 +37,10 @@ public:
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
-private:
+	GLuint frameBufferId;
+	GLuint sceneTextureId;
+	GLuint depthStencilId;
 
+private:
+	void DrawGrid();
 };
