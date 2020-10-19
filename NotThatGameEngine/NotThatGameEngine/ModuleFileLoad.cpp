@@ -6,10 +6,8 @@
 #include <fstream>
 #include <filesystem>
 
-#include "Assimp/include/cfileio.h"
-#include "Assimp/include/types.h"
-
 #pragma comment( lib, "PhysFS/libx86/physfs.lib" )
+
 
 ModuleFileLoad::ModuleFileLoad(Application* app, bool start_enabled) : Module(app, start_enabled) {
 	// needs to be created before Init so other modules can use it

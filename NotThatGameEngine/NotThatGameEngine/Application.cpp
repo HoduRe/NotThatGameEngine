@@ -14,6 +14,8 @@ Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter
 	imGui = new ModuleImGui(this);
 	eventManager = new ModuleEventManager(this);
 	primitives = new ModulePrimitives(this);
+	fileLoad = new ModuleFileLoad(this);
+	modelManager = new ModelManager(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -23,12 +25,14 @@ Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter
 	AddModule(reset);
 	AddModule(eventManager);
 	AddModule(window);
+	AddModule(fileLoad);
 	AddModule(camera);
 	AddModule(input);
 	AddModule(audio);
 	AddModule(physics);
 	AddModule(scene_intro);
 	AddModule(player);
+	AddModule(modelManager);
 
 	// Renderer last!
 	AddModule(renderer3D);

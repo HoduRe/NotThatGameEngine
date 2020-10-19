@@ -102,6 +102,9 @@
     <ClCompile Include="ModuleFileLoad.cpp">
       <Filter>Archivos de recursos</Filter>
     </ClCompile>
+    <ClCompile Include="ModelManager.cpp">
+      <Filter>Archivos de recursos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ModuleAudio.h">
@@ -196,6 +199,9 @@
     </ClInclude>
     <ClInclude Include="PathNode.h">
       <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelManager.h">
+      <Filter>Archivos de recursos</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -16,10 +16,10 @@
 #include "ModuleImGui.h"
 #include "ModuleEventManager.h"
 #include "ModulePrimitives.h"
-
+#include "ModuleFileLoad.h"
+#include "ModelManager.h"
 
 #define LOG(format, ...) App->log(__FILE__, __LINE__, format, __VA_ARGS__);
-
 
 class Application
 {
@@ -36,6 +36,8 @@ public:
 	ModuleImGui* imGui;
 	ModuleEventManager* eventManager;
 	ModulePrimitives* primitives;
+	ModuleFileLoad* fileLoad;
+	ModelManager* modelManager;
 
 	Timer ms_timer;
 
