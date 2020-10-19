@@ -4,7 +4,7 @@
 #pragma comment( lib, "Assimp/libx86/assimp.lib" )
 
 
-ModelManager::ModelManager(Application* app, bool start_enabled) : Module(app, start_enabled) {}
+ModelManager::ModelManager(Application* app, bool start_enabled) : Module(app, start_enabled), stream(), testMesh() {}
 
 
 ModelManager::~ModelManager() {}
@@ -83,7 +83,7 @@ void ModelManager::LoadModel(std::string path) {
 
 		for (unsigned int i = 0; i < paiMesh->mNumVertices; i++) {		// Vertices
 			const aiVector3D* pPos = &(paiMesh->mVertices[i]);
-			const aiVector3D* pNormal = &(paiMesh->mNormals[i]) : &Zero3D;
+			const aiVector3D* pNormal = &(paiMesh->mNormals[i]) /*: &Zero3D*/;
 			const aiVector3D* pTexCoord = paiMesh->HasTextureCoords(0) ? &(paiMesh->mTextureCoords[0][i]) : &Zero3D;
 
 			vertices.push_back(pPos->x);
@@ -119,31 +119,61 @@ void ModelManager::LoadModel(std::string path) {
 	// Init materials
 	for (unsigned int i = 0; i < scene->mNumMaterials; i++) {
 		const aiMaterial* pMaterial = scene->mMaterials[i];
-		textures[i] = NULL;
+		testMesh.textures[i] = NULL;
 		if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
 			aiString Path;
 
 			if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
-				std::string FullPath = Dir + "/" + Path.data;
-				textures[i] = new Texture(GL_TEXTURE_2D, FullPath.c_str());
+				std::string FullPath = path + "/" + Path.data;
+				testMesh.textures[i] = new Texture(GL_TEXTURE_2D, FullPath.c_str());
 
-				if (!m_Textures[i]->Load()) {
+				if (!testMesh.textures[i]->Load()) {
 					printf("Error loading texture '%s'\n", FullPath.c_str());
-					delete m_Textures[i];
-					m_Textures[i] = NULL;
+					delete testMesh.textures[i];
+					testMesh.textures[i] = NULL;
 				}
 			}
 		}
-		if (!textures[i]) {
-			textures[i] = new Texture(GL_TEXTURE_2D, "../Content/white.png");
-			textures[i]->Load();
+		if (!testMesh.textures[i]) {
+			testMesh.textures[i] = new Texture(GL_TEXTURE_2D, "../Content/white.png");
+			testMesh.textures[i]->Load();
 		}
 	}
 
-	//
+	/*
 	testMesh.numVertices = mesh.mNumVertices;
 	testMesh.vertices = new float[testMesh.numVertices * 3];
 	memcpy(testMesh.vertices, aiMesh->mVertices, sizeof(float) * testMesh.numVertices * 3);
+	*/
 	
 	LOG("New mesh with %d vertices", testMesh.numVertices);
 }
+
+
+Texture::Texture(GLenum TextureTarget, const std::string& FileName)
+{
+	textureTarget = TextureTarget;
+	fileName = FileName;
+}
+
+
+bool Texture::Load() {
+
+	glGenTextures(1, &textureId);
+	glBindTexture(textureTarget, textureId);
+//	glTexImage2D(textureTarget, 0, GL_RGBA, m_image.columns(), m_image.rows(), 0, GL_RGBA, GL_UNSIGNED_BYTE, m_blob.data());
+	glTexParameterf(textureTarget, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameterf(textureTarget, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glBindTexture(textureTarget, 0);
+
+	return true;
+}
+
+
+void Texture::Bind(GLenum TextureUnit)
+{
+	glActiveTexture(TextureUnit);
+	glBindTexture(textureTarget, textureId);
+}
+
+

@@ -10,78 +10,30 @@
 #include "Assimp/include/Importer.hpp"
 #include "Assimp/include/postprocess.h"
 
-/*
-#ifndef TEXTURE_H
-#define	TEXTURE_H
 
-#include <string>
-
-#include <GL/glew.h>
-#include <ImageMagick-6/Magick++.h>
-
-class Texture
+struct Texture
 {
-public:
 	Texture(GLenum TextureTarget, const std::string& FileName);
 
 	bool Load();
 
 	void Bind(GLenum TextureUnit);
 
-private:
-	std::string m_fileName;
-	GLenum m_textureTarget;
-	GLuint m_textureObj;
-	Magick::Image m_image;
-	Magick::Blob m_blob;
+	std::string fileName;
+	GLenum textureTarget;
+	GLuint textureId;
 };
 
 
-#endif	// TEXTURE_H
+struct SubMeshes {
+	GLuint vertexBufferId;
+	GLuint indexBufferId;
+	unsigned int NumIndices;
+	unsigned int MaterialIndex;
+};
 
-Texture::Texture(GLenum TextureTarget, const std::string& FileName)
-{
-	m_textureTarget = TextureTarget;
-	m_fileName      = FileName;
-}
-
-
-bool Texture::Load()
-{
-	try {
-		m_image.read(m_fileName);
-		m_image.write(&m_blob, "RGBA");
-	}
-	catch (Magick::Error& Error) {
-		std::cout << "Error loading texture '" << m_fileName << "': " << Error.what() << std::endl;
-		return false;
-	}
-
-	glGenTextures(1, &m_textureObj);
-	glBindTexture(m_textureTarget, m_textureObj);
-	glTexImage2D(m_textureTarget, 0, GL_RGBA, m_image.columns(), m_image.rows(), 0, GL_RGBA, GL_UNSIGNED_BYTE, m_blob.data());
-	glTexParameterf(m_textureTarget, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameterf(m_textureTarget, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glBindTexture(m_textureTarget, 0);
-
-	return true;
-}
-
-void Texture::Bind(GLenum TextureUnit)
-{
-	glActiveTexture(TextureUnit);
-	glBindTexture(m_textureTarget, m_textureObj);
-}
-*/
 
 struct Mesh {
-
-	struct SubMeshes {
-		GLuint vertexBufferId;
-		GLuint indexBufferId;
-		unsigned int NumIndices;
-		unsigned int MaterialIndex;
-	};
 
 	uint vramIndexId = 0;
 	uint numIndex = 0;
@@ -92,7 +44,7 @@ struct Mesh {
 	float* vertices = nullptr;
 
 	std::vector<SubMeshes> subMeshes;
-	std::vector textures;
+	std::vector<Texture*> textures;
 
 };
 
