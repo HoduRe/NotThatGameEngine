@@ -205,3 +205,26 @@ void ModuleRenderer3D::DrawGrid() {
 
 	glEnd();
 }
+
+
+void ModuleRenderer3D::DrawMesh(Mesh mesh) {
+	
+	for (int i = 0; i < mesh.subMeshes.size(); i++) {
+
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glBindBuffer(GL_ARRAY_BUFFER, mesh.subMeshes[i].vertexId);
+		glVertexPointer(3, GL_FLOAT, 0, NULL);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.subMeshes[i].indexId);
+
+		glDrawElements(GL_TRIANGLES, mesh.subMeshes[i].indexVectorSize, GL_UNSIGNED_INT, NULL);
+
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glDisableClientState(GL_VERTEX_ARRAY);
+		glDisableClientState(GL_NORMAL_ARRAY);
+
+	}
+
+}
+
+

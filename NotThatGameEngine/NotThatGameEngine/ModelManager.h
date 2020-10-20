@@ -26,22 +26,27 @@ struct Texture
 
 
 struct SubMeshes {
-	GLuint vertexBufferId;
-	GLuint indexBufferId;
-	unsigned int NumIndices;
-	unsigned int MaterialIndex;
+
+public:
+
+	SubMeshes() {};
+
+	GLuint vertexId = 0;
+	GLuint indexId = 0;
+	unsigned int numIndices = 0;
+	unsigned int materialId = 0;
+
+	int vertexVectorSize = 0;
+	int indexVectorSize = 0;
+
+	std::vector<float> vertices;
+	std::vector<uint> indices;
 };
 
 
 struct Mesh {
 
-	uint vramIndexId = 0;
-	uint numIndex = 0;
-	uint* index = nullptr;
-
-	uint vramUniqueVertices = 0;
-	uint numVertices = 0;
-	float* vertices = nullptr;
+public:
 
 	std::vector<SubMeshes> subMeshes;
 	std::vector<Texture*> textures;
