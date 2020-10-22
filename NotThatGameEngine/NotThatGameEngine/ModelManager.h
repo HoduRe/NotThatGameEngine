@@ -29,17 +29,24 @@ struct SubMeshes {
 
 public:
 
-	SubMeshes() {};
+	SubMeshes();
+	~SubMeshes();
 
-	GLuint vertexId = 0;
-	GLuint indexId = 0;
-	unsigned int numIndices = 0;
-	unsigned int materialId = 0;
+	GLuint vertexId;
+	GLuint indexId;
+	GLuint normalsId;
+	GLuint textureCoordId;
+	unsigned int materialId;
 
-	int vertexVectorSize = 0;
-	int indexVectorSize = 0;
+	int vertexVectorSize;
+	int indexVectorSize;
+	int normalVectorSize;
+	int textureCoordVectorSize;
 
 	std::vector<float> vertices;
+	std::vector<float> normals;
+	std::vector<float> textureCoord;
+	std::vector<float> colors;
 	std::vector<uint> indices;
 };
 
@@ -48,7 +55,7 @@ struct Mesh {
 
 public:
 
-	std::vector<SubMeshes> subMeshes;
+	std::vector<SubMeshes> subMeshes = std::vector<SubMeshes>();
 	std::vector<Texture*> textures;
 
 };
@@ -62,6 +69,7 @@ public:
 	~ModelManager();
 
 	bool Init();
+	bool Start();
 	update_status PreUpdate(float dt);
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);

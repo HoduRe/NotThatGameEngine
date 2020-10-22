@@ -111,6 +111,11 @@ update_status ModuleInput::PreUpdate(float dt)
 				if (e.window.event == SDL_WINDOWEVENT_RESIZED)
 					App->eventManager->GenerateEvent(EVENT_ENUM::WINDOW_RESIZE);
 			}
+			break;
+
+			case SDL_DROPFILE:
+				App->eventManager->GenerateEvent(EVENT_ENUM::FILE_DROPPED);
+				break;
 		}
 	}
 

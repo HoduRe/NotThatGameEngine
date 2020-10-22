@@ -212,14 +212,25 @@ void ModuleRenderer3D::DrawMesh(Mesh mesh) {
 	for (int i = 0; i < mesh.subMeshes.size(); i++) {
 
 		glEnableClientState(GL_VERTEX_ARRAY);
+		glEnableClientState(GL_NORMAL_ARRAY);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, mesh.subMeshes[i].vertexId);
+		glBindBuffer(GL_NORMAL_ARRAY, mesh.subMeshes[i].normalsId);
+		glBindBuffer(GL_TEXTURE_COORD_ARRAY, mesh.subMeshes[i].textureCoordId);
 		glVertexPointer(3, GL_FLOAT, 0, NULL);
+		glNormalPointer(GL_FLOAT, 0, NULL);
+		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+		//glColorPointer(4, GL_FLOAT, 0, &mesh.subMeshes[i].colors[0]);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.subMeshes[i].indexId);
 
 		glDrawElements(GL_TRIANGLES, mesh.subMeshes[i].indexVectorSize, GL_UNSIGNED_INT, NULL);
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_NORMAL_ARRAY, 0);
+		glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glDisableClientState(GL_NORMAL_ARRAY);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_NORMAL_ARRAY);
 

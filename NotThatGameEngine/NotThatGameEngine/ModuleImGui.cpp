@@ -112,7 +112,7 @@ update_status ModuleImGui::PostUpdate(float dt)
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-	SDL_GL_SwapWindow(App->window->window);	// Swaps current window with the other OpenGL (by default it uses double-buffered contexts)
+	SDL_GL_SwapWindow(App->window->window);	// Swaps current window with the other used by OpenGL (by default it uses double-buffered contexts)
 
 	return ret;
 }
