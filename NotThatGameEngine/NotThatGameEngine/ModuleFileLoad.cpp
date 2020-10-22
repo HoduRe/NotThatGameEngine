@@ -1,5 +1,4 @@
 #include "Application.h"
-#include "ModuleFileLoad.h"
 #include "PathNode.h"
 
 #include "PhysFS/include/physfs.h"
@@ -42,6 +41,8 @@ bool ModuleFileLoad::Init() {
 	//if(PHYSFS_setWriteDir(write_path) == 0)
 	//	LOG("File System error while creating write dir: %s\n", PHYSFS_getLastError());
 
+	App->eventManager->EventRegister(EVENT_ENUM::FILE_DROPPED, this);
+
 	SDL_free(write_path);
 
 	return ret;
@@ -56,6 +57,8 @@ bool ModuleFileLoad::CleanUp() {
 
 update_status ModuleFileLoad::PreUpdate(float dt) {
 
+	CheckListener(this);
+
 	return update_status::UPDATE_CONTINUE;
 }
 
@@ -69,6 +72,25 @@ update_status ModuleFileLoad::Update(float dt) {
 update_status ModuleFileLoad::PostUpdate(float dt) {
 
 	return update_status::UPDATE_CONTINUE;
+}
+
+
+void ModuleFileLoad::ExecuteEvent(EVENT_ENUM eventId) {
+
+	std::string filePath;
+
+	switch (eventId) {
+
+	case EVENT_ENUM::FILE_DROPPED:
+
+		filePath = App->input->lastDropFilePath;
+		App->modelManager->LoadModel(filePath);
+
+		break;
+	default:
+		break;
+	}
+
 }
 
 

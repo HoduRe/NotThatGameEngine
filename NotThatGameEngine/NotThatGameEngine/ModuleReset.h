@@ -2,7 +2,6 @@
 #define __ModuleReset_H__
 
 #include "Module.h"
-#include "Globals.h"
 
 class ModuleReset : public Module
 {

@@ -1,6 +1,7 @@
+#ifndef __MODULEPHYSICS3D__
+#define __MODULEPHYSICS3D__
 #pragma once
 #include "Module.h"
-#include "Globals.h"
 #include "MathGeoLib/include/MathGeoLib.h"
 
 class ModulePhysics3D : public Module
@@ -21,3 +22,4 @@ private:
 
 };
 
+#endif

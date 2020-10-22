@@ -1,3 +1,5 @@
+#ifndef __GLOBALS__
+#define __GLOBALS__
 #pragma once
 
 // Warning disabled ---
@@ -6,6 +8,8 @@
 
 #include <windows.h>
 #include <stdio.h>
+#include <string>
+#include <vector>
 
 #define CAP(n) ((n <= 0.0f) ? n=0.0f : (n >= 1.0f) ? n=1.0f : n=n)
 
@@ -68,3 +72,5 @@ enum class EVENT_ENUM
 #define WIN_RESIZABLE true
 #define WIN_BORDERLESS false
 #define WIN_FULLSCREEN_DESKTOP false
+
+#endif

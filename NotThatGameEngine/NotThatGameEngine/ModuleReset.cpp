@@ -1,8 +1,4 @@
 #include "Application.h"
-#include "ModuleReset.h"
-#include "ModulePlayer.h"
-#include "ModuleSceneIntro.h"
-#include "ModulePhysics3D.h"
 
 ModuleReset::ModuleReset(Application* app, bool start_enabled) : Module(app, start_enabled), reset(false) {}
 

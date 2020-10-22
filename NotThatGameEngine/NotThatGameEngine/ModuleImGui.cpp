@@ -1,7 +1,4 @@
 #include "Application.h"
-#include "ModuleImGui.h"
-#include "ModuleWindow.h"
-#include "ModuleRenderer3D.h"
 
 #include <shellapi.h>
 

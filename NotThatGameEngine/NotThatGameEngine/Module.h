@@ -1,7 +1,6 @@
 #ifndef __MODULE_H__
 #define __MODULE_H__
 
-#include <vector>
 #include "Globals.h"
 
 class Application;

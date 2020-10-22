@@ -1,6 +1,6 @@
-#pragma once
+#ifndef __MODULEPLAYER__
+#define __MODULEPlAYER__
 #include "Module.h"
-#include "Globals.h"
 
 
 class ModulePlayer : public Module
@@ -16,3 +16,5 @@ public:
 public:
 
 };
+
+#endif

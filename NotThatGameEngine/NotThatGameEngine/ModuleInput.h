@@ -1,6 +1,7 @@
-#pragma once
+#ifndef __MODULEINPUT_
+#define __MODULEINPUT__
+
 #include "Module.h"
-#include "Globals.h"
 
 #define MAX_MOUSE_BUTTONS 5
 
@@ -58,6 +59,9 @@ public:
 		return mouse_y_motion;
 	}
 
+public:
+	std::string lastDropFilePath;
+
 private:
 	KEY_STATE* keyboard;
 	KEY_STATE mouse_buttons[MAX_MOUSE_BUTTONS];
@@ -68,3 +72,5 @@ private:
 	int mouse_y_motion;
 	//int mouse_z_motion;
 };
+
+#endif

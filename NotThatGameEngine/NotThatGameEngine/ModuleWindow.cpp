@@ -1,5 +1,4 @@
 #include "Application.h"
-#include "ModuleWindow.h"
 
 ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled), window(NULL), screen_surface(NULL), width(SCREEN_WIDTH* SCREEN_SIZE), height(SCREEN_HEIGHT* SCREEN_SIZE)
 {}

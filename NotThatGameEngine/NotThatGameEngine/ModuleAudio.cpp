@@ -1,5 +1,4 @@
-#include "Globals.h"
-#include "Application.h"
+#include "SDL/include/SDL.h"
 #include "ModuleAudio.h"
 
 ModuleAudio::ModuleAudio(Application* app, bool start_enabled) : Module(app, start_enabled), sfxAdjustment(0), musicAdjustment(0)

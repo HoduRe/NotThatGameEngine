@@ -2,7 +2,6 @@
 #define __MODULEPRIMITIVES_H__
 
 #include "Module.h"
-#include "Globals.h"
 #include "Primitives.h"
 
 class ModulePrimitives : public Module

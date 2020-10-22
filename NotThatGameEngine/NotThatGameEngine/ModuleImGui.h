@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __MODULEIMGUI__
+#define __MODULEIMGUI__
+
 #include "Module.h"
 #include "Globals.h"
 
@@ -63,3 +65,4 @@ private:
 	void SceneWindow();
 };
 
+#endif

@@ -1,4 +1,3 @@
-#include "Application.h"
 #include "ModulePrimitives.h"
 
 ModulePrimitives::ModulePrimitives(Application* app, bool start_enabled) : Module(app, start_enabled) {}

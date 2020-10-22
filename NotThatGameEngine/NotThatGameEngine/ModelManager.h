@@ -2,8 +2,6 @@
 #define __MODELMANAGER_H__
 
 #include "Module.h"
-#include "Globals.h"
-#include "Primitives.h"
 
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"

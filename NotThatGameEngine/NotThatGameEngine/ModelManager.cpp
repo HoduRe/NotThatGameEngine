@@ -1,5 +1,4 @@
 #include "Application.h"
-#include "ModelManager.h"
 
 #pragma comment( lib, "Assimp/libx86/assimp.lib" )
 
@@ -10,14 +9,12 @@ ModelManager::ModelManager(Application* app, bool start_enabled) : Module(app, s
 ModelManager::~ModelManager() {}
 
 
-bool ModelManager::Init() {
+bool ModelManager::Init() {			// OpenGL has not been initialized yet
 
 	bool ret = true;
 
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 	aiAttachLogStream(&stream);
-
-	// OPENGL HAS NOT BEEN INIALIZED YET
 
 	return ret;
 }
@@ -25,8 +22,8 @@ bool ModelManager::Init() {
 
 bool ModelManager::Start() {
 
-	LoadModel("Library/Models/warrior.FBX");
-	//LoadModel("Library/Models/BakerHouse.fbx");
+	//LoadModel("Library/Models/warrior.FBX");
+	LoadModel("Library/Models/BakerHouse.fbx");
 
 	return true;
 }

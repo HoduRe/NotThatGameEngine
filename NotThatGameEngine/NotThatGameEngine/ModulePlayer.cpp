@@ -1,4 +1,3 @@
-#include "Application.h"
 #include "ModulePlayer.h"
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled)

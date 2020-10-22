@@ -1,7 +1,6 @@
 #ifndef __PRIMITIVES_H__
 #define __PRIMITIVES_H__
 
-#include <vector>
 #include "Globals.h"
 #include "glew-2.1.0/include/GL/glew.h"
 

@@ -1,6 +1,7 @@
-#pragma once
+#ifndef __MODULERENDER3D__
+#define __MODULERENDER3D__
+
 #include "Module.h"
-#include "Globals.h"
 #include "glmath.h"
 #include "Light.h"
 #include "Primitives.h"
@@ -47,3 +48,5 @@ public:
 private:
 	void DrawGrid();
 };
+
+#endif

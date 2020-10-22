@@ -2,8 +2,6 @@
 #define __MODULEFILELOAD_H__
 
 #include "Module.h"
-#include "Globals.h"
-#include <vector>
 
 struct SDL_RWops;
 int close_sdl_rwops(SDL_RWops* rw);
@@ -64,6 +62,7 @@ public:
 public:
 
 private:
+	void ExecuteEvent(EVENT_ENUM eventId);
 
 };
 
