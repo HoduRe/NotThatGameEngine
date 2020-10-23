@@ -77,7 +77,7 @@ update_status FileSystem::PostUpdate(float dt) {
 
 void FileSystem::ExecuteEvent(EVENT_ENUM eventId) {
 
-	std::string filePath;
+	char* filePath;
 
 	switch (eventId) {
 

@@ -8,17 +8,15 @@
 #include "Assimp/include/Importer.hpp"
 #include "Assimp/include/postprocess.h"
 
-
 struct Texture
 {
-	Texture(GLenum TextureTarget, const std::string& FileName);
+	Texture();
+	Texture(GLenum _textureType, const std::string& FileName);
 
-	bool Load();
-
-	void Bind(GLenum TextureUnit);
+	void SetAttributes();
 
 	std::string fileName;
-	GLenum textureTarget;
+	GLenum textureType;
 	GLuint textureId;
 };
 
@@ -44,17 +42,17 @@ public:
 	std::vector<float> vertices;
 	std::vector<float> normals;
 	std::vector<float> textureCoord;
-	std::vector<float> colors;
 	std::vector<uint> indices;
+	Texture diffuseTexture;
 };
 
 
 struct Mesh {
 
-public:
+	Mesh();
+	~Mesh();
 
-	std::vector<SubMeshes> subMeshes = std::vector<SubMeshes>();
-	std::vector<Texture*> textures;
+	std::vector<SubMeshes> subMeshes;
 
 };
 
@@ -73,7 +71,8 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
-	void LoadModel(std::string path);
+	void LoadModel(const char* path);
+	uint LoadTexture(const char* path, Texture* textureContainer = nullptr, GLenum type = GL_DIFFUSE);
 
 public:
 

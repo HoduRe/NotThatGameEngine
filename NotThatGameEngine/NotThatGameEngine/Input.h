@@ -39,7 +39,7 @@ public:
 	int GetMouseYMotion() const;
 
 public:
-	std::string lastDropFilePath;
+	char* lastDropFilePath;
 
 private:
 	KEY_STATE* keyboard;

@@ -219,8 +219,8 @@ void Renderer3D::DrawMesh(Mesh mesh) {
 		glVertexPointer(3, GL_FLOAT, 0, NULL);
 		glNormalPointer(GL_FLOAT, 0, NULL);
 		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
-		//glColorPointer(4, GL_FLOAT, 0, &mesh.subMeshes[i].colors[0]);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.subMeshes[i].indexId);
+		//glBindTexture(GL_TEXTURE_2D, mesh.subMeshes[i].textureId);
 
 		glDrawElements(GL_TRIANGLES, mesh.subMeshes[i].indexVectorSize, GL_UNSIGNED_INT, NULL);
 
@@ -228,6 +228,7 @@ void Renderer3D::DrawMesh(Mesh mesh) {
 		glBindBuffer(GL_NORMAL_ARRAY, 0);
 		glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glBindTexture(GL_TEXTURE_2D, 0);
 		glDisableClientState(GL_NORMAL_ARRAY);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);

@@ -1,5 +1,13 @@
 #include "Application.h"
 
+#include "Devil/include/il.h"
+#include "Devil/include/ilu.h"
+#include "Devil/include/ilut.h"
+
+#pragma comment ( lib, "Devil/libx86/DevIL.lib" )
+#pragma comment ( lib, "Devil/libx86/ILU.lib" )
+#pragma comment ( lib, "Devil/libx86/ILUT.lib" )
+
 #pragma comment( lib, "Assimp/libx86/assimp.lib" )
 
 
@@ -16,6 +24,10 @@ bool ManagerModel::Init() {			// OpenGL has not been initialized yet
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 	aiAttachLogStream(&stream);
 
+	ilInit();
+	iluInit();
+	ilutInit();
+
 	return ret;
 }
 
@@ -23,7 +35,9 @@ bool ManagerModel::Init() {			// OpenGL has not been initialized yet
 bool ManagerModel::Start() {
 
 	//LoadModel("Library/Models/warrior.FBX");
-	//LoadModel("Library/Models/BakerHouse.fbx");
+	LoadModel("Library/Models/BakerHouse.fbx");
+
+	LoadTexture("Library/Textures/Baker_house.png");
 
 	return true;
 }
@@ -67,12 +81,12 @@ void ManagerModel::ExecuteEvent(EVENT_ENUM eventId) {
 }
 
 
-void ManagerModel::LoadModel(std::string path) {
+void ManagerModel::LoadModel(const char* path) {
 
 	const aiScene* scene;
 	Assimp::Importer importer;
 
-	scene = importer.ReadFile(path.c_str(), aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices);
+	scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices);
 
 	if (scene == nullptr || scene->HasMeshes() == false) { LOG("Error loading scene % s", path); }
 
@@ -100,10 +114,6 @@ void ManagerModel::LoadModel(std::string path) {
 			testMesh.subMeshes[i].normals.push_back(pNormal->x);
 			testMesh.subMeshes[i].normals.push_back(pNormal->y);
 			testMesh.subMeshes[i].normals.push_back(pNormal->z);
-			testMesh.subMeshes[i].colors.push_back(pColor->r);
-			testMesh.subMeshes[i].colors.push_back(pColor->g);
-			testMesh.subMeshes[i].colors.push_back(pColor->b);
-			testMesh.subMeshes[i].colors.push_back(pColor->a);
 
 		}
 
@@ -174,35 +184,45 @@ void ManagerModel::LoadModel(std::string path) {
 }
 
 
-Texture::Texture(GLenum TextureTarget, const std::string& FileName)
-{
-	textureTarget = TextureTarget;
-	fileName = FileName;
+uint ManagerModel::LoadTexture(const char* path, Texture* textureContainer, GLenum type) {
+
+	uint imageTest;
+	ilGenImages(1, &imageTest);
+	ilBindImage(imageTest);
+	if (ilLoadImage(path) == IL_TRUE) {}
+	else { LOG("Image with id: %u failed to load.\n", imageTest); }
+
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glGenTextures(1, &imageTest);
+	glBindTexture(GL_TEXTURE_2D, imageTest);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, ilGetInteger(IL_IMAGE_BPP), ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), 0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE, ilGetData());
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	ilDeleteImages(1, &imageTest);
+
+	return imageTest;
 }
 
 
-bool Texture::Load() {
+Texture::Texture() : textureType(), fileName(), textureId() {}
 
-	glGenTextures(1, &textureId);
-	glBindTexture(textureTarget, textureId);
-	//glTexImage2D(textureTarget, 0, GL_RGBA, m_image.columns(), m_image.rows(), 0, GL_RGBA, GL_UNSIGNED_BYTE, m_blob.data());	TODO Textures
-	glTexParameterf(textureTarget, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameterf(textureTarget, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glBindTexture(textureTarget, 0);
 
-	return true;
+Texture::Texture(GLenum _textureType, const std::string& FileName): textureId(NULL), textureType( _textureType), fileName(FileName)
+{
 }
 
 
-void Texture::Bind(GLenum TextureUnit)
-{
-	glActiveTexture(TextureUnit);
-	glBindTexture(textureTarget, textureId);
+void Texture::SetAttributes() {
+	// TODO I have no idea how I want to load and store textures. Do gameobject hierarchy and then we talk
 }
 
 
 SubMeshes::SubMeshes() : vertexId(0), indexId(0), normalsId(0), textureCoordId(0), materialId(0), vertexVectorSize(0), indexVectorSize(0),
-normalVectorSize(0), textureCoordVectorSize(0), vertices(), normals(), textureCoord(), indices(), colors(0) {}
+normalVectorSize(0), textureCoordVectorSize(0), vertices(), normals(), textureCoord(), indices(), diffuseTexture() {}
 
 
 SubMeshes::~SubMeshes() {
@@ -213,3 +233,7 @@ SubMeshes::~SubMeshes() {
 }
 
 
+Mesh::Mesh(): subMeshes(0) {}
+
+
+Mesh::~Mesh() { subMeshes.clear(); }
