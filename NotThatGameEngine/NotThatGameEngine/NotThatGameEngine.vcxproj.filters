@@ -117,6 +117,9 @@
     <ClCompile Include="Component.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="EditorScene.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h">
@@ -222,6 +225,9 @@
       <Filter>GameObject</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorScene.h">
       <Filter>GameObject</Filter>
     </ClInclude>
   </ItemGroup>

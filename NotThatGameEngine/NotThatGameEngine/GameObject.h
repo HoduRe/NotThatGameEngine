@@ -9,8 +9,14 @@ class GameObject {
 
 public:
 
-	GameObject();
+	GameObject(int _id, std::string _name = "NewGameObject", GameObject* parent = nullptr, bool enabled = true);
 	~GameObject();
+
+	void Update();
+	Component* AddComponent(COMPONENT_TYPE _type);
+	int GenerateId();
+
+public:
 
 	std::string name;
 	GameObject* parent;
@@ -18,8 +24,11 @@ public:
 
 	int id;
 	bool enabled;
-	Transform* transform;
 	std::vector<Component*> components;
+
+private:
+
+	int componentIdGenerator;
 
 };
 

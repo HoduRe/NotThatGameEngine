@@ -1,13 +1,15 @@
 #ifndef __TRANSFORM_H__
 #define __TRANSFORM_H__
 
-#include "Globals.h"
+#include "Component.h"
 
-class Transform {
+class GameObject;
+
+class Transform : public Component {
 
 public:
 
-	Transform();
+	Transform(int _id, GameObject* _gameObject);
 	~Transform();
 
 };

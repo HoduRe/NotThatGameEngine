@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <string>
 #include <vector>
+#include <assert.h>
 
 #define CAP(n) ((n <= 0.0f) ? n=0.0f : (n >= 1.0f) ? n=1.0f : n=n)
 
