@@ -23,7 +23,7 @@ bool ModelManager::Init() {			// OpenGL has not been initialized yet
 bool ModelManager::Start() {
 
 	//LoadModel("Library/Models/warrior.FBX");
-	LoadModel("Library/Models/BakerHouse.fbx");
+	//LoadModel("Library/Models/BakerHouse.fbx");
 
 	return true;
 }

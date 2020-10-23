@@ -24,40 +24,19 @@ public:
 	update_status PreUpdate(float dt);
 	bool CleanUp();
 
-	KEY_STATE GetKey(int id) const
-	{
-		return keyboard[id];
-	}
+	KEY_STATE GetKey(int id) const;
 
-	KEY_STATE GetMouseButton(int id) const
-	{
-		return mouse_buttons[id];
-	}
+	KEY_STATE GetMouseButton(int id) const;
 
-	int GetMouseX() const
-	{
-		return mouse_x;
-	}
+	int GetMouseX() const;
 
-	int GetMouseY() const
-	{
-		return mouse_y;
-	}
+	int GetMouseY() const;
 
-	int GetMouseZ() const
-	{
-		return mouse_z;
-	}
+	int GetMouseZ() const;
 
-	int GetMouseXMotion() const
-	{
-		return mouse_x_motion;
-	}
+	int GetMouseXMotion() const;
 
-	int GetMouseYMotion() const
-	{
-		return mouse_y_motion;
-	}
+	int GetMouseYMotion() const;
 
 public:
 	std::string lastDropFilePath;
