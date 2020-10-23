@@ -1,14 +1,14 @@
-#include "ModulePhysics3D.h"
+#include "Physics3D.h"
 
-ModulePhysics3D::ModulePhysics3D(Application* app, bool start_enabled) : Module(app, start_enabled)
+Physics3D::Physics3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {}
 
 // Destructor
-ModulePhysics3D::~ModulePhysics3D()
+Physics3D::~Physics3D()
 {}
 
 // Render not available yet----------------------------------
-bool ModulePhysics3D::Init()
+bool Physics3D::Init()
 {
 	bool ret = true;
 
@@ -16,13 +16,13 @@ bool ModulePhysics3D::Init()
 }
 
 // ---------------------------------------------------------
-bool ModulePhysics3D::Start()
+bool Physics3D::Start()
 {
 	return true;
 }
 
 // ---------------------------------------------------------
-update_status ModulePhysics3D::PreUpdate(float dt)
+update_status Physics3D::PreUpdate(float dt)
 {
 
 
@@ -30,19 +30,19 @@ update_status ModulePhysics3D::PreUpdate(float dt)
 }
 
 // ---------------------------------------------------------
-update_status ModulePhysics3D::Update(float dt)
+update_status Physics3D::Update(float dt)
 {
 	return update_status::UPDATE_CONTINUE;
 }
 
 // ---------------------------------------------------------
-update_status ModulePhysics3D::PostUpdate(float dt)
+update_status Physics3D::PostUpdate(float dt)
 {
 	return update_status::UPDATE_CONTINUE;
 }
 
 // Called before quitting
-bool ModulePhysics3D::CleanUp()
+bool Physics3D::CleanUp()
 {
 	return true;
 }

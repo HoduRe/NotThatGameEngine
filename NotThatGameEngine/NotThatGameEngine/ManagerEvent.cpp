@@ -1,4 +1,4 @@
-#include "ModuleEventManager.h"
+#include "ManagerEvent.h"
 
 
 Event::Event()
@@ -17,17 +17,17 @@ Event::~Event()
 {
 }
 
-ModuleEventManager::ModuleEventManager(Application* app, bool start_enabled) : Module(app, start_enabled)
+ManagerEvent::ManagerEvent(Application* app, bool start_enabled) : Module(app, start_enabled)
 {}
 
 
 // Destructor
-ModuleEventManager::~ModuleEventManager()
+ManagerEvent::~ManagerEvent()
 {}
 
 
 //// Called before quitting
-bool ModuleEventManager::CleanUp()
+bool ManagerEvent::CleanUp()
 {
 	CleanListenerMap();
 
@@ -36,7 +36,7 @@ bool ModuleEventManager::CleanUp()
 	return true;
 }
 
-void ModuleEventManager::GenerateEvent(EVENT_ENUM eventId, EVENT_ENUM eventTriggerId)
+void ManagerEvent::GenerateEvent(EVENT_ENUM eventId, EVENT_ENUM eventTriggerId)
 {
 
 	if (eventId != EVENT_ENUM::NULL_EVENT)
@@ -63,7 +63,7 @@ void ModuleEventManager::GenerateEvent(EVENT_ENUM eventId, EVENT_ENUM eventTrigg
 
 }
 
-void ModuleEventManager::FireEvent(EVENT_ENUM eventId) const
+void ManagerEvent::FireEvent(EVENT_ENUM eventId) const
 {
 
 	if (eventId != EVENT_ENUM::NULL_EVENT)
@@ -85,7 +85,7 @@ void ModuleEventManager::FireEvent(EVENT_ENUM eventId) const
 
 }
 
-EVENT_ENUM ModuleEventManager::CheckEventTrigger(EVENT_ENUM eventTrigger)
+EVENT_ENUM ManagerEvent::CheckEventTrigger(EVENT_ENUM eventTrigger)
 {
 	EVENT_ENUM ret= EVENT_ENUM::NULL_EVENT;
 
@@ -105,7 +105,7 @@ EVENT_ENUM ModuleEventManager::CheckEventTrigger(EVENT_ENUM eventTrigger)
 }
 
 //returns true if the event has been registered or if the new listener has been added, else returns false
-bool ModuleEventManager::EventRegister(EVENT_ENUM event, Module* mod)
+bool ManagerEvent::EventRegister(EVENT_ENUM event, Module* mod)
 {
 	bool ret = false;
 
@@ -130,7 +130,7 @@ bool ModuleEventManager::EventRegister(EVENT_ENUM event, Module* mod)
 
 
 //returns true if an element has been erased from the listeners map
-bool ModuleEventManager::EventUnRegister(EVENT_ENUM event, Module* mod)
+bool ManagerEvent::EventUnRegister(EVENT_ENUM event, Module* mod)
 {
 	bool ret = false;
 
@@ -152,7 +152,7 @@ bool ModuleEventManager::EventUnRegister(EVENT_ENUM event, Module* mod)
 }
 
 
-void ModuleEventManager::CreateEventOnMap(EVENT_ENUM event)
+void ManagerEvent::CreateEventOnMap(EVENT_ENUM event)
 {
 	std::vector<Module*> vec;
 	eventListenersMap[event] = vec;
@@ -162,7 +162,7 @@ void ModuleEventManager::CreateEventOnMap(EVENT_ENUM event)
 
 
 //returns a positive number if a listener is already in the vector else returns -1
-int ModuleEventManager::FindListener(EVENT_ENUM event, Module* mod)
+int ManagerEvent::FindListener(EVENT_ENUM event, Module* mod)
 {
 	int ret = -1;
 
@@ -181,7 +181,7 @@ int ModuleEventManager::FindListener(EVENT_ENUM event, Module* mod)
 }
 
 
-std::vector<Module*>::iterator ModuleEventManager::EraseListener(EVENT_ENUM event, Module* mod,int vecId)
+std::vector<Module*>::iterator ManagerEvent::EraseListener(EVENT_ENUM event, Module* mod,int vecId)
 {
 	std::vector<Module*>::iterator iter=eventListenersMap[event].begin();
 	
@@ -204,7 +204,7 @@ std::vector<Module*>::iterator ModuleEventManager::EraseListener(EVENT_ENUM even
 }
 
 
-void  ModuleEventManager::CleanListenerMap()
+void  ManagerEvent::CleanListenerMap()
 {
 	eventListenersMap.clear();
 }

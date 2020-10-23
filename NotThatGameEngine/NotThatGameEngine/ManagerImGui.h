@@ -1,5 +1,5 @@
-#ifndef __MODULEIMGUI__
-#define __MODULEIMGUI__
+#ifndef __ManagerImGui_h__
+#define __ManagerImGui_h__
 
 #include "Module.h"
 #include "Globals.h"
@@ -8,11 +8,11 @@
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
 
-class ModuleImGui : public Module
+class ManagerImGui : public Module
 {
 public:
-	ModuleImGui(Application* app, bool start_enabled = true);
-	~ModuleImGui();
+	ManagerImGui(Application* app, bool start_enabled = true);
+	~ManagerImGui();
 
 	bool Init();
 	bool Start();

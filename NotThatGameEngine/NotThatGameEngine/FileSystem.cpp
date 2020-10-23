@@ -8,7 +8,7 @@
 #pragma comment( lib, "PhysFS/libx86/physfs.lib" )
 
 
-ModuleFileLoad::ModuleFileLoad(Application* app, bool start_enabled) : Module(app, start_enabled) {
+FileSystem::FileSystem(Application* app, bool start_enabled) : Module(app, start_enabled) {
 	// needs to be created before Init so other modules can use it
 	char* base_path = SDL_GetBasePath();
 	PHYSFS_init(nullptr);
@@ -24,12 +24,12 @@ ModuleFileLoad::ModuleFileLoad(Application* app, bool start_enabled) : Module(ap
 }
 
 
-ModuleFileLoad::~ModuleFileLoad() {
+FileSystem::~FileSystem() {
 	PHYSFS_deinit();
 }
 
 
-bool ModuleFileLoad::Init() {
+bool FileSystem::Init() {
 
 	LOG("Loading File System");
 	bool ret = true;
@@ -49,13 +49,13 @@ bool ModuleFileLoad::Init() {
 }
 
 
-bool ModuleFileLoad::CleanUp() {
+bool FileSystem::CleanUp() {
 
 	return true;
 }
 
 
-update_status ModuleFileLoad::PreUpdate(float dt) {
+update_status FileSystem::PreUpdate(float dt) {
 
 	CheckListener(this);
 
@@ -63,19 +63,19 @@ update_status ModuleFileLoad::PreUpdate(float dt) {
 }
 
 
-update_status ModuleFileLoad::Update(float dt) {
+update_status FileSystem::Update(float dt) {
 
 	return update_status::UPDATE_CONTINUE;
 }
 
 
-update_status ModuleFileLoad::PostUpdate(float dt) {
+update_status FileSystem::PostUpdate(float dt) {
 
 	return update_status::UPDATE_CONTINUE;
 }
 
 
-void ModuleFileLoad::ExecuteEvent(EVENT_ENUM eventId) {
+void FileSystem::ExecuteEvent(EVENT_ENUM eventId) {
 
 	std::string filePath;
 
@@ -94,7 +94,7 @@ void ModuleFileLoad::ExecuteEvent(EVENT_ENUM eventId) {
 }
 
 
-void ModuleFileLoad::CreateLibraryDirectories()
+void FileSystem::CreateLibraryDirectories()
 {
 	CreateDir(LIBRARY_PATH);
 	CreateDir(FOLDERS_PATH);
@@ -109,7 +109,7 @@ void ModuleFileLoad::CreateLibraryDirectories()
 }
 
 // Add a new zip file or folder
-bool ModuleFileLoad::AddPath(const char* path_or_zip)
+bool FileSystem::AddPath(const char* path_or_zip)
 {
 	bool ret = false;
 
@@ -124,12 +124,12 @@ bool ModuleFileLoad::AddPath(const char* path_or_zip)
 }
 
 // Check if a file exists
-bool ModuleFileLoad::Exists(const char* file) const
+bool FileSystem::Exists(const char* file) const
 {
 	return PHYSFS_exists(file) != 0;
 }
 
-bool ModuleFileLoad::CreateDir(const char* dir)
+bool FileSystem::CreateDir(const char* dir)
 {
 	if (IsDirectory(dir) == false)
 	{
@@ -140,17 +140,17 @@ bool ModuleFileLoad::CreateDir(const char* dir)
 }
 
 // Check if a file is a directory
-bool ModuleFileLoad::IsDirectory(const char* file) const
+bool FileSystem::IsDirectory(const char* file) const
 {
 	return PHYSFS_isDirectory(file) != 0;
 }
 
-const char* ModuleFileLoad::GetWriteDir() const
+const char* FileSystem::GetWriteDir() const
 {
 	return PHYSFS_getWriteDir();
 }
 
-void ModuleFileLoad::DiscoverFiles(const char* directory, std::vector<std::string>& file_list, std::vector<std::string>& dir_list) const
+void FileSystem::DiscoverFiles(const char* directory, std::vector<std::string>& file_list, std::vector<std::string>& dir_list) const
 {
 	char** rc = PHYSFS_enumerateFiles(directory);
 	char** i;
@@ -167,7 +167,7 @@ void ModuleFileLoad::DiscoverFiles(const char* directory, std::vector<std::strin
 	PHYSFS_freeList(rc);
 }
 
-void ModuleFileLoad::GetAllFilesWithExtension(const char* directory, const char* extension, std::vector<std::string>& file_list) const
+void FileSystem::GetAllFilesWithExtension(const char* directory, const char* extension, std::vector<std::string>& file_list) const
 {
 	std::vector<std::string> files;
 	std::vector<std::string> dirs;
@@ -183,7 +183,7 @@ void ModuleFileLoad::GetAllFilesWithExtension(const char* directory, const char*
 	}
 }
 
-PathNode ModuleFileLoad::GetAllFiles(const char* directory, std::vector<std::string>* filter_ext, std::vector<std::string>* ignore_ext) const
+PathNode FileSystem::GetAllFiles(const char* directory, std::vector<std::string>* filter_ext, std::vector<std::string>* ignore_ext) const
 {
 	PathNode root;
 	if (Exists(directory))
@@ -229,7 +229,7 @@ PathNode ModuleFileLoad::GetAllFiles(const char* directory, std::vector<std::str
 	return root;
 }
 
-void ModuleFileLoad::GetRealDir(const char* path, std::string& output) const
+void FileSystem::GetRealDir(const char* path, std::string& output) const
 {
 	output = PHYSFS_getBaseDir();
 
@@ -241,7 +241,7 @@ void ModuleFileLoad::GetRealDir(const char* path, std::string& output) const
 	output.append(PHYSFS_getRealDir(path)).append("/").append(path);
 }
 
-std::string ModuleFileLoad::GetPathRelativeToAssets(const char* originalPath) const
+std::string FileSystem::GetPathRelativeToAssets(const char* originalPath) const
 {
 	std::string ret;
 	GetRealDir(originalPath, ret);
@@ -249,21 +249,21 @@ std::string ModuleFileLoad::GetPathRelativeToAssets(const char* originalPath) co
 	return ret;
 }
 
-bool ModuleFileLoad::HasExtension(const char* path) const
+bool FileSystem::HasExtension(const char* path) const
 {
 	std::string ext = "";
 	SplitFilePath(path, nullptr, nullptr, &ext);
 	return ext != "";
 }
 
-bool ModuleFileLoad::HasExtension(const char* path, std::string extension) const
+bool FileSystem::HasExtension(const char* path, std::string extension) const
 {
 	std::string ext = "";
 	SplitFilePath(path, nullptr, nullptr, &ext);
 	return ext == extension;
 }
 
-bool ModuleFileLoad::HasExtension(const char* path, std::vector<std::string> extensions) const
+bool FileSystem::HasExtension(const char* path, std::vector<std::string> extensions) const
 {
 	std::string ext = "";
 	SplitFilePath(path, nullptr, nullptr, &ext);
@@ -277,7 +277,7 @@ bool ModuleFileLoad::HasExtension(const char* path, std::vector<std::string> ext
 	return false;
 }
 
-std::string ModuleFileLoad::NormalizePath(const char* full_path) const
+std::string FileSystem::NormalizePath(const char* full_path) const
 {
 	std::string newPath(full_path);
 	for (int i = 0; i < newPath.size(); ++i)
@@ -288,7 +288,7 @@ std::string ModuleFileLoad::NormalizePath(const char* full_path) const
 	return newPath;
 }
 
-void ModuleFileLoad::SplitFilePath(const char* full_path, std::string* path, std::string* file, std::string* extension) const
+void FileSystem::SplitFilePath(const char* full_path, std::string* path, std::string* file, std::string* extension) const
 {
 	if (full_path != nullptr)
 	{
@@ -322,7 +322,7 @@ void ModuleFileLoad::SplitFilePath(const char* full_path, std::string* path, std
 	}
 }
 
-unsigned int ModuleFileLoad::Load(const char* path, const char* file, char** buffer) const
+unsigned int FileSystem::Load(const char* path, const char* file, char** buffer) const
 {
 	std::string full_path(path);
 	full_path += file;
@@ -330,7 +330,7 @@ unsigned int ModuleFileLoad::Load(const char* path, const char* file, char** buf
 }
 
 // Read a whole file and put it in a new buffer
-uint ModuleFileLoad::Load(const char* file, char** buffer) const
+uint FileSystem::Load(const char* file, char** buffer) const
 {
 	uint ret = 0;
 
@@ -366,7 +366,7 @@ uint ModuleFileLoad::Load(const char* file, char** buffer) const
 	return ret;
 }
 
-bool ModuleFileLoad::DuplicateFile(const char* file, const char* dstFolder, std::string& relativePath)
+bool FileSystem::DuplicateFile(const char* file, const char* dstFolder, std::string& relativePath)
 {
 	std::string fileStr, extensionStr;
 	SplitFilePath(file, nullptr, &fileStr, &extensionStr);
@@ -378,7 +378,7 @@ bool ModuleFileLoad::DuplicateFile(const char* file, const char* dstFolder, std:
 
 }
 
-bool ModuleFileLoad::DuplicateFile(const char* srcFile, const char* dstFile)
+bool FileSystem::DuplicateFile(const char* srcFile, const char* dstFile)
 {
 	//TODO: Compare performance to calling Load(srcFile) and then Save(dstFile)
 	std::ifstream src;
@@ -412,7 +412,7 @@ int close_sdl_rwops(SDL_RWops* rw)
 }
 
 // Save a whole buffer to disk
-uint ModuleFileLoad::Save(const char* file, const void* buffer, unsigned int size, bool append) const
+uint FileSystem::Save(const char* file, const void* buffer, unsigned int size, bool append) const
 {
 	unsigned int ret = 0;
 
@@ -448,7 +448,7 @@ uint ModuleFileLoad::Save(const char* file, const void* buffer, unsigned int siz
 	return ret;
 }
 
-bool ModuleFileLoad::Remove(const char* file)
+bool FileSystem::Remove(const char* file)
 {
 	bool ret = false;
 
@@ -476,12 +476,12 @@ bool ModuleFileLoad::Remove(const char* file)
 	return ret;
 }
 
-uint64 ModuleFileLoad::GetLastModTime(const char* filename)
+uint64 FileSystem::GetLastModTime(const char* filename)
 {
 	return PHYSFS_getLastModTime(filename);
 }
 
-std::string ModuleFileLoad::GetUniqueName(const char* path, const char* name) const
+std::string FileSystem::GetUniqueName(const char* path, const char* name) const
 {
 	//TODO: modify to distinguix files and dirs?
 	std::vector<std::string> files, dirs;

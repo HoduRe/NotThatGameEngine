@@ -2,20 +2,20 @@
 
 Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter(0), framerate(0), consoleVecSize(0)
 {
-	window = new ModuleWindow(this);
-	input = new ModuleInput(this);
-	audio = new ModuleAudio(this, true);
-	scene_intro = new ModuleSceneIntro(this);
-	renderer3D = new ModuleRenderer3D(this);
-	camera = new ModuleCamera3D(this);
-	physics = new ModulePhysics3D(this);
-	player = new ModulePlayer(this);
-	reset = new ModuleReset(this);
-	imGui = new ModuleImGui(this);
-	eventManager = new ModuleEventManager(this);
-	primitives = new ModulePrimitives(this);
-	fileLoad = new ModuleFileLoad(this);
-	modelManager = new ModelManager(this);
+	window = new Window(this);
+	input = new Input(this);
+	audio = new Audio(this, true);
+	scene_intro = new Scene(this);
+	renderer3D = new Renderer3D(this);
+	camera = new Camera3D(this);
+	physics = new Physics3D(this);
+	player = new Player(this);
+	reset = new ResetModule(this);
+	imGui = new ManagerImGui(this);
+	eventManager = new ManagerEvent(this);
+	primitives = new ManagerPrimitives(this);
+	fileLoad = new FileSystem(this);
+	modelManager = new ManagerModel(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order

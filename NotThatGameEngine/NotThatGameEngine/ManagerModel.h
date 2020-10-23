@@ -1,5 +1,5 @@
-#ifndef __MODELMANAGER_H__
-#define __MODELMANAGER_H__
+#ifndef __ManagerModel_H__
+#define __ManagerModel_H__
 
 #include "Module.h"
 
@@ -58,13 +58,13 @@ public:
 
 };
 
-class ModelManager : public Module
+class ManagerModel : public Module
 {
 
 public:
 
-	ModelManager(Application* app, bool start_enabled = true);
-	~ModelManager();
+	ManagerModel(Application* app, bool start_enabled = true);
+	~ManagerModel();
 
 	bool Init();
 	bool Start();

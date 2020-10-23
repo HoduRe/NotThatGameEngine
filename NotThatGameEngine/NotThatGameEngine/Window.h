@@ -1,19 +1,19 @@
-#ifndef __ModuleWindow_H__
-#define __ModuleWindow_H__
+#ifndef __Window_H__
+#define __Window_H__
 
 #include "Module.h"
 #include "SDL/include/SDL.h"
 
 class Application;
 
-class ModuleWindow : public Module
+class Window : public Module
 {
 public:
 
-	ModuleWindow(Application* app, bool start_enabled = true);
+	Window(Application* app, bool start_enabled = true);
 
 	// Destructor
-	virtual ~ModuleWindow();
+	virtual ~Window();
 
 	bool Init();
 	update_status PostUpdate(float dt);
@@ -38,4 +38,4 @@ private:
 
 };
 
-#endif // __ModuleWindow_H__
+#endif // __Window_H__

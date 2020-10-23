@@ -1,15 +1,15 @@
 #include "SDL/include/SDL.h"
-#include "ModuleAudio.h"
+#include "Audio.h"
 
-ModuleAudio::ModuleAudio(Application* app, bool start_enabled) : Module(app, start_enabled), sfxAdjustment(0), musicAdjustment(0)
+Audio::Audio(Application* app, bool start_enabled) : Module(app, start_enabled), sfxAdjustment(0), musicAdjustment(0)
 {}
 
 // Destructor
-ModuleAudio::~ModuleAudio()
+Audio::~Audio()
 {}
 
 // Called before render is available
-bool ModuleAudio::Init()
+bool Audio::Init()
 {
 	bool ret = true;
 	SDL_Init(0);
@@ -23,14 +23,14 @@ bool ModuleAudio::Init()
 }
 
 // Called before quitting
-bool ModuleAudio::CleanUp()
+bool Audio::CleanUp()
 {
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
 	return true;
 }
 
 // Play a music file
-bool ModuleAudio::PlayMusic(const char* path, float fade_time)
+bool Audio::PlayMusic(const char* path, float fade_time)
 {
 	bool ret = true;
 
@@ -38,7 +38,7 @@ bool ModuleAudio::PlayMusic(const char* path, float fade_time)
 }
 
 // Load WAV
-unsigned int ModuleAudio::LoadFx(const char* path)
+unsigned int Audio::LoadFx(const char* path)
 {
 	unsigned int ret = 0;
 
@@ -46,7 +46,7 @@ unsigned int ModuleAudio::LoadFx(const char* path)
 }
 
 // Play WAV
-bool ModuleAudio::PlayFx(unsigned int id, int repeat)
+bool Audio::PlayFx(unsigned int id, int repeat)
 {
 	bool ret = false;
 

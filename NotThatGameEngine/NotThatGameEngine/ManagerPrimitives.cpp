@@ -1,12 +1,12 @@
-#include "ModulePrimitives.h"
+#include "ManagerPrimitives.h"
 
-ModulePrimitives::ModulePrimitives(Application* app, bool start_enabled) : Module(app, start_enabled) {}
-
-
-ModulePrimitives::~ModulePrimitives() {}
+ManagerPrimitives::ManagerPrimitives(Application* app, bool start_enabled) : Module(app, start_enabled) {}
 
 
-bool ModulePrimitives::Init() {
+ManagerPrimitives::~ManagerPrimitives() {}
+
+
+bool ManagerPrimitives::Init() {
 
 	bool ret = true;
 
@@ -19,7 +19,7 @@ bool ModulePrimitives::Init() {
 }
 
 
-bool ModulePrimitives::CleanUp() {
+bool ManagerPrimitives::CleanUp() {
 
 	for (int i = 0; i < primitives.size(); i++) {
 		glDeleteBuffers(1, (GLuint*)&primitives[i].idVertex);
@@ -30,13 +30,13 @@ bool ModulePrimitives::CleanUp() {
 }
 
 
-update_status ModulePrimitives::PreUpdate(float dt) {
+update_status ManagerPrimitives::PreUpdate(float dt) {
 
 	return update_status::UPDATE_CONTINUE;
 }
 
 
-update_status ModulePrimitives::Update(float dt) {
+update_status ManagerPrimitives::Update(float dt) {
 
 	CheckListener(this);
 
@@ -44,7 +44,7 @@ update_status ModulePrimitives::Update(float dt) {
 }
 
 
-update_status ModulePrimitives::PostUpdate(float dt) {
+update_status ManagerPrimitives::PostUpdate(float dt) {
 
 	CheckListener(this);
 
@@ -56,7 +56,7 @@ update_status ModulePrimitives::PostUpdate(float dt) {
 }
 
 
-void ModulePrimitives::ExecuteEvent(EVENT_ENUM eventId) {
+void ManagerPrimitives::ExecuteEvent(EVENT_ENUM eventId) {
 
 
 }

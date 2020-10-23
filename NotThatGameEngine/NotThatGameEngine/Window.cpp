@@ -1,15 +1,15 @@
 #include "Application.h"
 
-ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled), window(NULL), screen_surface(NULL), width(SCREEN_WIDTH* SCREEN_SIZE), height(SCREEN_HEIGHT* SCREEN_SIZE)
+Window::Window(Application* app, bool start_enabled) : Module(app, start_enabled), window(NULL), screen_surface(NULL), width(SCREEN_WIDTH* SCREEN_SIZE), height(SCREEN_HEIGHT* SCREEN_SIZE)
 {}
 
 // Destructor
-ModuleWindow::~ModuleWindow()
+Window::~Window()
 {
 }
 
 // Called before render is available
-bool ModuleWindow::Init()
+bool Window::Init()
 {
 	bool ret = true;
 
@@ -68,7 +68,7 @@ bool ModuleWindow::Init()
 }
 
 // Called before quitting
-bool ModuleWindow::CleanUp()
+bool Window::CleanUp()
 {
 	//Destroy window
 	if(window != NULL)
@@ -82,7 +82,7 @@ bool ModuleWindow::CleanUp()
 }
 
 
-update_status ModuleWindow::PostUpdate(float dt) {
+update_status Window::PostUpdate(float dt) {
 
 	CheckListener(this);
 
@@ -90,14 +90,14 @@ update_status ModuleWindow::PostUpdate(float dt) {
 }
 
 
-void ModuleWindow::SetTitle(const char* title)
+void Window::SetTitle(const char* title)
 {
 	SDL_SetWindowTitle(window, title);
 }
 
 
 
-void ModuleWindow::ExecuteEvent(EVENT_ENUM eventId) {
+void Window::ExecuteEvent(EVENT_ENUM eventId) {
 
 	switch (eventId) {
 

@@ -3,13 +3,13 @@
 #pragma comment( lib, "Assimp/libx86/assimp.lib" )
 
 
-ModelManager::ModelManager(Application* app, bool start_enabled) : Module(app, start_enabled), stream(), testMesh() {}
+ManagerModel::ManagerModel(Application* app, bool start_enabled) : Module(app, start_enabled), stream(), testMesh() {}
 
 
-ModelManager::~ModelManager() {}
+ManagerModel::~ManagerModel() {}
 
 
-bool ModelManager::Init() {			// OpenGL has not been initialized yet
+bool ManagerModel::Init() {			// OpenGL has not been initialized yet
 
 	bool ret = true;
 
@@ -20,7 +20,7 @@ bool ModelManager::Init() {			// OpenGL has not been initialized yet
 }
 
 
-bool ModelManager::Start() {
+bool ManagerModel::Start() {
 
 	//LoadModel("Library/Models/warrior.FBX");
 	//LoadModel("Library/Models/BakerHouse.fbx");
@@ -29,7 +29,7 @@ bool ModelManager::Start() {
 }
 
 
-bool ModelManager::CleanUp() {
+bool ManagerModel::CleanUp() {
 
 	aiDetachAllLogStreams();
 
@@ -37,13 +37,13 @@ bool ModelManager::CleanUp() {
 }
 
 
-update_status ModelManager::PreUpdate(float dt) {
+update_status ManagerModel::PreUpdate(float dt) {
 
 	return update_status::UPDATE_CONTINUE;
 }
 
 
-update_status ModelManager::Update(float dt) {
+update_status ManagerModel::Update(float dt) {
 
 	CheckListener(this);
 
@@ -51,7 +51,7 @@ update_status ModelManager::Update(float dt) {
 }
 
 
-update_status ModelManager::PostUpdate(float dt) {
+update_status ManagerModel::PostUpdate(float dt) {
 
 	CheckListener(this);
 
@@ -61,13 +61,13 @@ update_status ModelManager::PostUpdate(float dt) {
 }
 
 
-void ModelManager::ExecuteEvent(EVENT_ENUM eventId) {
+void ManagerModel::ExecuteEvent(EVENT_ENUM eventId) {
 
 
 }
 
 
-void ModelManager::LoadModel(std::string path) {
+void ManagerModel::LoadModel(std::string path) {
 
 	const aiScene* scene;
 	Assimp::Importer importer;

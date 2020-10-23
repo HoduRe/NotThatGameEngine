@@ -1,9 +1,9 @@
 #include "Application.h"
-#include "ModuleImGui.h"
+#include "ManagerImGui.h"
 
 #define MAX_KEYS 300
 
-ModuleInput::ModuleInput(Application* app, bool start_enabled) : Module(app, start_enabled)
+Input::Input(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	keyboard = new KEY_STATE[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(KEY_STATE) * MAX_KEYS);
@@ -11,13 +11,13 @@ ModuleInput::ModuleInput(Application* app, bool start_enabled) : Module(app, sta
 }
 
 // Destructor
-ModuleInput::~ModuleInput()
+Input::~Input()
 {
 	delete[] keyboard;
 }
 
 // Called before render is available
-bool ModuleInput::Init()
+bool Input::Init()
 {
 	bool ret = true;
 	SDL_Init(0);
@@ -31,7 +31,7 @@ bool ModuleInput::Init()
 }
 
 // Called every draw update
-update_status ModuleInput::PreUpdate(float dt)
+update_status Input::PreUpdate(float dt)
 {
 	SDL_PumpEvents();
 
@@ -125,32 +125,32 @@ update_status ModuleInput::PreUpdate(float dt)
 }
 
 // Called before quitting
-bool ModuleInput::CleanUp()
+bool Input::CleanUp()
 {
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
 }
 
 
-KEY_STATE ModuleInput::GetKey(int id) const { return keyboard[id]; }
+KEY_STATE Input::GetKey(int id) const { return keyboard[id]; }
 
 
-KEY_STATE ModuleInput::GetMouseButton(int id) const { return mouse_buttons[id]; }
+KEY_STATE Input::GetMouseButton(int id) const { return mouse_buttons[id]; }
 
 
-int ModuleInput::GetMouseX() const { return mouse_x; }
+int Input::GetMouseX() const { return mouse_x; }
 
 
-int ModuleInput::GetMouseY() const { return mouse_y; }
+int Input::GetMouseY() const { return mouse_y; }
 
 
-int ModuleInput::GetMouseZ() const { return mouse_z; }
+int Input::GetMouseZ() const { return mouse_z; }
 
 
-int ModuleInput::GetMouseXMotion() const { return mouse_x_motion; }
+int Input::GetMouseXMotion() const { return mouse_x_motion; }
 
 
-int ModuleInput::GetMouseYMotion() const { return mouse_y_motion; }
+int Input::GetMouseYMotion() const { return mouse_y_motion; }
 
 
 

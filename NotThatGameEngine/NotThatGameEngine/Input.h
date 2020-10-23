@@ -1,5 +1,5 @@
-#ifndef __MODULEINPUT_
-#define __MODULEINPUT__
+#ifndef __Input_h_
+#define __Input_h__
 
 #include "Module.h"
 
@@ -13,12 +13,12 @@ enum KEY_STATE
 	KEY_UP
 };
 
-class ModuleInput : public Module
+class Input : public Module
 {
 public:
 	
-	ModuleInput(Application* app, bool start_enabled = true);
-	~ModuleInput();
+	Input(Application* app, bool start_enabled = true);
+	~Input();
 
 	bool Init();
 	update_status PreUpdate(float dt);

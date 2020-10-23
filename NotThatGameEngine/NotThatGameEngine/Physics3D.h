@@ -1,14 +1,14 @@
-#ifndef __MODULEPHYSICS3D__
-#define __MODULEPHYSICS3D__
+#ifndef __Physics3D_h__
+#define __Physics3D_h__
 #pragma once
 #include "Module.h"
 #include "MathGeoLib/include/MathGeoLib.h"
 
-class ModulePhysics3D : public Module
+class Physics3D : public Module
 {
 public:
-	ModulePhysics3D(Application* app, bool start_enabled = true);
-	~ModulePhysics3D();
+	Physics3D(Application* app, bool start_enabled = true);
+	~Physics3D();
 
 	bool Init();
 	bool Start();

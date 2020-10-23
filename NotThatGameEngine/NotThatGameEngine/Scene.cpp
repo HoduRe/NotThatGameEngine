@@ -1,14 +1,14 @@
 #include "Application.h"
 
-ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
+Scene::Scene(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 }
 
-ModuleSceneIntro::~ModuleSceneIntro()
+Scene::~Scene()
 {}
 
 // Load assets
-bool ModuleSceneIntro::Start()
+bool Scene::Start()
 {
 	bool ret = true;
 
@@ -19,13 +19,13 @@ bool ModuleSceneIntro::Start()
 }
 
 // Load assets
-bool ModuleSceneIntro::CleanUp()
+bool Scene::CleanUp()
 {
 	return true;
 }
 
 // Update
-update_status ModuleSceneIntro::Update(float dt)
+update_status Scene::Update(float dt)
 {
 
 	return update_status::UPDATE_CONTINUE;

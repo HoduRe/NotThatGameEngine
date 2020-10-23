@@ -2,7 +2,7 @@
 
 #include <shellapi.h>
 
-ModuleImGui::ModuleImGui(Application* app, bool start_enabled) : Module(app, start_enabled), SDL(nullptr), MathGeoLib(nullptr), sliderDt(0.0f), appName("NotThatGameEngine"),
+ManagerImGui::ManagerImGui(Application* app, bool start_enabled) : Module(app, start_enabled), SDL(nullptr), MathGeoLib(nullptr), sliderDt(0.0f), appName("NotThatGameEngine"),
 sliderBrightness(1.0f), sliderWidth(SCREEN_WIDTH* SCREEN_SIZE), sliderHeight(SCREEN_HEIGHT* SCREEN_SIZE), vsync(true),
 fullscreen(WIN_FULLSCREEN), resizable(WIN_RESIZABLE), borderless(WIN_BORDERLESS), fullDesktop(WIN_FULLSCREEN_DESKTOP), refreshRate(0),
 AVX(false), AVX2(false), AltiVec(false), MMX(false), RDTSC(false), SSE(false), SSE2(false), SSE3(false), SSE41(false), SSE42(false),
@@ -10,11 +10,11 @@ showDemoWindow(false), defaultButtonsMenu(false), aboutWindow(false), configMenu
 {}
 
 // Destructor
-ModuleImGui::~ModuleImGui()
+ManagerImGui::~ManagerImGui()
 {}
 
 // Render not available yet----------------------------------
-bool ModuleImGui::Init()
+bool ManagerImGui::Init()
 {
 	bool ret = true;
 
@@ -57,13 +57,13 @@ bool ModuleImGui::Init()
 }
 
 // ---------------------------------------------------------
-bool ModuleImGui::Start()
+bool ManagerImGui::Start()
 {
 	return true;
 }
 
 // ---------------------------------------------------------
-update_status ModuleImGui::PreUpdate(float dt)
+update_status ManagerImGui::PreUpdate(float dt)
 {
 	ImVec4 clear_color = ImVec4(0.0f, 0.15f, 0.10f, 1.00f);
 
@@ -76,7 +76,7 @@ update_status ModuleImGui::PreUpdate(float dt)
 }
 
 // ---------------------------------------------------------
-update_status ModuleImGui::Update(float dt)
+update_status ManagerImGui::Update(float dt)
 {
 	update_status ret = update_status::UPDATE_CONTINUE;
 	update_status ret2 = update_status::UPDATE_CONTINUE;
@@ -101,7 +101,7 @@ update_status ModuleImGui::Update(float dt)
 }
 
 // ---------------------------------------------------------
-update_status ModuleImGui::PostUpdate(float dt)
+update_status ManagerImGui::PostUpdate(float dt)
 {
 	update_status ret = update_status::UPDATE_CONTINUE;
 
@@ -115,7 +115,7 @@ update_status ModuleImGui::PostUpdate(float dt)
 }
 
 // Called before quitting
-bool ModuleImGui::CleanUp()
+bool ManagerImGui::CleanUp()
 {
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
@@ -125,7 +125,7 @@ bool ModuleImGui::CleanUp()
 }
 
 
-update_status ModuleImGui::DefaultButtons()
+update_status ManagerImGui::DefaultButtons()
 {
 	static bool wireframe = false;
 
@@ -183,7 +183,7 @@ update_status ModuleImGui::DefaultButtons()
 }
 
 
-void ModuleImGui::SetMainMenuBar()
+void ManagerImGui::SetMainMenuBar()
 {
 
 	if (ImGui::BeginMainMenuBar()) {
@@ -218,7 +218,7 @@ void ModuleImGui::SetMainMenuBar()
 }
 
 
-void ModuleImGui::AboutMenu(bool* aboutMenu) {
+void ManagerImGui::AboutMenu(bool* aboutMenu) {
 
 	ImGui::Begin("About", aboutMenu);
 	ImGui::Text("NotThatGameEngine\n\nAn attempt to create a usable game engine >:3\nBy Ferran-Roger Basart i Bosch:");
@@ -235,7 +235,7 @@ void ModuleImGui::AboutMenu(bool* aboutMenu) {
 }
 
 
-update_status ModuleImGui::DefaultWindow() {
+update_status ManagerImGui::DefaultWindow() {
 
 	update_status ret = update_status::UPDATE_CONTINUE;
 	static char organization[25] = "UPC CITM";
@@ -314,7 +314,7 @@ update_status ModuleImGui::DefaultWindow() {
 }
 
 
-void ModuleImGui::ConsoleWindow() {
+void ManagerImGui::ConsoleWindow() {
 
 	if (consoleMenu) {
 		ImGui::Begin("Console", &consoleMenu);
@@ -327,7 +327,7 @@ void ModuleImGui::ConsoleWindow() {
 }
 
 
-void ModuleImGui::SceneWindow() {
+void ManagerImGui::SceneWindow() {
 
 	ImVec2 vec2(App->window->width * 0.75, App->window->height * 0.75);
 
@@ -342,6 +342,6 @@ void ModuleImGui::SceneWindow() {
 }
 
 
-std::string ModuleImGui::AppName() { return appName; }
+std::string ManagerImGui::AppName() { return appName; }
 
 

@@ -1,14 +1,14 @@
 #include "Application.h"
 
-ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled), context(nullptr), frameBufferId(0), sceneTextureId(0), depthStencilId(0)
+Renderer3D::Renderer3D(Application* app, bool start_enabled) : Module(app, start_enabled), context(nullptr), frameBufferId(0), sceneTextureId(0), depthStencilId(0)
 {}
 
 // Destructor
-ModuleRenderer3D::~ModuleRenderer3D()
+Renderer3D::~Renderer3D()
 {}
 
 // Called before render is available
-bool ModuleRenderer3D::Init()
+bool Renderer3D::Init()
 {
 	bool ret = true;
 
@@ -91,7 +91,7 @@ bool ModuleRenderer3D::Init()
 }
 
 // PreUpdate: clear buffer
-update_status ModuleRenderer3D::PreUpdate(float dt)
+update_status Renderer3D::PreUpdate(float dt)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	glLoadIdentity();
@@ -117,7 +117,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 }
 
 // PostUpdate present buffer to screen
-update_status ModuleRenderer3D::PostUpdate(float dt)
+update_status Renderer3D::PostUpdate(float dt)
 {
 	update_status ret = update_status::UPDATE_CONTINUE;
 
@@ -138,7 +138,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 }
 
 // Called before quitting
-bool ModuleRenderer3D::CleanUp()
+bool Renderer3D::CleanUp()
 {
 	glDeleteTextures(1, &sceneTextureId);
 	glDeleteFramebuffers(1, &frameBufferId);
@@ -149,7 +149,7 @@ bool ModuleRenderer3D::CleanUp()
 }
 
 
-void ModuleRenderer3D::OnResize(int width, int height)
+void Renderer3D::OnResize(int width, int height)
 {
 	glViewport(0, 0, width, height);
 
@@ -186,7 +186,7 @@ void ModuleRenderer3D::OnResize(int width, int height)
 }
 
 
-void ModuleRenderer3D::DrawGrid() {
+void Renderer3D::DrawGrid() {
 	glLineWidth(1.0f);
 
 	glBegin(GL_LINES);
@@ -206,7 +206,7 @@ void ModuleRenderer3D::DrawGrid() {
 }
 
 
-void ModuleRenderer3D::DrawMesh(Mesh mesh) {
+void Renderer3D::DrawMesh(Mesh mesh) {
 	
 	for (int i = 0; i < mesh.subMeshes.size(); i++) {
 

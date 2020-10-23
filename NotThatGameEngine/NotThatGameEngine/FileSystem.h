@@ -1,5 +1,5 @@
-#ifndef __MODULEFILELOAD_H__
-#define __MODULEFILELOAD_H__
+#ifndef __FileSystem_H__
+#define __FileSystem_H__
 
 #include "Module.h"
 
@@ -11,13 +11,13 @@ struct aiFileIO;
 class Config;
 struct PathNode;
 
-class ModuleFileLoad : public Module
+class FileSystem : public Module
 {
 
 public:
 
-	ModuleFileLoad(Application* app, bool start_enabled = true);
-	~ModuleFileLoad();
+	FileSystem(Application* app, bool start_enabled = true);
+	~FileSystem();
 
 	bool Init();
 	update_status PreUpdate(float dt);

@@ -20,12 +20,12 @@ public:
 	EVENT_ENUM idTrigger;
 };
 
-class ModuleEventManager : public Module
+class ManagerEvent : public Module
 {
 public:
 	
-	ModuleEventManager(Application* app, bool start_enabled = true);
-	virtual ~ModuleEventManager();
+	ManagerEvent(Application* app, bool start_enabled = true);
+	virtual ~ManagerEvent();
 
 	void GenerateEvent(EVENT_ENUM eventId, EVENT_ENUM eventTriggerId = EVENT_ENUM::NULL_EVENT);
 	bool EventRegister(EVENT_ENUM event, Module* mod);

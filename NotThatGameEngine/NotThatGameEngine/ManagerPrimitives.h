@@ -1,16 +1,16 @@
-#ifndef __MODULEPRIMITIVES_H__
-#define __MODULEPRIMITIVES_H__
+#ifndef __ManagerPrimitives_H__
+#define __ManagerPrimitives_H__
 
 #include "Module.h"
 #include "Primitives.h"
 
-class ModulePrimitives : public Module
+class ManagerPrimitives : public Module
 {
 
 public:
 
-	ModulePrimitives(Application* app, bool start_enabled = true);
-	~ModulePrimitives();
+	ManagerPrimitives(Application* app, bool start_enabled = true);
+	~ManagerPrimitives();
 
 	bool Init();
 	update_status PreUpdate(float dt);
