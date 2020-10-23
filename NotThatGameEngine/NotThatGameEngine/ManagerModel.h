@@ -78,7 +78,7 @@ public:
 
 private:
 
-	void ExecuteEvent(EVENT_ENUM eventId);
+	bool ExecuteEvent(EVENT_ENUM eventId, void* var);
 
 private:
 	aiLogStream stream;

@@ -20,7 +20,7 @@ public:
 private:
 
 	int GenerateId();
-	void ExecuteEvent(EVENT_ENUM _event);
+	bool ExecuteEvent(EVENT_ENUM _event, void* var);
 
 public:
 

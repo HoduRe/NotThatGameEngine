@@ -36,7 +36,7 @@ public:
 
 	bool CheckListener(Module* mod);
 
-	virtual void ExecuteEvent(EVENT_ENUM eventId);
+	virtual bool ExecuteEvent(EVENT_ENUM eventId, void* var = nullptr);
 
 	// Module activation
 	bool IsEnabled() const;

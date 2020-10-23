@@ -32,6 +32,7 @@ bool ManagerEvent::CleanUp()
 	CleanListenerMap();
 
 	eventVector.clear();
+	variablesVector.clear();
 
 	return true;
 }
@@ -61,7 +62,7 @@ void ManagerEvent::GenerateEvent(EVENT_ENUM eventId, EVENT_ENUM eventTriggerId, 
 
 	}
 
-
+	if (var != nullptr) { variablesVector.push_back(VariableStorage(eventId, var)); }
 
 }
 
@@ -210,4 +211,17 @@ void  ManagerEvent::CleanListenerMap()
 {
 	eventListenersMap.clear();
 }
+
+
+void ManagerEvent::CleanVariable(EVENT_ENUM event) {
+
+	for (int i = 0; i < variablesVector.size(); i++) { if (variablesVector[i].id == event) { variablesVector.erase(variablesVector.begin() + i); } }
+
+}
+
+
+VariableStorage::VariableStorage(EVENT_ENUM _id, void* _var) : id(_id), varBuffer(_var){}
+
+
+VariableStorage::~VariableStorage() { varBuffer = nullptr; }
 

@@ -274,7 +274,7 @@ update_status ManagerImGui::DefaultWindow() {
 		if (ImGui::CollapsingHeader("Window")) {
 			if (ImGui::Checkbox("Active", &appActive)) { if (appActive == false) { ret = update_status::UPDATE_STOP; } }
 			if (ImGui::SliderFloat("Brightness", &sliderBrightness, 0.0f, 1.0f)) { App->eventManager->GenerateEvent(EVENT_ENUM::SCREEN_BRIGHTNESS); }
-			if (ImGui::SliderInt("Width", &sliderWidth, 0, 1980)) { App->eventManager->GenerateEvent(EVENT_ENUM::CHANGE_WINDOW_WIDTH); }
+			if (ImGui::SliderInt("Width", &sliderWidth, 0, 1980)) { App->eventManager->GenerateEvent(EVENT_ENUM::CHANGE_WINDOW_WIDTH, EVENT_ENUM::NULL_EVENT, &sliderWidth); }
 			if (ImGui::SliderInt("Height", &sliderHeight, 0, 1280)) { App->eventManager->GenerateEvent(EVENT_ENUM::CHANGE_WINDOW_HEIGHT); }
 			ImGui::Text("Refresh rate: %i", refreshRate);
 			if (ImGui::Checkbox("Fullscreen", &fullscreen)) { App->eventManager->GenerateEvent(EVENT_ENUM::FULLSCREEN); }

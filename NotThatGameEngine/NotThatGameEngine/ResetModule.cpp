@@ -12,10 +12,10 @@ bool ResetModule::Start() {
 update_status ResetModule::Update(float dt) {	// IF YOU ARE TO USE THIS, UPDATE WITH THE NEW MODULES
 	if (reset == true) {
 		App->player->CleanUp();
-		App->scene_intro->CleanUp();
+		App->engineScene->CleanUp();
 		App->physics->CleanUp();
 		App->physics->Start();
-		App->scene_intro->Start();
+		App->engineScene->Start();
 		App->player->Start();
 		reset = false;
 	}

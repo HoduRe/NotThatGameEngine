@@ -6,7 +6,7 @@
 }*/
 
 
-EditorScene::EditorScene(Application* app, bool start_enabled = true) : Module(app, start_enabled), gameObjectIdCount(0), gameObjectVec() {}
+EditorScene::EditorScene(Application* app, bool start_enabled) : Module(app, start_enabled), gameObjectIdCount(0), gameObjectVec() {}
 
 
 EditorScene::~EditorScene() {
@@ -22,6 +22,7 @@ bool EditorScene::Init() {
 
 	App->eventManager->EventRegister(EVENT_ENUM::DELETE_GAMEOBJECT_COMPONENT, this);
 
+	return true;
 }
 
 
@@ -54,7 +55,7 @@ GameObject* EditorScene::AddGameObject(int id, std::string _name, GameObject* pa
 }
 
 
-void EditorScene::ExecuteEvent(EVENT_ENUM eventId) {
+bool EditorScene::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
 	switch (eventId) {
 
@@ -65,4 +66,6 @@ void EditorScene::ExecuteEvent(EVENT_ENUM eventId) {
 	default:
 		break;
 	}
+
+	return false;
 }

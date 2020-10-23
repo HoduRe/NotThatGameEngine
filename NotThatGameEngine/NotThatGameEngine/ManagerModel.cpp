@@ -59,15 +59,11 @@ update_status ManagerModel::PreUpdate(float dt) {
 
 update_status ManagerModel::Update(float dt) {
 
-	CheckListener(this);
-
 	return update_status::UPDATE_CONTINUE;
 }
 
 
 update_status ManagerModel::PostUpdate(float dt) {
-
-	CheckListener(this);
 
 	App->renderer3D->DrawMesh(testMesh);
 
@@ -75,9 +71,9 @@ update_status ManagerModel::PostUpdate(float dt) {
 }
 
 
-void ManagerModel::ExecuteEvent(EVENT_ENUM eventId) {
+bool ManagerModel::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
-
+	return false;
 }
 
 

@@ -20,6 +20,19 @@ public:
 	EVENT_ENUM idTrigger;
 };
 
+
+class VariableStorage {
+	
+public:
+
+	VariableStorage(EVENT_ENUM _id, void* _var);
+	~VariableStorage();
+
+	void* varBuffer;
+	EVENT_ENUM id;
+
+};
+
 class ManagerEvent : public Module
 {
 public:
@@ -32,12 +45,13 @@ public:
 	bool EventUnRegister(EVENT_ENUM event, Module* mod);
 
 	void CleanListenerMap();
+	void CleanVariable(EVENT_ENUM event);
 
 	bool CleanUp();
 
 public:
 
-	Component componentBuffer;
+	std::vector<VariableStorage> variablesVector;
 
 private:
 

@@ -1,4 +1,5 @@
 #include "Module.h"
+#include "Application.h"
 
 Module::Module(Application* parent, bool start_enabled) : App(parent), enabled(start_enabled){}
 
@@ -83,16 +84,19 @@ void Module::RemoveEvent(EVENT_ENUM eventId)
 bool Module::CheckListener(Module* mod)
 {
 	int numElem = listener.size();
+	int vectorBuffer = -1;
+	void* ptr = nullptr;
 
-	if (listener.size() == 0)
-	{
-		return false;
-	}
+	if (listener.size() == 0) { return false; }
+	for (int i = 0; i < numElem; i++) {
 
-	for (int i = 0; i < numElem; i++)
-	{
-		mod->ExecuteEvent(listener[i]);
-		numElem = listener.size();
+		for (int j = 0; j < App->eventManager->variablesVector.size(); j++) {
+			if (App->eventManager->variablesVector[j].id == listener[i]) {
+				ptr = App->eventManager->variablesVector[j].varBuffer;
+				vectorBuffer = j;
+			}
+		}
+		if (mod->ExecuteEvent(listener[i], ptr) && vectorBuffer != -1) { App->eventManager->variablesVector.erase(App->eventManager->variablesVector.begin() + vectorBuffer); }
 	}
 
 	listener.clear();
@@ -101,8 +105,7 @@ bool Module::CheckListener(Module* mod)
 }
 
 
-void Module::ExecuteEvent(EVENT_ENUM eventId)
-{}
+bool Module::ExecuteEvent(EVENT_ENUM eventId, void* var) { return false; }
 
 
 bool Module::IsEnabled() const { return enabled; }

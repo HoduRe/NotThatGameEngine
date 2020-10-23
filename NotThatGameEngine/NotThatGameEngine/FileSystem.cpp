@@ -75,7 +75,7 @@ update_status FileSystem::PostUpdate(float dt) {
 }
 
 
-void FileSystem::ExecuteEvent(EVENT_ENUM eventId) {
+bool FileSystem::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
 	char* filePath;
 
@@ -91,6 +91,7 @@ void FileSystem::ExecuteEvent(EVENT_ENUM eventId) {
 		break;
 	}
 
+	return false;
 }
 
 

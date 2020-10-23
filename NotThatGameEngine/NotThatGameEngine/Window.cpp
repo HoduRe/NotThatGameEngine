@@ -97,7 +97,7 @@ void Window::SetTitle(const char* title)
 
 
 
-void Window::ExecuteEvent(EVENT_ENUM eventId) {
+bool Window::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
 	switch (eventId) {
 
@@ -109,8 +109,9 @@ void Window::ExecuteEvent(EVENT_ENUM eventId) {
 
 	case EVENT_ENUM::CHANGE_WINDOW_WIDTH:
 
-		width = App->imGui->sliderWidth * SCREEN_SIZE;
+		width = *static_cast<int*>(var) * SCREEN_SIZE;
 		SDL_SetWindowSize(window, width, height);
+		return true;
 
 		break;
 
@@ -175,6 +176,8 @@ void Window::ExecuteEvent(EVENT_ENUM eventId) {
 	}
 
 	App->renderer3D->OnResize(width, height);
+
+	return false;
 }
 
 

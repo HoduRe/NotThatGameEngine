@@ -38,15 +38,11 @@ update_status ManagerPrimitives::PreUpdate(float dt) {
 
 update_status ManagerPrimitives::Update(float dt) {
 
-	CheckListener(this);
-
 	return update_status::UPDATE_CONTINUE;
 }
 
 
 update_status ManagerPrimitives::PostUpdate(float dt) {
-
-	CheckListener(this);
 
 	for (int i = 0; i < primitives.size(); i++) {
 		primitives[i].BlitPrimitive();
@@ -56,8 +52,9 @@ update_status ManagerPrimitives::PostUpdate(float dt) {
 }
 
 
-void ManagerPrimitives::ExecuteEvent(EVENT_ENUM eventId) {
+bool ManagerPrimitives::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
+	return false;
 
 }
 
