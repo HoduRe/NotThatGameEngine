@@ -36,7 +36,7 @@ bool ManagerEvent::CleanUp()
 	return true;
 }
 
-void ManagerEvent::GenerateEvent(EVENT_ENUM eventId, EVENT_ENUM eventTriggerId)
+void ManagerEvent::GenerateEvent(EVENT_ENUM eventId, EVENT_ENUM eventTriggerId, void* var)
 {
 
 	if (eventId != EVENT_ENUM::NULL_EVENT)
@@ -60,6 +60,8 @@ void ManagerEvent::GenerateEvent(EVENT_ENUM eventId, EVENT_ENUM eventTriggerId)
 		}
 
 	}
+
+
 
 }
 

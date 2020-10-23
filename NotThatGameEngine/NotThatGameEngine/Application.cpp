@@ -5,7 +5,7 @@ Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter
 	window = new Window(this);
 	input = new Input(this);
 	audio = new Audio(this, true);
-	scene_intro = new Scene(this);
+	engineScene = new Scene(this);
 	renderer3D = new Renderer3D(this);
 	camera = new Camera3D(this);
 	physics = new Physics3D(this);
@@ -16,6 +16,7 @@ Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter
 	primitives = new ManagerPrimitives(this);
 	fileLoad = new FileSystem(this);
 	modelManager = new ManagerModel(this);
+	editorScene = new EditorScene(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -30,7 +31,8 @@ Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter
 	AddModule(input);
 	AddModule(audio);
 	AddModule(physics);
-	AddModule(scene_intro);
+	AddModule(engineScene);
+	AddModule(editorScene);
 	AddModule(player);
 	AddModule(modelManager);
 

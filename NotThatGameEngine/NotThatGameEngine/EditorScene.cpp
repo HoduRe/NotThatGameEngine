@@ -1,5 +1,4 @@
-#include "EditorScene.h"
-
+#include "Application.h"
 
 /*EditorScene::EditorScene() : root(nullptr)	// TODO make the tree structure. R_Scene actually just creates the first object of a gameobject hierarchy, but the vector of gameobjects is from Scene (this)
 {
@@ -7,7 +6,7 @@
 }*/
 
 
-EditorScene::EditorScene() : gameObjectIdCount(0), gameObjectVec() {}
+EditorScene::EditorScene(Application* app, bool start_enabled = true) : Module(app, start_enabled), gameObjectIdCount(0), gameObjectVec() {}
 
 
 EditorScene::~EditorScene() {
@@ -19,10 +18,27 @@ EditorScene::~EditorScene() {
 }
 
 
-void EditorScene::Update(float dt)
+bool EditorScene::Init() {
+
+	App->eventManager->EventRegister(EVENT_ENUM::DELETE_GAMEOBJECT_COMPONENT, this);
+
+}
+
+
+update_status EditorScene::PreUpdate(float dt) {
+
+	CheckListener(this);
+	return update_status::UPDATE_CONTINUE;
+
+}
+
+
+update_status EditorScene::Update(float dt)
 {
 	int size = gameObjectVec.size();
 	for (int i = 0; i < size; i++) { gameObjectVec[i]->Update(); }
+
+	return update_status::UPDATE_CONTINUE;
 }
 
 
@@ -38,4 +54,15 @@ GameObject* EditorScene::AddGameObject(int id, std::string _name, GameObject* pa
 }
 
 
+void EditorScene::ExecuteEvent(EVENT_ENUM eventId) {
 
+	switch (eventId) {
+
+	case EVENT_ENUM::DELETE_GAMEOBJECT_COMPONENT:
+
+		break;
+
+	default:
+		break;
+	}
+}

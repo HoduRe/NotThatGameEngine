@@ -18,6 +18,7 @@
 #include "ManagerPrimitives.h"
 #include "FileSystem.h"
 #include "ManagerModel.h"
+#include "EditorScene.h"
 
 #define LOG(format, ...) App->log(__FILE__, __LINE__, format, __VA_ARGS__);
 
@@ -27,7 +28,7 @@ public:
 	Window* window;
 	Input* input;
 	Audio* audio;
-	Scene* scene_intro;
+	Scene* engineScene;
 	Renderer3D* renderer3D;
 	Camera3D* camera;
 	Physics3D* physics;
@@ -38,6 +39,7 @@ public:
 	ManagerPrimitives* primitives;
 	FileSystem* fileLoad;
 	ManagerModel* modelManager;
+	EditorScene* editorScene;
 
 	Timer ms_timer;
 

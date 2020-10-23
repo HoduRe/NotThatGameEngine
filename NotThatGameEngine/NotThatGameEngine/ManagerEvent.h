@@ -27,7 +27,7 @@ public:
 	ManagerEvent(Application* app, bool start_enabled = true);
 	virtual ~ManagerEvent();
 
-	void GenerateEvent(EVENT_ENUM eventId, EVENT_ENUM eventTriggerId = EVENT_ENUM::NULL_EVENT);
+	void GenerateEvent(EVENT_ENUM eventId, EVENT_ENUM eventTriggerId = EVENT_ENUM::NULL_EVENT, void* var = nullptr);
 	bool EventRegister(EVENT_ENUM event, Module* mod);
 	bool EventUnRegister(EVENT_ENUM event, Module* mod);
 
@@ -35,15 +35,20 @@ public:
 
 	bool CleanUp();
 
+public:
+
+	Component componentBuffer;
+
 private:
+
 	void CreateEventOnMap(EVENT_ENUM event);
 	void FireEvent(EVENT_ENUM eventId) const;
 	EVENT_ENUM CheckEventTrigger(EVENT_ENUM eventTrigger);
 	int FindListener(EVENT_ENUM event,Module*mod);
 	std::vector<Module*>::iterator EraseListener(EVENT_ENUM event, Module* mod, int vecId);
 
-
 private:
+
 	std::map<EVENT_ENUM,std::vector<Module*>> eventListenersMap;
 	std::vector<Event> eventVector;
 };
