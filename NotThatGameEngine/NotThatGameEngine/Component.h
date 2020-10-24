@@ -24,7 +24,7 @@ public:
 	virtual void Disable();
 	virtual void Update();
 
-	void ComponentClosed();
+	void SetComponentDelete();
 
 public:
 

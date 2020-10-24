@@ -18,7 +18,7 @@ void Component::Disable() { enabled = false; }
 void Component::Update() {}
 
 
-void Component::ComponentClosed() { deleteComponent = true; }
+void Component::SetComponentDelete() { deleteComponent = true; }
 
 
 

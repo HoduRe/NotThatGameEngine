@@ -6,24 +6,19 @@
 }*/// TODO how do we deal with the parent-child conflict; How do we delete a gameobject without leaving it's child / parent node dirty	
 
 
-EditorScene::EditorScene(Application* app, bool start_enabled) : Module(app, start_enabled), gameObjectIdCount(0), gameObjectVec() {}
+EditorScene::EditorScene(Application* app, bool start_enabled) : Module(app, start_enabled), gameObjectIdCount(0), rootGameObjectsVec() {}
 
 
 EditorScene::~EditorScene() {
-	int size = gameObjectVec.size();
-	for (int i = size; i > -1; i--) {
-		delete gameObjectVec[i];
-		gameObjectVec[i] = nullptr;
+
+	for (int i = rootGameObjectsVec.size() - 1; i > -1; i--) {
+		delete rootGameObjectsVec[i];
+		rootGameObjectsVec[i] = nullptr;
 	}
 }
 
 
-bool EditorScene::Init() {
-
-	App->eventManager->EventRegister(EVENT_ENUM::DELETE_GAMEOBJECT_COMPONENT, this);
-
-	return true;
-}
+bool EditorScene::Init() { return true; }
 
 
 update_status EditorScene::PreUpdate(float dt) {
@@ -37,8 +32,8 @@ update_status EditorScene::PreUpdate(float dt) {
 update_status EditorScene::Update(float dt)
 {
 
-	int size = gameObjectVec.size();
-	for (int i = 0; i < size; i++) { gameObjectVec[i]->Update(); }
+	int size = rootGameObjectsVec.size();
+	for (int i = 0; i < size; i++) { rootGameObjectsVec[i]->Update(); }
 
 	return update_status::UPDATE_CONTINUE;
 
@@ -47,8 +42,11 @@ update_status EditorScene::Update(float dt)
 
 update_status EditorScene::PostUpdate(float dt) {
 
-	int size = gameObjectVec.size();
-	for (int i = 0; i < size; i++) { gameObjectVec[i]->PostUpdate(); }
+	int size = rootGameObjectsVec.size();
+	for (int i = 0; i < size; i++) { rootGameObjectsVec[i]->PostUpdate(); }
+	
+	DeleteRootGameObjects();
+	
 	return update_status::UPDATE_CONTINUE;
 
 }
@@ -60,8 +58,30 @@ int EditorScene::GenerateId() { return gameObjectIdCount++; }
 GameObject* EditorScene::AddGameObject(int id, std::string _name, GameObject* parent, bool enabled) {
 
 	GameObject* newObject = new GameObject(id, _name, parent, enabled);
-	gameObjectVec.push_back(newObject);
+	rootGameObjectsVec.push_back(newObject);
 	return newObject;
+
+}
+
+
+void EditorScene::DeleteGameObject(int id) {
+	
+	bool ret = false;
+
+	for (int i = rootGameObjectsVec.size() - 1; i > -1; i--) {
+		if (rootGameObjectsVec[i]->id == id) { rootGameObjectsVec[i]->SetDeleteGameObject(); }
+		else {
+			ret = rootGameObjectsVec[i]->CheckChildDeletionById(id);
+			if (ret) { return; }
+		}
+	}
+
+}
+
+
+void EditorScene::DeleteRootGameObjects() {
+	
+	for (int i = rootGameObjectsVec.size() - 1; i > -1; i--) { if (rootGameObjectsVec[i]->deleteGameObject) { rootGameObjectsVec.erase(rootGameObjectsVec.begin() + i); } }
 
 }
 
@@ -69,10 +89,6 @@ GameObject* EditorScene::AddGameObject(int id, std::string _name, GameObject* pa
 bool EditorScene::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
 	switch (eventId) {
-
-	case EVENT_ENUM::DELETE_GAMEOBJECT_COMPONENT:
-
-		break;
 
 	default:
 		break;

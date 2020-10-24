@@ -64,7 +64,6 @@ enum class EVENT_ENUM
 
 	FILE_DROPPED,
 
-	DELETE_GAMEOBJECT_COMPONENT
 };
 
 // Configuration -----------

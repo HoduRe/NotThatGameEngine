@@ -16,6 +16,8 @@ public:
 	void PostUpdate();
 	Component* AddComponent(COMPONENT_TYPE _type);
 	int GenerateId();
+	bool CheckChildDeletionById(int _id);
+	void SetDeleteGameObject();
 
 public:
 
@@ -27,8 +29,11 @@ public:
 	bool enabled;
 	std::vector<Component*> components;
 
+	bool deleteGameObject;
+
 private:
 
+	void CheckGameObjectDeletion();
 	void CheckComponentDeletion();
 
 private:

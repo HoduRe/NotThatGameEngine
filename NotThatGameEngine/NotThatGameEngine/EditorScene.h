@@ -17,15 +17,17 @@ public:
 	update_status PostUpdate(float dt);
 
 	GameObject* AddGameObject(int id, std::string _name = "NewGameObject", GameObject* parent = nullptr, bool enabled = true);
+	void DeleteGameObject(int id);
 
 private:
 
 	int GenerateId();
 	bool ExecuteEvent(EVENT_ENUM _event, void* var);
+	void DeleteRootGameObjects();
 
 public:
 
-	std::vector<GameObject*> gameObjectVec;
+	std::vector<GameObject*> rootGameObjectsVec;
 
 private:
 
