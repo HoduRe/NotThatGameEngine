@@ -3,7 +3,7 @@
 /*EditorScene::EditorScene() : root(nullptr)	// TODO make the tree structure. R_Scene actually just creates the first object of a gameobject hierarchy, but the vector of gameobjects is from Scene (this)
 {
 	root = new GameObject("Root Object", GenerateId());
-}*/
+}*/// TODO how do we deal with the parent-child conflict; How do we delete a gameobject without leaving it's child / parent node dirty	
 
 
 EditorScene::EditorScene(Application* app, bool start_enabled) : Module(app, start_enabled), gameObjectIdCount(0), gameObjectVec() {}
@@ -36,10 +36,21 @@ update_status EditorScene::PreUpdate(float dt) {
 
 update_status EditorScene::Update(float dt)
 {
+
 	int size = gameObjectVec.size();
 	for (int i = 0; i < size; i++) { gameObjectVec[i]->Update(); }
 
 	return update_status::UPDATE_CONTINUE;
+
+}
+
+
+update_status EditorScene::PostUpdate(float dt) {
+
+	int size = gameObjectVec.size();
+	for (int i = 0; i < size; i++) { gameObjectVec[i]->PostUpdate(); }
+	return update_status::UPDATE_CONTINUE;
+
 }
 
 

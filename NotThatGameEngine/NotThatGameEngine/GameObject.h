@@ -13,6 +13,7 @@ public:
 	~GameObject();
 
 	void Update();
+	void PostUpdate();
 	Component* AddComponent(COMPONENT_TYPE _type);
 	int GenerateId();
 
@@ -25,6 +26,10 @@ public:
 	int id;
 	bool enabled;
 	std::vector<Component*> components;
+
+private:
+
+	void CheckComponentDeletion();
 
 private:
 

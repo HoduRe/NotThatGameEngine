@@ -13,6 +13,7 @@ An engine for CITM's Engine project which focuses on skeletical animation
 - <br/>
 
 ## Additional comments:
+- Event system: <br/>
 - <br/>
 
 

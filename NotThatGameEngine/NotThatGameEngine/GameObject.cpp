@@ -4,7 +4,6 @@ GameObject::GameObject(int _id, std::string _name, GameObject* _parent, bool _en
 	AddComponent(COMPONENT_TYPE::TRANSFORM);
 }
 
-// TODO how do we deal with the parent-child conflict; How do we delete a gameobject without leaving it's child / parent node dirty			width = *static_cast<int*>(var) * SCREEN_SIZE;
 GameObject::~GameObject() {
 
 	int childsSize = childs.size();
@@ -28,6 +27,13 @@ void GameObject::Update() {
 
 	int size = components.size();
 	for (int i = 0; i < size; i++) { if (components[i]->enabled) { components[i]->Update(); } }
+
+}
+
+
+void GameObject::PostUpdate() {
+
+	CheckComponentDeletion();
 
 }
 
@@ -58,4 +64,5 @@ Component* GameObject::AddComponent(COMPONENT_TYPE _type) {
 int GameObject::GenerateId() { return componentIdGenerator++; }
 
 
+void GameObject::CheckComponentDeletion() { for (int i = components.size(); i > -1; i--) { if (components[i]->deleteComponent) { components.erase(components.begin() + i); } } }
 

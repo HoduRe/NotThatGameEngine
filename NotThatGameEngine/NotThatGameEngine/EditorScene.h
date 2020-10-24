@@ -14,6 +14,7 @@ public:
 	bool Init();
 	update_status PreUpdate(float dt);
 	update_status Update(float dt);
+	update_status PostUpdate(float dt);
 
 	GameObject* AddGameObject(int id, std::string _name = "NewGameObject", GameObject* parent = nullptr, bool enabled = true);
 

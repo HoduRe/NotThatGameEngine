@@ -24,10 +24,13 @@ public:
 	virtual void Disable();
 	virtual void Update();
 
+	void ComponentClosed();
+
 public:
 
 	int id;
 	bool enabled;
+	bool deleteComponent;
 	COMPONENT_TYPE type;
 	GameObject* owner;
 
