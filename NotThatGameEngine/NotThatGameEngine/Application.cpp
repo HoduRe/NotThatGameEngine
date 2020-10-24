@@ -17,6 +17,7 @@ Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter
 	fileLoad = new FileSystem(this);
 	modelManager = new ManagerModel(this);
 	editorScene = new EditorScene(this);
+	texture = new Texture(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -26,6 +27,7 @@ Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter
 	AddModule(reset);
 	AddModule(eventManager);
 	AddModule(window);
+	AddModule(texture);
 	AddModule(fileLoad);
 	AddModule(camera);
 	AddModule(input);

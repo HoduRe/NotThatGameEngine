@@ -160,6 +160,7 @@
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ManagerModel.cpp" />
+    <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Module.cpp" />
     <ClCompile Include="Audio.cpp" />
@@ -174,6 +175,7 @@
     <ClCompile Include="Renderer3D.cpp" />
     <ClCompile Include="ResetModule.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Textures.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="Primitives.cpp" />
@@ -196,6 +198,7 @@
     <ClInclude Include="imstb_textedit.h" />
     <ClInclude Include="imstb_truetype.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="Material.h" />
     <ClInclude Include="MemLeaks.h" />
     <ClInclude Include="ManagerModel.h" />
     <ClInclude Include="Mesh.h" />
@@ -212,6 +215,7 @@
     <ClInclude Include="Renderer3D.h" />
     <ClInclude Include="ResetModule.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="Textures.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="PathNode.h" />

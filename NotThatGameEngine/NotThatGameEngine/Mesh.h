@@ -7,19 +7,6 @@
 
 class GameObject;
 
-struct Texture
-{
-	Texture();
-	Texture(GLenum _textureType, const std::string& FileName);
-
-	void SetAttributes();
-
-	std::string fileName;
-	GLenum textureType;
-	GLuint textureId;
-};
-
-
 struct SubMeshes {
 
 public:
@@ -31,7 +18,6 @@ public:
 	GLuint indexId;
 	GLuint normalsId;
 	GLuint textureCoordId;
-	uint materialId;
 
 	int vertexVectorSize;
 	int indexVectorSize;
@@ -42,7 +28,7 @@ public:
 	std::vector<float> normals;
 	std::vector<float> textureCoord;
 	std::vector<uint> indices;
-	Texture diffuseTexture;
+
 };
 
 class Mesh : public Component {

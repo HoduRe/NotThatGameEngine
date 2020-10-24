@@ -1,17 +1,6 @@
 #include "Application.h"
 
-#include "Devil/include/il.h"
-#include "Devil/include/ilu.h"
-#include "Devil/include/ilut.h"
-
-#pragma comment ( lib, "Devil/libx86/DevIL.lib" )
-#pragma comment ( lib, "Devil/libx86/ILU.lib" )
-#pragma comment ( lib, "Devil/libx86/ILUT.lib" )
-
-#pragma comment( lib, "Assimp/libx86/assimp.lib" )
-
-
-ManagerModel::ManagerModel(Application* app, bool start_enabled) : Module(app, start_enabled), stream(), testMesh(0, nullptr) {}
+ManagerModel::ManagerModel(Application* app, bool start_enabled) : Module(app, start_enabled), testMesh(0, nullptr) {}
 
 
 ManagerModel::~ManagerModel() {}
@@ -20,13 +9,6 @@ ManagerModel::~ManagerModel() {}
 bool ManagerModel::Init() {			// OpenGL has not been initialized yet
 
 	bool ret = true;
-
-	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
-	aiAttachLogStream(&stream);
-
-	ilInit();
-	iluInit();
-	ilutInit();
 
 	return ret;
 }
@@ -37,15 +19,11 @@ bool ManagerModel::Start() {
 	//LoadModel("Library/Models/warrior.FBX");
 	LoadModel("Library/Models/BakerHouse.fbx");
 
-	LoadTexture("Library/Textures/Baker_house.png");
-
 	return true;
 }
 
 
 bool ManagerModel::CleanUp() {
-
-	aiDetachAllLogStreams();
 
 	return true;
 }
@@ -79,7 +57,7 @@ bool ManagerModel::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
 void ManagerModel::LoadModel(const char* path) {
 
-	const aiScene* scene;
+/*	const aiScene* scene;
 	Assimp::Importer importer;
 
 	scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices);
@@ -98,7 +76,7 @@ void ManagerModel::LoadModel(const char* path) {
 
 		for (unsigned int j = 0; j < paiMesh->mNumVertices; j++) {		// Vertices
 			const aiVector3D* pPos = &(paiMesh->mVertices[j]);
-			const aiVector3D* pNormal = &(paiMesh->mNormals[j]) /*: &Zero3D*/;	// There are the same normals as there are vertices, so we don't need a loop for them
+			const aiVector3D* pNormal = &(paiMesh->mNormals[j]); //: &Zero3D	// There are the same normals as there are vertices, so we don't need a loop for them
 			const aiVector3D* pTexCoord = paiMesh->HasTextureCoords(0) ? &(paiMesh->mTextureCoords[0][j]) : &Zero3D;	// Same as above
 			const aiColor4D* pColor = paiMesh->HasVertexColors(0) ? (paiMesh->mColors[j]) : &ZeroColor;	// Same as above
 
@@ -149,7 +127,7 @@ void ManagerModel::LoadModel(const char* path) {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, testMesh.subMeshes[i].indexId);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * testMesh.subMeshes[i].indexVectorSize, testMesh.subMeshes[i].indices.data(), GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	}
+	}*/
 	
 	// Init materials
 /*	for (unsigned int i = 0; i < scene->mNumMaterials; i++) {
@@ -178,30 +156,5 @@ void ManagerModel::LoadModel(const char* path) {
 
 
 }
-
-
-uint ManagerModel::LoadTexture(const char* path, Texture* textureContainer, GLenum type) {
-
-	uint imageTest;
-	ilGenImages(1, &imageTest);
-	ilBindImage(imageTest);
-	if (ilLoadImage(path) == IL_TRUE) {}
-	else { LOG("Image with id: %u failed to load.\n", imageTest); }
-
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glGenTextures(1, &imageTest);
-	glBindTexture(GL_TEXTURE_2D, imageTest);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexImage2D(GL_TEXTURE_2D, 0, ilGetInteger(IL_IMAGE_BPP), ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), 0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE, ilGetData());
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	ilDeleteImages(1, &imageTest);
-
-	return imageTest;
-}
-
 
 

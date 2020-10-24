@@ -3,11 +3,6 @@
 
 #include "Module.h"
 
-#include "Assimp/include/cimport.h"
-#include "Assimp/include/scene.h"
-#include "Assimp/include/Importer.hpp"
-#include "Assimp/include/postprocess.h"
-
 #include "Mesh.h"
 
 class Texture;
@@ -28,7 +23,6 @@ public:
 	bool CleanUp();
 
 	void LoadModel(const char* path);
-	uint LoadTexture(const char* path, Texture* textureContainer = nullptr, GLenum type = GL_DIFFUSE);
 
 public:
 
@@ -37,7 +31,6 @@ private:
 	bool ExecuteEvent(EVENT_ENUM eventId, void* var);
 
 private:
-	aiLogStream stream;
 	Mesh testMesh;
 };
 

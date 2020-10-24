@@ -126,6 +126,12 @@
     <ClCompile Include="Mesh.cpp">
       <Filter>GameObject\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Textures.cpp">
+      <Filter>Modular code</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h">
@@ -238,6 +244,12 @@
     </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Textures.h">
+      <Filter>Modular code</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -19,6 +19,7 @@
 #include "FileSystem.h"
 #include "ManagerModel.h"
 #include "EditorScene.h"
+#include "Textures.h"
 
 #define LOG(format, ...) App->log(__FILE__, __LINE__, format, __VA_ARGS__);
 
@@ -40,6 +41,7 @@ public:
 	FileSystem* fileLoad;
 	ManagerModel* modelManager;
 	EditorScene* editorScene;
+	Texture* texture;
 
 	Timer ms_timer;
 
