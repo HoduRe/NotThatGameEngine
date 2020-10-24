@@ -9,6 +9,7 @@ enum class COMPONENT_TYPE {
 	NONE,
 
 	TRANSFORM,
+	MESH,
 
 	ERROR_TYPE
 };

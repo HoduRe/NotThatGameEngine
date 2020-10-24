@@ -8,53 +8,9 @@
 #include "Assimp/include/Importer.hpp"
 #include "Assimp/include/postprocess.h"
 
-struct Texture
-{
-	Texture();
-	Texture(GLenum _textureType, const std::string& FileName);
+#include "Mesh.h"
 
-	void SetAttributes();
-
-	std::string fileName;
-	GLenum textureType;
-	GLuint textureId;
-};
-
-
-struct SubMeshes {
-
-public:
-
-	SubMeshes();
-	~SubMeshes();
-
-	GLuint vertexId;
-	GLuint indexId;
-	GLuint normalsId;
-	GLuint textureCoordId;
-	unsigned int materialId;
-
-	int vertexVectorSize;
-	int indexVectorSize;
-	int normalVectorSize;
-	int textureCoordVectorSize;
-
-	std::vector<float> vertices;
-	std::vector<float> normals;
-	std::vector<float> textureCoord;
-	std::vector<uint> indices;
-	Texture diffuseTexture;
-};
-
-
-struct Mesh {
-
-	Mesh();
-	~Mesh();
-
-	std::vector<SubMeshes> subMeshes;
-
-};
+class Texture;
 
 class ManagerModel : public Module
 {

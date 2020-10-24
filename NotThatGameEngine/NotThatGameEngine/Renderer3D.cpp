@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "Mesh.h"
 
 Renderer3D::Renderer3D(Application* app, bool start_enabled) : Module(app, start_enabled), context(nullptr), frameBufferId(0), sceneTextureId(0), depthStencilId(0)
 {}
