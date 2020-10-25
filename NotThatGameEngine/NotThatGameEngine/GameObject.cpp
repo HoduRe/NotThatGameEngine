@@ -37,7 +37,7 @@ void GameObject::Update() {
 
 void GameObject::PostUpdate() {
 
-	for (int i = childs.size() -1; i > -1; i--) { childs[i]->PostUpdate(); }
+	for (int i = childs.size() - 1; i > -1; i--) { childs[i]->PostUpdate(); }
 
 	Mesh* mesh = nullptr;
 	int subMeshSize;
@@ -47,11 +47,11 @@ void GameObject::PostUpdate() {
 		for (int i = 0; i < size; i++) {
 			if (components[i]->type == COMPONENT_TYPE::MESH) {
 				mesh = (Mesh*)components[i];
-				subMeshSize = mesh->subMeshes.size();
-				for (int j = 0; j < subMeshSize; j++) { DrawMeshes(mesh->subMeshes[j]); }
+				DrawMeshes(*mesh);
 			}
 		}
 	}
+
 
 	CheckGameObjectDeletion();
 	CheckComponentDeletion();
@@ -146,7 +146,7 @@ void GameObject::SetDeleteGameObject() {
 }
 
 
-void GameObject::CheckComponentDeletion() { for (int i = components.size()- 1; i > -1; i--) { if (components[i]->deleteComponent) { components.erase(components.begin() + i); } } }
+void GameObject::CheckComponentDeletion() { for (int i = components.size() - 1; i > -1; i--) { if (components[i]->deleteComponent) { components.erase(components.begin() + i); } } }
 
 
 void GameObject::CheckGameObjectDeletion() {

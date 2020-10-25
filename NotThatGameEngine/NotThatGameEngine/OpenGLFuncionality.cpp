@@ -50,14 +50,14 @@ void LoadNormalBuffer(GLuint* id, int size, float* data) {
 void LoadTextureCoordBuffer(GLuint* id, int size, float* data) {
 
 	glGenBuffers(1, id);
-	glBindBuffer(GL_TEXTURE_COORD_ARRAY, *id);
-	glBufferData(GL_TEXTURE_COORD_ARRAY, size, data, GL_STATIC_DRAW);
-	glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, *id);
+	glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 }
 
 
-void LoadIndexBuffer(GLuint* id, int size, uint* data) {
+void LoadIndicesBuffer(GLuint* id, int size, uint* data) {
 
 	glGenBuffers(1, id);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *id);
@@ -67,21 +67,21 @@ void LoadIndexBuffer(GLuint* id, int size, uint* data) {
 }
 
 
-void DrawMeshes(SubMeshes& subMesh) {
+void DrawMeshes(Mesh& mesh) {
 
-	glEnableClientState(GL_VERTEX_ARRAY);	// Do this sepparetely in EditorScene, before and after calling the GameObjects PostUpdates, in case it's too CPU consuming
+	glEnableClientState(GL_VERTEX_ARRAY);	// TODO: Do this sepparetely in EditorScene, before and after calling the GameObjects PostUpdates, in case it's too CPU consuming
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, subMesh.vertexId);
-	glBindBuffer(GL_NORMAL_ARRAY, subMesh.normalsId);
-	glBindBuffer(GL_TEXTURE_COORD_ARRAY, subMesh.textureCoordId);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh.vertexId);
+	glBindBuffer(GL_NORMAL_ARRAY, mesh.normalsId);
+	glBindBuffer(GL_TEXTURE_COORD_ARRAY, mesh.textureCoordId);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 	glNormalPointer(GL_FLOAT, 0, NULL);
 	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, subMesh.indexId);
-	//glBindTexture(GL_TEXTURE_2D, subMesh.textureId);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.indexId);
+	//glBindTexture(GL_TEXTURE_2D, mesh.textureId);
 
-	glDrawElements(GL_TRIANGLES, subMesh.indices.size(), GL_UNSIGNED_INT, NULL);
+	glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, NULL);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_NORMAL_ARRAY, 0);

@@ -50,7 +50,10 @@ uint Texture::LoadTexture(const char* path, const char* textureName, GLenum _tex
 	ilGenImages(1, &imageTest);
 	ilBindImage(imageTest);
 	if (ilLoadImage(path) == IL_TRUE) {}
-	else { LOG("Image with id: %u failed to load.\n", imageTest); }
+	else {
+		LOG("Image with id: %u failed to load.\n", imageTest);
+		return NULL;
+	}
 
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	glGenTextures(1, &imageTest);

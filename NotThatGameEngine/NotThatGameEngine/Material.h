@@ -17,7 +17,7 @@ public:
 
 public:
 
-	uint materialId;
+	std::vector<uint> textureIdVec;
 
 };
 

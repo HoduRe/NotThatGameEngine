@@ -9,15 +9,15 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
-struct SubMeshes;
+class Mesh;
 
 bool InitOpenGL();
 
 void LoadVertexBuffer(GLuint* id, int size, float* data);
 void LoadNormalBuffer(GLuint* id, int size, float* data);
 void LoadTextureCoordBuffer(GLuint* id, int size, float* data);
-void LoadIndexBuffer(GLuint* id, int size, uint* data);
+void LoadIndicesBuffer(GLuint* id, int size, uint* data);
 
-void DrawMeshes(SubMeshes& subMesh);
+void DrawMeshes(Mesh& mesh);
 
 #endif

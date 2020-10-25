@@ -106,11 +106,11 @@ GameObject* EditorScene::AddGameObjectByLoadingModel(const char* path, const cha
 
 	if (objectName == nullptr) { objectName = path; }
 	GameObject* newObject = new GameObject(GenerateId(), objectName, parent, enabled);
-	Mesh* mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
+	Mesh* mesh = nullptr;
+	Material* material = nullptr;
 
 	const aiScene* scene;
 	Assimp::Importer importer;
-	SubMeshes* subMesh;
 
 	scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices);
 
@@ -118,13 +118,9 @@ GameObject* EditorScene::AddGameObjectByLoadingModel(const char* path, const cha
 
 	for (unsigned int i = 0; i < scene->mNumMeshes; i++) {
 
-		subMesh = new SubMeshes();
-		mesh->subMeshes.push_back(*subMesh);
-		subMesh = &mesh->subMeshes[i];
+		mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH); 
 
 		const aiMesh* paiMesh = (aiMesh*)scene->mMeshes[i];
-		//subMesh->materialId = paiMesh->mMaterialIndex;
-
 		const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
 		const aiColor4D ZeroColor(80.0f, 80.0f, 80.0f, 1.0f);
 
@@ -134,59 +130,56 @@ GameObject* EditorScene::AddGameObjectByLoadingModel(const char* path, const cha
 			const aiVector3D* pTexCoord = paiMesh->HasTextureCoords(0) ? &(paiMesh->mTextureCoords[0][j]) : &Zero3D;	// Same as above
 			const aiColor4D* pColor = paiMesh->HasVertexColors(0) ? (paiMesh->mColors[j]) : &ZeroColor;	// Same as above
 
-			subMesh->vertices.push_back(pPos->x);
-			subMesh->vertices.push_back(pPos->y);
-			subMesh->vertices.push_back(pPos->z);
-			subMesh->textureCoord.push_back(pTexCoord->x);
-			subMesh->textureCoord.push_back(pTexCoord->y);
-			subMesh->normals.push_back(pNormal->x);
-			subMesh->normals.push_back(pNormal->y);
-			subMesh->normals.push_back(pNormal->z);
+			mesh->vertices.push_back(pPos->x);
+			mesh->vertices.push_back(pPos->y);
+			mesh->vertices.push_back(pPos->z);
+			mesh->textureCoord.push_back(pTexCoord->x);
+			mesh->textureCoord.push_back(pTexCoord->y);
+			mesh->normals.push_back(pNormal->x);
+			mesh->normals.push_back(pNormal->y);
+			mesh->normals.push_back(pNormal->z);
 		}
 
-		LOG("New mesh with %d vertices", subMesh->vertices.size());
+		LOG("New mesh with %d vertices", mesh->vertices.size());
 
 		for (unsigned int j = 0; j < paiMesh->mNumFaces; j++) {		// Indices
 			const aiFace& Face = paiMesh->mFaces[j];
 			assert(Face.mNumIndices == 3);
-			subMesh->indices.push_back(Face.mIndices[0]);
-			subMesh->indices.push_back(Face.mIndices[1]);
-			subMesh->indices.push_back(Face.mIndices[2]);
+			mesh->indices.push_back(Face.mIndices[0]);
+			mesh->indices.push_back(Face.mIndices[1]);
+			mesh->indices.push_back(Face.mIndices[2]);
 		}
 
-		// TODO: have an openGL module / functionality (maybe just do a sepparate OpenGLInitialization file to do ALL OpenGl shit there) that intitalizes a buffer with vertices and index. Seriously, having to Bind and UnBind Buffers all the time is a pain in the ass. Even if it's just a functionality and not a module
-
-		LoadVertexBuffer(&subMesh->vertexId, sizeof(float) * subMesh->vertices.size(), subMesh->vertices.data());
-		LoadNormalBuffer(&subMesh->normalsId, sizeof(float) * subMesh->normals.size(), subMesh->normals.data());
-		LoadTextureCoordBuffer(&subMesh->textureCoordId, sizeof(float) * subMesh->textureCoord.size(), subMesh->textureCoord.data());
-		LoadIndexBuffer(&subMesh->indexId, sizeof(uint) * subMesh->indices.size(), subMesh->indices.data());
+		LoadVertexBuffer(&mesh->vertexId, sizeof(float) * mesh->vertices.size(), mesh->vertices.data());
+		LoadNormalBuffer(&mesh->normalsId, sizeof(float) * mesh->normals.size(), mesh->normals.data());
+		LoadTextureCoordBuffer(&mesh->textureCoordId, sizeof(float) * mesh->textureCoord.size(), mesh->textureCoord.data());
+		LoadIndicesBuffer(&mesh->indexId, sizeof(uint) * mesh->indices.size(), mesh->indices.data());
 
 	}
 
 	// Init materials
-/*	for (unsigned int i = 0; i < scene->mNumMaterials; i++) {
+	if (scene->mNumMaterials > 0) {
 
-		const aiMaterial* pMaterial = scene->mMaterials[i];
-		testMesh.textures[i] = NULL;
-		if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
-			aiString Path;
+		material = (Material*)newObject->AddComponent(COMPONENT_TYPE::MATERIAL);
 
-			if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
-				std::string FullPath = path + "/" + Path.data;
-				testMesh.textures[i] = new Texture(GL_TEXTURE_2D, FullPath.c_str());
+		for (unsigned int i = 0; i < scene->mNumMaterials; i++) {
 
-				if (!testMesh.textures[i]->Load()) {
-					printf("Error loading texture '%s'\n", FullPath.c_str());
-					delete testMesh.textures[i];
-					testMesh.textures[i] = NULL;
+			const aiMaterial* pMaterial = scene->mMaterials[i];
+
+			if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
+
+				aiString Path;
+
+				if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
+					std::string FullPath = path + (std::string)"/" + Path.data;	// TODO: does this allow for textures loading from anywhere, or what is this path addition about? Basically check that loading a model with an inherent texture works
+					material->textureIdVec.push_back(App->texture->LoadTexture(FullPath.c_str(), Path.data));
 				}
 			}
+			else {
+				// TODO: If there ain't no texture, put default texture
+			}
 		}
-		if (!testMesh.textures[i]) {
-			testMesh.textures[i] = new Texture(GL_TEXTURE_2D, "../Content/white.png");
-			testMesh.textures[i]->Load();
-		}
-	}*/
+	}
 
 	AddGameObject(newObject);
 

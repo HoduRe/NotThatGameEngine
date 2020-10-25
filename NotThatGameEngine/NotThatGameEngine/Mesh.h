@@ -7,25 +7,6 @@
 
 class GameObject;
 
-struct SubMeshes {
-
-public:
-
-	SubMeshes();
-	~SubMeshes();
-
-	GLuint vertexId;
-	GLuint indexId;
-	GLuint normalsId;
-	GLuint textureCoordId;
-
-	std::vector<float> vertices;
-	std::vector<float> normals;
-	std::vector<float> textureCoord;
-	std::vector<uint> indices;
-
-};
-
 class Mesh : public Component {
 
 public:
@@ -37,7 +18,15 @@ public:
 
 public:
 
-	std::vector<SubMeshes> subMeshes;
+	GLuint vertexId;
+	GLuint indexId;
+	GLuint normalsId;
+	GLuint textureCoordId;
+
+	std::vector<float> vertices;
+	std::vector<float> normals;
+	std::vector<float> textureCoord;
+	std::vector<uint> indices;
 
 };
 
