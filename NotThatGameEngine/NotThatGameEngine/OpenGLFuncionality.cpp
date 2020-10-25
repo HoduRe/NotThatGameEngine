@@ -31,7 +31,7 @@ void LoadDataBufferFloat(int bufferType, GLuint* id, int size, float* data) {
 
 	glGenBuffers(1, id);
 	glBindBuffer(bufferType, *id);
-	glBufferData(bufferType, size, data, GL_STATIC_DRAW);
+	glBufferData(bufferType, sizeof(float) * size, data, GL_STATIC_DRAW);
 	glBindBuffer(bufferType, 0);
 
 }
@@ -41,7 +41,7 @@ void LoadDataBufferUint(int bufferType, GLuint* id, int size, uint* data) {
 
 	glGenBuffers(1, id);
 	glBindBuffer(bufferType, *id);
-	glBufferData(bufferType, size, data, GL_STATIC_DRAW);
+	glBufferData(bufferType, sizeof(uint) * size, data, GL_STATIC_DRAW);
 	glBindBuffer(bufferType, 0);
 
 }

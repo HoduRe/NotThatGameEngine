@@ -11,9 +11,9 @@ bool ManagerPrimitives::Init() {
 	bool ret = true;
 
 	primitives.push_back(CubeF(3.0f));
-	//primitives.push_back(SphereF(2.0f, 36, 18));
-	//primitives.push_back(PyramidF(5.0f, 2.0f));
-	//primitives.push_back(CylinderF(8.0f, 3.0f, 30));
+	primitives.push_back(SphereF(2.0f, 36, 18));
+	primitives.push_back(PyramidF(5.0f, 2.0f));
+	primitives.push_back(CylinderF(8.0f, 3.0f, 30));
 
 	return ret;
 }

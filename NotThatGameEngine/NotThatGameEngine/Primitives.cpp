@@ -76,9 +76,7 @@ CubeF::CubeF() : PrimitivesF(PrimitiveEnum::PRIMITIVE_CUBE), edgeLength(0) {}
 CubeF::CubeF(std::vector<float> _vertices, std::vector<unsigned int> _indexBuffer) : PrimitivesF(PrimitiveEnum::PRIMITIVE_CUBE, _vertices, _indexBuffer), edgeLength(0) {}
 
 
-CubeF::CubeF(float _edgeLength) : PrimitivesF(PrimitiveEnum::PRIMITIVE_CUBE), edgeLength(_edgeLength) {
-	SetAttributes(_edgeLength);
-}
+CubeF::CubeF(float _edgeLength) : PrimitivesF(PrimitiveEnum::PRIMITIVE_CUBE), edgeLength(_edgeLength) { SetAttributes(_edgeLength); }
 
 
 void CubeF::SetAttributes(float _edgeLength) {

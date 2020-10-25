@@ -66,7 +66,7 @@ update_status EditorScene::PostUpdate(float dt) {
 
 
 bool EditorScene::CleanUp() {
-	
+
 	aiDetachAllLogStreams();
 	return true;
 
@@ -118,7 +118,7 @@ GameObject* EditorScene::AddGameObjectByLoadingModel(const char* path, const cha
 
 	for (unsigned int i = 0; i < scene->mNumMeshes; i++) {
 
-		mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH); 
+		mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
 
 		const aiMesh* paiMesh = (aiMesh*)scene->mMeshes[i];
 		const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
@@ -150,10 +150,10 @@ GameObject* EditorScene::AddGameObjectByLoadingModel(const char* path, const cha
 			mesh->indices.push_back(Face.mIndices[2]);
 		}
 
-		LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->vertexId, sizeof(float) * mesh->vertices.size(), mesh->vertices.data());
-		LoadDataBufferFloat(GL_NORMAL_ARRAY, &mesh->normalsId, sizeof(float) * mesh->normals.size(), mesh->normals.data());
-		LoadDataBufferFloat(GL_TEXTURE_COORD_ARRAY, &mesh->textureCoordId, sizeof(float) * mesh->textureCoord.size(), mesh->textureCoord.data());
-		LoadDataBufferUint(GL_ELEMENT_ARRAY_BUFFER, &mesh->indexId, sizeof(uint) * mesh->indices.size(), mesh->indices.data());
+		LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->vertexId, mesh->vertices.size(), mesh->vertices.data());
+		LoadDataBufferFloat(GL_NORMAL_ARRAY, &mesh->normalsId, mesh->normals.size(), mesh->normals.data());
+		LoadDataBufferFloat(GL_TEXTURE_COORD_ARRAY, &mesh->textureCoordId, mesh->textureCoord.size(), mesh->textureCoord.data());
+		LoadDataBufferUint(GL_ELEMENT_ARRAY_BUFFER, &mesh->indexId, mesh->indices.size(), mesh->indices.data());
 
 	}
 
