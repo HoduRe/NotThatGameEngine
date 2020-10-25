@@ -172,7 +172,7 @@ GameObject* EditorScene::AddGameObjectByLoadingModel(const char* path, const cha
 
 				if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
 					std::string FullPath = path + (std::string)"/" + Path.data;	// TODO: does this allow for textures loading from anywhere, or what is this path addition about? Basically check that loading a model with an inherent texture works
-					material->textureIdVec.push_back(App->texture->LoadTexture(FullPath.c_str(), Path.data));
+					material->textureIdVec.push_back(App->texture->LoadTexture(FullPath.c_str()));
 				}
 			}
 			else {

@@ -15,7 +15,7 @@ Texture::Texture(Application* app, bool start_enabled) : Module(app, start_enabl
 Texture::~Texture() { textureVec.clear(); }
 
 
-bool Texture::Init() {			// OpenGL has not been initialized yet
+bool Texture::Init() {	// OpenGL has not been initialized yet
 
 	bool ret = true;
 
@@ -44,7 +44,7 @@ update_status Texture::Update(float dt) {
 }
 
 
-uint Texture::LoadTexture(const char* path, const char* textureName, GLenum _textureType) {
+uint Texture::LoadTexture(const char* path, GLenum _textureType) {
 
 	uint imageTest;
 	ilGenImages(1, &imageTest);
@@ -67,18 +67,13 @@ uint Texture::LoadTexture(const char* path, const char* textureName, GLenum _tex
 
 	ilDeleteImages(1, &imageTest);
 
-	if (textureName == nullptr) { textureName = path; }
-	textureVec.push_back(TextureData (imageTest, textureName, _textureType));
+	textureVec.push_back(TextureData(imageTest, path, _textureType));
 
 	return imageTest;
 }
 
 
-TextureData::TextureData(GLuint& _id, const char* textureName, GLenum _textureType) {
-	textureId = _id;
-	name = textureName;
-	textureType = _textureType;
-}
+TextureData::TextureData(GLuint& _id, const char* textureName, GLenum _textureType) : textureId(_id), path(textureName), textureType(_textureType) { }
 
 
 

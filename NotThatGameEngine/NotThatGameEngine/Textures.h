@@ -8,7 +8,7 @@ struct TextureData {
 
 	TextureData(GLuint& _id, const char* textureName , GLenum _textureType);
 
-	std::string name;
+	std::string path;
 	GLenum textureType;
 	GLuint textureId;
 };
@@ -26,7 +26,7 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	uint LoadTexture(const char* path, const char* textureName = nullptr, GLenum _textureType = GL_DIFFUSE);
+	uint LoadTexture(const char* path, GLenum _textureType = GL_DIFFUSE);
 
 public:
 
