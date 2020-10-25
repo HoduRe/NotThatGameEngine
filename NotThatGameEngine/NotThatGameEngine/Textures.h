@@ -4,11 +4,6 @@
 #include "glew-2.1.0/include/GL/glew.h"
 #include "Module.h"
 
-#include "Assimp/include/cimport.h"
-#include "Assimp/include/scene.h"
-#include "Assimp/include/Importer.hpp"
-#include "Assimp/include/postprocess.h"
-
 struct TextureData {
 
 	TextureData(GLuint& _id, const char* textureName , GLenum _textureType);
@@ -38,8 +33,6 @@ public:
 	std::vector<TextureData> textureVec;
 
 private:
-
-	aiLogStream stream;
 
 };
 

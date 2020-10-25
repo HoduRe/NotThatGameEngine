@@ -19,11 +19,6 @@ public:
 	GLuint normalsId;
 	GLuint textureCoordId;
 
-	int vertexVectorSize;
-	int indexVectorSize;
-	int normalVectorSize;
-	int textureCoordVectorSize;
-
 	std::vector<float> vertices;
 	std::vector<float> normals;
 	std::vector<float> textureCoord;

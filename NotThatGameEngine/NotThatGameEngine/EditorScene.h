@@ -3,6 +3,12 @@
 
 #include "GameObject.h"
 #include "Module.h"
+#include "OpenGLFuncionality.h"
+
+#include "Assimp/include/cimport.h"
+#include "Assimp/include/scene.h"
+#include "Assimp/include/Importer.hpp"
+#include "Assimp/include/postprocess.h"
 
 class EditorScene : public Module {
 
@@ -12,11 +18,14 @@ public:
 	~EditorScene();
 
 	bool Init();
+	bool Start();
 	update_status PreUpdate(float dt);
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
+	bool CleanUp();
 
-	GameObject* AddGameObject(int id, std::string _name = "NewGameObject", GameObject* parent = nullptr, bool enabled = true);
+	bool AddGameObject(GameObject* newObject);
+	GameObject* AddGameObjectByLoadingModel(const char* path, const char* objectName = nullptr, GameObject* parent = nullptr, bool enabled = true);
 	void DeleteGameObject(int id);
 
 private:
@@ -31,7 +40,8 @@ public:
 
 private:
 
-	int gameObjectIdCount;
+	int gameObjectIdCount;	// TODO: remember to save this in the save file
+	aiLogStream stream;
 
 };
 

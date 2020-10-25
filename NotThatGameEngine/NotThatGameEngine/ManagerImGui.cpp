@@ -9,11 +9,11 @@ AVX(false), AVX2(false), AltiVec(false), MMX(false), RDTSC(false), SSE(false), S
 showDemoWindow(false), defaultButtonsMenu(false), aboutWindow(false), configMenu(false), appActive(false), consoleMenu(false), sceneWindow(false)
 {}
 
-// Destructor
+
 ManagerImGui::~ManagerImGui()
 {}
 
-// Render not available yet----------------------------------
+
 bool ManagerImGui::Init()
 {
 	bool ret = true;
@@ -56,13 +56,13 @@ bool ManagerImGui::Init()
 	return ret;
 }
 
-// ---------------------------------------------------------
+
 bool ManagerImGui::Start()
 {
 	return true;
 }
 
-// ---------------------------------------------------------
+
 update_status ManagerImGui::PreUpdate(float dt)
 {
 	ImVec4 clear_color = ImVec4(0.0f, 0.15f, 0.10f, 1.00f);
@@ -75,7 +75,7 @@ update_status ManagerImGui::PreUpdate(float dt)
 	return update_status::UPDATE_CONTINUE;
 }
 
-// ---------------------------------------------------------
+
 update_status ManagerImGui::Update(float dt)
 {
 	update_status ret = update_status::UPDATE_CONTINUE;
@@ -100,7 +100,7 @@ update_status ManagerImGui::Update(float dt)
 	else { return update_status::UPDATE_STOP; }
 }
 
-// ---------------------------------------------------------
+
 update_status ManagerImGui::PostUpdate(float dt)
 {
 	update_status ret = update_status::UPDATE_CONTINUE;
@@ -114,7 +114,7 @@ update_status ManagerImGui::PostUpdate(float dt)
 	return ret;
 }
 
-// Called before quitting
+
 bool ManagerImGui::CleanUp()
 {
 	ImGui_ImplOpenGL3_Shutdown();

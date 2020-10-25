@@ -11,9 +11,9 @@ Renderer3D::~Renderer3D()
 // Called before render is available
 bool Renderer3D::Init()
 {
+
 	bool ret = true;
 
-	// OPENGL - SDL CONFIGURATION
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
@@ -21,45 +21,17 @@ bool Renderer3D::Init()
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
-	//Create context
 	context = SDL_GL_CreateContext(App->window->window);
-	if (context == NULL)
-	{
-		ret = false;
-	}
+	if (context == NULL) { ret = false; }
 
-	if (ret == true)
-	{
-		GLenum glewError = glewInit();
-		if (glewError != GLEW_OK)
-		{
-			LOG("Error initializing GLEW! %s\n", glewGetErrorString(glewError));
-		}
+	GLenum glewError = glewInit();
+	if (glewError != GLEW_OK) { LOG("Error initializing GLEW! %s\n", glewGetErrorString(glewError)); }
 
-		LOG("Love me!");
+	// Vsync
+	SDL_GL_SetSwapInterval(1);
+	ret = InitOpenGL();
 
-		// Vsync
-		SDL_GL_SetSwapInterval(1);
-
-		// OPENGL INITIALIZATION
-
-		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-		//Initialize Projection Matrix
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-
-		//Initialize Modelview Matrix
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-
-		//Check for error
-		GLenum error = glGetError();
-		if (error != GL_NO_ERROR)
-		{
-			ret = false;
-		}
+	if (ret) {
 
 		GLfloat LightModelAmbient[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightModelAmbient);
@@ -76,17 +48,13 @@ bool Renderer3D::Init()
 		GLfloat MaterialDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
 
-		glEnable(GL_BLEND);
-		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_CULL_FACE);
 		lights[0].Active(true);
-		glEnable(GL_LIGHTING);
-		glEnable(GL_COLOR_MATERIAL);
-		glEnable(GL_TEXTURE_2D);
-	}
 
-	// Projection matrix for
-	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
+		// Projection matrix for
+		OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
+
+		LOG("Love me!");
+	}
 
 	return ret;
 }
@@ -162,7 +130,7 @@ void Renderer3D::OnResize(int width, int height)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	glGenFramebuffers(1, &frameBufferId);
+	glGenFramebuffers(1, &frameBufferId);	// TODO: WHY AM I CREATING A FRAMEBUFFER ON EVERY RESIZE
 	glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
 
 	glGenTextures(1, &sceneTextureId);
@@ -207,36 +175,8 @@ void Renderer3D::DrawGrid() {
 }
 
 
-void Renderer3D::DrawMesh(Mesh mesh) {
-	
-	for (int i = 0; i < mesh.subMeshes.size(); i++) {
 
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glEnableClientState(GL_NORMAL_ARRAY);
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glBindBuffer(GL_ARRAY_BUFFER, mesh.subMeshes[i].vertexId);
-		glBindBuffer(GL_NORMAL_ARRAY, mesh.subMeshes[i].normalsId);
-		glBindBuffer(GL_TEXTURE_COORD_ARRAY, mesh.subMeshes[i].textureCoordId);
-		glVertexPointer(3, GL_FLOAT, 0, NULL);
-		glNormalPointer(GL_FLOAT, 0, NULL);
-		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.subMeshes[i].indexId);
-		//glBindTexture(GL_TEXTURE_2D, mesh.subMeshes[i].textureId);
 
-		glDrawElements(GL_TRIANGLES, mesh.subMeshes[i].indexVectorSize, GL_UNSIGNED_INT, NULL);
 
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindBuffer(GL_NORMAL_ARRAY, 0);
-		glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		glBindTexture(GL_TEXTURE_2D, 0);
-		glDisableClientState(GL_NORMAL_ARRAY);
-		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-		glDisableClientState(GL_VERTEX_ARRAY);
-		glDisableClientState(GL_NORMAL_ARRAY);
-
-	}
-
-}
 
 

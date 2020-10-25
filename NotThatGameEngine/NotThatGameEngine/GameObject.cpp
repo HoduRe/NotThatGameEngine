@@ -1,7 +1,8 @@
 #include "GameObject.h"
+#include "OpenGLFuncionality.h"
 
-GameObject::GameObject(int _id, std::string _name, GameObject* _parent, bool _enabled) : name(_name), id(_id), parent(_parent), childs(), enabled(_enabled),
-components(), componentIdGenerator(0), deleteGameObject(false) {
+GameObject::GameObject(int _id, std::string _name, GameObject* _parent, bool _enabled, std::vector<GameObject*> children) :
+	name(_name), id(_id), parent(_parent), childs(children), enabled(_enabled), components(), componentIdGenerator(0), deleteGameObject(false) {
 	AddComponent(COMPONENT_TYPE::TRANSFORM);
 }
 
@@ -36,7 +37,21 @@ void GameObject::Update() {
 
 void GameObject::PostUpdate() {
 
-	for (int i = childs.size(); i > -1; i--) { childs[i]->PostUpdate(); }
+	for (int i = childs.size() -1; i > -1; i--) { childs[i]->PostUpdate(); }
+
+	Mesh* mesh = nullptr;
+	int subMeshSize;
+	int size = components.size();
+
+	if (size != 0) {
+		for (int i = 0; i < size; i++) {
+			if (components[i]->type == COMPONENT_TYPE::MESH) {
+				mesh = (Mesh*)components[i];
+				subMeshSize = mesh->subMeshes.size();
+				for (int j = 0; j < subMeshSize; j++) { DrawMeshes(mesh->subMeshes[j]); }
+			}
+		}
+	}
 
 	CheckGameObjectDeletion();
 	CheckComponentDeletion();
@@ -52,7 +67,19 @@ Component* GameObject::AddComponent(COMPONENT_TYPE _type) {
 
 	case COMPONENT_TYPE::TRANSFORM:
 
-		component = new Transform(GenerateId(), this);
+		component = new Transform(GenerateComponentId(), this);
+
+		break;
+
+	case COMPONENT_TYPE::MESH:
+
+		component = new Mesh(GenerateComponentId(), this);
+
+		break;
+
+	case COMPONENT_TYPE::MATERIAL:
+
+		component = new Material(GenerateComponentId(), this);
 
 		break;
 
@@ -65,6 +92,28 @@ Component* GameObject::AddComponent(COMPONENT_TYPE _type) {
 
 	return component;
 }
+
+
+bool GameObject::AddGameObjectByParent(GameObject* newObject) {
+	bool ret = false;
+
+	if (newObject->parent == this) {
+		childs.push_back(newObject);
+		return true;
+	}
+	else {
+		int size = childs.size();
+		for (int i = 0; i < size; i++) {
+			ret = childs[i]->AddGameObjectByParent(newObject);
+			if (ret) { return ret; }
+		}
+	}
+
+	return false;
+}
+
+
+int GameObject::GenerateComponentId() { return componentIdGenerator++; }
 
 
 bool GameObject::CheckChildDeletionById(int _id) {
@@ -97,10 +146,7 @@ void GameObject::SetDeleteGameObject() {
 }
 
 
-int GameObject::GenerateId() { return componentIdGenerator++; }
-
-
-void GameObject::CheckComponentDeletion() { for (int i = components.size(); i > -1; i--) { if (components[i]->deleteComponent) { components.erase(components.begin() + i); } } }
+void GameObject::CheckComponentDeletion() { for (int i = components.size()- 1; i > -1; i--) { if (components[i]->deleteComponent) { components.erase(components.begin() + i); } } }
 
 
 void GameObject::CheckGameObjectDeletion() {

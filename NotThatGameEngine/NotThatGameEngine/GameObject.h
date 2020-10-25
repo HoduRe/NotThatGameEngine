@@ -4,18 +4,21 @@
 #include "Globals.h"
 #include "Component.h"
 #include "Transform.h"
+#include "Mesh.h"
+#include "Material.h"
 
 class GameObject {
 
 public:
 
-	GameObject(int _id, std::string _name = "NewGameObject", GameObject* parent = nullptr, bool enabled = true);
+	GameObject(int _id, std::string _name = "NewGameObject", GameObject* parent = nullptr, bool enabled = true, std::vector<GameObject*> children = std::vector<GameObject*>());
 	~GameObject();
 
 	void Update();
 	void PostUpdate();
 	Component* AddComponent(COMPONENT_TYPE _type);
-	int GenerateId();
+	bool AddGameObjectByParent(GameObject* newObject);
+	int GenerateComponentId();
 	bool CheckChildDeletionById(int _id);
 	void SetDeleteGameObject();
 

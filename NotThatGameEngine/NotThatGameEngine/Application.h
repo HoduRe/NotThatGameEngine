@@ -17,7 +17,6 @@
 #include "ManagerEvent.h"
 #include "ManagerPrimitives.h"
 #include "FileSystem.h"
-#include "ManagerModel.h"
 #include "EditorScene.h"
 #include "Textures.h"
 
@@ -39,7 +38,6 @@ public:
 	ManagerEvent* eventManager;
 	ManagerPrimitives* primitives;
 	FileSystem* fileLoad;
-	ManagerModel* modelManager;
 	EditorScene* editorScene;
 	Texture* texture;
 

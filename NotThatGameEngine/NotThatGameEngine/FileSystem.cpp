@@ -84,7 +84,7 @@ bool FileSystem::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 	case EVENT_ENUM::FILE_DROPPED:
 
 		filePath = App->input->lastDropFilePath;
-		App->modelManager->LoadModel(filePath);
+		App->editorScene->AddGameObjectByLoadingModel(filePath);
 
 		break;
 	default:

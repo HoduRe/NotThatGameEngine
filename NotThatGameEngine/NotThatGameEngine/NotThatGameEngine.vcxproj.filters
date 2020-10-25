@@ -99,9 +99,6 @@
     <ClCompile Include="Audio.cpp">
       <Filter>Modular code</Filter>
     </ClCompile>
-    <ClCompile Include="ManagerModel.cpp">
-      <Filter>Modular code</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Modular code</Filter>
     </ClCompile>
@@ -131,6 +128,9 @@
     </ClCompile>
     <ClCompile Include="Textures.cpp">
       <Filter>Modular code</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGLFuncionality.cpp">
+      <Filter>Utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -218,9 +218,6 @@
     <ClInclude Include="Audio.h">
       <Filter>Modular code</Filter>
     </ClInclude>
-    <ClInclude Include="ManagerModel.h">
-      <Filter>Modular code</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Modular code</Filter>
     </ClInclude>
@@ -250,6 +247,9 @@
     </ClInclude>
     <ClInclude Include="Textures.h">
       <Filter>Modular code</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGLFuncionality.h">
+      <Filter>Utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

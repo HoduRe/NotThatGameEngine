@@ -8,10 +8,8 @@
 #pragma comment ( lib, "Devil/libx86/ILU.lib" )
 #pragma comment ( lib, "Devil/libx86/ILUT.lib" )
 
-#pragma comment( lib, "Assimp/libx86/assimp.lib" )
 
-
-Texture::Texture(Application* app, bool start_enabled) : Module(app, start_enabled), stream(), textureVec() {}
+Texture::Texture(Application* app, bool start_enabled) : Module(app, start_enabled), textureVec() {}
 
 
 Texture::~Texture() { textureVec.clear(); }
@@ -20,9 +18,6 @@ Texture::~Texture() { textureVec.clear(); }
 bool Texture::Init() {			// OpenGL has not been initialized yet
 
 	bool ret = true;
-
-	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
-	aiAttachLogStream(&stream);
 
 	ilInit();
 	iluInit();
@@ -40,12 +35,7 @@ bool Texture::Start() {
 }
 
 
-bool Texture::CleanUp() {
-
-	aiDetachAllLogStreams();
-
-	return true;
-}
+bool Texture::CleanUp() { return true; }
 
 
 update_status Texture::Update(float dt) {

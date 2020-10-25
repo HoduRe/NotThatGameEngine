@@ -15,7 +15,6 @@ Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter
 	eventManager = new ManagerEvent(this);
 	primitives = new ManagerPrimitives(this);
 	fileLoad = new FileSystem(this);
-	modelManager = new ManagerModel(this);
 	editorScene = new EditorScene(this);
 	texture = new Texture(this);
 
@@ -36,7 +35,6 @@ Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter
 	AddModule(engineScene);
 	AddModule(editorScene);
 	AddModule(player);
-	AddModule(modelManager);
 
 	// Renderer last!
 	AddModule(renderer3D);

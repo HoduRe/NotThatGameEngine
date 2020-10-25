@@ -5,16 +5,7 @@
 #include "glmath.h"
 #include "Light.h"
 #include "Primitives.h"
-
-#include "glew-2.1.0/include/GL/glew.h"
-
-#include "SDL\include\SDL_opengl.h"
-#include <gl/GL.h>
-#include <gl/GLU.h>
-
-#pragma comment( lib, "glew-2.1.0/lib/Release/Win32/glew32.lib")
-#pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
-#pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
+#include "OpenGLFuncionality.h"
 
 #define MAX_LIGHTS 8
 
@@ -32,7 +23,6 @@ public:
 	bool CleanUp();
 
 	void OnResize(int width, int height);
-	void DrawMesh(Mesh mesh);
 
 public:
 

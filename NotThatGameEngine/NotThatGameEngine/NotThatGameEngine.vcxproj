@@ -159,7 +159,6 @@
     <ClCompile Include="imgui_widgets.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="ManagerModel.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Module.cpp" />
@@ -169,6 +168,7 @@
     <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="ManagerImGui.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="OpenGLFuncionality.cpp" />
     <ClCompile Include="Physics3D.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ManagerPrimitives.cpp" />
@@ -200,7 +200,6 @@
     <ClInclude Include="Light.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="MemLeaks.h" />
-    <ClInclude Include="ManagerModel.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="Audio.h" />
@@ -209,6 +208,7 @@
     <ClInclude Include="FileSystem.h" />
     <ClInclude Include="ManagerImGui.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="OpenGLFuncionality.h" />
     <ClInclude Include="Physics3D.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ManagerPrimitives.h" />
