@@ -9,7 +9,7 @@
 #pragma comment ( lib, "Devil/libx86/ILUT.lib" )
 
 
-Texture::Texture(Application* app, bool start_enabled) : Module(app, start_enabled), textureVec() {}
+Texture::Texture(Application* app, bool start_enabled) : Module(app, start_enabled), textureVec(), defaultTextureId(-1) {}
 
 
 Texture::~Texture() { textureVec.clear(); }
@@ -29,7 +29,8 @@ bool Texture::Init() {	// OpenGL has not been initialized yet
 
 bool Texture::Start() {
 
-	LoadTexture("Library/Textures/Baker_house.png");
+	defaultTextureId = LoadTexture("Library/Textures/Baker_house.png");
+	App->eventManager->GenerateEvent(EVENT_ENUM::DEFAULT_TEXTURE_LOADED);
 
 	return true;
 }
@@ -47,12 +48,15 @@ update_status Texture::Update(float dt) {
 uint Texture::LoadTexture(const char* path, GLenum _textureType) {
 
 	uint imageTest;
+
+	for (int i = textureVec.size() - 1; i > -1; i--) { if (textureVec[i].path == path) { return textureVec[i].textureId; } }
+
 	ilGenImages(1, &imageTest);
 	ilBindImage(imageTest);
 	if (ilLoadImage(path) == IL_TRUE) {}
 	else {
 		LOG("Image with id: %u failed to load.\n", imageTest);
-		return NULL;
+		return defaultTextureId;
 	}
 
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);

@@ -15,7 +15,7 @@ public:
 	~GameObject();
 
 	void Update();
-	void PostUpdate();
+	void PostUpdate(uint& defaultTextureId);
 	Component* AddComponent(COMPONENT_TYPE _type);
 	bool AddGameObjectByParent(GameObject* newObject);
 	int GenerateComponentId();
@@ -36,6 +36,8 @@ public:
 
 private:
 
+	Component* FindComponent(COMPONENT_TYPE _type);
+	std::vector<Component*> FindComponents(COMPONENT_TYPE _type);
 	void CheckGameObjectDeletion();
 	void CheckComponentDeletion();
 

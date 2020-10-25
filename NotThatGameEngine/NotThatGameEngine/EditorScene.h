@@ -42,6 +42,7 @@ private:
 
 	int gameObjectIdCount;	// TODO: remember to save this in the save file
 	aiLogStream stream;
+	uint defaultTextureId;
 
 };
 

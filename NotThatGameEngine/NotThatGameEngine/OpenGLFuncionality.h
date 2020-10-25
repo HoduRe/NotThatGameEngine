@@ -16,6 +16,6 @@ bool InitOpenGL();
 void LoadDataBufferFloat(int bufferType, GLuint* id, int size, float* data);
 void LoadDataBufferUint(int bufferType, GLuint* id, int size, uint* data);
 
-void DrawMeshes(Mesh& mesh);
+void DrawMeshes(Mesh& mesh, uint textureId);
 
 #endif

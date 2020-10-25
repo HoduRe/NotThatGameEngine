@@ -17,7 +17,7 @@ public:
 
 public:
 
-	std::vector<uint> textureIdVec;
+	uint diffuseId;
 
 };
 

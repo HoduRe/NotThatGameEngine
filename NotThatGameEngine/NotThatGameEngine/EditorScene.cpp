@@ -3,7 +3,7 @@
 #pragma comment( lib, "Assimp/libx86/assimp.lib" )
 
 
-EditorScene::EditorScene(Application* app, bool start_enabled) : Module(app, start_enabled), gameObjectIdCount(0), rootGameObjectsVec(), stream() {}
+EditorScene::EditorScene(Application* app, bool start_enabled) : Module(app, start_enabled), gameObjectIdCount(0), rootGameObjectsVec(), stream(), defaultTextureId(-1) {}
 
 
 EditorScene::~EditorScene() {
@@ -56,7 +56,7 @@ update_status EditorScene::Update(float dt)
 update_status EditorScene::PostUpdate(float dt) {
 
 	int size = rootGameObjectsVec.size();
-	for (int i = 0; i < size; i++) { rootGameObjectsVec[i]->PostUpdate(); }
+	for (int i = 0; i < size; i++) { rootGameObjectsVec[i]->PostUpdate(defaultTextureId); }
 
 	DeleteRootGameObjects();
 
@@ -162,7 +162,7 @@ GameObject* EditorScene::AddGameObjectByLoadingModel(const char* path, const cha
 
 		material = (Material*)newObject->AddComponent(COMPONENT_TYPE::MATERIAL);
 
-		for (unsigned int i = 0; i < scene->mNumMaterials; i++) {
+		for (unsigned int i = 0; i < scene->mNumMaterials; i++) {	// TODO: We are supposing there will only be one material... Code is done in such way, so we have to limit Material creation in GameObjects in AddComponent()
 
 			const aiMaterial* pMaterial = scene->mMaterials[i];
 
@@ -171,12 +171,12 @@ GameObject* EditorScene::AddGameObjectByLoadingModel(const char* path, const cha
 				aiString Path;
 
 				if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
-					std::string FullPath = path + (std::string)"/" + Path.data;	// TODO: does this allow for textures loading from anywhere, or what is this path addition about? Basically check that loading a model with an inherent texture works
-					material->textureIdVec.push_back(App->texture->LoadTexture(FullPath.c_str()));
+					std::string FullPath = path + (std::string)"/" + Path.data;	// TODO: this takes the path, adds the texture within. Jokes on it, textures are on Library/Textures, so change path to that, Path.data is fine
+					material->diffuseId = App->texture->LoadTexture(FullPath.c_str());
 				}
 			}
 			else {
-				// TODO: If there ain't no texture, put default texture
+				// TODO: If there ain't no texture, put default texture. This means textureVec has a default value of -1 or something that means that texture, and which is created automatically with material
 			}
 		}
 	}
@@ -213,6 +213,11 @@ void EditorScene::DeleteRootGameObjects() {
 bool EditorScene::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
 	switch (eventId) {
+
+	case EVENT_ENUM::DEFAULT_TEXTURE_LOADED:
+
+		defaultTextureId = App->texture->defaultTextureId;
+		break;
 
 	default:
 		break;

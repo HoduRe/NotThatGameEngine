@@ -64,6 +64,8 @@ enum class EVENT_ENUM
 
 	FILE_DROPPED,
 
+	DEFAULT_TEXTURE_LOADED
+
 };
 
 // Configuration -----------

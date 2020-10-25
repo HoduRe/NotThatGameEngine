@@ -30,9 +30,11 @@ public:
 
 public:
 
-	std::vector<TextureData> textureVec;
+	uint defaultTextureId;
 
 private:
+
+	std::vector<TextureData> textureVec;
 
 };
 

@@ -47,7 +47,7 @@ void LoadDataBufferUint(int bufferType, GLuint* id, int size, uint* data) {
 }
 
 
-void DrawMeshes(Mesh& mesh) {
+void DrawMeshes(Mesh& mesh, uint textureId) {
 
 	glEnableClientState(GL_VERTEX_ARRAY);	// TODO: Do this sepparetely in EditorScene, before and after calling the GameObjects PostUpdates, in case it's too CPU consuming
 	glEnableClientState(GL_NORMAL_ARRAY);
@@ -59,7 +59,7 @@ void DrawMeshes(Mesh& mesh) {
 	glNormalPointer(GL_FLOAT, 0, NULL);
 	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.indexId);
-	//glBindTexture(GL_TEXTURE_2D, mesh.textureId);
+	glBindTexture(GL_TEXTURE_2D, textureId);
 
 	glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, NULL);
 

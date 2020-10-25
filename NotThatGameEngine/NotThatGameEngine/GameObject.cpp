@@ -35,23 +35,24 @@ void GameObject::Update() {
 }
 
 
-void GameObject::PostUpdate() {
+void GameObject::PostUpdate(uint& defaultTextureId) {
 
-	for (int i = childs.size() - 1; i > -1; i--) { childs[i]->PostUpdate(); }
+	for (int i = childs.size() - 1; i > -1; i--) { childs[i]->PostUpdate(defaultTextureId); }
 
+	std::vector<Component*> meshVec = FindComponents(COMPONENT_TYPE::MESH);
+	Material* material = (Material*)FindComponent(COMPONENT_TYPE::MATERIAL);
 	Mesh* mesh = nullptr;
-	int subMeshSize;
-	int size = components.size();
 
-	if (size != 0) {
-		for (int i = 0; i < size; i++) {
-			if (components[i]->type == COMPONENT_TYPE::MESH) {
-				mesh = (Mesh*)components[i];
-				DrawMeshes(*mesh);
-			}
+	for (int i = meshVec.size() - 1; i > -1; i--) {
+
+		mesh = (Mesh*)meshVec[i];
+		if (material != nullptr) {
+			if (material->diffuseId == -1) { DrawMeshes(mesh[i], defaultTextureId); }
+			else { DrawMeshes(mesh[i], material->diffuseId); }
 		}
-	}
+		else { DrawMeshes(mesh[i], 0); }
 
+	}
 
 	CheckGameObjectDeletion();
 	CheckComponentDeletion();
@@ -160,5 +161,23 @@ void GameObject::CheckGameObjectDeletion() {
 	}
 
 }
+
+
+Component* GameObject::FindComponent(COMPONENT_TYPE _type) {
+
+	for (int i = components.size() - 1; i > -1; i--) { if (components[i]->type == _type) { return components[i]; } }
+	return nullptr;
+
+}
+
+
+std::vector<Component*> GameObject::FindComponents(COMPONENT_TYPE _type) {
+
+	std::vector<Component*> vec;
+	for (int i = components.size() - 1; i > -1; i--) { if (components[i]->type == _type) { vec.push_back(components[i]); } }
+	return vec;
+
+}
+
 
 
