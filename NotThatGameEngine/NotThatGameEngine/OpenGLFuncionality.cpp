@@ -27,42 +27,22 @@ bool InitOpenGL() {
 }
 
 
-void LoadVertexBuffer(GLuint* id, int size, float* data) {
+void LoadDataBufferFloat(int bufferType, GLuint* id, int size, float* data) {
 
 	glGenBuffers(1, id);
-	glBindBuffer(GL_ARRAY_BUFFER, *id);
-	glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(bufferType, *id);
+	glBufferData(bufferType, size, data, GL_STATIC_DRAW);
+	glBindBuffer(bufferType, 0);
 
 }
 
 
-void LoadNormalBuffer(GLuint* id, int size, float* data) {
+void LoadDataBufferUint(int bufferType, GLuint* id, int size, uint* data) {
 
 	glGenBuffers(1, id);
-	glBindBuffer(GL_NORMAL_ARRAY, *id);
-	glBufferData(GL_NORMAL_ARRAY, size, data, GL_STATIC_DRAW);
-	glBindBuffer(GL_NORMAL_ARRAY, 0);
-
-}
-
-
-void LoadTextureCoordBuffer(GLuint* id, int size, float* data) {
-
-	glGenBuffers(1, id);
-	glBindBuffer(GL_ARRAY_BUFFER, *id);
-	glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-}
-
-
-void LoadIndicesBuffer(GLuint* id, int size, uint* data) {
-
-	glGenBuffers(1, id);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *id);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindBuffer(bufferType, *id);
+	glBufferData(bufferType, size, data, GL_STATIC_DRAW);
+	glBindBuffer(bufferType, 0);
 
 }
 

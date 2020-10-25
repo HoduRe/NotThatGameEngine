@@ -1,7 +1,6 @@
 #include "Primitives.h"
 
-PrimitivesF::PrimitivesF(PrimitiveEnum _type) :
-	type(_type), sizeVertexVector(0), sizeIndexVector(0), idVertex(0), idIndex(0), vertices(), indices() {}
+PrimitivesF::PrimitivesF(PrimitiveEnum _type) : type(_type), idVertex(0), idIndex(0), vertices(), indices() {}
 
 
 PrimitivesF::PrimitivesF(PrimitiveEnum _type, std::vector<float> _vertices, std::vector<unsigned int> _indexBuffer) :
@@ -10,8 +9,8 @@ PrimitivesF::PrimitivesF(PrimitiveEnum _type, std::vector<float> _vertices, std:
 	vertices = _vertices;
 	indices = _indexBuffer;
 
-	GLVertexBuffer();
-	GLIndexBuffer();
+	LoadDataBufferFloat(GL_ARRAY_BUFFER, &idVertex, vertices.size(), vertices.data());
+	LoadDataBufferUint(GL_ELEMENT_ARRAY_BUFFER, &idIndex, indices.size(), indices.data());
 }
 
 PrimitivesF::~PrimitivesF() {}
@@ -20,7 +19,7 @@ PrimitivesF::~PrimitivesF() {}
 void PrimitivesF::SetVertexVector(std::vector<float> _vertices) {
 
 	vertices = _vertices;
-	GLVertexBuffer();
+	LoadDataBufferFloat(GL_ARRAY_BUFFER, &idVertex, vertices.size(), vertices.data());
 }
 
 
@@ -30,7 +29,7 @@ std::vector<float> PrimitivesF::GetVertexVector() { return vertices; }
 void PrimitivesF::SetIndexVector(std::vector<unsigned int> _indexBuffer) {
 
 	indices = _indexBuffer;
-	GLIndexBuffer();
+	LoadDataBufferUint(GL_ELEMENT_ARRAY_BUFFER, &idIndex, indices.size(), indices.data());
 }
 
 
@@ -38,20 +37,19 @@ std::vector<unsigned int> PrimitivesF::GetIndexVector() { return indices; }
 
 
 bool PrimitivesF::BlitPrimitive() {
+
 	bool ret = true;
 
-	if (sizeVertexVector == 0) { ret = false; }
-	else if (sizeIndexVector == 0) {
+	if (vertices.size() == 0) { ret = false; }
+	else if (indices.size() == 0) {
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, idVertex);
 		glVertexPointer(3, GL_FLOAT, 0, NULL);
 
-		glDrawArrays(GL_TRIANGLES, 0, sizeVertexVector);
+		glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindBuffer(GL_NORMAL_ARRAY, 0);
 		glDisableClientState(GL_VERTEX_ARRAY);
-		glDisableClientState(GL_NORMAL_ARRAY);
 	}
 	else {
 		glEnableClientState(GL_VERTEX_ARRAY);
@@ -59,37 +57,14 @@ bool PrimitivesF::BlitPrimitive() {
 		glVertexPointer(3, GL_FLOAT, 0, NULL);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idIndex);
 
-		glDrawElements(GL_TRIANGLES, sizeIndexVector, GL_UNSIGNED_INT, NULL);
+		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, NULL);
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		glDisableClientState(GL_VERTEX_ARRAY);
-		glDisableClientState(GL_NORMAL_ARRAY);
 	}
 
 	return ret;
-}
-
-
-void PrimitivesF::GLVertexBuffer() {
-
-	sizeVertexVector = vertices.size();
-
-	glGenBuffers(1, (GLuint*)&idVertex);
-	glBindBuffer(GL_ARRAY_BUFFER, idVertex);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * sizeVertexVector, vertices.data(), GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-}
-
-
-void PrimitivesF::GLIndexBuffer() {
-
-	sizeIndexVector = indices.size();
-
-	glGenBuffers(1, (GLuint*)&idIndex);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idIndex);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * sizeIndexVector, indices.data(), GL_STATIC_DRAW);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 
@@ -128,8 +103,8 @@ void CubeF::SetAttributes(float _edgeLength) {
 	indices.push_back(4); indices.push_back(0);	indices.push_back(1);	indices.push_back(4); indices.push_back(1);	indices.push_back(5);	// Left
 
 
-	GLVertexBuffer();
-	GLIndexBuffer();
+	LoadDataBufferFloat(GL_ARRAY_BUFFER, &idVertex, vertices.size(), vertices.data());
+	LoadDataBufferUint(GL_ELEMENT_ARRAY_BUFFER, &idIndex, indices.size(), indices.data());
 }
 
 
@@ -166,10 +141,7 @@ void SphereF::SetAttributes(float _radius, int _stacks, int _sectors) {
 
 void SphereF::CreateVertices(float _radius, int _stacks, int _sectors) {
 
-	struct Vertex
-	{
-		float x, y, z;
-	};
+	struct Vertex { float x, y, z; };
 	std::vector<Vertex> tmpVertices;
 
 	float x, y, z, xy;
@@ -290,8 +262,8 @@ void SphereF::CreateVertices(float _radius, int _stacks, int _sectors) {
 		vertices.push_back(tmpVertices[i].z);
 	}
 
-	GLVertexBuffer();
-	GLIndexBuffer();
+	LoadDataBufferFloat(GL_ARRAY_BUFFER, &idVertex, vertices.size(), vertices.data());
+	LoadDataBufferUint(GL_ELEMENT_ARRAY_BUFFER, &idIndex, indices.size(), indices.data());
 }
 
 // PYRAMID-------------------------------------------------------------------
@@ -328,8 +300,8 @@ void PyramidF::SetAttributes(float _height, float _baseEdgeLength) {
 	indices.push_back(0); indices.push_back(3);	indices.push_back(2);	indices.push_back(0); indices.push_back(2);	indices.push_back(1);	// Base
 
 
-	GLVertexBuffer();
-	GLIndexBuffer();
+	LoadDataBufferFloat(GL_ARRAY_BUFFER, &idVertex, vertices.size(), vertices.data());
+	LoadDataBufferUint(GL_ELEMENT_ARRAY_BUFFER, &idIndex, indices.size(), indices.data());
 }
 
 // CYLINDER-------------------------------------------------------------------
@@ -474,6 +446,6 @@ void CylinderF::SetAttributes(float _height, float _radius, int _sectors) {
 	}
 
 
-	GLVertexBuffer();
+	LoadDataBufferFloat(GL_ARRAY_BUFFER, &idVertex, vertices.size(), vertices.data());
 }
 

@@ -150,10 +150,10 @@ GameObject* EditorScene::AddGameObjectByLoadingModel(const char* path, const cha
 			mesh->indices.push_back(Face.mIndices[2]);
 		}
 
-		LoadVertexBuffer(&mesh->vertexId, sizeof(float) * mesh->vertices.size(), mesh->vertices.data());
-		LoadNormalBuffer(&mesh->normalsId, sizeof(float) * mesh->normals.size(), mesh->normals.data());
-		LoadTextureCoordBuffer(&mesh->textureCoordId, sizeof(float) * mesh->textureCoord.size(), mesh->textureCoord.data());
-		LoadIndicesBuffer(&mesh->indexId, sizeof(uint) * mesh->indices.size(), mesh->indices.data());
+		LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->vertexId, sizeof(float) * mesh->vertices.size(), mesh->vertices.data());
+		LoadDataBufferFloat(GL_NORMAL_ARRAY, &mesh->normalsId, sizeof(float) * mesh->normals.size(), mesh->normals.data());
+		LoadDataBufferFloat(GL_TEXTURE_COORD_ARRAY, &mesh->textureCoordId, sizeof(float) * mesh->textureCoord.size(), mesh->textureCoord.data());
+		LoadDataBufferUint(GL_ELEMENT_ARRAY_BUFFER, &mesh->indexId, sizeof(uint) * mesh->indices.size(), mesh->indices.data());
 
 	}
 

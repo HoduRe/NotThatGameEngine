@@ -3,6 +3,7 @@
 
 #include "Globals.h"
 #include "glew-2.1.0/include/GL/glew.h"
+#include "OpenGLFuncionality.h"
 
 enum class PrimitiveEnum {
 	PRIMITIVE_NONE,
@@ -28,14 +29,10 @@ public:
 
 	bool BlitPrimitive();
 
-	void GLVertexBuffer();
-	void GLIndexBuffer();
-
 	PrimitiveEnum type;
-	int sizeVertexVector;
-	int sizeIndexVector;
-	int idVertex;
-	int idIndex;
+
+	GLuint idVertex;
+	GLuint idIndex;
 	
 protected:
 	std::vector<float> vertices;

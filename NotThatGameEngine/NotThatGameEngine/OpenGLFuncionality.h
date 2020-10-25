@@ -13,10 +13,8 @@ class Mesh;
 
 bool InitOpenGL();
 
-void LoadVertexBuffer(GLuint* id, int size, float* data);
-void LoadNormalBuffer(GLuint* id, int size, float* data);
-void LoadTextureCoordBuffer(GLuint* id, int size, float* data);
-void LoadIndicesBuffer(GLuint* id, int size, uint* data);
+void LoadDataBufferFloat(int bufferType, GLuint* id, int size, float* data);
+void LoadDataBufferUint(int bufferType, GLuint* id, int size, uint* data);
 
 void DrawMeshes(Mesh& mesh);
 
