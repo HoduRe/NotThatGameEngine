@@ -238,27 +238,27 @@ void SetCylinderVertices(float _height, float _radius, int _sectors, std::vector
 
 		switch (loopRegulator) {
 		case 3:
-			firstPointX = &vertices[i];
+			firstPointX = vertices->at(i);
 			loopRegulator++;
 			break;
 		case 4:
-			firstPointY = *vertices[i].data();
+			firstPointY = vertices->at(i);
 			loopRegulator++;
 			break;
 		case 5:
-			firstPointZ = *vertices[i].data();
+			firstPointZ = vertices->at(i);
 			loopRegulator++;
 			break;
 		case 6:
-			secondPointX = *vertices[i].data();
+			secondPointX = vertices->at(i);
 			loopRegulator++;
 			break;
 		case 7:
-			secondPointY = *vertices[i].data();
+			secondPointY = vertices->at(i);
 			loopRegulator++;
 			break;
 		case 8:
-			secondPointZ = *vertices[i].data();
+			secondPointZ = vertices->at(i);
 
 			// First triangle
 			vertices->push_back(firstPointX);
@@ -290,6 +290,9 @@ void SetCylinderVertices(float _height, float _radius, int _sectors, std::vector
 		}
 
 	}
+
+	int size = vertices->size();
+	for (int i = 0; i < size; i++) { indices->push_back(i); }
 
 }
 

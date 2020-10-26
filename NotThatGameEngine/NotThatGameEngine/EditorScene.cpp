@@ -196,7 +196,6 @@ bool EditorScene::AddPrimitive(PrimitiveEnum _type) {
 
 	GameObject* newObject = new GameObject(GenerateId(), "");
 	Mesh* mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
-	AddGameObject(newObject);
 
 	switch (_type) {
 
@@ -235,6 +234,8 @@ bool EditorScene::AddPrimitive(PrimitiveEnum _type) {
 
 	mesh->SetVertices(mesh->vertices);
 	mesh->SetIndices(mesh->indices);
+
+	AddGameObject(newObject);
 
 	return true;
 }
