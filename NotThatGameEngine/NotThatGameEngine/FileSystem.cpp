@@ -88,7 +88,7 @@ bool FileSystem::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 }
 
 
-bool FileSystem::AddPath(const char* path_or_zip){
+bool FileSystem::AddPath(const char* path_or_zip) {
 
 	bool ret = false;
 
@@ -103,9 +103,9 @@ bool FileSystem::AddPath(const char* path_or_zip){
 bool FileSystem::Exists(const char* file) const { return PHYSFS_exists(file) != 0; }
 
 
-bool FileSystem::CreateDir(const char* dir){
+bool FileSystem::CreateDir(const char* dir) {
 
-	if (IsDirectory(dir) == false)	{
+	if (IsDirectory(dir) == false) {
 
 		PHYSFS_mkdir(dir);
 		return true;
