@@ -11,15 +11,18 @@ bool Texture::Init() {	// OpenGL has not been initialized yet
 
 	bool ret = true;
 
-	ilInit();
-	iluInit();
-	ilutInit();
-
 	return ret;
 }
 
 
 bool Texture::Start() {
+
+	ilInit();
+	iluInit();
+	ilutInit();
+
+	ilEnable(IL_ORIGIN_SET);
+	ilOriginFunc(IL_ORIGIN_UPPER_LEFT);
 
 	defaultTextureId = LoadTexture("Library/Textures/Baker_house.png");
 	App->eventManager->GenerateEvent(EVENT_ENUM::DEFAULT_TEXTURE_LOADED);

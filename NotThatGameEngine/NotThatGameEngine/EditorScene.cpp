@@ -118,7 +118,10 @@ GameObject* EditorScene::AddGameObjectByLoadingModel(const char* path, const cha
 
 	scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices);
 
-	if (scene == nullptr || scene->HasMeshes() == false) { LOG("Error loading scene % s", path); }
+	if (scene == nullptr || scene->HasMeshes() == false) {
+		LOG("Error loading scene % s", path);
+		return nullptr;
+	}
 
 	for (unsigned int i = 0; i < scene->mNumMeshes; i++) {
 
@@ -126,13 +129,11 @@ GameObject* EditorScene::AddGameObjectByLoadingModel(const char* path, const cha
 
 		const aiMesh* paiMesh = (aiMesh*)scene->mMeshes[i];
 		const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
-		const aiColor4D ZeroColor(80.0f, 80.0f, 80.0f, 1.0f);
 
 		for (unsigned int j = 0; j < paiMesh->mNumVertices; j++) {		// Vertices
 			const aiVector3D* pPos = &(paiMesh->mVertices[j]);
 			const aiVector3D* pNormal = &(paiMesh->mNormals[j]); //: &Zero3D	// There are the same normals as there are vertices, so we don't need a loop for them
 			const aiVector3D* pTexCoord = paiMesh->HasTextureCoords(0) ? &(paiMesh->mTextureCoords[0][j]) : &Zero3D;	// Same as above
-			const aiColor4D* pColor = paiMesh->HasVertexColors(0) ? (paiMesh->mColors[j]) : &ZeroColor;	// Same as above
 
 			mesh->vertices.push_back(pPos->x);
 			mesh->vertices.push_back(pPos->y);
@@ -155,8 +156,8 @@ GameObject* EditorScene::AddGameObjectByLoadingModel(const char* path, const cha
 		}
 
 		LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->vertexId, mesh->vertices.size(), mesh->vertices.data());
-		LoadDataBufferFloat(GL_NORMAL_ARRAY, &mesh->normalsId, mesh->normals.size(), mesh->normals.data());
-		LoadDataBufferFloat(GL_TEXTURE_COORD_ARRAY, &mesh->textureCoordId, mesh->textureCoord.size(), mesh->textureCoord.data());
+		LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->normalsId, mesh->normals.size(), mesh->normals.data());
+		LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->textureCoordId, mesh->textureCoord.size(), mesh->textureCoord.data());
 		LoadDataBufferUint(GL_ELEMENT_ARRAY_BUFFER, &mesh->indexId, mesh->indices.size(), mesh->indices.data());
 
 	}
