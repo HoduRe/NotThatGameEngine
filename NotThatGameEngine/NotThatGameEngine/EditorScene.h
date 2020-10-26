@@ -2,6 +2,7 @@
 #define __EDITORSCENE_H__
 
 #include "GameObject.h"
+#include "Primitives.h"
 #include "Module.h"
 #include "OpenGLFuncionality.h"
 
@@ -24,6 +25,7 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
+	bool AddPrimitive(PrimitiveEnum _type);
 	bool AddGameObject(GameObject* newObject);
 	GameObject* AddGameObjectByLoadingModel(const char* path, const char* objectName = nullptr, GameObject* parent = nullptr, bool enabled = true);
 	void DeleteGameObject(int id);

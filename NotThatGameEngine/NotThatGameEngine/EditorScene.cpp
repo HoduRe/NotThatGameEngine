@@ -19,7 +19,6 @@ bool EditorScene::Init() {
 
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 	aiAttachLogStream(&stream);
-
 	return true;
 
 }
@@ -27,6 +26,11 @@ bool EditorScene::Init() {
 
 bool EditorScene::Start()
 {
+
+	App->eventManager->EventRegister(EVENT_ENUM::CREATE_CUBE, this);
+	App->eventManager->EventRegister(EVENT_ENUM::CREATE_SPHERE, this);
+	App->eventManager->EventRegister(EVENT_ENUM::CREATE_PYRAMID, this);
+	App->eventManager->EventRegister(EVENT_ENUM::CREATE_CYLINDER, this);
 
 	AddGameObjectByLoadingModel("Library/Meshes/BakerHouse.fbx", "Baker house");
 
@@ -188,6 +192,54 @@ GameObject* EditorScene::AddGameObjectByLoadingModel(const char* path, const cha
 }
 
 
+bool EditorScene::AddPrimitive(PrimitiveEnum _type) {
+
+	GameObject* newObject = new GameObject(GenerateId(), "");
+	Mesh* mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
+	AddGameObject(newObject);
+
+	switch (_type) {
+
+	case PrimitiveEnum::PRIMITIVE_CUBE:
+
+		newObject->name = "Cube";
+		SetCubeVertices(3.0f, &mesh->vertices, &mesh->indices);
+
+		break;
+
+	case PrimitiveEnum::PRIMITIVE_SPHERE:
+
+		newObject->name = "Sphere";
+		SetSphereVertices(2.0f, 36, 18, &mesh->vertices, &mesh->indices);
+
+		break;
+
+	case PrimitiveEnum::PRIMITIVE_PYRAMID:
+
+		newObject->name = "Pyramid";
+		SetPyramidVertices(5.0f, 2.0f, &mesh->vertices, &mesh->indices);
+
+		break;
+
+	case PrimitiveEnum::PRIMITIVE_CYLINDER:
+
+		newObject->name = "Cylinder";
+		SetCylinderVertices(8.0f, 3.0f, 30, &mesh->vertices, &mesh->indices);
+
+		break;
+
+	default:
+
+		break;
+	}
+
+	mesh->SetVertices(mesh->vertices);
+	mesh->SetIndices(mesh->indices);
+
+	return true;
+}
+
+
 void EditorScene::DeleteGameObject(int id) {
 
 	bool ret = false;
@@ -217,6 +269,30 @@ bool EditorScene::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 	case EVENT_ENUM::DEFAULT_TEXTURE_LOADED:
 
 		defaultTextureId = App->texture->defaultTextureId;
+		break;
+
+	case EVENT_ENUM::CREATE_CUBE:
+
+		AddPrimitive(PrimitiveEnum::PRIMITIVE_CUBE);
+
+		break;
+
+	case EVENT_ENUM::CREATE_SPHERE:
+
+		AddPrimitive(PrimitiveEnum::PRIMITIVE_SPHERE);
+
+		break;
+
+	case EVENT_ENUM::CREATE_PYRAMID:
+
+		AddPrimitive(PrimitiveEnum::PRIMITIVE_PYRAMID);
+
+		break;
+
+	case EVENT_ENUM::CREATE_CYLINDER:
+
+		AddPrimitive(PrimitiveEnum::PRIMITIVE_CYLINDER);
+
 		break;
 
 	default:

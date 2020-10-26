@@ -13,7 +13,6 @@ Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter
 	reset = new ResetModule(this);
 	imGui = new ManagerImGui(this);
 	eventManager = new ManagerEvent(this);
-	primitives = new ManagerPrimitives(this);
 	fileLoad = new FileSystem(this);
 	editorScene = new EditorScene(this);
 	texture = new Texture(this);
@@ -38,7 +37,6 @@ Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter
 
 	// Renderer last!
 	AddModule(renderer3D);
-	AddModule(primitives);
 	AddModule(imGui);
 }
 

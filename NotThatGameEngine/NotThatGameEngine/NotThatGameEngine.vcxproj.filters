@@ -63,12 +63,6 @@
     <ClCompile Include="imgui_demo.cpp">
       <Filter>ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Primitives.cpp">
-      <Filter>Utility</Filter>
-    </ClCompile>
-    <ClCompile Include="ManagerPrimitives.cpp">
-      <Filter>Modular code</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer3D.cpp">
       <Filter>Modular code</Filter>
     </ClCompile>
@@ -132,6 +126,9 @@
     <ClCompile Include="OpenGLFuncionality.cpp">
       <Filter>Utility</Filter>
     </ClCompile>
+    <ClCompile Include="Primitives.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h">
@@ -176,17 +173,11 @@
     <ClInclude Include="imgui_impl_opengl3.h">
       <Filter>ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="Primitives.h">
-      <Filter>Utility</Filter>
-    </ClInclude>
     <ClInclude Include="MemLeaks.h">
       <Filter>Utility</Filter>
     </ClInclude>
     <ClInclude Include="PathNode.h">
       <Filter>Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="ManagerPrimitives.h">
-      <Filter>Modular code</Filter>
     </ClInclude>
     <ClInclude Include="Renderer3D.h">
       <Filter>Modular code</Filter>
@@ -250,6 +241,9 @@
     </ClInclude>
     <ClInclude Include="OpenGLFuncionality.h">
       <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Primitives.h">
+      <Filter>GameObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

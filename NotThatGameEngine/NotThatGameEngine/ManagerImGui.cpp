@@ -211,7 +211,21 @@ void ManagerImGui::SetMainMenuBar()
 			ImGui::EndMenu();
 		}
 
+		if (ImGui::BeginMenu("Create Primitive")) {
+
+			if (ImGui::MenuItem("Cube")) { App->eventManager->GenerateEvent(EVENT_ENUM::CREATE_CUBE); }
+
+			if (ImGui::MenuItem("Sphere")) { App->eventManager->GenerateEvent(EVENT_ENUM::CREATE_SPHERE); }
+
+			if (ImGui::MenuItem("Pyramid")) { App->eventManager->GenerateEvent(EVENT_ENUM::CREATE_PYRAMID); }
+
+			if (ImGui::MenuItem("Cylinder")) { App->eventManager->GenerateEvent(EVENT_ENUM::CREATE_CYLINDER); }
+
+			ImGui::EndMenu();
+		}
+
 		ImGui::EndMainMenuBar();
+
 	}
 
 	if (aboutWindow) { AboutMenu(&aboutWindow); }

@@ -2,8 +2,7 @@
 #define __MESH_H__
 
 #include "Component.h"
-#include "Globals.h"
-#include "glew-2.1.0/include/GL/glew.h"
+#include "OpenGLFuncionality.h"
 
 class GameObject;
 
@@ -15,6 +14,10 @@ public:
 	~Mesh();
 
 	void Update();
+	void SetVertices(std::vector<float> _vertices);
+	void SetIndices(std::vector<uint> _indices);
+	void SetNormals(std::vector<float> _normals);
+	void SetTextureCoord(std::vector<float> _textureCoord);
 
 public:
 

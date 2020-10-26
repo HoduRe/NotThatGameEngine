@@ -13,105 +13,16 @@ enum class PrimitiveEnum {
 	PRIMITIVE_CYLINDER
 };
 
-class PrimitivesF {
 
-public:
+void SetCubeVertices(float _edgeLength, std::vector<float>* vertices, std::vector<uint>* indices);
 
-	PrimitivesF(PrimitiveEnum _type);
-	PrimitivesF(PrimitiveEnum _type, std::vector<float> _vertices, std::vector<unsigned int> _index);
-	~PrimitivesF();
 
-	void SetVertexVector(std::vector<float> _vertices);	// Returns size
-	std::vector<float> GetVertexVector();	// Returns vertex vector
+void SetSphereVertices(float radius, int stacks, int sectors, std::vector<float>* vertices, std::vector<uint>* indices);
 
-	void SetIndexVector(std::vector<unsigned int> _indexBuffer);	// Returns size
-	std::vector<unsigned int> GetIndexVector();	// Returns index vector
 
-	bool BlitPrimitive();
+void SetPyramidVertices(float _height, float _baseEdgeLength, std::vector<float>* vertices, std::vector<uint>* indices);
 
-	PrimitiveEnum type;
 
-	GLuint idVertex;
-	GLuint idIndex;
-	
-protected:
-	std::vector<float> vertices;
-	std::vector<uint> indices;
-
-};
-
-class CubeF : public PrimitivesF {
-
-public:
-
-	CubeF();
-	CubeF(std::vector<float> _vertices, std::vector<unsigned int> _index);
-	CubeF(float edgeLength);
-	~CubeF();
-
-	void SetAttributes(float _edgeLength);
-
-private:
-
-	float edgeLength;
-};
-
-class SphereF : public PrimitivesF {
-
-public:
-
-	SphereF();
-	SphereF(std::vector<float> _vertices, std::vector<unsigned int> _index);
-	SphereF(float radius, int stacks, int sectors);
-	~SphereF();
-
-	void SetAttributes(float radius, int stacks, int sectors);
-
-private:
-	
-	void CreateVertices(float radius, int stacks, int sectors);
-
-	float radius;
-	int sectors;
-	int stacks;
-
-};
-
-class PyramidF : public PrimitivesF {
-
-public:
-
-	PyramidF();
-	PyramidF(std::vector<float> _vertices, std::vector<unsigned int> _index);
-	PyramidF(float _height, float _baseEdgeLength);
-	~PyramidF();
-
-	void SetAttributes(float _height, float _baseEdgeLength);
-
-private:
-
-	float height;
-	float baseEdgeLength;
-
-};
-
-class CylinderF : public PrimitivesF {
-
-public:
-
-	CylinderF();
-	CylinderF(std::vector<float> _vertices, std::vector<unsigned int> _index);
-	CylinderF(float _height, float _radius, float _baseEdgeLength);
-	~CylinderF();
-
-	void SetAttributes(float _height, float _radius, int _sectors);
-
-private:
-
-	float height;
-	float radius;
-	int sectors;
-
-};
+void SetCylinderVertices(float _height, float _radius, int _sectors, std::vector<float>* vertices, std::vector<uint>* indices);
 
 #endif

@@ -171,7 +171,6 @@
     <ClCompile Include="OpenGLFuncionality.cpp" />
     <ClCompile Include="Physics3D.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="ManagerPrimitives.cpp" />
     <ClCompile Include="Renderer3D.cpp" />
     <ClCompile Include="ResetModule.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -211,7 +210,6 @@
     <ClInclude Include="OpenGLFuncionality.h" />
     <ClInclude Include="Physics3D.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="ManagerPrimitives.h" />
     <ClInclude Include="Renderer3D.h" />
     <ClInclude Include="ResetModule.h" />
     <ClInclude Include="Scene.h" />
