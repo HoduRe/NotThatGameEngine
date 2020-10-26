@@ -112,8 +112,7 @@ update_status Input::PreUpdate(float dt)
 		break;
 
 		case SDL_DROPFILE:
-			lastDropFilePath = e.drop.file;
-			App->eventManager->GenerateEvent(EVENT_ENUM::FILE_DROPPED);
+			App->eventManager->GenerateEvent(EVENT_ENUM::FILE_DROPPED, EVENT_ENUM::NULL_EVENT, (char*)e.drop.file);
 			break;
 		}
 	}

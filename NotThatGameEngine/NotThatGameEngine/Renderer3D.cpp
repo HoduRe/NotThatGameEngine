@@ -53,7 +53,7 @@ bool Renderer3D::Init()
 		// Projection matrix for
 		OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-		LOG("Love me!");
+		LOG("Love me!\n");
 	}
 
 	return ret;
