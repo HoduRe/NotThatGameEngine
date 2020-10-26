@@ -47,7 +47,7 @@ void GameObject::PostUpdate(uint& defaultTextureId) {
 
 		mesh = (Mesh*)meshVec[i];
 		if (material != nullptr) {
-			if (material->diffuseId == -1) { DrawMeshes(*mesh, defaultTextureId); }
+			if (material->diffuseId == 0) { DrawMeshes(*mesh, defaultTextureId); }
 			else { DrawMeshes(*mesh, material->diffuseId); }
 		}
 		else { DrawMeshes(*mesh, 0); }

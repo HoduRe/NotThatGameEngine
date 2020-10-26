@@ -1,7 +1,7 @@
 #include "Application.h"
 
 
-Texture::Texture(Application* app, bool start_enabled) : Module(app, start_enabled), textureVec(), defaultTextureId(-1) {}
+Texture::Texture(Application* app, bool start_enabled) : Module(app, start_enabled), textureVec(), defaultTextureId(0) {}
 
 
 Texture::~Texture() { textureVec.clear(); }
@@ -24,7 +24,7 @@ bool Texture::Start() {
 	ilEnable(IL_ORIGIN_SET);
 	ilOriginFunc(IL_ORIGIN_UPPER_LEFT);
 
-	defaultTextureId = LoadTexture("Library/Textures/Baker_house.png");
+	defaultTextureId = LoadTexture("Library/Textures/Alex.png");
 	App->eventManager->GenerateEvent(EVENT_ENUM::DEFAULT_TEXTURE_LOADED);
 
 	return true;
@@ -48,6 +48,7 @@ uint Texture::LoadTexture(const char* path, GLenum _textureType) {
 
 	ilGenImages(1, &imageTest);
 	ilBindImage(imageTest);
+
 	if (ilLoadImage(path) == IL_TRUE) {}
 	else {
 		LOG("Image with id: %u failed to load.\n", imageTest);

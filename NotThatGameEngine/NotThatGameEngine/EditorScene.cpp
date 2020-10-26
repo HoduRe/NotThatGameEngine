@@ -3,7 +3,7 @@
 #pragma comment( lib, "Assimp/libx86/assimp.lib" )
 
 
-EditorScene::EditorScene(Application* app, bool start_enabled) : Module(app, start_enabled), gameObjectIdCount(0), rootGameObjectsVec(), stream(), defaultTextureId(-1) {}
+EditorScene::EditorScene(Application* app, bool start_enabled) : Module(app, start_enabled), gameObjectIdCount(0), rootGameObjectsVec(), stream(), defaultTextureId(0) {}
 
 
 EditorScene::~EditorScene() {
@@ -19,6 +19,13 @@ bool EditorScene::Init() {
 
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 	aiAttachLogStream(&stream);
+
+	App->eventManager->EventRegister(EVENT_ENUM::CREATE_CUBE, this);
+	App->eventManager->EventRegister(EVENT_ENUM::CREATE_SPHERE, this);
+	App->eventManager->EventRegister(EVENT_ENUM::CREATE_PYRAMID, this);
+	App->eventManager->EventRegister(EVENT_ENUM::CREATE_CYLINDER, this);
+	App->eventManager->EventRegister(EVENT_ENUM::DEFAULT_TEXTURE_LOADED, this);
+
 	return true;
 
 }
@@ -26,11 +33,6 @@ bool EditorScene::Init() {
 
 bool EditorScene::Start()
 {
-
-	App->eventManager->EventRegister(EVENT_ENUM::CREATE_CUBE, this);
-	App->eventManager->EventRegister(EVENT_ENUM::CREATE_SPHERE, this);
-	App->eventManager->EventRegister(EVENT_ENUM::CREATE_PYRAMID, this);
-	App->eventManager->EventRegister(EVENT_ENUM::CREATE_CYLINDER, this);
 
 	AddGameObjectByLoadingModel("Library/Meshes/BakerHouse.fbx", "Baker house");
 
@@ -176,12 +178,9 @@ GameObject* EditorScene::AddGameObjectByLoadingModel(const char* path, const cha
 				aiString Path;
 
 				if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
-					std::string FullPath = path + (std::string)"/" + Path.data;	// TODO: this takes the path, adds the texture within. Jokes on it, textures are on Library/Textures, so change path to that, Path.data is fine
+					std::string FullPath = TEXTURES_PATH + (std::string)Path.data;
 					material->diffuseId = App->texture->LoadTexture(FullPath.c_str());
 				}
-			}
-			else {
-				// TODO: If there ain't no texture, put default texture. This means textureVec has a default value of -1 or something that means that texture, and which is created automatically with material
 			}
 		}
 	}
