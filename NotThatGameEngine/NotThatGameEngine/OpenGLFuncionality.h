@@ -6,15 +6,20 @@
 #include "SDL/include/SDL.h"
 #include "SDL/include/SDL_opengl.h"
 
+#include "Devil/include/il.h"
+#include "Devil/include/ilu.h"
+#include "Devil/include/ilut.h"
+
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
 class Mesh;
 
-bool InitOpenGL();
+bool SetOpenGL();
 
 void LoadDataBufferFloat(int bufferType, GLuint* id, int size, float* data);
 void LoadDataBufferUint(int bufferType, GLuint* id, int size, uint* data);
+void LoadGLTexture(GLuint* _id, int width, int height, int bpp, int format, ILubyte* data);
 
 void DrawMeshes(Mesh& mesh, uint textureId);
 

@@ -1,8 +1,8 @@
 #ifndef __TEXTURES_H__
 #define __TEXTURES_H__
 
-#include "glew-2.1.0/include/GL/glew.h"
 #include "Module.h"
+#include "OpenGLFuncionality.h"
 
 struct TextureData {
 

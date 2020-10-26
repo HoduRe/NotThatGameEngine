@@ -1,13 +1,5 @@
 #include "Application.h"
 
-#include "Devil/include/il.h"
-#include "Devil/include/ilu.h"
-#include "Devil/include/ilut.h"
-
-#pragma comment ( lib, "Devil/libx86/DevIL.lib" )
-#pragma comment ( lib, "Devil/libx86/ILU.lib" )
-#pragma comment ( lib, "Devil/libx86/ILUT.lib" )
-
 
 Texture::Texture(Application* app, bool start_enabled) : Module(app, start_enabled), textureVec(), defaultTextureId(-1) {}
 
@@ -59,15 +51,7 @@ uint Texture::LoadTexture(const char* path, GLenum _textureType) {
 		return defaultTextureId;
 	}
 
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glGenTextures(1, &imageTest);
-	glBindTexture(GL_TEXTURE_2D, imageTest);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexImage2D(GL_TEXTURE_2D, 0, ilGetInteger(IL_IMAGE_BPP), ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), 0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE, ilGetData());
-	glBindTexture(GL_TEXTURE_2D, 0);
+	LoadGLTexture(&imageTest, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_BPP), ilGetInteger(IL_IMAGE_FORMAT), ilGetData());
 
 	ilDeleteImages(1, &imageTest);
 

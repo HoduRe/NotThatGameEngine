@@ -29,7 +29,7 @@ bool Renderer3D::Init()
 
 	// Vsync
 	SDL_GL_SetSwapInterval(1);
-	ret = InitOpenGL();
+	ret = SetOpenGL();
 
 	if (ret) {
 

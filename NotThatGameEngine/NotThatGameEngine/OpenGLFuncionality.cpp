@@ -1,11 +1,15 @@
 #include "OpenGLFuncionality.h"
 #include "Mesh.h"
 
+#pragma comment ( lib, "Devil/libx86/DevIL.lib" )
+#pragma comment ( lib, "Devil/libx86/ILU.lib" )
+#pragma comment ( lib, "Devil/libx86/ILUT.lib" )
+
 #pragma comment( lib, "glew-2.1.0/lib/Release/Win32/glew32.lib")
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
-bool InitOpenGL() {
+bool SetOpenGL() {
 
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -43,6 +47,21 @@ void LoadDataBufferUint(int bufferType, GLuint* id, int size, uint* data) {
 	glBindBuffer(bufferType, *id);
 	glBufferData(bufferType, sizeof(uint) * size, data, GL_STATIC_DRAW);
 	glBindBuffer(bufferType, 0);
+
+}
+
+
+void LoadGLTexture(GLuint* _id, int width, int height, int bpp, int format, ILubyte* data) {
+
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glGenTextures(1, _id);
+	glBindTexture(GL_TEXTURE_2D, *_id);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, bpp, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 }
 
