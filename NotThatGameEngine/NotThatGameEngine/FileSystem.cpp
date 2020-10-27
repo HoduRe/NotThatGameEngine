@@ -17,7 +17,10 @@ FileSystem::FileSystem(Application* app, bool start_enabled) : Module(app, start
 
 	if (PHYSFS_setWriteDir(".") == 0) { LOG("File System error while creating write dir: %s\n", PHYSFS_getLastError()); }
 
-	AddPath(".Assets");	// TODO: . and Assets was sepparated before...
+	AddPath(".");	// Those must NOT be joined
+	AddPath("Assets");
+
+	std::string name = PHYSFS_getBaseDir();
 
 	CreateDir(LIBRARY_PATH);
 	CreateDir(FOLDERS_PATH);

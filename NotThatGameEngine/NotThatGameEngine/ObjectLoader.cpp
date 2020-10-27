@@ -20,13 +20,6 @@ GameObject* LoadModel(Application* App, const char* path, const char* buffer, ui
 }
 
 
-void LoadTexture(Application* app, const char* path) {
-
-
-
-}
-
-
 bool LoadScene(Application* App, const char* buffer, uint size, GameObject* newObject, const char* path) {
 
 	const aiScene* scene = aiImportFileFromMemory(buffer, size, aiProcessPreset_TargetRealtime_MaxQuality, nullptr);
@@ -93,9 +86,7 @@ bool LoadScene(Application* App, const char* buffer, uint size, GameObject* newO
 
 				if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
 					std::string FullPath = TEXTURES_PATH + (std::string)Path.data;
-					char* buffer;
-					App->fileLoad->Load(path, &buffer);
-					material->diffuseId = App->texture->LoadTexture(FullPath.c_str(), buffer);
+					material->diffuseId = LoadTexture(App, FullPath.c_str());
 				}
 			}
 		}
@@ -103,5 +94,43 @@ bool LoadScene(Application* App, const char* buffer, uint size, GameObject* newO
 
 	return true;
 }
+
+
+uint LoadTexture(Application* App, const char* path) {
+
+	uint imageTest = App->texture->IsTextureRepeated(path);
+
+	if (imageTest == 0) {
+
+		char* buffer;
+		uint size = App->fileLoad->Load(path, &buffer);
+		ILboolean ret;
+
+		ilGenImages(1, &imageTest);
+		ilBindImage(imageTest);
+
+		ret = ilLoadL(IL_TYPE_UNKNOWN, buffer, size);
+
+		RELEASE_ARRAY(buffer);
+
+		if (ret == IL_TRUE) {}
+		else {
+			LOG("Image with id: %u failed to load.\n", imageTest);
+			return 0;
+		}
+
+		LoadGLTexture(&imageTest, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_BPP), ilGetInteger(IL_IMAGE_FORMAT), ilGetData());
+		ilDeleteImages(1, &imageTest);
+
+		TextureData* texture = new TextureData(imageTest, path, GL_DIFFUSE);
+
+		App->texture->AddTexture(texture);
+
+	}
+
+	return imageTest;
+
+}
+
 
 

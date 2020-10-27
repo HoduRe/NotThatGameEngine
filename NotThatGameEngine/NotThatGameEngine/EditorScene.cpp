@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "ObjectLoader.h"
+#include "Primitives.h"
 
 #pragma comment( lib, "Assimp/libx86/assimp.lib" )
 

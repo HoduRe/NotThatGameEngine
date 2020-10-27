@@ -2,9 +2,7 @@
 #define __EDITORSCENE_H__
 
 #include "GameObject.h"
-#include "Primitives.h"
 #include "Module.h"
-#include "OpenGLFuncionality.h"
 
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"

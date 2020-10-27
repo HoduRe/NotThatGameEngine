@@ -2,7 +2,6 @@
 #define __TEXTURES_H__
 
 #include "Module.h"
-#include "OpenGLFuncionality.h"
 
 struct TextureData {
 
@@ -26,7 +25,8 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	uint LoadTexture(const char* path, const char* buffer, GLenum _textureType = GL_DIFFUSE);
+	void AddTexture(TextureData* texture);
+	uint IsTextureRepeated(const char* path);
 
 public:
 

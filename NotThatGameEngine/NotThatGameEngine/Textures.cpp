@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "ObjectLoader.h"
 
 
 Texture::Texture(Application* app, bool start_enabled) : Module(app, start_enabled), textureVec(), defaultTextureId(0) {}
@@ -22,11 +23,9 @@ bool Texture::Start() {
 	ilutInit();
 
 	ilEnable(IL_ORIGIN_SET);
-	ilOriginFunc(IL_ORIGIN_UPPER_LEFT);
+	ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
 
-	char* buffer;
-	App->fileLoad->Load("Library/Textures/Alex.png", &buffer);
-	defaultTextureId = LoadTexture("Library/Textures/Alex.png", buffer);
+	defaultTextureId = LoadTexture(App, "Library/Textures/Alex.png");
 	App->eventManager->GenerateEvent(EVENT_ENUM::DEFAULT_TEXTURE_LOADED);
 
 	return true;
@@ -42,28 +41,18 @@ update_status Texture::Update(float dt) {
 }
 
 
-uint Texture::LoadTexture(const char* path, const char* buffer, GLenum _textureType) {
+void Texture::AddTexture(TextureData* texture) { textureVec.push_back(*texture); }
 
-	uint imageTest;
 
-	for (int i = textureVec.size() - 1; i > -1; i--) { if (textureVec[i].path == path) { return textureVec[i].textureId; } }
+uint Texture::IsTextureRepeated(const char* path) {
+	
+	for (int i = textureVec.size() - 1; i > -1; i--) {
+	
+		if (textureVec[i].path == path) { return textureVec[i].textureId; }
 
-	ilGenImages(1, &imageTest);
-	ilBindImage(imageTest);
-
-	if (ilLoadImage(path) == IL_TRUE) {}
-	else {
-		LOG("Image with id: %u failed to load.\n", imageTest);
-		return defaultTextureId;
 	}
 
-	LoadGLTexture(&imageTest, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_BPP), ilGetInteger(IL_IMAGE_FORMAT), ilGetData());
-
-	ilDeleteImages(1, &imageTest);
-
-	textureVec.push_back(TextureData(imageTest, path, _textureType));
-
-	return imageTest;
+	return 0;
 }
 
 
