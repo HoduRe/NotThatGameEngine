@@ -24,7 +24,9 @@ bool Texture::Start() {
 	ilEnable(IL_ORIGIN_SET);
 	ilOriginFunc(IL_ORIGIN_UPPER_LEFT);
 
-	defaultTextureId = LoadTexture("Library/Textures/Alex.png");
+	char* buffer;
+	App->fileLoad->Load("Library/Textures/Alex.png", &buffer);
+	defaultTextureId = LoadTexture("Library/Textures/Alex.png", buffer);
 	App->eventManager->GenerateEvent(EVENT_ENUM::DEFAULT_TEXTURE_LOADED);
 
 	return true;
@@ -40,7 +42,7 @@ update_status Texture::Update(float dt) {
 }
 
 
-uint Texture::LoadTexture(const char* path, GLenum _textureType) {
+uint Texture::LoadTexture(const char* path, const char* buffer, GLenum _textureType) {
 
 	uint imageTest;
 

@@ -11,6 +11,7 @@
 #include "Assimp/include/Importer.hpp"
 #include "Assimp/include/postprocess.h"
 
+
 class EditorScene : public Module {
 
 public:
@@ -27,12 +28,11 @@ public:
 
 	bool AddPrimitive(PrimitiveEnum _type);
 	bool AddGameObject(GameObject* newObject);
-	GameObject* AddGameObjectByLoadingModel(const char* path, const char* objectName = nullptr, GameObject* parent = nullptr, bool enabled = true);
 	void DeleteGameObject(int id);
+	int GenerateId();
 
 private:
 
-	int GenerateId();
 	bool ExecuteEvent(EVENT_ENUM _event, void* var);
 	void DeleteRootGameObjects();
 

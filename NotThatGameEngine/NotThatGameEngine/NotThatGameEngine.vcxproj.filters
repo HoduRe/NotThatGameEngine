@@ -19,10 +19,10 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="GameObject">
+    <Filter Include="GameObjectLogic">
       <UniqueIdentifier>{4d92be61-d6a2-49f8-ab4d-d504c66481a2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObject\Components">
+    <Filter Include="GameObjectLogic\Components">
       <UniqueIdentifier>{a2f37aaa-9260-45e6-a70f-1ab82508e2d8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -103,22 +103,22 @@
       <Filter>Modular code</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>GameObject</Filter>
+      <Filter>GameObjectLogic</Filter>
     </ClCompile>
     <ClCompile Include="EditorScene.cpp">
-      <Filter>GameObject</Filter>
+      <Filter>GameObjectLogic</Filter>
     </ClCompile>
     <ClCompile Include="Component.cpp">
-      <Filter>GameObject\Components</Filter>
+      <Filter>GameObjectLogic\Components</Filter>
     </ClCompile>
     <ClCompile Include="Transform.cpp">
-      <Filter>GameObject\Components</Filter>
+      <Filter>GameObjectLogic\Components</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
-      <Filter>GameObject\Components</Filter>
+      <Filter>GameObjectLogic\Components</Filter>
     </ClCompile>
     <ClCompile Include="Material.cpp">
-      <Filter>GameObject\Components</Filter>
+      <Filter>GameObjectLogic\Components</Filter>
     </ClCompile>
     <ClCompile Include="Textures.cpp">
       <Filter>Modular code</Filter>
@@ -127,7 +127,10 @@
       <Filter>Utility</Filter>
     </ClCompile>
     <ClCompile Include="Primitives.cpp">
-      <Filter>GameObject</Filter>
+      <Filter>GameObjectLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectLoader.cpp">
+      <Filter>GameObjectLogic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -219,22 +222,22 @@
       <Filter>Modular code</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>GameObject</Filter>
+      <Filter>GameObjectLogic</Filter>
     </ClInclude>
     <ClInclude Include="EditorScene.h">
-      <Filter>GameObject</Filter>
+      <Filter>GameObjectLogic</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
-      <Filter>GameObject\Components</Filter>
+      <Filter>GameObjectLogic\Components</Filter>
     </ClInclude>
     <ClInclude Include="Transform.h">
-      <Filter>GameObject\Components</Filter>
+      <Filter>GameObjectLogic\Components</Filter>
     </ClInclude>
     <ClInclude Include="Mesh.h">
-      <Filter>GameObject\Components</Filter>
+      <Filter>GameObjectLogic\Components</Filter>
     </ClInclude>
     <ClInclude Include="Material.h">
-      <Filter>GameObject\Components</Filter>
+      <Filter>GameObjectLogic\Components</Filter>
     </ClInclude>
     <ClInclude Include="Textures.h">
       <Filter>Modular code</Filter>
@@ -243,7 +246,10 @@
       <Filter>Utility</Filter>
     </ClInclude>
     <ClInclude Include="Primitives.h">
-      <Filter>GameObject</Filter>
+      <Filter>GameObjectLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectLoader.h">
+      <Filter>GameObjectLogic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "PathNode.h"
+#include "ObjectLoader.h"
 
 #include "PhysFS/include/physfs.h"
 #include <fstream>
@@ -70,13 +71,15 @@ update_status FileSystem::PostUpdate(float dt) {
 bool FileSystem::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
 	char* filePath;
+	char* buffer;
 
 	switch (eventId) {
 
 	case EVENT_ENUM::FILE_DROPPED:
 
 		filePath = (char*)var;
-		App->editorScene->AddGameObjectByLoadingModel(filePath);
+		Load(filePath, &buffer);
+		LoadModel(App, filePath, buffer);
 
 		break;
 	default:
@@ -328,6 +331,7 @@ uint FileSystem::Load(const char* file, char** buffer) const {	// Read a whole f
 				RELEASE_ARRAY(buffer);
 
 			}
+
 			else {
 
 				ret = readed;

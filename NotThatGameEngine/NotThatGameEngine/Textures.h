@@ -26,7 +26,7 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	uint LoadTexture(const char* path, GLenum _textureType = GL_DIFFUSE);
+	uint LoadTexture(const char* path, const char* buffer, GLenum _textureType = GL_DIFFUSE);
 
 public:
 
