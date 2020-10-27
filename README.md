@@ -14,6 +14,8 @@ An engine for CITM's Engine project which focuses on skeletical animation
 
 ## Additional comments:
 - Event system: <br/>
+- Obligued path: the directory must be a folder named "Assets/" <br/>
 - <br/>
+
 
 

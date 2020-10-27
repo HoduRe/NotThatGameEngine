@@ -15,7 +15,7 @@
 #include "ResetModule.h"
 #include "ManagerImGui.h"
 #include "ManagerEvent.h"
-#include "FileSystem.h"
+#include "ManagerFile.h"
 #include "EditorScene.h"
 #include "Textures.h"
 
@@ -35,7 +35,7 @@ public:
 	ResetModule* reset;
 	ManagerImGui* imGui;
 	ManagerEvent* eventManager;
-	FileSystem* fileLoad;
+	FileManager* fileManager;
 	EditorScene* editorScene;
 	Texture* texture;
 

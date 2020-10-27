@@ -1,5 +1,5 @@
-#ifndef __FileSystem_H__
-#define __FileSystem_H__
+#ifndef __FileManager_H__
+#define __FileManager_H__
 
 #include "Module.h"
 
@@ -11,13 +11,22 @@ struct aiFileIO;
 class Config;
 struct PathNode;
 
-class FileSystem : public Module
+enum class ResourceEnum {
+	NONE,
+
+	MODEL,
+	TEXTURE,
+
+	UNKNOWN
+};
+
+class FileManager : public Module
 {
 
 public:
 
-	FileSystem(Application* app, bool start_enabled = true);
-	~FileSystem();
+	FileManager(Application* app, bool start_enabled = true);
+	~FileManager();
 
 	bool Init();
 	update_status PreUpdate(float dt);
@@ -42,6 +51,7 @@ public:
 	bool HasExtension(const char* path, std::vector<std::string> extensions) const;
 
 	std::string NormalizePath(const char* path) const;
+	std::string LocalizePath(std::string path) const;
 	void SplitFilePath(const char* full_path, std::string* path, std::string* file = nullptr, std::string* extension = nullptr) const;
 
 	// Open for Read/Write
@@ -61,6 +71,7 @@ public:
 
 private:
 	bool ExecuteEvent(EVENT_ENUM eventId, void* var);
+	ResourceEnum CheckResourceType(std::string name);
 
 };
 

@@ -9,7 +9,7 @@
 #pragma comment( lib, "PhysFS/libx86/physfs.lib" )
 
 
-FileSystem::FileSystem(Application* app, bool start_enabled) : Module(app, start_enabled) {
+FileManager::FileManager(Application* app, bool start_enabled) : Module(app, start_enabled) {
 
 	char* base_path = SDL_GetBasePath();
 	PHYSFS_init(nullptr);
@@ -35,10 +35,10 @@ FileSystem::FileSystem(Application* app, bool start_enabled) : Module(app, start
 }
 
 
-FileSystem::~FileSystem() { PHYSFS_deinit(); }
+FileManager::~FileManager() { PHYSFS_deinit(); }
 
 
-bool FileSystem::Init() {
+bool FileManager::Init() {
 
 	bool ret = true;
 
@@ -48,10 +48,10 @@ bool FileSystem::Init() {
 }
 
 
-bool FileSystem::CleanUp() { return true; }
+bool FileManager::CleanUp() { return true; }
 
 
-update_status FileSystem::PreUpdate(float dt) {
+update_status FileManager::PreUpdate(float dt) {
 
 	CheckListener(this);
 
@@ -59,30 +59,50 @@ update_status FileSystem::PreUpdate(float dt) {
 }
 
 
-update_status FileSystem::Update(float dt) {
+update_status FileManager::Update(float dt) {
 
 	return update_status::UPDATE_CONTINUE;
 }
 
 
-update_status FileSystem::PostUpdate(float dt) {
+update_status FileManager::PostUpdate(float dt) {
 
 	return update_status::UPDATE_CONTINUE;
 }
 
 
-bool FileSystem::ExecuteEvent(EVENT_ENUM eventId, void* var) {
+bool FileManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
-	char* filePath;
+	std::string filePath;
 	char* buffer;
+	uint size;
+	ResourceEnum type;
 
 	switch (eventId) {
 
 	case EVENT_ENUM::FILE_DROPPED:
 
 		filePath = (char*)var;
-		Load(filePath, &buffer);
-		LoadModel(App, filePath, buffer);
+		filePath = NormalizePath(filePath.c_str());
+		filePath = LocalizePath(filePath);
+		size = Load(filePath.c_str(), &buffer);
+
+		type = CheckResourceType(filePath);
+		
+		if (size != 0) {
+			switch (type) {
+			case ResourceEnum::MODEL:
+				LoadModel(App, filePath.c_str(), buffer, size);
+				break;
+
+			case ResourceEnum::TEXTURE:
+				LoadTexture(App, filePath.c_str(), buffer, size);
+				break;
+
+			default:
+				break;
+			}
+		}
 
 		break;
 	default:
@@ -94,7 +114,7 @@ bool FileSystem::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 }
 
 
-bool FileSystem::AddPath(const char* path_or_zip) {
+bool FileManager::AddPath(const char* path_or_zip) {
 
 	bool ret = false;
 
@@ -106,10 +126,10 @@ bool FileSystem::AddPath(const char* path_or_zip) {
 }
 
 // Check if a file exists
-bool FileSystem::Exists(const char* file) const { return PHYSFS_exists(file) != 0; }
+bool FileManager::Exists(const char* file) const { return PHYSFS_exists(file) != 0; }
 
 
-bool FileSystem::CreateDir(const char* dir) {
+bool FileManager::CreateDir(const char* dir) {
 
 	if (IsDirectory(dir) == false) {
 
@@ -122,13 +142,13 @@ bool FileSystem::CreateDir(const char* dir) {
 }
 
 
-bool FileSystem::IsDirectory(const char* file) const { return PHYSFS_isDirectory(file) != 0; }
+bool FileManager::IsDirectory(const char* file) const { return PHYSFS_isDirectory(file) != 0; }
 
 
-const char* FileSystem::GetWriteDir() const { return PHYSFS_getWriteDir(); }
+const char* FileManager::GetWriteDir() const { return PHYSFS_getWriteDir(); }
 
 
-void FileSystem::DiscoverFiles(const char* directory, std::vector<std::string>& file_list, std::vector<std::string>& dir_list) const {
+void FileManager::DiscoverFiles(const char* directory, std::vector<std::string>& file_list, std::vector<std::string>& dir_list) const {
 
 	char** rc = PHYSFS_enumerateFiles(directory);
 	char** i;
@@ -146,7 +166,7 @@ void FileSystem::DiscoverFiles(const char* directory, std::vector<std::string>& 
 }
 
 
-void FileSystem::GetAllFilesWithExtension(const char* directory, const char* extension, std::vector<std::string>& file_list) const {
+void FileManager::GetAllFilesWithExtension(const char* directory, const char* extension, std::vector<std::string>& file_list) const {
 
 	std::vector<std::string> files;
 	std::vector<std::string> dirs;
@@ -162,7 +182,7 @@ void FileSystem::GetAllFilesWithExtension(const char* directory, const char* ext
 
 }
 
-PathNode FileSystem::GetAllFiles(const char* directory, std::vector<std::string>* filter_ext, std::vector<std::string>* ignore_ext) const {
+PathNode FileManager::GetAllFiles(const char* directory, std::vector<std::string>* filter_ext, std::vector<std::string>* ignore_ext) const {
 
 	PathNode root;
 	if (Exists(directory)) {
@@ -210,7 +230,7 @@ PathNode FileSystem::GetAllFiles(const char* directory, std::vector<std::string>
 }
 
 
-void FileSystem::GetRealDir(const char* path, std::string& output) const {
+void FileManager::GetRealDir(const char* path, std::string& output) const {
 
 	output = PHYSFS_getBaseDir();
 
@@ -224,7 +244,7 @@ void FileSystem::GetRealDir(const char* path, std::string& output) const {
 }
 
 
-std::string FileSystem::GetPathRelativeToAssets(const char* originalPath) const {
+std::string FileManager::GetPathRelativeToAssets(const char* originalPath) const {
 
 	std::string ret;
 	GetRealDir(originalPath, ret);
@@ -233,7 +253,7 @@ std::string FileSystem::GetPathRelativeToAssets(const char* originalPath) const 
 }
 
 
-bool FileSystem::HasExtension(const char* path) const {
+bool FileManager::HasExtension(const char* path) const {
 
 	std::string ext = "";
 	SplitFilePath(path, nullptr, nullptr, &ext);
@@ -242,7 +262,7 @@ bool FileSystem::HasExtension(const char* path) const {
 }
 
 
-bool FileSystem::HasExtension(const char* path, std::string extension) const {
+bool FileManager::HasExtension(const char* path, std::string extension) const {
 
 	std::string ext = "";
 	SplitFilePath(path, nullptr, nullptr, &ext);
@@ -251,7 +271,7 @@ bool FileSystem::HasExtension(const char* path, std::string extension) const {
 }
 
 
-bool FileSystem::HasExtension(const char* path, std::vector<std::string> extensions) const {
+bool FileManager::HasExtension(const char* path, std::vector<std::string> extensions) const {
 
 	std::string ext = "";
 	SplitFilePath(path, nullptr, nullptr, &ext);
@@ -262,7 +282,7 @@ bool FileSystem::HasExtension(const char* path, std::vector<std::string> extensi
 }
 
 
-std::string FileSystem::NormalizePath(const char* full_path) const {
+std::string FileManager::NormalizePath(const char* full_path) const {
 
 	std::string newPath(full_path);
 	for (int i = 0; i < newPath.size(); ++i) { if (newPath[i] == '\\') { newPath[i] = '/'; } }
@@ -271,7 +291,29 @@ std::string FileSystem::NormalizePath(const char* full_path) const {
 }
 
 
-void FileSystem::SplitFilePath(const char* full_path, std::string* path, std::string* file, std::string* extension) const {
+std::string FileManager::LocalizePath(std::string path) const {
+
+	std::string newPath;
+	std::string dirPath = PHYSFS_getBaseDir();
+	std::string obliguedPath = OBLIGUED_PATH;
+	dirPath = NormalizePath(dirPath.c_str());
+
+	int size = path.size(), i = 0, j = 0;
+	bool directorySkipped = false;
+	char char1, char2;
+
+	while (path[j] == dirPath[j] && j < size) { j++; }
+	while (path[j] != obliguedPath[0] && j < size) { j++; }
+	while (path[j] == obliguedPath[i] && j < size) { j++; i++; }
+
+	for (j; j < size; j++) { newPath.push_back(path[j]); }
+
+	return newPath;
+
+}
+
+
+void FileManager::SplitFilePath(const char* full_path, std::string* path, std::string* file, std::string* extension) const {
 
 	if (full_path != nullptr) {
 
@@ -304,7 +346,7 @@ void FileSystem::SplitFilePath(const char* full_path, std::string* path, std::st
 }
 
 
-unsigned int FileSystem::Load(const char* path, const char* file, char** buffer) const {
+unsigned int FileManager::Load(const char* path, const char* file, char** buffer) const {
 
 	std::string full_path(path);
 	full_path += file;
@@ -313,7 +355,7 @@ unsigned int FileSystem::Load(const char* path, const char* file, char** buffer)
 }
 
 
-uint FileSystem::Load(const char* file, char** buffer) const {	// Read a whole file and put it in a new buffer
+uint FileManager::Load(const char* file, char** buffer) const {	// Read a whole file and put it in a new buffer
 
 	uint ret = 0;
 
@@ -354,7 +396,7 @@ uint FileSystem::Load(const char* file, char** buffer) const {	// Read a whole f
 }
 
 
-bool FileSystem::DuplicateFile(const char* file, const char* dstFolder, std::string& relativePath) {
+bool FileManager::DuplicateFile(const char* file, const char* dstFolder, std::string& relativePath) {
 
 	std::string fileStr, extensionStr;
 	SplitFilePath(file, nullptr, &fileStr, &extensionStr);
@@ -367,7 +409,7 @@ bool FileSystem::DuplicateFile(const char* file, const char* dstFolder, std::str
 }
 
 
-bool FileSystem::DuplicateFile(const char* srcFile, const char* dstFile) {
+bool FileManager::DuplicateFile(const char* srcFile, const char* dstFile) {
 
 	//TODO: Compare performance to calling Load(srcFile) and then Save(dstFile)
 	std::ifstream src;
@@ -403,7 +445,7 @@ int close_sdl_rwops(SDL_RWops* rw) {
 }
 
 
-uint FileSystem::Save(const char* file, const void* buffer, unsigned int size, bool append) const {	// Save a whole buffer to disk
+uint FileManager::Save(const char* file, const void* buffer, unsigned int size, bool append) const {	// Save a whole buffer to disk
 
 	unsigned int ret = 0;
 	bool overwrite = PHYSFS_exists(file) != 0;
@@ -432,7 +474,7 @@ uint FileSystem::Save(const char* file, const void* buffer, unsigned int size, b
 }
 
 
-bool FileSystem::Remove(const char* file) {
+bool FileManager::Remove(const char* file) {
 
 	bool ret = false;
 
@@ -460,10 +502,10 @@ bool FileSystem::Remove(const char* file) {
 }
 
 
-uint64 FileSystem::GetLastModTime(const char* filename) { return PHYSFS_getLastModTime(filename); }
+uint64 FileManager::GetLastModTime(const char* filename) { return PHYSFS_getLastModTime(filename); }
 
 
-std::string FileSystem::GetUniqueName(const char* path, const char* name) const {
+std::string FileManager::GetUniqueName(const char* path, const char* name) const {
 
 	//TODO: modify to distinguix files and dirs?
 	std::vector<std::string> files, dirs;
@@ -499,4 +541,23 @@ std::string FileSystem::GetUniqueName(const char* path, const char* name) const 
 	return finalName;
 
 }
+
+
+ResourceEnum FileManager::CheckResourceType(std::string name) {
+
+	std::string ext;
+
+	SplitFilePath(name.c_str(), nullptr, nullptr, &ext);
+
+	static_assert(static_cast<int>(ResourceEnum::UNKNOWN) == 3, "Code Needs Update");
+
+	if (ext == "FBX" || ext == "fbx") { return ResourceEnum::MODEL; }
+	else if (ext == "tga" || ext == "png" || ext == "jpg" || ext == "TGA" || ext == "PNG" || ext == "JPG") { return ResourceEnum::TEXTURE; }
+
+	return ResourceEnum::UNKNOWN;
+
+}
+
+
+
 

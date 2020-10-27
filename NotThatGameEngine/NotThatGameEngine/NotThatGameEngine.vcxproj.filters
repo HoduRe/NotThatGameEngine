@@ -81,9 +81,6 @@
     <ClCompile Include="ManagerImGui.cpp">
       <Filter>Modular code</Filter>
     </ClCompile>
-    <ClCompile Include="FileSystem.cpp">
-      <Filter>Modular code</Filter>
-    </ClCompile>
     <ClCompile Include="ManagerEvent.cpp">
       <Filter>Modular code</Filter>
     </ClCompile>
@@ -131,6 +128,9 @@
     </ClCompile>
     <ClCompile Include="ObjectLoader.cpp">
       <Filter>GameObjectLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="ManagerFile.cpp">
+      <Filter>Modular code</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -200,9 +200,6 @@
     <ClInclude Include="ManagerImGui.h">
       <Filter>Modular code</Filter>
     </ClInclude>
-    <ClInclude Include="FileSystem.h">
-      <Filter>Modular code</Filter>
-    </ClInclude>
     <ClInclude Include="ManagerEvent.h">
       <Filter>Modular code</Filter>
     </ClInclude>
@@ -250,6 +247,9 @@
     </ClInclude>
     <ClInclude Include="ObjectLoader.h">
       <Filter>GameObjectLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="ManagerFile.h">
+      <Filter>Modular code</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

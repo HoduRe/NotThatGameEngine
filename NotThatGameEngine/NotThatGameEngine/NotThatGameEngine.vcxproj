@@ -165,7 +165,7 @@
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Camera3D.cpp" />
     <ClCompile Include="ManagerEvent.cpp" />
-    <ClCompile Include="FileSystem.cpp" />
+    <ClCompile Include="ManagerFile.cpp" />
     <ClCompile Include="ManagerImGui.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="ObjectLoader.cpp" />
@@ -205,7 +205,7 @@
     <ClInclude Include="Audio.h" />
     <ClInclude Include="Camera3D.h" />
     <ClInclude Include="ManagerEvent.h" />
-    <ClInclude Include="FileSystem.h" />
+    <ClInclude Include="ManagerFile.h" />
     <ClInclude Include="ManagerImGui.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="ObjectLoader.h" />

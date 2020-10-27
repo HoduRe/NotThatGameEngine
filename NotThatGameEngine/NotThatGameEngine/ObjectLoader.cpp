@@ -6,7 +6,7 @@ GameObject* LoadModel(Application* App, const char* path, const char* buffer, ui
 
 	GameObject* newObject = new GameObject(App->editorScene->GenerateId(), path, parent, enabled);
 
-	if (buffer == nullptr && size == 0) { size = App->fileLoad->Load(path, (char**)&buffer); }
+	if (buffer == nullptr && size == 0) { size = App->fileManager->Load(path, (char**)&buffer); }
 	if(LoadScene(App, buffer, size, newObject, path)){}
 	else {
 		delete newObject;
@@ -92,18 +92,19 @@ bool LoadScene(Application* App, const char* buffer, uint size, GameObject* newO
 		}
 	}
 
+	App->editorScene->AddGameObject(newObject);
+
 	return true;
 }
 
 
-uint LoadTexture(Application* App, const char* path) {
+uint LoadTexture(Application* App, const char* path, const char* buffer, uint size) {
 
 	uint imageTest = App->texture->IsTextureRepeated(path);
 
 	if (imageTest == 0) {
 
-		char* buffer;
-		uint size = App->fileLoad->Load(path, &buffer);
+		if (buffer == nullptr && size == 0) { size = App->fileManager->Load(path, (char**)&buffer); }
 		ILboolean ret;
 
 		ilGenImages(1, &imageTest);
