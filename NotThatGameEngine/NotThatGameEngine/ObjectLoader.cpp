@@ -85,7 +85,7 @@ bool LoadScene(Application* App, const char* buffer, uint size, GameObject* newO
 				aiString Path;
 
 				if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
-					std::string FullPath = TEXTURES_PATH + (std::string)Path.data;
+					std::string FullPath = TEXTURES_PATH + (std::string)Path.data;	// TODO: do this better. It will need a function that iterates everything, yes. But do it
 					material->diffuseId = LoadTexture(App, FullPath.c_str());
 				}
 			}
