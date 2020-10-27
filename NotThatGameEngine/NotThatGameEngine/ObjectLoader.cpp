@@ -6,10 +6,7 @@ GameObject* LoadModel(Application* App, const char* path, const char* buffer, ui
 
 	GameObject* newObject = new GameObject(App->editorScene->GenerateId(), path, parent, enabled);
 
-	if (buffer == nullptr && size == 0) {
-		//	Load buffer via file manager
-	}
-	
+	if (buffer == nullptr && size == 0) { size = App->fileLoad->Load(path, (char**)&buffer); }
 	if(LoadScene(App, buffer, size, newObject, path)){}
 	else {
 		delete newObject;
