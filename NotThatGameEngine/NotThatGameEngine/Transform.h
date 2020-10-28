@@ -15,9 +15,11 @@ public:
 
 	void Update();
 
+	void RecalculateTransform(float3& parentPosition);
+
 public:
 
-	float3 position;
+	float3 localPosition;
 	float3 rotationEuler;
 	Quat rotation;
 	float3 scale;

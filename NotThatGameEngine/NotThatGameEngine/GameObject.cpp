@@ -2,7 +2,7 @@
 #include "OpenGLFuncionality.h"
 
 GameObject::GameObject(int _id, std::string _name, GameObject* _parent, bool _enabled, std::vector<GameObject*> children) :
-	name(_name), id(_id), parent(_parent), childs(children), enabled(_enabled), components(), componentIdGenerator(0), deleteGameObject(false) {
+	name(_name), id(_id), worldPosition(0.0f, 0.0f, 0.0f), parent(_parent), childs(children), enabled(_enabled), components(), componentIdGenerator(0), deleteGameObject(false) {
 	AddComponent(COMPONENT_TYPE::TRANSFORM);
 }
 
@@ -37,6 +37,10 @@ void GameObject::Update() {
 
 void GameObject::PostUpdate(uint& defaultTextureId) {
 
+	// TODO: try implementing dirty flag ;)
+	Transform* transform = (Transform*)FindComponent(COMPONENT_TYPE::TRANSFORM);
+	if (parent != nullptr) { transform->RecalculateTransform(parent->worldPosition); }
+
 	for (int i = childs.size() - 1; i > -1; i--) { childs[i]->PostUpdate(defaultTextureId); }
 
 	std::vector<Component*> meshVec = FindComponents(COMPONENT_TYPE::MESH);
@@ -68,7 +72,7 @@ Component* GameObject::AddComponent(COMPONENT_TYPE _type) {
 
 	case COMPONENT_TYPE::TRANSFORM:
 
-		component = new Transform(GenerateComponentId(), this);
+		if (FindComponent(COMPONENT_TYPE::TRANSFORM) == nullptr) { component = new Transform(GenerateComponentId(), this); }
 
 		break;
 
@@ -80,7 +84,7 @@ Component* GameObject::AddComponent(COMPONENT_TYPE _type) {
 
 	case COMPONENT_TYPE::MATERIAL:
 
-		component = new Material(GenerateComponentId(), this);
+		if (FindComponent(COMPONENT_TYPE::MATERIAL) == nullptr) { component = new Material(GenerateComponentId(), this); }
 
 		break;
 
@@ -165,7 +169,8 @@ void GameObject::CheckGameObjectDeletion() {
 
 Component* GameObject::FindComponent(COMPONENT_TYPE _type) {
 
-	for (int i = components.size() - 1; i > -1; i--) { if (components[i]->type == _type) { return components[i]; } }
+	int size = components.size();
+	for (int i = 0; i < size; i++) { if (components[i]->type == _type) { return components[i]; } }
 	return nullptr;
 
 }
@@ -174,7 +179,8 @@ Component* GameObject::FindComponent(COMPONENT_TYPE _type) {
 std::vector<Component*> GameObject::FindComponents(COMPONENT_TYPE _type) {
 
 	std::vector<Component*> vec;
-	for (int i = components.size() - 1; i > -1; i--) { if (components[i]->type == _type) { vec.push_back(components[i]); } }
+	int size = components.size();
+	for (int i = 0; i < size; i++) { if (components[i]->type == _type) { vec.push_back(components[i]); } }
 	return vec;
 
 }
