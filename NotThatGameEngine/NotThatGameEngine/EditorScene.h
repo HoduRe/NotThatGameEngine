@@ -9,7 +9,6 @@
 #include "Assimp/include/Importer.hpp"
 #include "Assimp/include/postprocess.h"
 
-
 class EditorScene : public Module {
 
 public:

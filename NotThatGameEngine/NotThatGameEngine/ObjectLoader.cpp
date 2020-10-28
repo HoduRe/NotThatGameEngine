@@ -1,5 +1,4 @@
 #include "ObjectLoader.h"
-#include "Application.h"
 
 
 GameObject* LoadModel(Application* App, const char* path, const char* buffer, uint size, GameObject* parent, bool enabled) {
@@ -31,15 +30,17 @@ bool LoadScene(Application* App, const char* buffer, uint size, GameObject* newO
 
 	Mesh* mesh;
 	Material* material = nullptr;
+	std::vector<SceneObject> vec;
+	aiMatrix4x4 trans;
 
-	//	LoadMesh(App, scene->mRootNode, newObject->components);
+	LoadMeshNode(scene->mRootNode, vec, trans);
 
 	for (unsigned int i = 0; i < scene->mNumMeshes; i++) {
 
 		mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
 
 		mesh->materialId = scene->mMeshes[i]->mMaterialIndex;
-		
+
 		const aiMesh* paiMesh = (aiMesh*)scene->mMeshes[i];
 		const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
 
@@ -139,56 +140,26 @@ uint LoadTexture(Application* App, const char* path, const char* buffer, uint si
 }
 
 
-Mesh* LoadMesh(Application* App, const aiNode* node, std::vector<Component*> vec) {
+void LoadMeshNode(aiNode* node, std::vector<SceneObject>& targetParent, aiMatrix4x4 accTransform) {
 
-	Mesh* mesh = nullptr;
+	aiMatrix4x4 transform;
 
-	aiVector3D pos, sca;
-	aiQuaternion rot;
+	if (node->mNumMeshes > 0) {
 
-	node->mTransformation.Decompose(sca, rot, pos);
+		for (int i = 0; i < node->mNumMeshes; i++) {
 
-	float3 position(pos.x, pos.y, pos.z), scale(sca.x, sca.y, sca.z);
-	Quat rotation(rot.x, rot.y, rot.z, rot.w);
-
-	for (unsigned int i = 0; i < node->mNumMeshes; i++) {
-
-		const aiMesh* paiMesh = (aiMesh*)node->mMeshes[i];
-		const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
-
-		for (unsigned int j = 0; j < paiMesh->mNumVertices; j++) {		// Vertices
-			const aiVector3D* pPos = &(paiMesh->mVertices[j]);
-			const aiVector3D* pNormal = &(paiMesh->mNormals[j]); //: &Zero3D	// There are the same normals as there are vertices, so we don't need a loop for them
-			const aiVector3D* pTexCoord = paiMesh->HasTextureCoords(0) ? &(paiMesh->mTextureCoords[0][j]) : &Zero3D;	// Same as above
-
-			mesh->vertices.push_back(pPos->x);
-			mesh->vertices.push_back(pPos->y);
-			mesh->vertices.push_back(pPos->z);
-			mesh->textureCoord.push_back(pTexCoord->x);
-			mesh->textureCoord.push_back(pTexCoord->y);
-			mesh->normals.push_back(pNormal->x);
-			mesh->normals.push_back(pNormal->y);
-			mesh->normals.push_back(pNormal->z);
+			SceneObject* object = new SceneObject;
+			object->meshID = node->mMeshes[i];
+			object->transform = node->mTransformation * accTransform;
+			targetParent.push_back(*object);
+			
 		}
-
-		LOG("New mesh with %d vertices", mesh->vertices.size());
-
-		for (unsigned int j = 0; j < paiMesh->mNumFaces; j++) {		// Indices
-			const aiFace& Face = paiMesh->mFaces[j];
-			assert(Face.mNumIndices == 3);
-			mesh->indices.push_back(Face.mIndices[0]);
-			mesh->indices.push_back(Face.mIndices[1]);
-			mesh->indices.push_back(Face.mIndices[2]);
-		}
-
-		LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->vertexId, mesh->vertices.size(), mesh->vertices.data());
-		LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->normalsId, mesh->normals.size(), mesh->normals.data());
-		LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->textureCoordId, mesh->textureCoord.size(), mesh->textureCoord.data());
-		LoadDataBufferUint(GL_ELEMENT_ARRAY_BUFFER, &mesh->indexId, mesh->indices.size(), mesh->indices.data());
 
 	}
 
-	return mesh;
+	transform = node->mTransformation * accTransform;
+
+	for (int i = 0; i < node->mNumChildren; i++) { LoadMeshNode(node->mChildren[i], targetParent, transform); }
 
 }
 
