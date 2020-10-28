@@ -31,7 +31,7 @@ bool LoadScene(Application* App, const char* buffer, uint size, GameObject* newO
 
 	Material* material = nullptr;
 
-	LoadMesh(App, scene->mRootNode);
+	LoadMesh(App, scene->mRootNode, newObject->components);
 
 	// Init materials
 	if (scene->mNumMaterials > 0) {
@@ -96,87 +96,19 @@ uint LoadTexture(Application* App, const char* path, const char* buffer, uint si
 }
 
 
-GameObject* LoadMesh(Application* App, const aiNode* node) {
+Mesh* LoadMesh(Application* App, const aiNode* node, std::vector<Component*> vec) {
 
-	GameObject* childObject = new GameObject(App->editorScene->GenerateId());
 	Mesh* mesh = nullptr;
-
-	/* ////////////////
-
-//Assimp loads "dummy" modules to stack fbx transformation. Here we collapse all those transformations
-//to the first node that is not a dummy
-std::string nodeName = node->mName.C_Str();
-bool dummyFound = true;
-while (dummyFound)
-{
-	dummyFound = false;
-
-	//All dummy modules have one children (next dummy module or last module containing the mesh)
-	if (nodeName.find("_$AssimpFbx$_") != std::string::npos && node->mNumChildren == 1)
-	{
-		//Dummy module have only one child node, so we use that one as our next node
-		node = node->mChildren[0];
-
-		// Accumulate transform
-		node->mTransformation.Decompose(aiScale, aiRotation, aiTranslation);
-		pos += float3(aiTranslation.x, aiTranslation.y, aiTranslation.z);
-		scale = float3(scale.x * aiScale.x, scale.y * aiScale.y, scale.z * aiScale.z);
-		rot = rot * Quat(aiRotation.x, aiRotation.y, aiRotation.z, aiRotation.w);
-
-		nodeName = node->mName.C_Str();
-		dummyFound = true;
-	}
-}
-
-ModelNode newNode(randomID.Int(), nodeName.c_str(), pos, scale, rot, parentID);
-newNode.ID = randomID.Int();
-
-// Loading node meshes ----------------------------------------
-for (uint i = 0; i < node->mNumMeshes && i < 1; i++)
-{
-	//TODO: Warning: some nodes might have 2 meshes!
-	const aiMesh* newMesh = scene->mMeshes[node->mMeshes[i]];
-
-	newNode.meshID = node->mMeshes[i];
-	newNode.materialID = newMesh->mMaterialIndex;
-}
-
-model->nodes.push_back(newNode);
-
-// Load all children from the current node. As we are storing all nodes in reverse order due to recursion,
-// we will be doing the same for all the children in the same node
-for (uint i = node->mNumChildren; i > 0u; --i)
-{
-	ImportNodeData(scene, node->mChildren[i - 1], model, newNode.ID);
-}
-
-
-for (uint i = 0; i < scene->mNumMeshes; ++i)
-{
-	std::string meshName;
-	for (uint n = 0; n < rModel->nodes.size(); ++n)
-	{
-		if (rModel->nodes[n].meshID == i)
-			meshName = rModel->nodes[n].name;
-	}
-	scene->mMeshes[i]->mName = meshName;
-	meshes.push_back(ImportResourceFromModel(model->GetAssetsFile(), scene->mMeshes[i], meshName.c_str(), ResourceType::MESH));
-	model->AddContainedResource(meshes.back());
-
-
-	//////////////*/
 
 	aiVector3D pos, sca;
 	aiQuaternion rot;
 
-	node->mTransformation.Decompose(pos, rot, sca);
+	node->mTransformation.Decompose(sca, rot, pos);
 
 	float3 position (pos.x, pos.y, pos.z), scale (sca.x, sca.y, sca.z);
 	Quat rotation(rot.x, rot.y, rot.z, rot.w);
 
 	for (unsigned int i = 0; i < node->mNumMeshes; i++) {
-
-		mesh = (Mesh*)childObject->AddComponent(COMPONENT_TYPE::MESH);
 
 		const aiMesh* paiMesh = (aiMesh*)node->mMeshes[i];
 		const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
@@ -213,6 +145,6 @@ for (uint i = 0; i < scene->mNumMeshes; ++i)
 
 	}
 
-	return childObject;
+	return mesh;
 
 }
