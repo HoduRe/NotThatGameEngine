@@ -29,9 +29,51 @@ bool LoadScene(Application* App, const char* buffer, uint size, GameObject* newO
 		return false;
 	}
 
+	Mesh* mesh;
 	Material* material = nullptr;
 
-	LoadMesh(App, scene->mRootNode, newObject->components);
+	//	LoadMesh(App, scene->mRootNode, newObject->components);
+
+	for (unsigned int i = 0; i < scene->mNumMeshes; i++) {
+
+		mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
+
+		mesh->materialId = scene->mMeshes[i]->mMaterialIndex;
+		
+		const aiMesh* paiMesh = (aiMesh*)scene->mMeshes[i];
+		const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
+
+		for (unsigned int j = 0; j < paiMesh->mNumVertices; j++) {		// Vertices
+			const aiVector3D* pPos = &(paiMesh->mVertices[j]);
+			const aiVector3D* pNormal = &(paiMesh->mNormals[j]); //: &Zero3D	// There are the same normals as there are vertices, so we don't need a loop for them
+			const aiVector3D* pTexCoord = paiMesh->HasTextureCoords(0) ? &(paiMesh->mTextureCoords[0][j]) : &Zero3D;	// Same as above
+
+			mesh->vertices.push_back(pPos->x);
+			mesh->vertices.push_back(pPos->y);
+			mesh->vertices.push_back(pPos->z);
+			mesh->textureCoord.push_back(pTexCoord->x);
+			mesh->textureCoord.push_back(pTexCoord->y);
+			mesh->normals.push_back(pNormal->x);
+			mesh->normals.push_back(pNormal->y);
+			mesh->normals.push_back(pNormal->z);
+		}
+
+		LOG("New mesh with %d vertices", mesh->vertices.size());
+
+		for (unsigned int j = 0; j < paiMesh->mNumFaces; j++) {		// Indices
+			const aiFace& Face = paiMesh->mFaces[j];
+			assert(Face.mNumIndices == 3);
+			mesh->indices.push_back(Face.mIndices[0]);
+			mesh->indices.push_back(Face.mIndices[1]);
+			mesh->indices.push_back(Face.mIndices[2]);
+		}
+
+		LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->vertexId, mesh->vertices.size(), mesh->vertices.data());
+		LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->normalsId, mesh->normals.size(), mesh->normals.data());
+		LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->textureCoordId, mesh->textureCoord.size(), mesh->textureCoord.data());
+		LoadDataBufferUint(GL_ELEMENT_ARRAY_BUFFER, &mesh->indexId, mesh->indices.size(), mesh->indices.data());
+
+	}
 
 	// Init materials
 	if (scene->mNumMaterials > 0) {
@@ -54,6 +96,7 @@ bool LoadScene(Application* App, const char* buffer, uint size, GameObject* newO
 		}
 	}
 
+	aiReleaseImport(scene);
 	App->editorScene->AddGameObject(newObject);
 
 	return true;
@@ -105,7 +148,7 @@ Mesh* LoadMesh(Application* App, const aiNode* node, std::vector<Component*> vec
 
 	node->mTransformation.Decompose(sca, rot, pos);
 
-	float3 position (pos.x, pos.y, pos.z), scale (sca.x, sca.y, sca.z);
+	float3 position(pos.x, pos.y, pos.z), scale(sca.x, sca.y, sca.z);
 	Quat rotation(rot.x, rot.y, rot.z, rot.w);
 
 	for (unsigned int i = 0; i < node->mNumMeshes; i++) {
@@ -148,3 +191,10 @@ Mesh* LoadMesh(Application* App, const aiNode* node, std::vector<Component*> vec
 	return mesh;
 
 }
+
+
+
+
+
+
+
