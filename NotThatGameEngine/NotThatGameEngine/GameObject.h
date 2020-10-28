@@ -26,7 +26,7 @@ public:
 
 	std::string name;
 	GameObject* parent;
-	float3 worldPosition;
+	float4x4 worldTransform;
 	std::vector<GameObject*> childs;
 
 	int id;

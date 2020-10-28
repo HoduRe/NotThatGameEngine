@@ -67,7 +67,10 @@ void LoadGLTexture(GLuint* _id, int width, int height, int bpp, int format, ILub
 }
 
 
-void DrawMeshes(Mesh& mesh, uint textureId) {
+void DrawMeshes(Mesh& mesh, float4x4 worldTransform, uint textureId) {
+
+	glPushMatrix();
+	glMultMatrixf((float*)&worldTransform);
 
 	glEnableClientState(GL_VERTEX_ARRAY);	// TODO: Do this sepparetely in EditorScene, before and after calling the GameObjects PostUpdates, in case it's too CPU consuming
 	glEnableClientState(GL_NORMAL_ARRAY);
@@ -90,6 +93,8 @@ void DrawMeshes(Mesh& mesh, uint textureId) {
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
+
+	glPopMatrix();
 
 }
 

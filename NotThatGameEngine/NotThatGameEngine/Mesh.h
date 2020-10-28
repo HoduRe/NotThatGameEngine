@@ -25,6 +25,7 @@ public:
 	GLuint indexId;
 	GLuint normalsId;
 	GLuint textureCoordId;
+	GLuint materialId;
 
 	std::vector<float> vertices;
 	std::vector<float> normals;

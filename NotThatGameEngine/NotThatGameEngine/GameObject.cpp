@@ -2,7 +2,7 @@
 #include "OpenGLFuncionality.h"
 
 GameObject::GameObject(int _id, std::string _name, GameObject* _parent, bool _enabled, std::vector<GameObject*> children) :
-	name(_name), id(_id), worldPosition(0.0f, 0.0f, 0.0f), parent(_parent), childs(children), enabled(_enabled), components(), componentIdGenerator(0), deleteGameObject(false) {
+	name(_name), id(_id), worldTransform(), parent(_parent), childs(children), enabled(_enabled), components(), componentIdGenerator(0), deleteGameObject(false) {
 	AddComponent(COMPONENT_TYPE::TRANSFORM);
 }
 
@@ -39,7 +39,8 @@ void GameObject::PostUpdate(uint& defaultTextureId) {
 
 	// TODO: try implementing dirty flag ;)
 	Transform* transform = (Transform*)FindComponent(COMPONENT_TYPE::TRANSFORM);
-	if (parent != nullptr) { transform->RecalculateTransform(parent->worldPosition); }
+	if (parent != nullptr) { transform->RecalculateTransformFromParent(parent->worldTransform); }
+	else { worldTransform = transform->transform; }
 
 	for (int i = childs.size() - 1; i > -1; i--) { childs[i]->PostUpdate(defaultTextureId); }
 
@@ -51,10 +52,10 @@ void GameObject::PostUpdate(uint& defaultTextureId) {
 
 		mesh = (Mesh*)meshVec[i];
 		if (material != nullptr) {
-			if (material->diffuseId == 0) { DrawMeshes(*mesh, defaultTextureId); }
-			else { DrawMeshes(*mesh, material->diffuseId); }
+			if (material->diffuseId == 0) { DrawMeshes(*mesh, worldTransform, defaultTextureId); }
+			else { DrawMeshes(*mesh, worldTransform, material->diffuseId); }	// TODO: we should use the material ID checking from the absolute parent (make a function checking upwards until you find a parent with Material component)
 		}
-		else { DrawMeshes(*mesh, 0); }
+		else { DrawMeshes(*mesh, worldTransform, 0); }
 
 	}
 

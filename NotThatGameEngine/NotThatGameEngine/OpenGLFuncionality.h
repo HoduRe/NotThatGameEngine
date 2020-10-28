@@ -6,6 +6,8 @@
 #include "SDL/include/SDL.h"
 #include "SDL/include/SDL_opengl.h"
 
+#include "MathGeoLib/include/MathGeoLib.h"
+
 #include "Devil/include/il.h"
 #include "Devil/include/ilu.h"
 #include "Devil/include/ilut.h"
@@ -21,6 +23,6 @@ void LoadDataBufferFloat(int bufferType, GLuint* id, int size, float* data);
 void LoadDataBufferUint(int bufferType, GLuint* id, int size, uint* data);
 void LoadGLTexture(GLuint* _id, int width, int height, int bpp, int format, ILubyte* data);
 
-void DrawMeshes(Mesh& mesh, uint textureId);
+void DrawMeshes(Mesh& mesh, float4x4 worldTransform, uint textureId);
 
 #endif
