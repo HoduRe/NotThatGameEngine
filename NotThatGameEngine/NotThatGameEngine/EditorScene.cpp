@@ -36,7 +36,7 @@ bool EditorScene::Init() {
 bool EditorScene::Start()
 {
 
-	//LoadModel(App, "Library/Meshes/BakerHouse.fbx");
+	LoadModel(App, "Library/Meshes/BakerHouse.fbx");
 
 	return true;
 }
