@@ -31,8 +31,9 @@ bool Texture::Start() {
 
 	ilEnable(IL_ORIGIN_SET);
 	ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
-
+	
 	defaultTextureId = LoadTexture(App, "Library/Textures/Alex.png");
+	checkersTextureId = LoadTexture(App, "Library/Textures/Checker.png");
 	App->eventManager->GenerateEvent(EVENT_ENUM::DEFAULT_TEXTURE_LOADED);
 
 	return true;
@@ -69,6 +70,7 @@ TextureData Texture::GetTextureData(GLuint id) {
 	for (int i = 0; i < size; i++) { if (textureVec[i].textureId == id) { return textureVec[i]; } }
 
 }
+
 
 
 

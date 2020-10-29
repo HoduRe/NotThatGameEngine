@@ -433,6 +433,7 @@ void ManagerImGui::InspectorWindow() {
 				ImGui::Text("Path: %s", textureData.path.c_str());
 				ImGui::Text("Width: %d", textureData.width);
 				ImGui::Text("Height: %d", textureData.height);
+				if (ImGui::Button("Switch to Checkers Texture")) { material->SetDiffuse(App->texture->checkersTextureId); }
 
 			}
 

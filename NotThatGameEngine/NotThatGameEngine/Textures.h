@@ -35,6 +35,7 @@ public:
 public:
 
 	uint defaultTextureId;
+	uint checkersTextureId;
 
 private:
 

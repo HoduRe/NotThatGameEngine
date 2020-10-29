@@ -9,3 +9,7 @@ Material::~Material() {}
 void Material::Update() {}
 
 
+void Material::SetDiffuse(uint id) { diffuseId = id; }
+
+
+

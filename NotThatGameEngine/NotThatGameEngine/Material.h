@@ -15,6 +15,8 @@ public:
 
 	void Update();
 
+	void SetDiffuse(uint id);
+
 public:
 
 	uint diffuseId;
