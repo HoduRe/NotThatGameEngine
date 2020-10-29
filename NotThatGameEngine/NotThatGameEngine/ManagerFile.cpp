@@ -76,6 +76,7 @@ bool FileManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 	std::string filePath;
 	char* buffer;
 	uint size;
+	uint id;
 	ResourceEnum type;
 
 	switch (eventId) {
@@ -96,7 +97,8 @@ bool FileManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 				break;
 
 			case ResourceEnum::TEXTURE:
-				LoadTexture(App, filePath.c_str(), buffer, size);
+				id = LoadTexture(App, filePath.c_str(), buffer, size);
+				App->eventManager->GenerateEvent(EVENT_ENUM::PUT_TEXTURE_TO_FOCUSED_MODEL, EVENT_ENUM::NULL_EVENT, (void*)id);
 				break;
 
 			default:

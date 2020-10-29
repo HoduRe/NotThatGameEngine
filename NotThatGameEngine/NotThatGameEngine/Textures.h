@@ -30,7 +30,7 @@ public:
 
 	void AddTexture(TextureData* texture);
 	uint IsTextureRepeated(const char* path);
-	TextureData GetTextureData(GLuint id);
+	TextureData* GetTextureData(GLuint id);
 
 public:
 

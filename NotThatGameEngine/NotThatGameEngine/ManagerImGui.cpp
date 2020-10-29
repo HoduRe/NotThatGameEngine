@@ -466,7 +466,7 @@ void ManagerImGui::InspectorWindow() {
 
 			Material* material = (Material*)focus->FindComponent(COMPONENT_TYPE::MATERIAL);
 			TextureData* textureData = nullptr;
-			if (material != nullptr && material->diffuseId != 0) { textureData = &App->texture->GetTextureData(material->diffuseId); }
+			if (material != nullptr && material->diffuseId != 0) { textureData = App->texture->GetTextureData(material->diffuseId); }
 			std::vector<Component*> meshes = focus->FindComponents(COMPONENT_TYPE::MESH);
 			Mesh* mesh;
 

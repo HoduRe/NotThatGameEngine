@@ -65,10 +65,10 @@ uint Texture::IsTextureRepeated(const char* path) {
 }
 
 
-TextureData Texture::GetTextureData(GLuint id) {
+TextureData* Texture::GetTextureData(GLuint id) {
 
 	int size = textureVec.size();
-	for (int i = 0; i < size; i++) { if (textureVec[i].textureId == id) { return textureVec[i]; } }
+	for (int i = 0; i < size; i++) { if (textureVec[i].textureId == id) { return &textureVec[i]; } }
 
 }
 

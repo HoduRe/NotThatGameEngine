@@ -30,6 +30,7 @@ bool EditorScene::Init() {
 	App->eventManager->EventRegister(EVENT_ENUM::CREATE_PYRAMID, this);
 	App->eventManager->EventRegister(EVENT_ENUM::CREATE_CYLINDER, this);
 	App->eventManager->EventRegister(EVENT_ENUM::DEFAULT_TEXTURE_LOADED, this);
+	App->eventManager->EventRegister(EVENT_ENUM::PUT_TEXTURE_TO_FOCUSED_MODEL, this);
 
 	return true;
 
@@ -100,7 +101,7 @@ bool EditorScene::AddGameObject(GameObject* newObject) {
 		newObject->name = newObject->name + std::to_string(newObject->id);
 
 		if (newObject->parent == nullptr) {
-		
+
 			rootGameObjectsVec.push_back(newObject);
 			return true;
 
@@ -203,6 +204,8 @@ void EditorScene::DeleteRootGameObjects() {
 
 bool EditorScene::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
+	Material* material;
+
 	switch (eventId) {
 
 	case EVENT_ENUM::DEFAULT_TEXTURE_LOADED:
@@ -234,11 +237,26 @@ bool EditorScene::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
 		break;
 
+	case EVENT_ENUM::PUT_TEXTURE_TO_FOCUSED_MODEL:
+
+		if (focus != nullptr) {
+
+			material = (Material*)focus->FindComponent(COMPONENT_TYPE::MATERIAL);
+
+			if (material != nullptr) { material->diffuseId = (uint)var; }
+			else { LOG("This object has no material. Assign it a material through the inspector."); }
+
+		}
+
+		else { LOG("There is no object selected to drop the texture to."); }
+
+		break;
+
 	default:
 		break;
 	}
 
-	return false;
+	return true;
 }
 
 
