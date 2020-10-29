@@ -61,6 +61,16 @@ private:
 	bool hierarchyWindow;
 	bool inspectorWindow;
 
+	std::string positionX;
+	std::string positionY;
+	std::string positionZ;
+	std::string rotationX;
+	std::string rotationY;
+	std::string rotationZ;
+	std::string scaleX;
+	std::string scaleY;
+	std::string scaleZ;
+
 	update_status DefaultButtons();
 	void SetMainMenuBar();
 	void AboutMenu(bool* aboutMenu);

@@ -27,6 +27,8 @@ public:
 	GLuint textureCoordId;
 	GLuint materialId;
 
+	std::string meshName;
+
 	std::vector<float> vertices;
 	std::vector<float> normals;
 	std::vector<float> textureCoord;

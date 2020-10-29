@@ -40,6 +40,7 @@ bool LoadScene(Application* App, const char* buffer, uint size, GameObject* newO
 		mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
 
 		mesh->materialId = scene->mMeshes[i]->mMaterialIndex;
+		mesh->meshName = scene->mMeshes[i]->mName.C_Str();
 
 		const aiMesh* paiMesh = (aiMesh*)scene->mMeshes[i];
 		const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);

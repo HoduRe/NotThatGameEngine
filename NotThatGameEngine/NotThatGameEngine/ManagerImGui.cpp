@@ -340,7 +340,7 @@ void ManagerImGui::ConsoleWindow() {
 		ImGui::Begin("Console", &consoleMenu);
 
 		for (int i = 0; i < App->consoleVecSize; i++) {
-			ImGui::Text(App->consoleVec[0].c_str());
+			ImGui::Text(App->consoleVec[0].c_str());	// TODO: LOG problem maybe because this. You can print strings as --> ImGui::Text("%s", string.c_str());
 		}
 		ImGui::End();
 	}
@@ -418,22 +418,82 @@ void ManagerImGui::InspectorWindow() {
 		if (focus != nullptr) {
 
 			Material* material = (Material*)focus->FindComponent(COMPONENT_TYPE::MATERIAL);
-			TextureData textureData = App->texture->GetTextureData(material->diffuseId);
+			TextureData* textureData = nullptr;
+			if (material != nullptr) { textureData = &App->texture->GetTextureData(material->diffuseId); }
+			std::vector<Component*> meshes = focus->FindComponents(COMPONENT_TYPE::MESH);
+			Mesh* mesh;
+
+			float3 position;
+			float3 rotationEuler;
+			Quat rotation;
+			float3 scale;
+			focus->worldTransform.Decompose(position, rotation, scale);
+			rotationEuler = rotation.ToEulerXYZ();
+
+			positionX = std::to_string(position.x);
+			positionY = std::to_string(position.y);
+			positionZ = std::to_string(position.z);
+			rotationX = std::to_string(rotationEuler.x);
+			rotationY = std::to_string(rotationEuler.y);
+			rotationZ = std::to_string(rotationEuler.z);
+			scaleX = std::to_string(scale.x);
+			scaleY = std::to_string(scale.y);
+			scaleZ = std::to_string(scale.z);
 
 			if (ImGui::CollapsingHeader("Transform")) {
 
+				ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_CharsDecimal | ImGuiInputTextFlags_CharsNoBlank | ImGuiInputTextFlags_AutoSelectAll;
+
+				ImGui::Text("Position:");
+				if (ImGui::InputText("Position X", (char*)positionX.c_str(), positionX.size(), input_text_flags)) {}
+				if (ImGui::InputText("Position Y", (char*)positionY.c_str(), positionY.size(), input_text_flags)) {}
+				if (ImGui::InputText("Position Z", (char*)positionZ.c_str(), positionZ.size(), input_text_flags)) {}
+
+				ImGui::Text("Rotation:");
+				if (ImGui::InputText("Rotation X", (char*)rotationX.c_str(), rotationX.size(), input_text_flags)) {}
+				if (ImGui::InputText("Rotation Y", (char*)rotationY.c_str(), rotationY.size(), input_text_flags)) {}
+				if (ImGui::InputText("Rotation Z", (char*)rotationZ.c_str(), rotationZ.size(), input_text_flags)) {}
+
+				ImGui::Text("Scale:");
+				if (ImGui::InputText("Scale X", (char*)scaleX.c_str(), scaleX.size(), input_text_flags)) {}
+				if (ImGui::InputText("Scale Y", (char*)scaleY.c_str(), scaleY.size(), input_text_flags)) {}
+				if (ImGui::InputText("Scale Z", (char*)scaleZ.c_str(), scaleZ.size(), input_text_flags)) {}
 			}
 
 			if (ImGui::CollapsingHeader("Mesh")) {
+
+				for (int i = 0; i < meshes.size(); i++) {
+
+					mesh = (Mesh*)meshes[i];
+					ImGui::Text("%s", mesh->meshName.c_str());
+					ImGui::Text("Vertices ID: %u", mesh->vertexId);
+					ImGui::Text("Normals ID: %u", mesh->normalsId);
+					ImGui::Text("Texture coordinates ID: %u", mesh->textureCoordId);
+					ImGui::Text("Indices ID: %u", mesh->indexId);
+					ImGui::Text("Material ID: %u", mesh->materialId);
+					ImGui::NewLine();
+
+				}
 
 			}
 
 			if (ImGui::CollapsingHeader("Textures")) {
 
-				ImGui::Text("Path: %s", textureData.path.c_str());
-				ImGui::Text("Width: %d", textureData.width);
-				ImGui::Text("Height: %d", textureData.height);
-				if (ImGui::Button("Switch to Checkers Texture")) { material->SetDiffuse(App->texture->checkersTextureId); }
+				if (material != nullptr) {
+
+					ImGui::Text("Path: %s", textureData->path.c_str());
+					ImGui::Text("Width: %d", textureData->width);
+					ImGui::Text("Height: %d", textureData->height);
+					if (ImGui::Button("Switch to Checkers Texture")) { material->SetDiffuse(App->texture->checkersTextureId); }
+
+				}
+				
+				else {
+				
+					ImGui::NewLine();
+					ImGui::Text("No material: add a material to use textures");
+				
+				}
 
 			}
 

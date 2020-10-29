@@ -2,7 +2,7 @@
 #include "ObjectLoader.h"
 
 
-Texture::Texture(Application* app, bool start_enabled) : Module(app, start_enabled), textureVec(), defaultTextureId(0) {}
+Texture::Texture(Application* app, bool start_enabled) : Module(app, start_enabled), textureVec(), defaultTextureId(0), checkersTextureId(0) {}
 
 
 Texture::~Texture() { textureVec.clear(); }
