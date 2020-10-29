@@ -22,6 +22,8 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
+	void SetFrameBuffer(GLuint buffer);
+
 	void OnResize(int width, int height);
 
 public:

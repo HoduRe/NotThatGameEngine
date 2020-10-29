@@ -8,6 +8,8 @@
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
 
+class GameObject;
+
 class ManagerImGui : public Module
 {
 public:
@@ -67,6 +69,9 @@ private:
 	void SceneWindow();
 	void HierarchyWindow();
 	void InspectorWindow();
+
+	void AddChildNode(GameObject* nextObject);
+
 };
 
 #endif

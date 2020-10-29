@@ -62,8 +62,10 @@ bool Renderer3D::Init()
 // PreUpdate: clear buffer
 update_status Renderer3D::PreUpdate(float dt)
 {
+
+	glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-	glLoadIdentity();
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->camera->GetViewMatrix());
@@ -71,31 +73,20 @@ update_status Renderer3D::PreUpdate(float dt)
 	glClearDepth(1.0f);
 	glClearColor(0.f, 0.f, 0.f, 1.f);
 
-	// light 0 on cam pos
 	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
+	for (uint i = 0; i < MAX_LIGHTS; ++i) { lights[i].Render(); }
 
-	for (uint i = 0; i < MAX_LIGHTS; ++i)
-		lights[i].Render();
-
-	// Geometry
-
-
-	// Debug
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	return update_status::UPDATE_CONTINUE;
 }
 
-// PostUpdate present buffer to screen
+
 update_status Renderer3D::PostUpdate(float dt)
 {
 	update_status ret = update_status::UPDATE_CONTINUE;
 
 	glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
-	glClearDepth(1.0f);
-	glClearColor(0.f, 0.f, 0.f, 1.f);
 
 	DrawGrid();
 
@@ -173,7 +164,7 @@ void Renderer3D::DrawGrid() {
 }
 
 
-
+void Renderer3D::SetFrameBuffer(GLuint buffer) { glBindFramebuffer(GL_FRAMEBUFFER, buffer); }
 
 
 

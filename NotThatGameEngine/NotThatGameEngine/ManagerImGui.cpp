@@ -6,7 +6,7 @@ ManagerImGui::ManagerImGui(Application* app, bool start_enabled) : Module(app, s
 sliderBrightness(1.0f), sliderWidth(SCREEN_WIDTH* SCREEN_SIZE), sliderHeight(SCREEN_HEIGHT* SCREEN_SIZE), vsync(true),
 fullscreen(WIN_FULLSCREEN), resizable(WIN_RESIZABLE), borderless(WIN_BORDERLESS), fullDesktop(WIN_FULLSCREEN_DESKTOP), refreshRate(0),
 AVX(false), AVX2(false), AltiVec(false), MMX(false), RDTSC(false), SSE(false), SSE2(false), SSE3(false), SSE41(false), SSE42(false),
-showDemoWindow(false), defaultButtonsMenu(false), aboutWindow(false), configMenu(false), appActive(false), consoleMenu(false), sceneWindow(false), hierarchyWindow(true), inspectorWindow(false)
+showDemoWindow(false), defaultButtonsMenu(false), aboutWindow(false), configMenu(false), appActive(false), consoleMenu(true), sceneWindow(true), hierarchyWindow(true), inspectorWindow(true)
 {}
 
 
@@ -366,9 +366,23 @@ void ManagerImGui::HierarchyWindow() {
 
 	if (hierarchyWindow) {
 
-		ImGui::Begin("Hierarchy", &hierarchyWindow);
+		int size = App->editorScene->rootGameObjectsVec.size();
 
+		ImGui::Begin("Scene Objects", &hierarchyWindow);
 
+		for (int i = 0; i < size; i++) {
+
+			if (ImGui::TreeNode(App->editorScene->rootGameObjectsVec[i]->name.c_str())) {
+
+				int childSize = App->editorScene->rootGameObjectsVec[i]->childs.size();
+
+				if (App->editorScene->rootGameObjectsVec[i]->childs.size() != 0) { for (int j = 0; j < childSize; j++) { AddChildNode(App->editorScene->rootGameObjectsVec[i]->childs[j]); } }
+
+				ImGui::TreePop();
+
+			}
+
+		}
 
 		ImGui::End();
 	}
@@ -389,5 +403,20 @@ void ManagerImGui::InspectorWindow() {
 
 
 std::string ManagerImGui::AppName() { return appName; }
+
+
+void ManagerImGui::AddChildNode(GameObject* nextObject) {
+
+	if (ImGui::TreeNode(nextObject->name.c_str())) {
+
+		int childSize = nextObject->childs.size();
+
+		if (nextObject->childs.size() != 0) { for (int j = 0; j < childSize; j++) { AddChildNode(nextObject->childs[j]); } }
+
+		ImGui::TreePop();
+
+	}
+
+}
 
 

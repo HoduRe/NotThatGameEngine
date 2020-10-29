@@ -63,10 +63,14 @@ update_status EditorScene::Update(float dt)
 
 update_status EditorScene::PostUpdate(float dt) {
 
+	App->renderer3D->SetFrameBuffer(App->renderer3D->frameBufferId);
+
 	int size = rootGameObjectsVec.size();
 	for (int i = 0; i < size; i++) { rootGameObjectsVec[i]->PostUpdate(defaultTextureId); }
 
 	DeleteRootGameObjects();
+
+	App->renderer3D->SetFrameBuffer(0);
 
 	return update_status::UPDATE_CONTINUE;
 
@@ -89,6 +93,8 @@ bool EditorScene::AddGameObject(GameObject* newObject) {
 	bool ret = false;
 
 	if (newObject != nullptr) {
+
+		newObject->name = newObject->name + std::to_string(newObject->id);
 
 		if (newObject->parent == nullptr) {
 		
