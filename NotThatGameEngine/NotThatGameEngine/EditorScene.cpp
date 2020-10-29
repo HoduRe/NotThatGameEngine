@@ -5,7 +5,7 @@
 #pragma comment( lib, "Assimp/libx86/assimp.lib" )
 
 
-EditorScene::EditorScene(Application* app, bool start_enabled) : Module(app, start_enabled), gameObjectIdCount(0), rootGameObjectsVec(), stream(), defaultTextureId(0) {}
+EditorScene::EditorScene(Application* app, bool start_enabled) : Module(app, start_enabled), gameObjectIdCount(0), rootGameObjectsVec(), stream(), defaultTextureId(0), focus(nullptr) {}
 
 
 EditorScene::~EditorScene() {
@@ -14,6 +14,9 @@ EditorScene::~EditorScene() {
 		delete rootGameObjectsVec[i];
 		rootGameObjectsVec[i] = nullptr;
 	}
+
+	focus = nullptr;
+
 }
 
 
@@ -237,6 +240,12 @@ bool EditorScene::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
 	return false;
 }
+
+
+void EditorScene::SetFocus(GameObject* gameobject) { focus = gameobject; }
+
+
+GameObject* EditorScene::GetFocus() { return focus; }
 
 
 

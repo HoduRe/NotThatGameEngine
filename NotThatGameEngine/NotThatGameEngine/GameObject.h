@@ -21,6 +21,8 @@ public:
 	int GenerateComponentId();
 	bool CheckChildDeletionById(int _id);
 	void SetDeleteGameObject();
+	Component* FindComponent(COMPONENT_TYPE _type);
+	std::vector<Component*> FindComponents(COMPONENT_TYPE _type);
 
 public:
 
@@ -37,8 +39,6 @@ public:
 
 private:
 
-	Component* FindComponent(COMPONENT_TYPE _type);
-	std::vector<Component*> FindComponents(COMPONENT_TYPE _type);
 	void CheckGameObjectDeletion();
 	void CheckComponentDeletion();
 

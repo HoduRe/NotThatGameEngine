@@ -39,6 +39,7 @@ void GameObject::PostUpdate(uint& defaultTextureId) {
 
 	// TODO: try implementing dirty flag ;)
 	Transform* transform = (Transform*)FindComponent(COMPONENT_TYPE::TRANSFORM);
+
 	if (parent != nullptr) { transform->RecalculateTransformFromParent(parent->worldTransform); }
 	else { worldTransform = transform->transform; }
 

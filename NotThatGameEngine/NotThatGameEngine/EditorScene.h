@@ -27,6 +27,8 @@ public:
 	bool AddGameObject(GameObject* newObject);
 	void DeleteGameObject(int id);
 	int GenerateId();
+	void SetFocus(GameObject* gameobject = nullptr);
+	GameObject* GetFocus();
 
 private:
 
@@ -42,6 +44,7 @@ private:
 	int gameObjectIdCount;	// TODO: remember to save this in the save file
 	aiLogStream stream;
 	uint defaultTextureId;
+	GameObject* focus;
 
 };
 

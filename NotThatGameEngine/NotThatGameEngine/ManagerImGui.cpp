@@ -375,6 +375,7 @@ void ManagerImGui::HierarchyWindow() {
 			if (ImGui::TreeNode(App->editorScene->rootGameObjectsVec[i]->name.c_str())) {
 
 				int childSize = App->editorScene->rootGameObjectsVec[i]->childs.size();
+				App->editorScene->SetFocus(App->editorScene->rootGameObjectsVec[i]);
 
 				if (App->editorScene->rootGameObjectsVec[i]->childs.size() != 0) { for (int j = 0; j < childSize; j++) { AddChildNode(App->editorScene->rootGameObjectsVec[i]->childs[j]); } }
 
@@ -390,26 +391,12 @@ void ManagerImGui::HierarchyWindow() {
 }
 
 
-void ManagerImGui::InspectorWindow() {
-
-	if (inspectorWindow) {
-
-		ImGui::Begin("Inspector", &inspectorWindow);
-
-		ImGui::End();
-	}
-
-}
-
-
-std::string ManagerImGui::AppName() { return appName; }
-
-
 void ManagerImGui::AddChildNode(GameObject* nextObject) {
 
 	if (ImGui::TreeNode(nextObject->name.c_str())) {
 
 		int childSize = nextObject->childs.size();
+		App->editorScene->SetFocus(nextObject);
 
 		if (nextObject->childs.size() != 0) { for (int j = 0; j < childSize; j++) { AddChildNode(nextObject->childs[j]); } }
 
@@ -418,5 +405,45 @@ void ManagerImGui::AddChildNode(GameObject* nextObject) {
 	}
 
 }
+
+
+void ManagerImGui::InspectorWindow() {
+
+	if (inspectorWindow) {
+
+		ImGui::Begin("Inspector", &inspectorWindow);
+
+		GameObject* focus = App->editorScene->GetFocus();
+
+		if (focus != nullptr) {
+
+			Material* material = (Material*)focus->FindComponent(COMPONENT_TYPE::MATERIAL);
+			TextureData textureData = App->texture->GetTextureData(material->diffuseId);
+
+			if (ImGui::CollapsingHeader("Transform")) {
+
+			}
+
+			if (ImGui::CollapsingHeader("Mesh")) {
+
+			}
+
+			if (ImGui::CollapsingHeader("Textures")) {
+
+				ImGui::Text("Path: %s", textureData.path.c_str());
+				ImGui::Text("Width: %d", textureData.width);
+				ImGui::Text("Height: %d", textureData.height);
+
+			}
+
+		}
+
+		ImGui::End();
+	}
+
+}
+
+
+std::string ManagerImGui::AppName() { return appName; }
 
 

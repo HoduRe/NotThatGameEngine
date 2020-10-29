@@ -3,7 +3,7 @@
 
 GameObject* LoadModel(Application* App, const char* path, const char* buffer, uint size, GameObject* parent, bool enabled) {
 
-	GameObject* newObject = new GameObject(App->editorScene->GenerateId(), path, parent, enabled);
+	GameObject* newObject = new GameObject(App->editorScene->GenerateId(), path, parent, enabled);	// TODO: convert path to only the name of the file with the FileSystem function :3
 
 	if (buffer == nullptr && size == 0) { size = App->fileManager->Load(path, (char**)&buffer); }
 	if (LoadScene(App, buffer, size, newObject, path)) {}
@@ -129,7 +129,7 @@ uint LoadTexture(Application* App, const char* path, const char* buffer, uint si
 		LoadGLTexture(&imageTest, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_BPP), ilGetInteger(IL_IMAGE_FORMAT), ilGetData());
 		ilDeleteImages(1, &imageTest);
 
-		TextureData* texture = new TextureData(imageTest, path, GL_DIFFUSE);
+		TextureData* texture = new TextureData(imageTest, path, GL_DIFFUSE, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT));
 
 		App->texture->AddTexture(texture);
 
