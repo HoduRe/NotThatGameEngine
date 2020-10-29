@@ -80,6 +80,24 @@ update_status Camera3D::Update(float dt)
 		// LookAt(vec3 (3, 4, 2));		This should do... stuff. Rotate around the center of the selected object
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
+
+		GameObject* object;
+		object = App->editorScene->GetFocus();
+
+		if (object != nullptr) {
+
+			float3 vector = object->worldTransform.TranslatePart();
+			Position.x = 10;
+			Position.y = 5;
+			Position.z = 0;
+			LookAt(vec3(vector.x, vector.y, vector.z));
+
+		}
+
+		else { LOG("There is no gameObject selected."); }
+	}
+
 	CalculateViewMatrix();
 
 	return update_status::UPDATE_CONTINUE;

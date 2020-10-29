@@ -6,6 +6,7 @@ An engine for CITM's Engine project which focuses on skeletical animation
 <li>Lots of [hopes and dreams](https://images-na.ssl-images-amazon.com/images/I/91Hv6KacesL.jpg)</li>
 
 ## Instructions:
+- Camera controls:<br/>
 - <br/>
 - <br/>
 
