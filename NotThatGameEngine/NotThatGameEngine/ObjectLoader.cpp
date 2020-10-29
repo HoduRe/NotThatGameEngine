@@ -33,7 +33,7 @@ bool LoadScene(Application* App, const char* buffer, uint size, GameObject* newO
 	std::vector<SceneObject> vec;
 	aiMatrix4x4 trans;
 
-	LoadMeshNode(scene->mRootNode, vec, trans);
+	LoadMeshNode(scene->mRootNode, vec, trans);	// TODO: Am I loading this correctly? What is going on
 
 	for (unsigned int i = 0; i < scene->mNumMeshes; i++) {
 

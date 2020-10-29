@@ -90,8 +90,6 @@ update_status Renderer3D::PostUpdate(float dt)
 {
 	update_status ret = update_status::UPDATE_CONTINUE;
 
-	DrawGrid();
-
 	glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);

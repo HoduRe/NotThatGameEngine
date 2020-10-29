@@ -6,7 +6,7 @@ ManagerImGui::ManagerImGui(Application* app, bool start_enabled) : Module(app, s
 sliderBrightness(1.0f), sliderWidth(SCREEN_WIDTH* SCREEN_SIZE), sliderHeight(SCREEN_HEIGHT* SCREEN_SIZE), vsync(true),
 fullscreen(WIN_FULLSCREEN), resizable(WIN_RESIZABLE), borderless(WIN_BORDERLESS), fullDesktop(WIN_FULLSCREEN_DESKTOP), refreshRate(0),
 AVX(false), AVX2(false), AltiVec(false), MMX(false), RDTSC(false), SSE(false), SSE2(false), SSE3(false), SSE41(false), SSE42(false),
-showDemoWindow(false), defaultButtonsMenu(false), aboutWindow(false), configMenu(false), appActive(false), consoleMenu(false), sceneWindow(false)
+showDemoWindow(false), defaultButtonsMenu(false), aboutWindow(false), configMenu(false), appActive(false), consoleMenu(false), sceneWindow(false), hierarchyWindow(true), inspectorWindow(false)
 {}
 
 
@@ -93,6 +93,8 @@ update_status ManagerImGui::Update(float dt)
 	ret2 = DefaultWindow();
 	ConsoleWindow();
 	SceneWindow();
+	HierarchyWindow();
+	InspectorWindow();
 
 	ImGui::EndFrame();
 
@@ -186,11 +188,15 @@ update_status ManagerImGui::DefaultButtons()
 void ManagerImGui::SetMainMenuBar()
 {
 
-	if (ImGui::BeginMainMenuBar()) {
+	if (ImGui::BeginMainMenuBar()) {	// TODO: order those in different tabs
 
 		if (ImGui::BeginMenu("Dev Options")) {
 
 			if (ImGui::MenuItem("Scene Window")) { sceneWindow = !sceneWindow; }
+
+			if (ImGui::MenuItem("Hierarchy Window")) { hierarchyWindow = !hierarchyWindow; }
+
+			if (ImGui::MenuItem("Inspector Window")) { inspectorWindow = !inspectorWindow; }
 
 			if (ImGui::MenuItem("Gui Demo")) { showDemoWindow = !showDemoWindow; }
 
@@ -353,6 +359,32 @@ void ManagerImGui::SceneWindow() {
 
 		ImGui::End();
 	}
+}
+
+
+void ManagerImGui::HierarchyWindow() {
+
+	if (hierarchyWindow) {
+
+		ImGui::Begin("Hierarchy", &hierarchyWindow);
+
+
+
+		ImGui::End();
+	}
+
+}
+
+
+void ManagerImGui::InspectorWindow() {
+
+	if (inspectorWindow) {
+
+		ImGui::Begin("Inspector", &inspectorWindow);
+
+		ImGui::End();
+	}
+
 }
 
 

@@ -41,11 +41,11 @@ void LoadDataBufferFloat(int bufferType, GLuint* id, int size, float* data) {
 }
 
 
-void LoadDataBufferUint(int bufferType, GLuint* id, int size, uint* data) {
+void LoadDataBufferUint(int bufferType, GLuint* id, int size, GLuint* data) {
 
 	glGenBuffers(1, id);
 	glBindBuffer(bufferType, *id);
-	glBufferData(bufferType, sizeof(uint) * size, data, GL_STATIC_DRAW);
+	glBufferData(bufferType, sizeof(GLuint) * size, data, GL_STATIC_DRAW);
 	glBindBuffer(bufferType, 0);
 
 }
@@ -67,30 +67,39 @@ void LoadGLTexture(GLuint* _id, int width, int height, int bpp, int format, ILub
 }
 
 
-void DrawMeshes(Mesh& mesh, float4x4 worldTransform, uint textureId) {
+void DrawMeshes(Mesh& mesh, float4x4 worldTransform, GLuint textureId) {
 
 	glPushMatrix();
 	glMultMatrixf((float*)&worldTransform);
 
-	glEnableClientState(GL_VERTEX_ARRAY);	// TODO: Do this sepparetely in EditorScene, before and after calling the GameObjects PostUpdates, in case it's too CPU consuming
-	glEnableClientState(GL_NORMAL_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, mesh.vertexId);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh.normalsId);
-	glNormalPointer(GL_FLOAT, 0, NULL);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh.textureCoordId);
-	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+
+	if (mesh.normalsId != 0) {
+		glEnableClientState(GL_NORMAL_ARRAY);
+		glBindBuffer(GL_ARRAY_BUFFER, mesh.normalsId);
+		glNormalPointer(GL_FLOAT, 0, NULL);
+	}
+
+	if (mesh.textureCoordId != 0) {
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glBindBuffer(GL_ARRAY_BUFFER, mesh.textureCoordId);
+		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+	}
+
+	if (textureId != 0) { glBindTexture(GL_TEXTURE_2D, textureId); }
+
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.indexId);
-	glBindTexture(GL_TEXTURE_2D, textureId);
 
 	glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, NULL);
 
-	glBindTexture(GL_TEXTURE_2D, 0);
+	if (textureId != 0) { glBindTexture(GL_TEXTURE_2D, 0); }
+	if (mesh.normalsId != 0) { glDisableClientState(GL_NORMAL_ARRAY); }
+	if (mesh.textureCoordId != 0) { glDisableClientState(GL_TEXTURE_COORD_ARRAY); }
+
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glDisableClientState(GL_NORMAL_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
 

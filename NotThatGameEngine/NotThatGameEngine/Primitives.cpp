@@ -1,7 +1,7 @@
 #include "Primitives.h"
 
 
-void SetCubeVertices(float _edgeLength, std::vector<float>* vertices, std::vector<uint>* indices) {
+void SetCubeVertices(float _edgeLength, std::vector<float>* vertices, std::vector<GLuint>* indices) {
 
 	vertices->push_back(0); vertices->push_back(0); vertices->push_back(0);
 	vertices->push_back(0); vertices->push_back(0); vertices->push_back(_edgeLength);
@@ -23,7 +23,7 @@ void SetCubeVertices(float _edgeLength, std::vector<float>* vertices, std::vecto
 }
 
 
-void SetSphereVertices(float radius, int stacks, int sectors, std::vector<float>* vertices, std::vector<uint>* indices) {
+void SetSphereVertices(float radius, int stacks, int sectors, std::vector<float>* vertices, std::vector<GLuint>* indices) {
 
 	if (stacks < 3) { stacks = 3; }
 	if (sectors < 3) { sectors = 3; }
@@ -151,7 +151,7 @@ void SetSphereVertices(float radius, int stacks, int sectors, std::vector<float>
 }
 
 
-void SetPyramidVertices(float _height, float _baseEdgeLength, std::vector<float>* vertices, std::vector<uint>* indices) {
+void SetPyramidVertices(float _height, float _baseEdgeLength, std::vector<float>* vertices, std::vector<GLuint>* indices) {
 
 	vertices->push_back(0); vertices->push_back(0); vertices->push_back(0);
 	vertices->push_back(_baseEdgeLength); vertices->push_back(0); vertices->push_back(0);
@@ -169,7 +169,7 @@ void SetPyramidVertices(float _height, float _baseEdgeLength, std::vector<float>
 }
 
 
-void SetCylinderVertices(float _height, float _radius, int _sectors, std::vector<float>* vertices, std::vector<uint>* indices) {
+void SetCylinderVertices(float _height, float _radius, int _sectors, std::vector<float>* vertices, std::vector<GLuint>* indices) {
 
 	if (_sectors < 3) { _sectors = 3; }
 

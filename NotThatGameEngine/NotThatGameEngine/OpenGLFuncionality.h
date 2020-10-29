@@ -20,9 +20,9 @@ class Mesh;
 bool SetOpenGL();
 
 void LoadDataBufferFloat(int bufferType, GLuint* id, int size, float* data);
-void LoadDataBufferUint(int bufferType, GLuint* id, int size, uint* data);
+void LoadDataBufferUint(int bufferType, GLuint* id, int size, GLuint* data);
 void LoadGLTexture(GLuint* _id, int width, int height, int bpp, int format, ILubyte* data);
 
-void DrawMeshes(Mesh& mesh, float4x4 worldTransform, uint textureId);
+void DrawMeshes(Mesh& mesh, float4x4 worldTransform, GLuint textureId);
 
 #endif

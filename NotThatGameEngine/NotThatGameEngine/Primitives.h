@@ -14,15 +14,15 @@ enum class PrimitiveEnum {
 };
 
 
-void SetCubeVertices(float _edgeLength, std::vector<float>* vertices, std::vector<uint>* indices);
+void SetCubeVertices(float _edgeLength, std::vector<float>* vertices, std::vector<GLuint>* indices);
 
 
-void SetSphereVertices(float radius, int stacks, int sectors, std::vector<float>* vertices, std::vector<uint>* indices);
+void SetSphereVertices(float radius, int stacks, int sectors, std::vector<float>* vertices, std::vector<GLuint>* indices);
 
 
-void SetPyramidVertices(float _height, float _baseEdgeLength, std::vector<float>* vertices, std::vector<uint>* indices);
+void SetPyramidVertices(float _height, float _baseEdgeLength, std::vector<float>* vertices, std::vector<GLuint>* indices);
 
 
-void SetCylinderVertices(float _height, float _radius, int _sectors, std::vector<float>* vertices, std::vector<uint>* indices);
+void SetCylinderVertices(float _height, float _radius, int _sectors, std::vector<float>* vertices, std::vector<GLuint>* indices);
 
 #endif

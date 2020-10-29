@@ -56,6 +56,8 @@ private:
 	bool appActive;
 	bool consoleMenu;
 	bool sceneWindow;
+	bool hierarchyWindow;
+	bool inspectorWindow;
 
 	update_status DefaultButtons();
 	void SetMainMenuBar();
@@ -63,6 +65,8 @@ private:
 	update_status DefaultWindow();
 	void ConsoleWindow();
 	void SceneWindow();
+	void HierarchyWindow();
+	void InspectorWindow();
 };
 
 #endif
