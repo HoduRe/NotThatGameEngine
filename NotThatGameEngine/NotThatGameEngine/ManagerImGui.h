@@ -80,7 +80,7 @@ private:
 	void HierarchyWindow();
 	void InspectorWindow();
 
-	void AddChildNode(GameObject* nextObject);
+	void AddChildNode(GameObject* nextObject, int index);
 
 };
 

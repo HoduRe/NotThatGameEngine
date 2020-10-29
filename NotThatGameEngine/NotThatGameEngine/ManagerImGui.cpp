@@ -367,19 +367,39 @@ void ManagerImGui::HierarchyWindow() {
 	if (hierarchyWindow) {
 
 		int size = App->editorScene->rootGameObjectsVec.size();
+		static ImGuiTreeNodeFlags base_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
+		static int selection_mask = (1 << 2);
 
 		ImGui::Begin("Scene Objects", &hierarchyWindow);
 
 		for (int i = 0; i < size; i++) {
 
-			if (ImGui::TreeNode(App->editorScene->rootGameObjectsVec[i]->name.c_str())) {
+			ImGuiTreeNodeFlags node_flags = base_flags;
+			const bool is_selected = (selection_mask & (1 << i)) != 0;
+			bool node_open;
+			int childSize = App->editorScene->rootGameObjectsVec[i]->childs.size();
 
-				int childSize = App->editorScene->rootGameObjectsVec[i]->childs.size();
-				App->editorScene->SetFocus(App->editorScene->rootGameObjectsVec[i]);
+			if (is_selected) { node_flags |= ImGuiTreeNodeFlags_Selected; }
 
-				if (App->editorScene->rootGameObjectsVec[i]->childs.size() != 0) { for (int j = 0; j < childSize; j++) { AddChildNode(App->editorScene->rootGameObjectsVec[i]->childs[j]); } }
+			if (childSize != 0) {
 
-				ImGui::TreePop();
+				node_open = ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, App->editorScene->rootGameObjectsVec[i]->name.c_str(), i);
+
+				if (node_open) {
+
+					if (ImGui::IsItemClicked()) { App->editorScene->SetFocus(App->editorScene->rootGameObjectsVec[i]); }
+					for (int j = 0; j < childSize; j++) { AddChildNode(App->editorScene->rootGameObjectsVec[i]->childs[j], j); }
+					ImGui::TreePop();
+
+				}
+
+			}
+
+			else {
+
+				node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+				node_open = ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, App->editorScene->rootGameObjectsVec[i]->name.c_str(), i);
+				if (ImGui::IsItemClicked()) { App->editorScene->SetFocus(App->editorScene->rootGameObjectsVec[i]); }
 
 			}
 
@@ -388,21 +408,48 @@ void ManagerImGui::HierarchyWindow() {
 		ImGui::End();
 	}
 
+	/*	if (test_drag_and_drop && ImGui::BeginDragDropSource()) {
+	ImGui::SetDragDropPayload("_TREENODE", NULL, 0);
+	ImGui::Text("This is a drag and drop source");
+	ImGui::EndDragDropSource();
+	}*/	// TODO: this may are may not be available for dragging
+
 }
 
 
-void ManagerImGui::AddChildNode(GameObject* nextObject) {
+void ManagerImGui::AddChildNode(GameObject* nextObject, int index) {
 
-	if (ImGui::TreeNode(nextObject->name.c_str())) {
+	static ImGuiTreeNodeFlags base_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
+	static int selection_mask = (1 << 2);
+	ImGuiTreeNodeFlags node_flags = base_flags;
+	const bool is_selected = (selection_mask & (1 << index)) != 0;
+	bool node_open;
+	int childSize = nextObject->childs.size();
 
-		int childSize = nextObject->childs.size();
-		App->editorScene->SetFocus(nextObject);
+	if (is_selected) { node_flags |= ImGuiTreeNodeFlags_Selected; }
 
-		if (nextObject->childs.size() != 0) { for (int j = 0; j < childSize; j++) { AddChildNode(nextObject->childs[j]); } }
+	if (childSize != 0) {
 
-		ImGui::TreePop();
+		node_open = ImGui::TreeNodeEx((void*)(intptr_t)index, node_flags, nextObject->name.c_str(), index);
+
+		if (node_open) {
+
+			if (ImGui::IsItemClicked()) { App->editorScene->SetFocus(nextObject); }
+			for (int j = 0; j < childSize; j++) { AddChildNode(nextObject->childs[j], j); }
+			ImGui::TreePop();
+
+		}
 
 	}
+
+	else {
+
+		node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+		node_open = ImGui::TreeNodeEx((void*)(intptr_t)index, node_flags, nextObject->name.c_str(), index);
+		if (ImGui::IsItemClicked()) { App->editorScene->SetFocus(nextObject); }
+
+	}
+
 
 }
 
@@ -487,12 +534,12 @@ void ManagerImGui::InspectorWindow() {
 					if (ImGui::Button("Switch to Checkers Texture")) { material->SetDiffuse(App->texture->checkersTextureId); }
 
 				}
-				
+
 				else {
-				
+
 					ImGui::NewLine();
 					ImGui::Text("No material: add a material to use textures");
-				
+
 				}
 
 			}
