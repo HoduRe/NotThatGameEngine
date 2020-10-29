@@ -412,7 +412,7 @@ void ManagerImGui::HierarchyWindow() {
 	ImGui::SetDragDropPayload("_TREENODE", NULL, 0);
 	ImGui::Text("This is a drag and drop source");
 	ImGui::EndDragDropSource();
-	}*/	// TODO: this may are may not be available for dragging
+	}*/	// TODO: this may or may not be usasble for dragging hierarchies
 
 }
 
@@ -466,7 +466,7 @@ void ManagerImGui::InspectorWindow() {
 
 			Material* material = (Material*)focus->FindComponent(COMPONENT_TYPE::MATERIAL);
 			TextureData* textureData = nullptr;
-			if (material != nullptr) { textureData = &App->texture->GetTextureData(material->diffuseId); }
+			if (material != nullptr && material->diffuseId != 0) { textureData = &App->texture->GetTextureData(material->diffuseId); }
 			std::vector<Component*> meshes = focus->FindComponents(COMPONENT_TYPE::MESH);
 			Mesh* mesh;
 
@@ -526,7 +526,7 @@ void ManagerImGui::InspectorWindow() {
 
 			if (ImGui::CollapsingHeader("Textures")) {
 
-				if (material != nullptr) {
+				if (material != nullptr && material->diffuseId != 0) {
 
 					ImGui::Text("Path: %s", textureData->path.c_str());
 					ImGui::Text("Width: %d", textureData->width);
@@ -535,10 +535,44 @@ void ManagerImGui::InspectorWindow() {
 
 				}
 
+				else if (material != nullptr) {
+
+					ImGui::NewLine();
+					ImGui::Text("No texture. Add a texture:");
+					ImGui::NewLine();
+
+					if (ImGui::Button("Default texture")) { material->SetDiffuse(App->texture->defaultTextureId); }
+					if (ImGui::Button("Checkers texture")) { material->SetDiffuse(App->texture->checkersTextureId); }
+					if (ImGui::Button("Ahegao texture. How could this get in here")) { material->SetDiffuse(App->texture->degenerateTextureId); }
+
+				}
+
 				else {
 
 					ImGui::NewLine();
-					ImGui::Text("No material: add a material to use textures");
+					ImGui::Text("No material: add material to have a texture:");
+					ImGui::NewLine();
+
+					if (ImGui::Button("Add material with default texture")) {
+
+						material = (Material*)focus->AddComponent(COMPONENT_TYPE::MATERIAL);
+						material->SetDiffuse(App->texture->defaultTextureId);
+
+					}
+
+					if (ImGui::Button("Add material with checkers texture")) {
+
+						material = (Material*)focus->AddComponent(COMPONENT_TYPE::MATERIAL);
+						material->SetDiffuse(App->texture->checkersTextureId);
+
+					}
+
+					if (ImGui::Button("Add material with an ahegao texture. This is no joke. It's a meme of culture")) {
+
+						material = (Material*)focus->AddComponent(COMPONENT_TYPE::MATERIAL);
+						material->SetDiffuse(App->texture->degenerateTextureId);
+
+					}
 
 				}
 

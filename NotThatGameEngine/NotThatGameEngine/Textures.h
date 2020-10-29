@@ -36,6 +36,7 @@ public:
 
 	uint defaultTextureId;
 	uint checkersTextureId;
+	uint degenerateTextureId;
 
 private:
 

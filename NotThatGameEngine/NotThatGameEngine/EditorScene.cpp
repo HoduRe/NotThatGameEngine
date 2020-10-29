@@ -132,7 +132,7 @@ bool EditorScene::AddGameObject(GameObject* newObject) {
 
 bool EditorScene::AddPrimitive(PrimitiveEnum _type) {
 
-	GameObject* newObject = new GameObject(GenerateId(), "", rootGameObjectsVec[0]);
+	GameObject* newObject = new GameObject(GenerateId(), "");
 	Mesh* mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
 
 	switch (_type) {

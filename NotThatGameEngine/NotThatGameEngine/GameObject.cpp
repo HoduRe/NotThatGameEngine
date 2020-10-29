@@ -74,7 +74,9 @@ Component* GameObject::AddComponent(COMPONENT_TYPE _type) {
 
 	case COMPONENT_TYPE::TRANSFORM:
 
-		if (FindComponent(COMPONENT_TYPE::TRANSFORM) == nullptr) { component = new Transform(GenerateComponentId(), this); }
+		component = FindComponent(COMPONENT_TYPE::TRANSFORM);
+		if (component == nullptr) { component = new Transform(GenerateComponentId(), this); }
+		else { return component; }
 
 		break;
 
@@ -86,7 +88,9 @@ Component* GameObject::AddComponent(COMPONENT_TYPE _type) {
 
 	case COMPONENT_TYPE::MATERIAL:
 
-		if (FindComponent(COMPONENT_TYPE::MATERIAL) == nullptr) { component = new Material(GenerateComponentId(), this); }
+		component = FindComponent(COMPONENT_TYPE::MATERIAL);
+		if (component == nullptr) { component = new Material(GenerateComponentId(), this); }
+		else { return component; }
 
 		break;
 

@@ -34,6 +34,7 @@ bool Texture::Start() {
 	
 	defaultTextureId = LoadTexture(App, "Library/Textures/Alex.png");
 	checkersTextureId = LoadTexture(App, "Library/Textures/Checker.png");
+	degenerateTextureId = LoadTexture(App, "Library/Textures/Degenerate.png");
 	App->eventManager->GenerateEvent(EVENT_ENUM::DEFAULT_TEXTURE_LOADED);
 
 	return true;
