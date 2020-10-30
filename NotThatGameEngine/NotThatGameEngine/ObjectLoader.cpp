@@ -27,7 +27,7 @@ bool LoadScene(Application* App, const char* buffer, uint size, GameObject* newO
 		LOG("Error loading scene % s", path);
 		return false;
 	}
-
+	
 	Mesh* mesh;
 	Material* material = nullptr;
 	std::vector<SceneObject> vec;

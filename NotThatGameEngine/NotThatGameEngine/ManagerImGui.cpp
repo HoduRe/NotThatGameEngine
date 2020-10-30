@@ -1,12 +1,16 @@
 #include "Application.h"
 
+#include "Assimp/include/version.h"
+#include "PhysFS/include/physfs.h"
+
 #include <shellapi.h>
 
-ManagerImGui::ManagerImGui(Application* app, bool start_enabled) : Module(app, start_enabled), SDL(nullptr), MathGeoLib(nullptr), sliderDt(0.0f), appName("NotThatGameEngine"),
+ManagerImGui::ManagerImGui(Application* app, bool start_enabled) : Module(app, start_enabled), SDL((char*)""), MathGeoLib((char*)""), sliderDt(0.0f), appName("NotThatGameEngine"),
 sliderBrightness(1.0f), sliderWidth(SCREEN_WIDTH* SCREEN_SIZE), sliderHeight(SCREEN_HEIGHT* SCREEN_SIZE), vsync(true),
 fullscreen(WIN_FULLSCREEN), resizable(WIN_RESIZABLE), borderless(WIN_BORDERLESS), fullDesktop(WIN_FULLSCREEN_DESKTOP), refreshRate(0),
 AVX(false), AVX2(false), AltiVec(false), MMX(false), RDTSC(false), SSE(false), SSE2(false), SSE3(false), SSE41(false), SSE42(false),
-showDemoWindow(false), defaultButtonsMenu(false), aboutWindow(false), configMenu(false), appActive(false), consoleMenu(true), sceneWindow(true), hierarchyWindow(true), inspectorWindow(true)
+showDemoWindow(false), defaultButtonsMenu(false), aboutWindow(false), configMenu(false), appActive(false), consoleMenu(true), sceneWindow(true), hierarchyWindow(true), inspectorWindow(true),
+Devil(), Assimp(), PhysFS(), GLEW()
 {}
 
 
@@ -35,6 +39,19 @@ bool ManagerImGui::Init()
 
 	SDL = (char*)"SDL 2.0.12";
 	MathGeoLib = (char*)"MathGeoLib 1.5";
+
+	int version = ilGetInteger(IL_VERSION_NUM);
+	Devil = "DevIl " + std::to_string(version/100);
+	version = version % 100;
+	Devil = Devil + "." + std::to_string(version / 10);
+	version = version % 10;
+	Devil = Devil + "." + std::to_string(version);
+
+	PHYSFS_Version version2;
+	PHYSFS_VERSION(&version2);
+
+	Assimp = "ASSIMP " + std::to_string(aiGetVersionMajor()) + "." + std::to_string(aiGetVersionMinor());
+	PhysFS = "PhysFS " + std::to_string(version2.major) + "."+ std::to_string(version2.minor);
 
 	//Get refresh rate
 	SDL_DisplayMode displayMode;
@@ -248,6 +265,9 @@ void ManagerImGui::AboutMenu(bool* aboutMenu) {
 	if (ImGui::Button(GLEW.c_str())) { ShellExecuteA(0, "open", "http://glew.sourceforge.net/index.html", NULL, NULL, SW_SHOWNORMAL); }
 	if (ImGui::Button(ImGui.c_str())) { ShellExecuteA(0, "open", "https://github.com/ocornut/imgui", NULL, NULL, SW_SHOWNORMAL); }
 	if (ImGui::Button(MathGeoLib)) { ShellExecuteA(0, "open", "https://github.com/juj/MathGeoLib", NULL, NULL, SW_SHOWNORMAL); }
+	if (ImGui::Button(Assimp.c_str())) { ShellExecuteA(0, "open", "https://www.assimp.org/", NULL, NULL, SW_SHOWNORMAL); }
+	if (ImGui::Button(PhysFS.c_str())) { ShellExecuteA(0, "open", "https://icculus.org/physfs/", NULL, NULL, SW_SHOWNORMAL); }
+	if (ImGui::Button(Devil.c_str())) { ShellExecuteA(0, "open", "http://openil.sourceforge.net/", NULL, NULL, SW_SHOWNORMAL); }
 	ImGui::Text("\n\nLICENSE:\n\nMIT License\n\nCopyright(c) 2020 Ferran - Roger Basart i Bosch\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this softwareand associated documentation files(the 'Software'), \nto deal in the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and /or sell\ncopies of the Software, and to permit persons to whom the Software is furnished\nto do so, subject to the following conditions : \n");
 	ImGui::Text("\tThe above copyright noticeand this permission notice shall be included in all\n\tcopies or substantial portions of the Software.\n");
 	ImGui::Text("THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,\nINCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.");
@@ -306,7 +326,13 @@ update_status ManagerImGui::DefaultWindow() {
 		}
 
 		if (ImGui::CollapsingHeader("Hardware")) {
-			ImGui::Text("SDL 2.0.12");
+			ImGui::Text(SDL);
+			ImGui::Text(GLEW.c_str());
+			ImGui::Text(ImGui.c_str());
+			ImGui::Text(MathGeoLib);
+			ImGui::Text(Assimp.c_str());
+			ImGui::Text(PhysFS.c_str());
+			ImGui::Text(Devil.c_str());
 			ImGui::NewLine();
 			ImGui::Text("CPUs: %i (Cache: %i kb)", SDL_GetCPUCount(), SDL_GetCPUCacheLineSize());
 			ImGui::Text("System RAM: %.2f Gb)", (float)SDL_GetSystemRAM() * 0.0009765625);	// The long number is 1 / 1024, because function returns in Mb
@@ -349,7 +375,7 @@ void ManagerImGui::ConsoleWindow() {
 
 void ManagerImGui::SceneWindow() {
 
-	ImVec2 vec2(App->window->width * 0.75, App->window->height * 0.75);
+	ImVec2 vec2(App->window->width, App->window->height);
 
 	if (sceneWindow) {
 

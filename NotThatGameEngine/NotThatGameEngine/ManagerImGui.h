@@ -38,6 +38,9 @@ private:
 	char* SDL;
 	std::string GLEW;
 	std::string ImGui;
+	std::string Devil;
+	std::string Assimp;
+	std::string PhysFS;
 	char* MathGeoLib;
 	char appName[30];
 	int refreshRate;
