@@ -501,7 +501,7 @@ void ManagerImGui::InspectorWindow() {
 			Quat rotation;
 			float3 scale;
 			focus->worldTransform.Decompose(position, rotation, scale);
-			rotationEuler = rotation.ToEulerXYZ();
+			rotationEuler = rotation.ToEulerXYZ() * RADTODEG;
 
 			positionX = std::to_string(position.x);
 			positionY = std::to_string(position.y);

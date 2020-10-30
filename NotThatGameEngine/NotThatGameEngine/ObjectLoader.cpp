@@ -101,8 +101,9 @@ uint LoadTexture(Application* App, const char* path, const char* buffer, uint si
 
 void LoadMeshNode(Application* App, aiNode* node, aiScene* scene, GameObject* parent, aiMatrix4x4 accTransform) {
 
-	aiMatrix4x4 transform;
+	aiMatrix4x4 transform = node->mTransformation * accTransform;	// TODO: this transform goes somewhere;
 	Mesh* mesh;
+	Transform* transformation;
 
 	if (node->mNumMeshes > 0) {
 
@@ -148,18 +149,36 @@ void LoadMeshNode(Application* App, aiNode* node, aiScene* scene, GameObject* pa
 			LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->textureCoordId, mesh->textureCoord.size(), mesh->textureCoord.data());
 			LoadDataBufferUint(GL_ELEMENT_ARRAY_BUFFER, &mesh->indexId, mesh->indices.size(), mesh->indices.data());
 
+			transformation = (Transform*)newObject->FindComponent(COMPONENT_TYPE::TRANSFORM);
+			transformation->transform = aiTransformTofloat4x4Transform(transform);
 			App->editorScene->AddGameObject(newObject);
 
 		}
 
 	}
 
-	transform = node->mTransformation * accTransform;	// TODO: this transform goes somewhere
-
 	for (int i = 0; i < node->mNumChildren; i++) { LoadMeshNode(App, node->mChildren[i], scene, parent, transform); }
 
 }
 
+
+float4x4 aiTransformTofloat4x4Transform(aiMatrix4x4 matrix) {
+
+	float4x4 transform;
+
+	aiVector3D position;
+	aiQuaternion rotation;
+	aiVector3D scale;
+
+	matrix.Decompose(scale, rotation, position);
+
+	float3 positionM(position.x, position.y, position.z);
+	Quat rotationM(rotation.x, rotation.y, rotation.z, rotation.w);
+	float3 scaleM(scale.x, scale.y, scale.z);
+
+	return transform.FromTRS(positionM, rotationM, scaleM);
+
+}
 
 
 

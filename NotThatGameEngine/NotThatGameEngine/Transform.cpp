@@ -58,4 +58,3 @@ void Transform::SetEulerAngles(float3 eulerAngles) {
 
 
 
-
