@@ -98,6 +98,8 @@ update_status Camera3D::Update(float dt)
 		else { LOG("There is no gameObject selected."); }
 	}
 
+	App->input->GetMouseZ();
+
 	CalculateViewMatrix();
 
 	return update_status::UPDATE_CONTINUE;

@@ -34,6 +34,8 @@ public:
 	std::vector<float> textureCoord;
 	std::vector<GLuint> indices;
 
+	bool paintNormals;
+
 };
 
 #endif

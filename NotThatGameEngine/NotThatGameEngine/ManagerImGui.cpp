@@ -509,7 +509,7 @@ void ManagerImGui::InspectorWindow() {
 
 			if (ImGui::CollapsingHeader("Mesh")) {
 
-				for (int i = 0; i < meshes.size(); i++) {
+				for (int i = 0; i < meshes.size(); i++) {	// TODO: if 1 mesh = 1 gameobject, we can kill this :)
 
 					mesh = (Mesh*)meshes[i];
 					ImGui::Text("%s", mesh->meshName.c_str());
@@ -519,6 +519,8 @@ void ManagerImGui::InspectorWindow() {
 					ImGui::Text("Indices ID: %u", mesh->indexId);
 					ImGui::Text("Material ID: %u", mesh->materialId);
 					ImGui::NewLine();
+
+					if(ImGui::Checkbox("Activate normals display", &mesh->paintNormals)){}
 
 				}
 

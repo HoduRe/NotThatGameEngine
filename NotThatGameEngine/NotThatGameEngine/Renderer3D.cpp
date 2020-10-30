@@ -119,7 +119,7 @@ void Renderer3D::OnResize(int width, int height)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	glGenFramebuffers(1, &frameBufferId);	// TODO: WHY AM I CREATING A FRAMEBUFFER ON EVERY RESIZE
+	if (frameBufferId == 0) { glGenFramebuffers(1, &frameBufferId); }
 	glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
 
 	glGenTextures(1, &sceneTextureId);
