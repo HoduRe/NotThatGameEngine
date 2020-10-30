@@ -21,61 +21,20 @@ GameObject* LoadModel(Application* App, const char* path, const char* buffer, ui
 
 bool LoadScene(Application* App, const char* buffer, uint size, GameObject* newObject, const char* path) {
 
-	const aiScene* scene = aiImportFileFromMemory(buffer, size, aiProcessPreset_TargetRealtime_MaxQuality, nullptr);
+	aiScene* scene = (aiScene*)aiImportFileFromMemory(buffer, size, aiProcessPreset_TargetRealtime_MaxQuality, nullptr);
+	Material* material = nullptr;
+	aiMatrix4x4 trans;
 
 	if (scene == nullptr || scene->HasMeshes() == false) {
 		LOG("Error loading scene % s", path);
 		return false;
 	}
-	
-	Mesh* mesh;
-	Material* material = nullptr;
-	std::vector<SceneObject> vec;
-	aiMatrix4x4 trans;
 
-	LoadMeshNode(scene->mRootNode, vec, trans);	// TODO: Am I loading this correctly? What is going on
+	App->editorScene->AddGameObject(newObject);
 
-	for (unsigned int i = 0; i < scene->mNumMeshes; i++) {
+	if (scene->mRootNode->mNumChildren != 0) { for (int i = 0; i < scene->mRootNode->mNumChildren; i++) { LoadMeshNode(App, scene->mRootNode->mChildren[i], (aiScene*)scene, newObject, trans); } }
 
-		mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
-
-		mesh->materialId = scene->mMeshes[i]->mMaterialIndex;
-		mesh->meshName = scene->mMeshes[i]->mName.C_Str();
-
-		const aiMesh* paiMesh = (aiMesh*)scene->mMeshes[i];
-		const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
-
-		for (unsigned int j = 0; j < paiMesh->mNumVertices; j++) {		// Vertices
-			const aiVector3D* pPos = &(paiMesh->mVertices[j]);
-			const aiVector3D* pNormal = &(paiMesh->mNormals[j]); //: &Zero3D	// There are the same normals as there are vertices, so we don't need a loop for them
-			const aiVector3D* pTexCoord = paiMesh->HasTextureCoords(0) ? &(paiMesh->mTextureCoords[0][j]) : &Zero3D;	// Same as above
-
-			mesh->vertices.push_back(pPos->x);
-			mesh->vertices.push_back(pPos->y);
-			mesh->vertices.push_back(pPos->z);
-			mesh->textureCoord.push_back(pTexCoord->x);
-			mesh->textureCoord.push_back(pTexCoord->y);
-			mesh->normals.push_back(pNormal->x);
-			mesh->normals.push_back(pNormal->y);
-			mesh->normals.push_back(pNormal->z);
-		}
-
-		LOG("New mesh with %d vertices", mesh->vertices.size());
-
-		for (unsigned int j = 0; j < paiMesh->mNumFaces; j++) {		// Indices
-			const aiFace& Face = paiMesh->mFaces[j];
-			assert(Face.mNumIndices == 3);
-			mesh->indices.push_back(Face.mIndices[0]);
-			mesh->indices.push_back(Face.mIndices[1]);
-			mesh->indices.push_back(Face.mIndices[2]);
-		}
-
-		LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->vertexId, mesh->vertices.size(), mesh->vertices.data());
-		LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->normalsId, mesh->normals.size(), mesh->normals.data());
-		LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->textureCoordId, mesh->textureCoord.size(), mesh->textureCoord.data());
-		LoadDataBufferUint(GL_ELEMENT_ARRAY_BUFFER, &mesh->indexId, mesh->indices.size(), mesh->indices.data());
-
-	}
+	// TODO: gameObject has material, but meshes from childs only have materialId. Wut?
 
 	// Init materials
 	if (scene->mNumMaterials > 0) {
@@ -99,7 +58,6 @@ bool LoadScene(Application* App, const char* buffer, uint size, GameObject* newO
 	}
 
 	aiReleaseImport(scene);
-	App->editorScene->AddGameObject(newObject);
 
 	return true;
 }
@@ -141,26 +99,64 @@ uint LoadTexture(Application* App, const char* path, const char* buffer, uint si
 }
 
 
-void LoadMeshNode(aiNode* node, std::vector<SceneObject>& targetParent, aiMatrix4x4 accTransform) {
+void LoadMeshNode(Application* App, aiNode* node, aiScene* scene, GameObject* parent, aiMatrix4x4 accTransform) {
 
 	aiMatrix4x4 transform;
+	Mesh* mesh;
 
 	if (node->mNumMeshes > 0) {
 
 		for (int i = 0; i < node->mNumMeshes; i++) {
 
-			SceneObject* object = new SceneObject;
-			object->meshID = node->mMeshes[i];
-			object->transform = node->mTransformation * accTransform;
-			targetParent.push_back(*object);
-			
+			GameObject* newObject = new GameObject(App->editorScene->GenerateId(), "NewGameObject", parent);
+
+			mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
+
+			mesh->materialId = scene->mMeshes[node->mMeshes[i]]->mMaterialIndex;
+			mesh->meshName = scene->mMeshes[node->mMeshes[i]]->mName.C_Str();
+
+			const aiMesh* paiMesh = (aiMesh*)scene->mMeshes[node->mMeshes[i]];
+			const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
+
+			for (unsigned int j = 0; j < paiMesh->mNumVertices; j++) {		// Vertices
+				const aiVector3D* pPos = &(paiMesh->mVertices[j]);
+				const aiVector3D* pNormal = &(paiMesh->mNormals[j]); //: &Zero3D	// There are the same normals as there are vertices, so we don't need a loop for them
+				const aiVector3D* pTexCoord = paiMesh->HasTextureCoords(0) ? &(paiMesh->mTextureCoords[0][j]) : &Zero3D;	// Same as above
+
+				mesh->vertices.push_back(pPos->x);
+				mesh->vertices.push_back(pPos->y);
+				mesh->vertices.push_back(pPos->z);
+				mesh->textureCoord.push_back(pTexCoord->x);
+				mesh->textureCoord.push_back(pTexCoord->y);
+				mesh->normals.push_back(pNormal->x);
+				mesh->normals.push_back(pNormal->y);
+				mesh->normals.push_back(pNormal->z);
+			}
+
+			LOG("New mesh with %d vertices", mesh->vertices.size());
+
+			for (unsigned int j = 0; j < paiMesh->mNumFaces; j++) {		// Indices
+				const aiFace& Face = paiMesh->mFaces[j];
+				assert(Face.mNumIndices == 3);
+				mesh->indices.push_back(Face.mIndices[0]);
+				mesh->indices.push_back(Face.mIndices[1]);
+				mesh->indices.push_back(Face.mIndices[2]);
+			}
+
+			LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->vertexId, mesh->vertices.size(), mesh->vertices.data());
+			LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->normalsId, mesh->normals.size(), mesh->normals.data());
+			LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->textureCoordId, mesh->textureCoord.size(), mesh->textureCoord.data());
+			LoadDataBufferUint(GL_ELEMENT_ARRAY_BUFFER, &mesh->indexId, mesh->indices.size(), mesh->indices.data());
+
+			App->editorScene->AddGameObject(newObject);
+
 		}
 
 	}
 
-	transform = node->mTransformation * accTransform;
+	transform = node->mTransformation * accTransform;	// TODO: this transform goes somewhere
 
-	for (int i = 0; i < node->mNumChildren; i++) { LoadMeshNode(node->mChildren[i], targetParent, transform); }
+	for (int i = 0; i < node->mNumChildren; i++) { LoadMeshNode(App, node->mChildren[i], scene, parent, transform); }
 
 }
 
