@@ -24,9 +24,14 @@ bool ManagerImGui::Init()
 
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
-	ImGui::StyleColorsClassic();
+
+	ImGuiIO& io = ImGui::GetIO();
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 	ImGui_ImplOpenGL3_Init("#version 130");
+
 
 	LOG("ImGui initialized.\n");
 
@@ -82,29 +87,33 @@ bool ManagerImGui::Start()
 }
 
 
-update_status ManagerImGui::PreUpdate(float dt)
-{
-	ImVec4 clear_color = ImVec4(0.0f, 0.15f, 0.10f, 1.00f);
+update_status ManagerImGui::PreUpdate(float dt) {
+
+	ImVec4 clear_color = ImVec4(0.5f, 0.5f, 0.5f, 1.00f);
 
 	glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->camera->GetViewMatrix());
 
 	return update_status::UPDATE_CONTINUE;
+
 }
 
 
-update_status ManagerImGui::Update(float dt)
-{
+update_status ManagerImGui::Update(float dt) {
+
 	update_status ret = update_status::UPDATE_CONTINUE;
 	update_status ret2 = update_status::UPDATE_CONTINUE;
-
 
 	// Start the Dear ImGui frame
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
+
+	ImGuiDockNodeFlags flag = ImGuiDockNodeFlags_NoDockingInCentralNode;
+	ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), flag);
 
 	if (showDemoWindow) { ImGui::ShowDemoWindow(&showDemoWindow); }	// DEMO WINDOW
 	ret = DefaultButtons();
@@ -129,7 +138,6 @@ update_status ManagerImGui::PostUpdate(float dt)
 	// Rendering
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
 	SDL_GL_SwapWindow(App->window->window);	// Swaps current window with the other used by OpenGL (by default it uses double-buffered contexts)
 
 	return ret;
@@ -365,7 +373,7 @@ update_status ManagerImGui::DefaultWindow() {
 void ManagerImGui::ConsoleWindow() {
 
 	if (consoleMenu) {
-		
+
 		ImGui::Begin("Console", &consoleMenu);
 		for (int i = 0; i < App->consoleVecSize; i++) { ImGui::Text(App->consoleVec[i].c_str()); }
 		ImGui::End();
@@ -376,12 +384,13 @@ void ManagerImGui::ConsoleWindow() {
 
 void ManagerImGui::SceneWindow() {
 
-	ImVec2 vec2(App->window->width, App->window->height);
-
 	if (sceneWindow) {
 
-		ImGui::Begin("Scene", &sceneWindow);
+		ImGuiWindowFlags flag = ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse;
 
+		ImGui::Begin("Scene", &sceneWindow, flag);
+
+		ImVec2 vec2(ImGui::GetWindowWidth(), ImGui::GetWindowHeight());
 		ImVec2 uvMin = ImVec2(0.0f, 1.0f);
 		ImVec2 uvMax = ImVec2(1.0f, 0.0f);
 

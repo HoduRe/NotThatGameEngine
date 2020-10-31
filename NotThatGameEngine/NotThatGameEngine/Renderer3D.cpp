@@ -84,6 +84,9 @@ update_status Renderer3D::PreUpdate(float dt)
 
 	glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
 
+	ImVec4 clear_color = ImVec4(0.5f, 0.5f, 0.5f, 1.00f);
+
+	glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 	glMatrixMode(GL_MODELVIEW);
