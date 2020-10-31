@@ -31,6 +31,7 @@ bool LoadScene(Application* App, const char* buffer, uint size, GameObject* newO
 	}
 
 	App->editorScene->AddGameObject(newObject);
+	trans = scene->mRootNode->mTransformation;
 
 	if (scene->mRootNode->mNumChildren != 0) { for (int i = 0; i < scene->mRootNode->mNumChildren; i++) { LoadMeshNode(App, scene->mRootNode->mChildren[i], (aiScene*)scene, newObject, trans); } }
 
@@ -138,7 +139,7 @@ void LoadMeshNode(Application* App, aiNode* node, aiScene* scene, GameObject* pa
 
 			for (unsigned int j = 0; j < paiMesh->mNumFaces; j++) {		// Indices
 				const aiFace& Face = paiMesh->mFaces[j];
-				assert(Face.mNumIndices == 3);
+				if (Face.mNumIndices != 3) { LOG("Not all faces of %s are triangles.", scene->mMeshes[node->mMeshes[i]]->mName.C_Str()); }
 				mesh->indices.push_back(Face.mIndices[0]);
 				mesh->indices.push_back(Face.mIndices[1]);
 				mesh->indices.push_back(Face.mIndices[2]);
@@ -150,7 +151,7 @@ void LoadMeshNode(Application* App, aiNode* node, aiScene* scene, GameObject* pa
 			LoadDataBufferUint(GL_ELEMENT_ARRAY_BUFFER, &mesh->indexId, mesh->indices.size(), mesh->indices.data());
 
 			transformation = (Transform*)newObject->FindComponent(COMPONENT_TYPE::TRANSFORM);
-			transformation->transform = aiTransformTofloat4x4Transform(transform);
+			aiTransformTofloat4x4Transform(transform, transformation);
 			App->editorScene->AddGameObject(newObject);
 
 		}
@@ -162,9 +163,7 @@ void LoadMeshNode(Application* App, aiNode* node, aiScene* scene, GameObject* pa
 }
 
 
-float4x4 aiTransformTofloat4x4Transform(aiMatrix4x4 matrix) {
-
-	float4x4 transform;
+void aiTransformTofloat4x4Transform(aiMatrix4x4 matrix, Transform* transform) {
 
 	aiVector3D position;
 	aiQuaternion rotation;
@@ -172,11 +171,11 @@ float4x4 aiTransformTofloat4x4Transform(aiMatrix4x4 matrix) {
 
 	matrix.Decompose(scale, rotation, position);
 
-	float3 positionM(position.x, position.y, position.z);
-	Quat rotationM(rotation.x, rotation.y, rotation.z, rotation.w);
-	float3 scaleM(scale.x, scale.y, scale.z);
+	transform->position = float3(position.x, position.y, position.z);
+	transform->rotation = Quat(rotation.x, rotation.y, rotation.z, rotation.w);
+	transform->scale = float3(scale.x, scale.y, scale.z);
 
-	return transform.FromTRS(positionM, rotationM, scaleM);
+	transform->transform = transform->transform.FromTRS(transform->position, transform->rotation, transform->scale);
 
 }
 

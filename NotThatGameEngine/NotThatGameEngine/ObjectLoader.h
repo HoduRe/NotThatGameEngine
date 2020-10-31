@@ -15,6 +15,6 @@ class Mesh;
 	void LoadMeshNode(Application* App, aiNode* node, aiScene* scene, GameObject* parent, aiMatrix4x4 accTransform);
 
 	bool LoadScene(Application* App, const char* buffer, uint size, GameObject* newObject, const char* path);
-	float4x4 aiTransformTofloat4x4Transform(aiMatrix4x4 matrix);
+	void aiTransformTofloat4x4Transform(aiMatrix4x4 matrix, Transform* transform);
 
 #endif

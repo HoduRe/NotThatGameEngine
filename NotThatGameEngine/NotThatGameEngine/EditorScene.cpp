@@ -41,7 +41,6 @@ bool EditorScene::Start()
 {
 
 	LoadModel(App, "Library/Meshes/BakerHouse.fbx");
-	LoadModel(App, "Library/Meshes/House.obj");
 
 	return true;
 }
@@ -114,7 +113,13 @@ bool EditorScene::AddGameObject(GameObject* newObject) {	// This function doesn'
 
 			for (int i = 0; i < size; i++) {
 
-				if (rootGameObjectsVec[i] == newObject->parent) { rootGameObjectsVec[i]->childs.push_back(newObject); }
+				if (rootGameObjectsVec[i] == newObject->parent) {
+				
+					rootGameObjectsVec[i]->childs.push_back(newObject);
+					return true;
+
+				}
+
 				else {
 
 					ret = rootGameObjectsVec[i]->AddGameObjectByParent(newObject);
