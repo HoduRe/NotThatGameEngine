@@ -1,7 +1,7 @@
 #include "Mesh.h"
 
 Mesh::Mesh(int _id, GameObject* _gameObject) : Component(_id, _gameObject, COMPONENT_TYPE::MESH), vertexId(0), indexId(0), normalsId(0), textureCoordId(0),
-vertices(), normals(), textureCoord(), indices(), meshName("No_name_Mesh"), paintNormals(false) {}
+vertices(), normals(), textureCoord(), indices(), meshName("No_name_Mesh"), paintNormals(false), debugNormalsId(0), debugNormals() {}
 
 
 Mesh::~Mesh() {
@@ -46,6 +46,38 @@ void Mesh::SetTextureCoord(std::vector<float> _textureCoord)
 
 	textureCoord = _textureCoord;
 	LoadDataBufferFloat(GL_TEXTURE_COORD_ARRAY, &textureCoordId, textureCoord.size(), textureCoord.data());
+
+}
+
+
+GLuint Mesh::DebugNormals() {
+
+	int verticesSize = vertices.size();
+
+	if (normals.size() != 0 && verticesSize != 0) {
+
+		if (debugNormalsId != 0) { return debugNormalsId; }
+
+		else {
+
+			for (int i = 0; i < verticesSize; i += 3) {
+
+				debugNormals.push_back(vertices[i]);
+				debugNormals.push_back(vertices[i+1]);
+				debugNormals.push_back(vertices[i+2]);
+				debugNormals.push_back((vertices[i] + normals[i]) * 10);	// TODO: maybe delete the * 10
+				debugNormals.push_back((vertices[i+1] + normals[i+1]) * 10);	// TODO: maybe delete the * 10
+				debugNormals.push_back((vertices[i+2] + normals[i+2]) * 10);	// TODO: maybe delete the * 10
+
+			}
+
+			LoadDataBufferFloat(GL_ARRAY_BUFFER, &debugNormalsId, debugNormals.size(), debugNormals.data());
+
+		}
+
+	}
+
+	else { return 0; }
 
 }
 

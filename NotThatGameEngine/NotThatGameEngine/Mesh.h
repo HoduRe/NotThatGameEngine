@@ -19,6 +19,8 @@ public:
 	void SetNormals(std::vector<float> _normals);
 	void SetTextureCoord(std::vector<float> _textureCoord);
 
+	GLuint DebugNormals();
+
 public:
 
 	GLuint vertexId;
@@ -26,12 +28,16 @@ public:
 	GLuint normalsId;
 	GLuint textureCoordId;
 
+	GLuint debugNormalsId;
+
 	std::string meshName;
 
 	std::vector<float> vertices;
 	std::vector<float> normals;
 	std::vector<float> textureCoord;
 	std::vector<GLuint> indices;
+
+	std::vector<float> debugNormals;
 
 	bool paintNormals;
 

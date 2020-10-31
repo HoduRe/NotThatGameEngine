@@ -24,5 +24,6 @@ void LoadDataBufferUint(int bufferType, GLuint* id, int size, GLuint* data);
 void LoadGLTexture(GLuint* _id, int width, int height, int bpp, int format, ILubyte* data);
 
 void DrawMeshes(Mesh& mesh, float4x4 worldTransform, GLuint textureId);
+void DrawLines(float4x4 worldTransform, GLuint debugId, std::vector<float> debugVec);
 
 #endif

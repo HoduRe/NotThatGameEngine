@@ -381,7 +381,10 @@ void ManagerImGui::SceneWindow() {
 
 		ImGui::Begin("Scene", &sceneWindow);
 
-		ImGui::Image((ImTextureID*)App->renderer3D->sceneTextureId, vec2);
+		ImVec2 uvMin = ImVec2(0.0f, 1.0f);                 // Top-left
+		ImVec2 uvMax = ImVec2(1.0f, 0.0f);                 // Lower-right
+
+		ImGui::Image((ImTextureID*)App->renderer3D->sceneTextureId, vec2, uvMin, uvMax);
 		//ImGui::Image((ImTextureID*)App->texture->defaultTextureId, vec2);
 
 		ImGui::End();

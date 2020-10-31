@@ -108,3 +108,25 @@ void DrawMeshes(Mesh& mesh, float4x4 worldTransform, GLuint textureId) {
 }
 
 
+void DrawLines(float4x4 worldTransform, GLuint debugId, std::vector<float> debugVec) {
+
+	if (debugId != 0) {
+
+		glPushMatrix();
+		glMultMatrixf((float*)&worldTransform.Transposed());
+
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glBindBuffer(GL_ARRAY_BUFFER, debugId);
+
+		glVertexPointer(3, GL_FLOAT, 0, NULL);
+		glColor3f(0.5, 0.5, 0.5);	// TODO: maybe delete this
+		glDrawArrays(GL_LINE, NULL, debugVec.size());
+
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glDisableClientState(GL_VERTEX_ARRAY);
+
+		glPopMatrix();
+
+	}
+
+}

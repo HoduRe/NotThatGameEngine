@@ -42,6 +42,7 @@ void GameObject::PostUpdate(uint& defaultTextureId) {
 
 	if (parent != nullptr) { transform->RecalculateTransformFromParent(parent->worldTransform); }
 	else { worldTransform = transform->transform; }
+	worldTransform = worldTransform.identity;	// TODO: delete this
 
 	for (int i = childs.size() - 1; i > -1; i--) { childs[i]->PostUpdate(defaultTextureId); }
 
@@ -57,6 +58,8 @@ void GameObject::PostUpdate(uint& defaultTextureId) {
 			else { DrawMeshes(*mesh, worldTransform, material->diffuseId); }
 		}
 		else { DrawMeshes(*mesh, worldTransform, 0); }
+
+		if (mesh->paintNormals) { DrawLines(worldTransform, mesh->DebugNormals(), mesh->debugNormals); }
 
 	}
 
