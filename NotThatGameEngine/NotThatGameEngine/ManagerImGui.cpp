@@ -503,18 +503,17 @@ void ManagerImGui::InspectorWindow() {
 
 		if (focus != nullptr) {
 
+			Mesh* mesh;
+			Transform* transform = (Transform*)focus->FindComponent(COMPONENT_TYPE::TRANSFORM);
 			Material* material = (Material*)focus->FindComponent(COMPONENT_TYPE::MATERIAL);
 			TextureData* textureData = nullptr;
 			if (material != nullptr && material->diffuseId != 0) { textureData = App->texture->GetTextureData(material->diffuseId); }
 			std::vector<Component*> meshes = focus->FindComponents(COMPONENT_TYPE::MESH);
-			Mesh* mesh;
 
-			float3 position;
-			float3 rotationEuler;
-			Quat rotation;
-			float3 scale;
-			focus->worldTransform.Decompose(position, rotation, scale);
-			rotationEuler = rotation.ToEulerXYZ() * RADTODEG;
+
+			float3 position = transform->GetPosition();
+			float3 rotationEuler = transform->GetEulerAngles();
+			float3 scale = transform->GetScale();
 
 			positionX = std::to_string(position.x);
 			positionY = std::to_string(position.y);
@@ -531,19 +530,19 @@ void ManagerImGui::InspectorWindow() {
 				ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_CharsDecimal | ImGuiInputTextFlags_CharsNoBlank | ImGuiInputTextFlags_AutoSelectAll;
 
 				ImGui::Text("Position:");
-				if (ImGui::InputText("Position X", (char*)positionX.c_str(), positionX.size(), input_text_flags)) {}
-				if (ImGui::InputText("Position Y", (char*)positionY.c_str(), positionY.size(), input_text_flags)) {}
-				if (ImGui::InputText("Position Z", (char*)positionZ.c_str(), positionZ.size(), input_text_flags)) {}
+				if (ImGui::InputText("Position X", (char*)positionX.c_str(), positionX.size(), input_text_flags)) { transform->SetPosition (float3(stof(positionX), stof(positionY), stof(positionZ))); }
+				if (ImGui::InputText("Position Y", (char*)positionY.c_str(), positionY.size(), input_text_flags)) { transform->SetPosition(float3(stof(positionX), stof(positionY), stof(positionZ))); }
+				if (ImGui::InputText("Position Z", (char*)positionZ.c_str(), positionZ.size(), input_text_flags)) { transform->SetPosition(float3(stof(positionX), stof(positionY), stof(positionZ))); }
 
 				ImGui::Text("Rotation:");
-				if (ImGui::InputText("Rotation X", (char*)rotationX.c_str(), rotationX.size(), input_text_flags)) {}
-				if (ImGui::InputText("Rotation Y", (char*)rotationY.c_str(), rotationY.size(), input_text_flags)) {}
-				if (ImGui::InputText("Rotation Z", (char*)rotationZ.c_str(), rotationZ.size(), input_text_flags)) {}
+				if (ImGui::InputText("Rotation X", (char*)rotationX.c_str(), rotationX.size(), input_text_flags)) { transform->SetEulerAngles(float3(stof(rotationX), stof(rotationY), stof(rotationZ))); }
+				if (ImGui::InputText("Rotation Y", (char*)rotationY.c_str(), rotationY.size(), input_text_flags)) { transform->SetEulerAngles(float3(stof(rotationX), stof(rotationY), stof(rotationZ))); }
+				if (ImGui::InputText("Rotation Z", (char*)rotationZ.c_str(), rotationZ.size(), input_text_flags)) { transform->SetEulerAngles(float3(stof(rotationX), stof(rotationY), stof(rotationZ))); }
 
 				ImGui::Text("Scale:");
-				if (ImGui::InputText("Scale X", (char*)scaleX.c_str(), scaleX.size(), input_text_flags)) {}
-				if (ImGui::InputText("Scale Y", (char*)scaleY.c_str(), scaleY.size(), input_text_flags)) {}
-				if (ImGui::InputText("Scale Z", (char*)scaleZ.c_str(), scaleZ.size(), input_text_flags)) {}
+				if (ImGui::InputText("Scale X", (char*)scaleX.c_str(), scaleX.size(), input_text_flags)) { transform->SetScale(float3(stof(scaleX), stof(scaleY), stof(scaleZ))); }
+				if (ImGui::InputText("Scale Y", (char*)scaleY.c_str(), scaleY.size(), input_text_flags)) { transform->SetScale(float3(stof(scaleX), stof(scaleY), stof(scaleZ))); }
+				if (ImGui::InputText("Scale Z", (char*)scaleZ.c_str(), scaleZ.size(), input_text_flags)) { transform->SetScale(float3(stof(scaleX), stof(scaleY), stof(scaleZ))); }
 			}
 
 			if (ImGui::CollapsingHeader("Mesh")) {

@@ -82,7 +82,7 @@ update_status Camera3D::Update(float dt)
 		if (focus != nullptr) {
 		
 			Transform* transform = (Transform*)focus->FindComponent(COMPONENT_TYPE::TRANSFORM);
-			Look(vec3(transform->position.x, transform->position.y, transform->position.z), Reference);
+			Look(vec3(transform->GetPosition().x, transform->GetPosition().y, transform->GetPosition().z), Reference);
 
 		}
 

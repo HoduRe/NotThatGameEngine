@@ -174,11 +174,9 @@ void aiTransformTofloat4x4Transform(aiMatrix4x4 matrix, Transform* transform) {
 
 	matrix.Decompose(scale, rotation, position);
 
-	transform->position = float3(position.x, position.y, position.z);
-	transform->rotation = Quat(rotation.x, rotation.y, rotation.z, rotation.w);
-	transform->scale = float3(scale.x, scale.y, scale.z);
-
-	transform->transform = transform->transform.FromTRS(transform->position, transform->rotation, transform->scale);
+	transform->SetPosition(float3(position.x, position.y, position.z));
+	transform->SetRotation(Quat(rotation.x, rotation.y, rotation.z, rotation.w));
+	transform->SetScale(float3(scale.x, scale.y, scale.z));	// TODO: I can optimize this by calling directly the recalculation matrix, but with a function that takes position, rotation and scale as values to recalculate it with
 
 }
 

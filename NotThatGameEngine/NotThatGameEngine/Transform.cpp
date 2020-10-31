@@ -45,6 +45,22 @@ void Transform::RecalculateTransform() {
 }
 
 
+void Transform::SetPosition(float3 _position) {
+
+	position = _position;
+	RecalculateTransform();
+
+}
+
+
+void Transform::SetRotation(Quat _rotation) {
+
+	rotation = _rotation;
+	RecalculateTransform();
+
+}
+
+
 void Transform::SetEulerAngles(float3 eulerAngles) {
 
 	float3 newEluerRotation = (eulerAngles - rotationEuler) * DEGTORAD;
@@ -54,6 +70,26 @@ void Transform::SetEulerAngles(float3 eulerAngles) {
 	RecalculateTransform();
 
 }
+
+
+void Transform::SetScale(float3 _scale) {
+
+	scale = _scale;
+	RecalculateTransform();
+
+}
+
+
+float3 Transform::GetPosition() { return position; }
+
+
+Quat Transform::GetEulerQuat() { return rotation; }
+
+
+float3 Transform::GetEulerAngles() { return rotationEuler; }
+
+
+float3 Transform::GetScale() { return scale; }
 
 
 

@@ -17,20 +17,31 @@ public:
 
 	void RecalculateTransformFromParent(float4x4& parentPosition);
 
+	void SetPosition(float3 position);
+	void SetRotation(Quat _rotation);
 	void SetEulerAngles(float3 eulerAngles);
+	void SetScale(float3 scale);
+
+	float3 GetPosition();
+	Quat GetEulerQuat();
+	float3 GetEulerAngles();
+	float3 GetScale();
 
 public:
 
-	float3 position;
-	float3 rotationEuler;
-	Quat rotation;
-	float3 scale;
 	float4x4 transform;
 
 private:
 
 	void RecalculateEulerAngles();
 	void RecalculateTransform();
+
+private:
+
+	float3 position;
+	float3 rotationEuler;
+	Quat rotation;
+	float3 scale;
 
 };
 
