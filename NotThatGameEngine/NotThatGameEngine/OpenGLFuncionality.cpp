@@ -119,7 +119,7 @@ void DrawLines(float4x4 worldTransform, GLuint debugId, std::vector<float> debug
 		glBindBuffer(GL_ARRAY_BUFFER, debugId);
 
 		glVertexPointer(3, GL_FLOAT, 0, NULL);
-		glColor3f(0.5, 0.5, 0.5);	// TODO: maybe delete this
+		glColor3f(80.0f, 0.0f, 0.0f);
 		glDrawArrays(GL_LINES, NULL, debugVec.size());
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
