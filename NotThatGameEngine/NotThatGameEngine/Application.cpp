@@ -182,11 +182,11 @@ void Application::log(const char file[], int line, const char* format, ...)
 	sprintf_s(tmp_string2, 4096, "\n%s(%d) : %s", file, line, tmp_string);
 	OutputDebugString(tmp_string2);
 
-	consoleVec.push_back(tmp_string2);
+	consoleVec.insert(consoleVec.begin(), tmp_string2);
 	consoleVecSize++;
 
 	if (consoleVecSize >= 50) {
-		consoleVec.erase(consoleVec.begin());
+		consoleVec.erase(consoleVec.begin()+consoleVec.size()-1);
 		consoleVecSize--;
 	}
 }
