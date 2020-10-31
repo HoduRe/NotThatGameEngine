@@ -102,7 +102,7 @@ uint LoadTexture(Application* App, const char* path, const char* buffer, uint si
 
 void LoadMeshNode(Application* App, aiNode* node, aiScene* scene, GameObject* parent, aiMatrix4x4 accTransform) {
 
-	aiMatrix4x4 transform = node->mTransformation * accTransform;	// TODO: this transform goes somewhere;
+	aiMatrix4x4 transform = accTransform * node->mTransformation;
 	Mesh* mesh;
 	Transform* transformation;
 

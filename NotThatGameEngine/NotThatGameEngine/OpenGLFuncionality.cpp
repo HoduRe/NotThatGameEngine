@@ -70,7 +70,7 @@ void LoadGLTexture(GLuint* _id, int width, int height, int bpp, int format, ILub
 void DrawMeshes(Mesh& mesh, float4x4 worldTransform, GLuint textureId) {
 
 	glPushMatrix();
-	glMultMatrixf((float*)&worldTransform);
+	glMultMatrixf((float*)&worldTransform.Transposed());
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, mesh.vertexId);
