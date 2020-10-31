@@ -382,6 +382,7 @@ void ManagerImGui::SceneWindow() {
 		ImGui::Begin("Scene", &sceneWindow);
 
 		ImGui::Image((ImTextureID*)App->renderer3D->sceneTextureId, vec2);
+		//ImGui::Image((ImTextureID*)App->texture->defaultTextureId, vec2);
 
 		ImGui::End();
 	}

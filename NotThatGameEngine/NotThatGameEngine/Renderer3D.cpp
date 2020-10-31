@@ -53,11 +53,7 @@ bool Renderer3D::Init()
 		glGenFramebuffers(1, &frameBufferId);
 		glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
 
-		glGenTextures(1, &sceneTextureId);
-		glBindTexture(GL_TEXTURE_2D, sceneTextureId);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, SCREEN_WIDTH, SCREEN_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		LoadGLTexture(&sceneTextureId, SCREEN_WIDTH, SCREEN_HEIGHT, GL_RGBA, GL_RGBA, NULL);
 
 		glGenRenderbuffers(1, &depthStencilId);
 		glBindRenderbuffer(GL_RENDERBUFFER, depthStencilId);
@@ -68,7 +64,6 @@ bool Renderer3D::Init()
 
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) { LOG("Scene buffer is not loaded properly."); }
 
-		glBindTexture(GL_TEXTURE_2D, 0);
 		glBindRenderbuffer(GL_RENDERBUFFER, 0);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
