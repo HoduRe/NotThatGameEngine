@@ -25,7 +25,6 @@ public:
 	GLuint indexId;
 	GLuint normalsId;
 	GLuint textureCoordId;
-	GLuint materialId;
 
 	std::string meshName;
 

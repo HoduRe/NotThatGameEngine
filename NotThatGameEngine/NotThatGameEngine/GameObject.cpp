@@ -54,7 +54,7 @@ void GameObject::PostUpdate(uint& defaultTextureId) {
 		mesh = (Mesh*)meshVec[i];
 		if (material != nullptr) {
 			if (material->diffuseId == 0) { DrawMeshes(*mesh, worldTransform, defaultTextureId); }
-			else { DrawMeshes(*mesh, worldTransform, material->diffuseId); }	// TODO: we should use the material ID checking from the absolute parent (make a function checking upwards until you find a parent with Material component)
+			else { DrawMeshes(*mesh, worldTransform, material->diffuseId); }
 		}
 		else { DrawMeshes(*mesh, worldTransform, 0); }
 

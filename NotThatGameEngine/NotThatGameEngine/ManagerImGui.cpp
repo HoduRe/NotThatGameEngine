@@ -544,7 +544,6 @@ void ManagerImGui::InspectorWindow() {
 					ImGui::Text("Normals ID: %u", mesh->normalsId);
 					ImGui::Text("Texture coordinates ID: %u", mesh->textureCoordId);
 					ImGui::Text("Indices ID: %u", mesh->indexId);
-					ImGui::Text("Material ID: %u", mesh->materialId);
 					ImGui::NewLine();
 
 					if(ImGui::Checkbox("Activate normals display", &mesh->paintNormals)){}

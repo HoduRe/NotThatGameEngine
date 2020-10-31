@@ -22,7 +22,6 @@ GameObject* LoadModel(Application* App, const char* path, const char* buffer, ui
 bool LoadScene(Application* App, const char* buffer, uint size, GameObject* newObject, const char* path) {
 
 	aiScene* scene = (aiScene*)aiImportFileFromMemory(buffer, size, aiProcessPreset_TargetRealtime_MaxQuality, nullptr);
-	Material* material = nullptr;
 	aiMatrix4x4 trans;
 
 	if (scene == nullptr || scene->HasMeshes() == false) {
@@ -34,29 +33,6 @@ bool LoadScene(Application* App, const char* buffer, uint size, GameObject* newO
 	trans = scene->mRootNode->mTransformation;
 
 	if (scene->mRootNode->mNumChildren != 0) { for (int i = 0; i < scene->mRootNode->mNumChildren; i++) { LoadMeshNode(App, scene->mRootNode->mChildren[i], (aiScene*)scene, newObject, trans); } }
-
-	// TODO: gameObject has material, but meshes from childs only have materialId. Wut?
-
-	// Init materials
-	if (scene->mNumMaterials > 0) {
-
-		material = (Material*)newObject->AddComponent(COMPONENT_TYPE::MATERIAL);
-
-		for (unsigned int i = 0; i < scene->mNumMaterials; i++) {	// TODO: We are supposing there will only be one material... Code is done in such way, so we have to limit Material creation in GameObjects in AddComponent()
-
-			const aiMaterial* pMaterial = scene->mMaterials[i];
-
-			if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
-
-				aiString Path;
-
-				if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
-					std::string FullPath = TEXTURES_PATH + (std::string)Path.data;	// TODO: do this better. It will need a function that iterates everything, yes. But do it
-					material->diffuseId = LoadTexture(App, FullPath.c_str());
-				}
-			}
-		}
-	}
 
 	aiReleaseImport(scene);
 
@@ -113,8 +89,6 @@ void LoadMeshNode(Application* App, aiNode* node, aiScene* scene, GameObject* pa
 			GameObject* newObject = new GameObject(App->editorScene->GenerateId(), "NewGameObject", parent);
 
 			mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
-
-			mesh->materialId = scene->mMeshes[node->mMeshes[i]]->mMaterialIndex;
 			mesh->meshName = scene->mMeshes[node->mMeshes[i]]->mName.C_Str();
 
 			const aiMesh* paiMesh = (aiMesh*)scene->mMeshes[node->mMeshes[i]];
@@ -152,6 +126,9 @@ void LoadMeshNode(Application* App, aiNode* node, aiScene* scene, GameObject* pa
 
 			transformation = (Transform*)newObject->FindComponent(COMPONENT_TYPE::TRANSFORM);
 			aiTransformTofloat4x4Transform(transform, transformation);
+
+			LoadMeshMaterial(App, scene, newObject, scene->mMeshes[node->mMeshes[i]]->mMaterialIndex);
+
 			App->editorScene->AddGameObject(newObject);
 
 		}
@@ -162,6 +139,29 @@ void LoadMeshNode(Application* App, aiNode* node, aiScene* scene, GameObject* pa
 
 }
 
+
+void LoadMeshMaterial(Application* App, aiScene* scene, GameObject* newObject, int materialId) {
+
+	Material* material = nullptr;
+
+	if (scene->mNumMaterials > 0) {
+
+		material = (Material*)newObject->AddComponent(COMPONENT_TYPE::MATERIAL);
+		const aiMaterial* pMaterial = scene->mMaterials[materialId];
+		aiString Path;
+
+		if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
+
+			if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
+				std::string FullPath = TEXTURES_PATH + (std::string)Path.data;	// TODO: do this better. It will need a function that iterates everything, yes. But do it
+				material->diffuseId = LoadTexture(App, FullPath.c_str());
+			}
+
+		}
+
+	}
+
+}
 
 void aiTransformTofloat4x4Transform(aiMatrix4x4 matrix, Transform* transform) {
 

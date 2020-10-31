@@ -10,11 +10,12 @@ class Application;
 class Component;
 class Mesh;
 
-	GameObject* LoadModel(Application* app, const char* path, const char* buffer = nullptr, uint size = 0, GameObject* parent = nullptr, bool enabled = true);
-	uint LoadTexture(Application* app, const char* path, const char* buffer = nullptr, uint size = 0);
-	void LoadMeshNode(Application* App, aiNode* node, aiScene* scene, GameObject* parent, aiMatrix4x4 accTransform);
+bool LoadScene(Application* App, const char* buffer, uint size, GameObject* newObject, const char* path);
+GameObject* LoadModel(Application* app, const char* path, const char* buffer = nullptr, uint size = 0, GameObject* parent = nullptr, bool enabled = true);
+void LoadMeshNode(Application* App, aiNode* node, aiScene* scene, GameObject* parent, aiMatrix4x4 accTransform);
+void LoadMeshMaterial(Application* App, aiScene* scene, GameObject* newObject, int materialId);
+uint LoadTexture(Application* app, const char* path, const char* buffer = nullptr, uint size = 0);
 
-	bool LoadScene(Application* App, const char* buffer, uint size, GameObject* newObject, const char* path);
-	void aiTransformTofloat4x4Transform(aiMatrix4x4 matrix, Transform* transform);
+void aiTransformTofloat4x4Transform(aiMatrix4x4 matrix, Transform* transform);
 
 #endif
