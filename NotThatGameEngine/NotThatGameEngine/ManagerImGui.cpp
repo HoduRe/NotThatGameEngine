@@ -28,6 +28,8 @@ bool ManagerImGui::Init()
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 	ImGui_ImplOpenGL3_Init("#version 130");
 
+	LOG("ImGui initialized.\n");
+
 	// Dynamically showing the version of the libs
 	GLEW = "GLEW ";
 	char* glewVersion = (char*)glewGetString(GLEW_VERSION);
@@ -41,7 +43,7 @@ bool ManagerImGui::Init()
 	MathGeoLib = (char*)"MathGeoLib 1.5";
 
 	int version = ilGetInteger(IL_VERSION_NUM);
-	Devil = "DevIl " + std::to_string(version/100);
+	Devil = "DevIl " + std::to_string(version / 100);
 	version = version % 100;
 	Devil = Devil + "." + std::to_string(version / 10);
 	version = version % 10;
@@ -51,7 +53,7 @@ bool ManagerImGui::Init()
 	PHYSFS_VERSION(&version2);
 
 	Assimp = "ASSIMP " + std::to_string(aiGetVersionMajor()) + "." + std::to_string(aiGetVersionMinor());
-	PhysFS = "PhysFS " + std::to_string(version2.major) + "."+ std::to_string(version2.minor);
+	PhysFS = "PhysFS " + std::to_string(version2.major) + "." + std::to_string(version2.minor);
 
 	//Get refresh rate
 	SDL_DisplayMode displayMode;
@@ -325,7 +327,7 @@ update_status ManagerImGui::DefaultWindow() {
 			if (ImGui::Checkbox("Full desktop", &fullDesktop)) { App->eventManager->GenerateEvent(EVENT_ENUM::FULLDESKTOP_WINDOW); }
 		}
 
-		if (ImGui::CollapsingHeader("Hardware")) {
+		if (ImGui::CollapsingHeader("Software & hardware")) {
 			ImGui::Text(SDL);
 			ImGui::Text(GLEW.c_str());
 			ImGui::Text(ImGui.c_str());
@@ -363,12 +365,11 @@ update_status ManagerImGui::DefaultWindow() {
 void ManagerImGui::ConsoleWindow() {
 
 	if (consoleMenu) {
+		
 		ImGui::Begin("Console", &consoleMenu);
-
-		for (int i = 0; i < App->consoleVecSize; i++) {
-			ImGui::Text(App->consoleVec[0].c_str());	// TODO: LOG problem maybe because this. You can print strings as --> ImGui::Text("%s", string.c_str());
-		}
+		for (int i = 0; i < App->consoleVecSize; i++) { ImGui::Text(App->consoleVec[i].c_str()); }
 		ImGui::End();
+
 	}
 }
 
@@ -548,7 +549,7 @@ void ManagerImGui::InspectorWindow() {
 					ImGui::Text("Indices ID: %u", mesh->indexId);
 					ImGui::NewLine();
 
-					if(ImGui::Checkbox("Activate normals display", &mesh->paintNormals)){}
+					if (ImGui::Checkbox("Activate normals display", &mesh->paintNormals)) {}
 
 				}
 

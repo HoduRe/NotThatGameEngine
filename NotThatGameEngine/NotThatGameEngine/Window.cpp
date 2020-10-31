@@ -13,46 +13,29 @@ bool Window::Init()
 {
 	bool ret = true;
 
-	if(SDL_Init(SDL_INIT_VIDEO) < 0)
-	{
+	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+
 		ret = false;
+		LOG("SDL2 initialization failed.\n");
+
 	}
-	else
-	{
-		//Create window
+
+	else {
+
+		LOG("SDL2 initialized correctly.\n");
+
 		Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 
-		if(WIN_FULLSCREEN == true)
-		{
-			flags |= SDL_WINDOW_FULLSCREEN;
-		}
-
-		if(WIN_RESIZABLE == true)
-		{
-			flags |= SDL_WINDOW_RESIZABLE;
-		}
-
-		if(WIN_BORDERLESS == true)
-		{
-			flags |= SDL_WINDOW_BORDERLESS;
-		}
-
-		if(WIN_FULLSCREEN_DESKTOP == true)
-		{
-			flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
-		}
+		if (WIN_FULLSCREEN == true) { flags |= SDL_WINDOW_FULLSCREEN; }
+		if (WIN_RESIZABLE == true) { flags |= SDL_WINDOW_RESIZABLE; }
+		if (WIN_BORDERLESS == true) { flags |= SDL_WINDOW_BORDERLESS; }
+		if (WIN_FULLSCREEN_DESKTOP == true) { flags |= SDL_WINDOW_FULLSCREEN_DESKTOP; }
 
 		window = SDL_CreateWindow(App->imGui->AppName().c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
 
-		if(window == NULL)
-		{
-			ret = false;
-		}
-		else
-		{
-			//Get window surface
-			screen_surface = SDL_GetWindowSurface(window);
-		}
+		if (window == NULL) { ret = false; }
+		else { screen_surface = SDL_GetWindowSurface(window); }
+
 	}
 
 	App->eventManager->EventRegister(EVENT_ENUM::SCREEN_BRIGHTNESS, this);
@@ -68,17 +51,12 @@ bool Window::Init()
 }
 
 // Called before quitting
-bool Window::CleanUp()
-{
-	//Destroy window
-	if(window != NULL)
-	{
-		SDL_DestroyWindow(window);
-	}
+bool Window::CleanUp() {
 
-	//Quit SDL subsystems
+	if (window != NULL) { SDL_DestroyWindow(window); }
 	SDL_Quit();
 	return true;
+
 }
 
 
@@ -90,10 +68,7 @@ update_status Window::PostUpdate(float dt) {
 }
 
 
-void Window::SetTitle(const char* title)
-{
-	SDL_SetWindowTitle(window, title);
-}
+void Window::SetTitle(const char* title) { SDL_SetWindowTitle(window, title); }
 
 
 

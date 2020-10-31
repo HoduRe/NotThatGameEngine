@@ -95,7 +95,7 @@ update_status Camera3D::Update(float dt)
 
 		}
 
-		else { LOG("There is no gameObject selected."); }
+		else { LOG("There is no gameObject selected.\n"); }
 	}
 
 	App->input->GetMouseZ();

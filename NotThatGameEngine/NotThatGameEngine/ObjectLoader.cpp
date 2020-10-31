@@ -25,7 +25,7 @@ bool LoadScene(Application* App, const char* buffer, uint size, GameObject* newO
 	aiMatrix4x4 trans;
 
 	if (scene == nullptr || scene->HasMeshes() == false) {
-		LOG("Error loading scene % s", path);
+		LOG("Error loading scene % s.\n", path);
 		return false;
 	}
 
@@ -35,6 +35,8 @@ bool LoadScene(Application* App, const char* buffer, uint size, GameObject* newO
 	if (scene->mRootNode->mNumChildren != 0) { for (int i = 0; i < scene->mRootNode->mNumChildren; i++) { LoadMeshNode(App, scene->mRootNode->mChildren[i], (aiScene*)scene, newObject, trans); } }
 
 	aiReleaseImport(scene);
+
+	LOG("Scene with path %s loaded.\n", path);
 
 	return true;
 }
@@ -56,9 +58,9 @@ uint LoadTexture(Application* App, const char* path, const char* buffer, uint si
 
 		RELEASE_ARRAY(buffer);
 
-		if (ret == IL_TRUE) {}
+		if (ret == IL_TRUE) { LOG("Texture with path %s loaded.\n", path); }
 		else {
-			LOG("Image with id: %u failed to load.\n", imageTest);
+			LOG("Texture with path %s failed to load.\n", path);
 			return 0;
 		}
 
@@ -109,11 +111,11 @@ void LoadMeshNode(Application* App, aiNode* node, aiScene* scene, GameObject* pa
 				mesh->normals.push_back(pNormal->z);
 			}
 
-			LOG("New mesh with %d vertices", mesh->vertices.size());
+			LOG("New mesh %s with %d vertices.\n", mesh->meshName.c_str(), mesh->vertices.size());
 
 			for (unsigned int j = 0; j < paiMesh->mNumFaces; j++) {		// Indices
 				const aiFace& Face = paiMesh->mFaces[j];
-				if (Face.mNumIndices != 3) { LOG("Not all faces of %s are triangles.", scene->mMeshes[node->mMeshes[i]]->mName.C_Str()); }
+				if (Face.mNumIndices != 3) { LOG("Not all faces of %s are triangles.\n", scene->mMeshes[node->mMeshes[i]]->mName.C_Str()); }
 				mesh->indices.push_back(Face.mIndices[0]);
 				mesh->indices.push_back(Face.mIndices[1]);
 				mesh->indices.push_back(Face.mIndices[2]);
@@ -155,6 +157,7 @@ void LoadMeshMaterial(Application* App, aiScene* scene, GameObject* newObject, i
 			if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
 				std::string FullPath = TEXTURES_PATH + (std::string)Path.data;	// TODO: do this better. It will need a function that iterates everything, yes. But do it
 				material->diffuseId = LoadTexture(App, FullPath.c_str());
+				LOG("Material with id = %u loaded.\n", material->diffuseId);
 			}
 
 		}

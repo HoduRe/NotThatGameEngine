@@ -29,12 +29,14 @@ bool Texture::Start() {
 	iluInit();
 	ilutInit();
 
+	LOG("DevIL libraries initialized.\n");
+
 	ilEnable(IL_ORIGIN_SET);
 	ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
 	
 	defaultTextureId = LoadTexture(App, "Library/Textures/Alex.png");
 	checkersTextureId = LoadTexture(App, "Library/Textures/Checker.png");
-	degenerateTextureId = LoadTexture(App, "Library/Textures/Degenerate.png");
+	degenerateTextureId = LoadTexture(App, "Library/Textures/Degenerate.jpg");
 	App->eventManager->GenerateEvent(EVENT_ENUM::DEFAULT_TEXTURE_LOADED);
 
 	return true;

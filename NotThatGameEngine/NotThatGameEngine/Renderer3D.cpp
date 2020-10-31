@@ -33,6 +33,8 @@ bool Renderer3D::Init()
 
 	if (ret) {
 
+		LOG("OpenGL initialized correctly.\n");
+
 		GLfloat LightModelAmbient[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightModelAmbient);
 
@@ -62,7 +64,8 @@ bool Renderer3D::Init()
 
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, sceneTextureId, 0);
 
-		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) { LOG("Scene buffer is not loaded properly."); }
+		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) { LOG("Scene buffer is not loaded properly.\n"); }
+		else { LOG("Scene buffer initialized."); }
 
 		glBindRenderbuffer(GL_RENDERBUFFER, 0);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);

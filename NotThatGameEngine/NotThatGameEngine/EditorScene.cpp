@@ -103,6 +103,7 @@ bool EditorScene::AddGameObject(GameObject* newObject) {	// This function doesn'
 		if (newObject->parent == nullptr) {
 
 			rootGameObjectsVec.push_back(newObject);
+			LOG("Object %s added into scene.\n", newObject->name.c_str());
 			return true;
 
 		}
@@ -116,6 +117,7 @@ bool EditorScene::AddGameObject(GameObject* newObject) {	// This function doesn'
 				if (rootGameObjectsVec[i] == newObject->parent) {
 				
 					rootGameObjectsVec[i]->childs.push_back(newObject);
+					LOG("Object %s added into scene.\n", newObject->name.c_str());
 					return true;
 
 				}
@@ -123,7 +125,12 @@ bool EditorScene::AddGameObject(GameObject* newObject) {	// This function doesn'
 				else {
 
 					ret = rootGameObjectsVec[i]->AddGameObjectByParent(newObject);
-					if (ret) { return ret; }
+					if (ret) {
+						
+						LOG("Object %s added into scene.\n", newObject->name.c_str());
+						return ret;
+					
+					}
 
 				}
 
@@ -131,7 +138,7 @@ bool EditorScene::AddGameObject(GameObject* newObject) {	// This function doesn'
 		}
 	}
 
-	LOG("GameObject couldn't be added into the scene.");
+	LOG("The object couldn't be added into the scene.");
 
 	return ret;
 
@@ -251,11 +258,11 @@ bool EditorScene::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 			material = (Material*)focus->FindComponent(COMPONENT_TYPE::MATERIAL);
 
 			if (material != nullptr) { material->diffuseId = (uint)var; }
-			else { LOG("This object has no material. Assign it a material through the inspector."); }
+			else { LOG("This object has no material. Assign it a material through the inspector.\n"); }
 
 		}
 
-		else { LOG("There is no object selected to drop the texture to."); }
+		else { LOG("There is no object selected to drop the texture to.\n"); }
 
 		break;
 

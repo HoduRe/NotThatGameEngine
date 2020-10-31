@@ -15,6 +15,7 @@ FileManager::FileManager(Application* app, bool start_enabled) : Module(app, sta
 	PHYSFS_init(nullptr);
 	SDL_free(base_path);
 
+	LOG("PhysFS initialized.\n");
 	if (PHYSFS_setWriteDir(".") == 0) { LOG("File System error while creating write dir: %s\n", PHYSFS_getLastError()); }
 
 	AddPath(".");	// Those must NOT be joined
@@ -91,6 +92,7 @@ bool FileManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 		type = CheckResourceType(filePath);
 		
 		if (size != 0) {
+
 			switch (type) {
 			case ResourceEnum::MODEL:
 				LoadModel(App, filePath.c_str(), buffer, size);
@@ -104,11 +106,16 @@ bool FileManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 			default:
 				break;
 			}
+
+			LOG("File with path %s loaded has been dropped into the engine.", filePath.c_str());
+
 		}
 
 		break;
+
 	default:
 		break;
+
 	}
 
 	return false;
@@ -426,12 +433,12 @@ bool FileManager::DuplicateFile(const char* srcFile, const char* dstFile) {
 	dst.close();
 
 	if (srcOpen && dstOpen) {
-		LOG("[success] File Duplicated Correctly");
+		LOG("[success] File Duplicated Correctly.\n");
 		return true;
 	}
 
 	else {
-		LOG("[error] File could not be duplicated");
+		LOG("[error] File could not be duplicated.\n");
 		return false;
 	}
 
@@ -456,21 +463,21 @@ uint FileManager::Save(const char* file, const void* buffer, unsigned int size, 
 	if (fs_file != nullptr) {
 
 		uint written = (uint)PHYSFS_write(fs_file, (const void*)buffer, 1, size);
-		if (written != size) { LOG("[error] File System error while writing to file %s: %s", file, PHYSFS_getLastError()); }
+		if (written != size) { LOG("[error] File System error while writing to file %s: %s.\n", file, PHYSFS_getLastError()); }
 
 		else {
 
-			if (append == true) { LOG("Added %u data to [%s%s]", size, GetWriteDir(), file); }
-			else if (overwrite == true) { LOG("File [%s%s] overwritten with %u bytes", GetWriteDir(), file, size); }
-			else { LOG("New file created [%s%s] of %u bytes", GetWriteDir(), file, size); }
+			if (append == true) { LOG("Added %u data to [%s%s].\n", size, GetWriteDir(), file); }
+			else if (overwrite == true) { LOG("File [%s%s] overwritten with %u bytes.\n", GetWriteDir(), file, size); }
+			else { LOG("New file created [%s%s] of %u bytes.\n", GetWriteDir(), file, size); }
 			ret = written;
 
 		}
 
-		if (PHYSFS_close(fs_file) == 0) { LOG("[error] File System error while closing file %s: %s", file, PHYSFS_getLastError()); }
+		if (PHYSFS_close(fs_file) == 0) { LOG("[error] File System error while closing file %s: %s.\n", file, PHYSFS_getLastError()); }
 	}
 
-	else { LOG("[error] File System error while opening file %s: %s", file, PHYSFS_getLastError()); }
+	else { LOG("[error] File System error while opening file %s: %s.\n", file, PHYSFS_getLastError()); }
 
 	return ret;
 }
@@ -492,12 +499,12 @@ bool FileManager::Remove(const char* file) {
 
 		if (PHYSFS_delete(file) != 0) {
 
-			LOG("File deleted: [%s]", file);
+			LOG("File deleted: [%s].\n", file);
 			ret = true;
 
 		}
 
-		else { LOG("File System error while trying to delete [%s]: %s", file, PHYSFS_getLastError()); }
+		else { LOG("File System error while trying to delete [%s]: %s.\n", file, PHYSFS_getLastError()); }
 	}
 
 	return ret;
