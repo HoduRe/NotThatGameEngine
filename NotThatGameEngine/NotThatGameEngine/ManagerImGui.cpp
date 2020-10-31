@@ -503,12 +503,11 @@ void ManagerImGui::InspectorWindow() {
 
 		if (focus != nullptr) {
 
-			Mesh* mesh;
 			Transform* transform = (Transform*)focus->FindComponent(COMPONENT_TYPE::TRANSFORM);
 			Material* material = (Material*)focus->FindComponent(COMPONENT_TYPE::MATERIAL);
+			Mesh* mesh = (Mesh*)focus->FindComponent(COMPONENT_TYPE::MESH);
 			TextureData* textureData = nullptr;
 			if (material != nullptr && material->diffuseId != 0) { textureData = App->texture->GetTextureData(material->diffuseId); }
-			std::vector<Component*> meshes = focus->FindComponents(COMPONENT_TYPE::MESH);
 
 
 			float3 position = transform->GetPosition();
@@ -547,9 +546,8 @@ void ManagerImGui::InspectorWindow() {
 
 			if (ImGui::CollapsingHeader("Mesh")) {
 
-				for (int i = 0; i < meshes.size(); i++) {	// TODO: if 1 mesh = 1 gameobject, we can kill this :)
+				if (mesh != nullptr) {
 
-					mesh = (Mesh*)meshes[i];
 					ImGui::Text("%s", mesh->meshName.c_str());
 					ImGui::Text("Vertices ID: %u", mesh->vertexId);
 					ImGui::Text("Normals ID: %u", mesh->normalsId);
@@ -561,6 +559,8 @@ void ManagerImGui::InspectorWindow() {
 
 				}
 
+				else { ImGui::Text("This object has no mesh attached"); }
+
 			}
 
 			if (ImGui::CollapsingHeader("Textures")) {
@@ -570,7 +570,7 @@ void ManagerImGui::InspectorWindow() {
 					ImGui::Text("Path: %s", textureData->path.c_str());
 					ImGui::Text("Width: %d", textureData->width);
 					ImGui::Text("Height: %d", textureData->height);
-					if (ImGui::Button("Switch to Checkers Texture")) { material->SetDiffuse(App->texture->checkersTextureId); }
+					if (material->diffuseId != App->texture->checkersTextureId) { if (ImGui::Button("Switch to Checkers Texture")) { material->SetDiffuse(App->texture->checkersTextureId); } }
 
 				}
 
@@ -589,7 +589,7 @@ void ManagerImGui::InspectorWindow() {
 				else {
 
 					ImGui::NewLine();
-					ImGui::Text("No material: add material to have a texture:");
+					ImGui::Text("No material. Add material to have\na texture:");
 					ImGui::NewLine();
 
 					if (ImGui::Button("Add material with default texture")) {
@@ -612,6 +612,14 @@ void ManagerImGui::InspectorWindow() {
 						material->SetDiffuse(App->texture->degenerateTextureId);
 
 					}
+
+				}
+
+				if (mesh == nullptr) {
+
+					ImGui::NewLine();
+					ImGui::NewLine();
+					ImGui::Text("Don't want to ruin the fun, but...\nThere's no mesh to apply texture to.");
 
 				}
 

@@ -45,17 +45,18 @@ void GameObject::PostUpdate(uint& defaultTextureId) {
 
 	for (int i = childs.size() - 1; i > -1; i--) { childs[i]->PostUpdate(defaultTextureId); }
 
-	std::vector<Component*> meshVec = FindComponents(COMPONENT_TYPE::MESH);
+	Mesh* mesh = (Mesh*)FindComponent(COMPONENT_TYPE::MESH);
 	Material* material = (Material*)FindComponent(COMPONENT_TYPE::MATERIAL);
-	Mesh* mesh = nullptr;
 
-	for (int i = meshVec.size() - 1; i > -1; i--) {
+	if (mesh != nullptr) {
 
-		mesh = (Mesh*)meshVec[i];
 		if (material != nullptr) {
+
 			if (material->diffuseId == 0) { DrawMeshes(*mesh, worldTransform, defaultTextureId); }
 			else { DrawMeshes(*mesh, worldTransform, material->diffuseId); }
+
 		}
+
 		else { DrawMeshes(*mesh, worldTransform, 0); }
 
 		if (mesh->paintNormals) { DrawLines(worldTransform, mesh->DebugNormals(), mesh->debugNormals); }
@@ -84,7 +85,9 @@ Component* GameObject::AddComponent(COMPONENT_TYPE _type) {
 
 	case COMPONENT_TYPE::MESH:
 
-		component = new Mesh(GenerateComponentId(), this);
+		component = FindComponent(COMPONENT_TYPE::MESH);
+		if (component == nullptr) { component = new Mesh(GenerateComponentId(), this); }
+		else { return component; }
 
 		break;
 
