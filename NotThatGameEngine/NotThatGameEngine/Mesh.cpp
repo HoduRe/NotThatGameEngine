@@ -65,9 +65,9 @@ GLuint Mesh::DebugNormals() {
 				debugNormals.push_back(vertices[i]);
 				debugNormals.push_back(vertices[i+1]);
 				debugNormals.push_back(vertices[i+2]);
-				debugNormals.push_back((vertices[i] + normals[i]) * 10);	// TODO: maybe delete the * 10
-				debugNormals.push_back((vertices[i+1] + normals[i+1]) * 10);	// TODO: maybe delete the * 10
-				debugNormals.push_back((vertices[i+2] + normals[i+2]) * 10);	// TODO: maybe delete the * 10
+				debugNormals.push_back(vertices[i] + normals[i]);
+				debugNormals.push_back(vertices[i+1] + normals[i+1]);
+				debugNormals.push_back(vertices[i+2] + normals[i+2]);
 
 			}
 
