@@ -372,9 +372,11 @@ update_status ManagerImGui::DefaultWindow() {
 
 void ManagerImGui::ConsoleWindow() {
 
+	ImGuiWindowFlags flags = ImGuiWindowFlags_AlwaysHorizontalScrollbar;
+
 	if (consoleMenu) {
 
-		ImGui::Begin("Console", &consoleMenu);
+		ImGui::Begin("Console", &consoleMenu, flags);
 		for (int i = 0; i < App->consoleVecSize; i++) { ImGui::Text(App->consoleVec[i].c_str()); }
 		ImGui::End();
 
