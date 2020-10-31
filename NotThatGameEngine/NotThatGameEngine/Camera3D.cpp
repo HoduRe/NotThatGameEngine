@@ -31,6 +31,7 @@ update_status Camera3D::Update(float dt)
 {
 	vec3 newPos(0, 0, 0);
 	float speed = 5.0f * dt;
+	int mouseWheel = App->input->GetMouseZ();
 
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) { speed = 10.0f * dt; }
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT) {
@@ -80,7 +81,7 @@ update_status Camera3D::Update(float dt)
 
 		GameObject* focus = App->editorScene->GetFocus();
 		if (focus != nullptr) {
-		
+
 			Transform* transform = (Transform*)focus->FindComponent(COMPONENT_TYPE::TRANSFORM);
 			Look(vec3(transform->GetPosition().x, transform->GetPosition().y, transform->GetPosition().z), Reference);
 
@@ -96,9 +97,9 @@ update_status Camera3D::Update(float dt)
 		if (object != nullptr) {
 
 			float3 vector = object->worldTransform.TranslatePart();
-			Position.x = 10;
-			Position.y = 5;
-			Position.z = 0;
+			Position.x = vector.x + 10;
+			Position.y = vector.y + 5;
+			Position.z = vector.z;
 			LookAt(vec3(vector.x, vector.y, vector.z));
 
 		}
@@ -106,7 +107,9 @@ update_status Camera3D::Update(float dt)
 		else { LOG("There is no gameObject selected.\n"); }
 	}
 
-	App->input->GetMouseZ();
+	if (mouseWheel < 0) {  }
+	
+	if (mouseWheel > 0) {}
 
 	CalculateViewMatrix();
 
