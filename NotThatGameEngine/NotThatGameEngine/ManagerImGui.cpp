@@ -414,10 +414,10 @@ void ManagerImGui::HierarchyWindow() {
 			if (childSize != 0) {
 
 				node_open = ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, App->editorScene->rootGameObjectsVec[i]->name.c_str(), i);
+				if (ImGui::IsItemClicked()) { App->editorScene->SetFocus(App->editorScene->rootGameObjectsVec[i]); }
 
 				if (node_open) {
 
-					if (ImGui::IsItemClicked()) { App->editorScene->SetFocus(App->editorScene->rootGameObjectsVec[i]); }
 					for (int j = 0; j < childSize; j++) { AddChildNode(App->editorScene->rootGameObjectsVec[i]->childs[j], j); }
 					ImGui::TreePop();
 
@@ -461,10 +461,10 @@ void ManagerImGui::AddChildNode(GameObject* nextObject, int index) {
 	if (childSize != 0) {
 
 		node_open = ImGui::TreeNodeEx((void*)(intptr_t)index, node_flags, nextObject->name.c_str(), index);
+		if (ImGui::IsItemClicked()) { App->editorScene->SetFocus(nextObject); }
 
 		if (node_open) {
 
-			if (ImGui::IsItemClicked()) { App->editorScene->SetFocus(nextObject); }
 			for (int j = 0; j < childSize; j++) { AddChildNode(nextObject->childs[j], j); }
 			ImGui::TreePop();
 

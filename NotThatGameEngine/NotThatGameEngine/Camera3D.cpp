@@ -77,7 +77,15 @@ update_status Camera3D::Update(float dt)
 	}
 
 	else if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT) {
-		// LookAt(vec3 (3, 4, 2));		This should do... stuff. Rotate around the center of the selected object
+
+		GameObject* focus = App->editorScene->GetFocus();
+		if (focus != nullptr) {
+		
+			Transform* transform = (Transform*)focus->FindComponent(COMPONENT_TYPE::TRANSFORM);
+			Look(vec3(transform->position.x, transform->position.y, transform->position.z), Reference);
+
+		}
+
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
