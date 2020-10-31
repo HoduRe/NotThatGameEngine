@@ -42,7 +42,6 @@ void GameObject::PostUpdate(uint& defaultTextureId) {
 
 	if (parent != nullptr) { transform->RecalculateTransformFromParent(parent->worldTransform); }
 	else { worldTransform = transform->transform; }
-	//worldTransform = worldTransform.identity;	// TODO: delete this
 
 	for (int i = childs.size() - 1; i > -1; i--) { childs[i]->PostUpdate(defaultTextureId); }
 
