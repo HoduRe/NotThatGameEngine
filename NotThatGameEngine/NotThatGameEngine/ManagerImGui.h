@@ -84,7 +84,7 @@ private:
 	void InspectorWindow();
 
 	void AddChildNode(GameObject* nextObject, int index);
-
+	float StringToFloat(std::string _string);
 };
 
 #endif

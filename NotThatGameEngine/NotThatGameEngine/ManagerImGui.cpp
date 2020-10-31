@@ -530,19 +530,19 @@ void ManagerImGui::InspectorWindow() {
 				ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_CharsDecimal | ImGuiInputTextFlags_CharsNoBlank | ImGuiInputTextFlags_AutoSelectAll;
 
 				ImGui::Text("Position:");
-				if (ImGui::InputText("Position X", (char*)positionX.c_str(), positionX.size(), input_text_flags)) { transform->SetPosition (float3(stof(positionX), stof(positionY), stof(positionZ))); }
-				if (ImGui::InputText("Position Y", (char*)positionY.c_str(), positionY.size(), input_text_flags)) { transform->SetPosition(float3(stof(positionX), stof(positionY), stof(positionZ))); }
-				if (ImGui::InputText("Position Z", (char*)positionZ.c_str(), positionZ.size(), input_text_flags)) { transform->SetPosition(float3(stof(positionX), stof(positionY), stof(positionZ))); }
+				if (ImGui::InputText("Position X", (char*)positionX.c_str(), positionX.size(), input_text_flags)) { transform->SetPosition(float3(StringToFloat(positionX), StringToFloat(positionY), StringToFloat(positionZ))); }
+				if (ImGui::InputText("Position Y", (char*)positionY.c_str(), positionY.size(), input_text_flags)) { transform->SetPosition(float3(StringToFloat(positionX), StringToFloat(positionY), StringToFloat(positionZ))); }
+				if (ImGui::InputText("Position Z", (char*)positionZ.c_str(), positionZ.size(), input_text_flags)) { transform->SetPosition(float3(StringToFloat(positionX), StringToFloat(positionY), StringToFloat(positionZ))); }
 
 				ImGui::Text("Rotation:");
-				if (ImGui::InputText("Rotation X", (char*)rotationX.c_str(), rotationX.size(), input_text_flags)) { transform->SetEulerAngles(float3(stof(rotationX), stof(rotationY), stof(rotationZ))); }
-				if (ImGui::InputText("Rotation Y", (char*)rotationY.c_str(), rotationY.size(), input_text_flags)) { transform->SetEulerAngles(float3(stof(rotationX), stof(rotationY), stof(rotationZ))); }
-				if (ImGui::InputText("Rotation Z", (char*)rotationZ.c_str(), rotationZ.size(), input_text_flags)) { transform->SetEulerAngles(float3(stof(rotationX), stof(rotationY), stof(rotationZ))); }
+				if (ImGui::InputText("Rotation X", (char*)rotationX.c_str(), rotationX.size(), input_text_flags)) { transform->SetEulerAngles(float3(StringToFloat(rotationX), StringToFloat(rotationY), StringToFloat(rotationZ))); }
+				if (ImGui::InputText("Rotation Y", (char*)rotationY.c_str(), rotationY.size(), input_text_flags)) { transform->SetEulerAngles(float3(StringToFloat(rotationX), StringToFloat(rotationY), StringToFloat(rotationZ))); }
+				if (ImGui::InputText("Rotation Z", (char*)rotationZ.c_str(), rotationZ.size(), input_text_flags)) { transform->SetEulerAngles(float3(StringToFloat(rotationX), StringToFloat(rotationY), StringToFloat(rotationZ))); }
 
 				ImGui::Text("Scale:");
-				if (ImGui::InputText("Scale X", (char*)scaleX.c_str(), scaleX.size(), input_text_flags)) { transform->SetScale(float3(stof(scaleX), stof(scaleY), stof(scaleZ))); }
-				if (ImGui::InputText("Scale Y", (char*)scaleY.c_str(), scaleY.size(), input_text_flags)) { transform->SetScale(float3(stof(scaleX), stof(scaleY), stof(scaleZ))); }
-				if (ImGui::InputText("Scale Z", (char*)scaleZ.c_str(), scaleZ.size(), input_text_flags)) { transform->SetScale(float3(stof(scaleX), stof(scaleY), stof(scaleZ))); }
+				if (ImGui::InputText("Scale X", (char*)scaleX.c_str(), scaleX.size(), input_text_flags)) { transform->SetScale(float3(StringToFloat(scaleX), StringToFloat(scaleY), StringToFloat(scaleZ))); }
+				if (ImGui::InputText("Scale Y", (char*)scaleY.c_str(), scaleY.size(), input_text_flags)) { transform->SetScale(float3(StringToFloat(scaleX), StringToFloat(scaleY), StringToFloat(scaleZ))); }
+				if (ImGui::InputText("Scale Z", (char*)scaleZ.c_str(), scaleZ.size(), input_text_flags)) { transform->SetScale(float3(StringToFloat(scaleX), StringToFloat(scaleY), StringToFloat(scaleZ))); }
 			}
 
 			if (ImGui::CollapsingHeader("Mesh")) {
@@ -626,5 +626,10 @@ void ManagerImGui::InspectorWindow() {
 
 
 std::string ManagerImGui::AppName() { return appName; }
+
+
+float ManagerImGui::StringToFloat(std::string _string) { return std::stof("0" + _string); }
+
+
 
 
