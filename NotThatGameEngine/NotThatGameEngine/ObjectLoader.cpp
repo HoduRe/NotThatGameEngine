@@ -155,14 +155,18 @@ void LoadMeshMaterial(Application* App, aiScene* scene, GameObject* newObject, i
 		if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
 
 			if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
-				std::string FullPath = TEXTURES_PATH + (std::string)Path.data;	// TODO: do this better. It will need a function that iterates everything, yes. But do it
+
+				std::string FullPath = TEXTURES_PATH + App->fileManager->NormalizePath(Path.C_Str());	// TODO: do this better. It will need a function that iterates everything, yes. But do it
 				material->diffuseId = LoadTexture(App, FullPath.c_str());
 				LOG("Material with id = %u loaded.\n", material->diffuseId);
+
 			}
 
 		}
 
 	}
+
+	else { LOG("This model has no materials attached.\n"); }
 
 }
 

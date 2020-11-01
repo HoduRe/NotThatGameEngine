@@ -90,8 +90,10 @@ bool FileManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 		size = Load(filePath.c_str(), &buffer);
 
 		type = CheckResourceType(filePath);
-		
+
 		if (size != 0) {
+
+			if (type != ResourceEnum::UNKNOWN) { LOG("File with path %s, with readable format, has been dropped into the engine.", filePath.c_str()); }
 
 			switch (type) {
 			case ResourceEnum::MODEL:
@@ -106,8 +108,6 @@ bool FileManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 			default:
 				break;
 			}
-
-			LOG("File with path %s loaded has been dropped into the engine.", filePath.c_str());
 
 		}
 
@@ -560,7 +560,7 @@ ResourceEnum FileManager::CheckResourceType(std::string name) {
 
 	static_assert(static_cast<int>(ResourceEnum::UNKNOWN) == 3, "Code Needs Update");
 
-	if (ext == "FBX" || ext == "fbx") { return ResourceEnum::MODEL; }
+	if (ext == "FBX" || ext == "fbx" || ext == "obj" || ext == "OBJ") { return ResourceEnum::MODEL; }
 	else if (ext == "tga" || ext == "png" || ext == "jpg" || ext == "TGA" || ext == "PNG" || ext == "JPG" || ext == "dds") { return ResourceEnum::TEXTURE; }
 
 	return ResourceEnum::UNKNOWN;

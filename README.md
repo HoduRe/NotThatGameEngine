@@ -26,11 +26,11 @@ An engine for CITM's Engine project which focuses on skeletical animation
 - Trees can be moved through with keyboard input (but focus is only on click)<br/>
 
 ## Additional comments:
-User-based:
 - Obligued path: the directory must be a folder named "Assets/" <br/>
 - Obligued path for textures: the directory must be "Assets/Library/Textures/" <br/>
 - Do not move Checkers, Alex or Degenerate textures. They are internally loaded for the user to have by default, thus the path is hardcoded :) <br/>
-<br/>
+- Primitives do not have normals nor texture coordinates, thus they can't recieve a texture <br/>
+- Give the dragon time to load :')<br/>
 
 
 
