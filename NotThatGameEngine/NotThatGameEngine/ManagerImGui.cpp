@@ -116,9 +116,10 @@ update_status ManagerImGui::Update(float dt) {
 	ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), flag);
 
 	if (showDemoWindow) { ImGui::ShowDemoWindow(&showDemoWindow); }	// DEMO WINDOW
-	ret = DefaultButtons();
-	SetMainMenuBar();
+	DefaultButtons();
+	ret = SetMainMenuBar();
 	ret2 = DefaultWindow();
+	AboutMenu();
 	ConsoleWindow();
 	SceneWindow();
 	HierarchyWindow();
@@ -154,94 +155,45 @@ bool ManagerImGui::CleanUp()
 }
 
 
-update_status ManagerImGui::DefaultButtons()
+update_status ManagerImGui::SetMainMenuBar()
 {
-	static bool wireframe = false;
 
 	update_status ret = update_status::UPDATE_CONTINUE;
 
-	if (defaultButtonsMenu) {		// CLOSE APP BUTTON
-		ImGui::Begin("Default buttons", &defaultButtonsMenu);
-		if (ImGui::Button("Close App")) { ret = update_status::UPDATE_STOP; }
-
-		if (ImGui::Button("Depth test")) {
-			if (glIsEnabled(GL_DEPTH_TEST)) { glDisable(GL_DEPTH_TEST); }
-			else { glEnable(GL_DEPTH_TEST); }
-		}
-
-		if (ImGui::Button("Cull face")) {
-			if (glIsEnabled(GL_CULL_FACE)) { glDisable(GL_CULL_FACE); }
-			else { glEnable(GL_CULL_FACE); }
-		}
-
-		if (ImGui::Button("Lighting")) {
-			if (glIsEnabled(GL_LIGHTING)) { glDisable(GL_LIGHTING); }
-			else { glEnable(GL_LIGHTING); }
-		}
-
-		if (ImGui::Button("Color material")) {
-			if (glIsEnabled(GL_COLOR_MATERIAL)) { glDisable(GL_COLOR_MATERIAL); }
-			else { glEnable(GL_COLOR_MATERIAL); }
-		}
-
-		if (ImGui::Button("Texture")) {
-			if (glIsEnabled(GL_TEXTURE_2D)) { glDisable(GL_TEXTURE_2D); }
-			else { glEnable(GL_TEXTURE_2D); }
-		}
-
-		if (ImGui::Button("Fog")) {
-			if (!glIsEnabled(GL_FOG)) { glEnable(GL_FOG); }
-			else { glDisable(GL_FOG); }
-		}
-
-		if (ImGui::Button("Limited colors")) {
-			if (glIsEnabled(GL_MINMAX)) { glDisable(GL_MINMAX); }
-			else { glEnable(GL_MINMAX); }
-		}
-
-		if (ImGui::Button("Wireframe mode")) {
-			wireframe = !wireframe;
-			if (wireframe) { glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); }
-			else { glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); }
-		}
-
-		ImGui::End();
-	}
-
-	return ret;
-}
-
-
-void ManagerImGui::SetMainMenuBar()
-{
-
 	if (ImGui::BeginMainMenuBar()) {	// TODO: order those in different tabs
 
-		if (ImGui::BeginMenu("Dev Options")) {
+		if (ImGui::BeginMenu("File")) {
 
-			if (ImGui::MenuItem("Scene Window")) { sceneWindow = !sceneWindow; }
+			if (ImGui::MenuItem("New")) {}
 
-			if (ImGui::MenuItem("Hierarchy Window")) { hierarchyWindow = !hierarchyWindow; }
+			if (ImGui::MenuItem("Open", "Ctrl+O")) {}
 
-			if (ImGui::MenuItem("Inspector Window")) { inspectorWindow = !inspectorWindow; }
+			if (ImGui::MenuItem("Save", "Ctrl+S")) {}
 
-			if (ImGui::MenuItem("Gui Demo")) { showDemoWindow = !showDemoWindow; }
+			if (ImGui::MenuItem("Save As...")) {}
 
-			if (ImGui::MenuItem("Documentation")) { ShellExecuteA(0, "open", "https://github.com/ferba93/NotThatGameEngine/wiki", NULL, NULL, SW_SHOWNORMAL); }
-
-			if (ImGui::MenuItem("Download latest")) { ShellExecuteA(0, "open", "https://github.com/ferba93/NotThatGameEngine/releases", NULL, NULL, SW_SHOWNORMAL); }
-
-			if (ImGui::MenuItem("Report a bug")) { ShellExecuteA(0, "open", "https://github.com/ferba93/NotThatGameEngine/issues", NULL, NULL, SW_SHOWNORMAL); }
-
-			if (ImGui::MenuItem("App configuration")) { configMenu = !configMenu; }
-
-			if (ImGui::MenuItem("General buttons")) { defaultButtonsMenu = !defaultButtonsMenu; }
-
-			if (ImGui::MenuItem("Console output")) { consoleMenu = !consoleMenu; }
-
-			if (ImGui::MenuItem("About")) { aboutWindow = !aboutWindow; }
+			if (ImGui::MenuItem("Close App")) { ret = update_status::UPDATE_STOP; }
 
 			ImGui::EndMenu();
+
+		}
+
+		if (ImGui::BeginMenu("Edit")) {
+
+			if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
+
+			if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}
+
+			ImGui::Separator();
+
+			if (ImGui::MenuItem("Cut", "CTRL+X")) {}
+
+			if (ImGui::MenuItem("Copy", "CTRL+C")) {}
+
+			if (ImGui::MenuItem("Paste", "CTRL+V")) {}
+
+			ImGui::EndMenu();
+
 		}
 
 		if (ImGui::BeginMenu("Create Primitive")) {
@@ -257,31 +209,75 @@ void ManagerImGui::SetMainMenuBar()
 			ImGui::EndMenu();
 		}
 
+		if (ImGui::BeginMenu("Editor Windows")) {
+
+			if (ImGui::MenuItem("Scene Window")) { sceneWindow = !sceneWindow; }
+
+			if (ImGui::MenuItem("Hierarchy Window")) { hierarchyWindow = !hierarchyWindow; }
+
+			if (ImGui::MenuItem("Inspector Window")) { inspectorWindow = !inspectorWindow; }
+
+			if (ImGui::MenuItem("Console output")) { consoleMenu = !consoleMenu; }
+
+			ImGui::EndMenu();
+
+		}
+		
+		if (ImGui::BeginMenu("Configuration")) {
+
+			if (ImGui::MenuItem("App options")) { configMenu = !configMenu; }
+
+			if (ImGui::MenuItem("OpenGL options")) { defaultButtonsMenu = !defaultButtonsMenu; }
+
+			ImGui::EndMenu();
+
+		}
+
+		if (ImGui::BeginMenu("Dev Info")) {
+
+			if (ImGui::MenuItem("Documentation")) { ShellExecuteA(0, "open", "https://github.com/ferba93/NotThatGameEngine/wiki", NULL, NULL, SW_SHOWNORMAL); }
+
+			if (ImGui::MenuItem("Download latest")) { ShellExecuteA(0, "open", "https://github.com/ferba93/NotThatGameEngine/releases", NULL, NULL, SW_SHOWNORMAL); }
+
+			if (ImGui::MenuItem("Report a bug")) { ShellExecuteA(0, "open", "https://github.com/ferba93/NotThatGameEngine/issues", NULL, NULL, SW_SHOWNORMAL); }
+
+			if (ImGui::MenuItem("Gui Demo")) { showDemoWindow = !showDemoWindow; }
+
+			if (ImGui::MenuItem("About")) { aboutWindow = !aboutWindow; }
+
+			ImGui::EndMenu();
+
+		}
+
 		ImGui::EndMainMenuBar();
 
 	}
 
-	if (aboutWindow) { AboutMenu(&aboutWindow); }
+	return ret;
 }
 
 
-void ManagerImGui::AboutMenu(bool* aboutMenu) {
+void ManagerImGui::AboutMenu() {
 
-	ImGui::Begin("About", aboutMenu);
-	ImGui::Text("NotThatGameEngine\n\nAn attempt to create a usable game engine >:3\nBy Ferran-Roger Basart i Bosch:");
-	if (ImGui::Button("GitHub")) { ShellExecuteA(0, "open", "https://github.com/ferba93/", NULL, NULL, SW_SHOWNORMAL); }
-	ImGui::Text("\n\nLIBRARIES:");
-	if (ImGui::Button(SDL)) { ShellExecuteA(0, "open", "https://www.libsdl.org/", NULL, NULL, SW_SHOWNORMAL); }
-	if (ImGui::Button(GLEW.c_str())) { ShellExecuteA(0, "open", "http://glew.sourceforge.net/index.html", NULL, NULL, SW_SHOWNORMAL); }
-	if (ImGui::Button(ImGui.c_str())) { ShellExecuteA(0, "open", "https://github.com/ocornut/imgui", NULL, NULL, SW_SHOWNORMAL); }
-	if (ImGui::Button(MathGeoLib)) { ShellExecuteA(0, "open", "https://github.com/juj/MathGeoLib", NULL, NULL, SW_SHOWNORMAL); }
-	if (ImGui::Button(Assimp.c_str())) { ShellExecuteA(0, "open", "https://www.assimp.org/", NULL, NULL, SW_SHOWNORMAL); }
-	if (ImGui::Button(PhysFS.c_str())) { ShellExecuteA(0, "open", "https://icculus.org/physfs/", NULL, NULL, SW_SHOWNORMAL); }
-	if (ImGui::Button(Devil.c_str())) { ShellExecuteA(0, "open", "http://openil.sourceforge.net/", NULL, NULL, SW_SHOWNORMAL); }
-	ImGui::Text("\n\nLICENSE:\n\nMIT License\n\nCopyright(c) 2020 Ferran - Roger Basart i Bosch\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this softwareand associated documentation files(the 'Software'), \nto deal in the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and /or sell\ncopies of the Software, and to permit persons to whom the Software is furnished\nto do so, subject to the following conditions : \n");
-	ImGui::Text("\tThe above copyright noticeand this permission notice shall be included in all\n\tcopies or substantial portions of the Software.\n");
-	ImGui::Text("THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,\nINCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.");
-	ImGui::End();
+	if (aboutWindow) {
+
+		ImGui::Begin("About", &aboutWindow);
+		ImGui::Text("NotThatGameEngine\n\nAn attempt to create a usable game engine >:3\nBy Ferran-Roger Basart i Bosch:");
+		if (ImGui::Button("GitHub")) { ShellExecuteA(0, "open", "https://github.com/ferba93/", NULL, NULL, SW_SHOWNORMAL); }
+		ImGui::Text("\n\nLIBRARIES:");
+		if (ImGui::Button(SDL)) { ShellExecuteA(0, "open", "https://www.libsdl.org/", NULL, NULL, SW_SHOWNORMAL); }
+		if (ImGui::Button(GLEW.c_str())) { ShellExecuteA(0, "open", "http://glew.sourceforge.net/index.html", NULL, NULL, SW_SHOWNORMAL); }
+		if (ImGui::Button(ImGui.c_str())) { ShellExecuteA(0, "open", "https://github.com/ocornut/imgui", NULL, NULL, SW_SHOWNORMAL); }
+		if (ImGui::Button(MathGeoLib)) { ShellExecuteA(0, "open", "https://github.com/juj/MathGeoLib", NULL, NULL, SW_SHOWNORMAL); }
+		if (ImGui::Button(Assimp.c_str())) { ShellExecuteA(0, "open", "https://www.assimp.org/", NULL, NULL, SW_SHOWNORMAL); }
+		if (ImGui::Button(PhysFS.c_str())) { ShellExecuteA(0, "open", "https://icculus.org/physfs/", NULL, NULL, SW_SHOWNORMAL); }
+		if (ImGui::Button(Devil.c_str())) { ShellExecuteA(0, "open", "http://openil.sourceforge.net/", NULL, NULL, SW_SHOWNORMAL); }
+		ImGui::Text("\n\nLICENSE:\n\nMIT License\n\nCopyright(c) 2020 Ferran - Roger Basart i Bosch\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this softwareand associated documentation files(the 'Software'), \nto deal in the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and /or sell\ncopies of the Software, and to permit persons to whom the Software is furnished\nto do so, subject to the following conditions : \n");
+		ImGui::Text("\tThe above copyright noticeand this permission notice shall be included in all\n\tcopies or substantial portions of the Software.\n");
+		ImGui::Text("THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,\nINCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.");
+		ImGui::End();
+
+	}
 }
 
 
@@ -292,24 +288,22 @@ update_status ManagerImGui::DefaultWindow() {
 	char title[25];
 
 	if (configMenu) {
-		ImGui::Begin("Configuration", &configMenu);
 
-		if (ImGui::BeginMenu("Options")) {
-			ImGui::EndMenu();
-		}
+		ImGui::Begin("Configuration", &configMenu);
 
 		if (ImGui::CollapsingHeader("Application")) {
 
-			if (ImGui::InputText("App name", appName, IM_ARRAYSIZE(appName))) {
-				App->window->SetTitle(appName);
-			}
+			if (ImGui::InputText("App name", appName, IM_ARRAYSIZE(appName))) { App->window->SetTitle(appName); }
 
 			ImGui::InputText("Organization", organization, IM_ARRAYSIZE(organization));
 
 			if (ImGui::SliderFloat("Max FPS", &sliderDt, 0.0f, 80.0f, "%.0f")) {
+
 				if (sliderDt == 0) { App->UserDt(false); }
 				else { App->UserDt(true); }
+
 			}
+
 			ImGui::Text("Limited frames: %.0f", App->framerate);
 
 			//ImGui::Text();	// Limited frames
@@ -367,6 +361,61 @@ update_status ManagerImGui::DefaultWindow() {
 	}
 
 	return ret;
+}
+
+
+void ManagerImGui::DefaultButtons()
+{
+	static bool wireframe = false;
+
+	if (defaultButtonsMenu) {
+
+		ImGui::Begin("OpenGL Options", &defaultButtonsMenu);
+
+		if (ImGui::Button("Depth test")) {
+			if (glIsEnabled(GL_DEPTH_TEST)) { glDisable(GL_DEPTH_TEST); }
+			else { glEnable(GL_DEPTH_TEST); }
+		}
+
+		if (ImGui::Button("Cull face")) {
+			if (glIsEnabled(GL_CULL_FACE)) { glDisable(GL_CULL_FACE); }
+			else { glEnable(GL_CULL_FACE); }
+		}
+
+		if (ImGui::Button("Lighting")) {
+			if (glIsEnabled(GL_LIGHTING)) { glDisable(GL_LIGHTING); }
+			else { glEnable(GL_LIGHTING); }
+		}
+
+		if (ImGui::Button("Color material")) {
+			if (glIsEnabled(GL_COLOR_MATERIAL)) { glDisable(GL_COLOR_MATERIAL); }
+			else { glEnable(GL_COLOR_MATERIAL); }
+		}
+
+		if (ImGui::Button("Texture")) {
+			if (glIsEnabled(GL_TEXTURE_2D)) { glDisable(GL_TEXTURE_2D); }
+			else { glEnable(GL_TEXTURE_2D); }
+		}
+
+		if (ImGui::Button("Fog")) {
+			if (!glIsEnabled(GL_FOG)) { glEnable(GL_FOG); }
+			else { glDisable(GL_FOG); }
+		}
+
+		if (ImGui::Button("Limited colors")) {
+			if (glIsEnabled(GL_MINMAX)) { glDisable(GL_MINMAX); }
+			else { glEnable(GL_MINMAX); }
+		}
+
+		if (ImGui::Button("Wireframe mode")) {
+			wireframe = !wireframe;
+			if (wireframe) { glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); }
+			else { glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); }
+		}
+
+		ImGui::End();
+	}
+
 }
 
 

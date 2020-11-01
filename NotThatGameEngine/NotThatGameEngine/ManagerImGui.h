@@ -74,9 +74,9 @@ private:
 	std::string scaleY;
 	std::string scaleZ;
 
-	update_status DefaultButtons();
-	void SetMainMenuBar();
-	void AboutMenu(bool* aboutMenu);
+	void DefaultButtons();
+	update_status SetMainMenuBar();
+	void AboutMenu();
 	update_status DefaultWindow();
 	void ConsoleWindow();
 	void SceneWindow();

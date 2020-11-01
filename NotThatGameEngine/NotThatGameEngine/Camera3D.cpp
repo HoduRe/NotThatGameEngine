@@ -109,7 +109,7 @@ update_status Camera3D::Update(float dt)
 
 	if (mouseWheel < 0) {  }
 	
-	if (mouseWheel > 0) {}
+	if (mouseWheel > 0) {  }
 
 	CalculateViewMatrix();
 
