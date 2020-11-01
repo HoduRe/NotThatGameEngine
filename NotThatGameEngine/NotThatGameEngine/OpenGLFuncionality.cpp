@@ -23,7 +23,6 @@ bool SetOpenGL() {
 	if (error != GL_NO_ERROR) { return false; }
 
 	glColor3f(1.0f, 1.0f, 1.0f);
-	glEnable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_LIGHTING);
