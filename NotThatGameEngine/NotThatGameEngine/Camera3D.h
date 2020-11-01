@@ -22,6 +22,7 @@ public:
 private:
 
 	void CalculateViewMatrix();
+	void MoveCamera();
 
 public:
 	
@@ -30,6 +31,8 @@ public:
 private:
 
 	mat4x4 ViewMatrix, ViewMatrixInverse;
+	float speed;
+
 };
 
 #endif

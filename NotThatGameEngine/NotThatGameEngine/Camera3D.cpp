@@ -29,61 +29,21 @@ bool Camera3D::CleanUp() { return true; }
 
 update_status Camera3D::Update(float dt)
 {
-	vec3 newPos(0, 0, 0);
-	float speed = 5.0f * dt;
+	speed = 5.0f * dt;
 	int mouseWheel = App->input->GetMouseZ();
 
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) { speed = 10.0f * dt; }
-	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT) {
-
-		int dx = -App->input->GetMouseXMotion();
-		int dy = -App->input->GetMouseYMotion();
-		float Sensitivity = 0.25f;
-
-		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y += speed;
-		if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y -= speed;
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
-		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
-
-		Position += newPos;
-		Reference += newPos;
-		Position -= Reference;
-
-		if (dx != 0) {
-
-			float DeltaX = (float)dx * Sensitivity;
-			X = rotate(X, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-			Y = rotate(Y, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-			Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-
-		}
-
-		if (dy != 0) {
-
-			float DeltaY = (float)dy * Sensitivity;
-			Y = rotate(Y, DeltaY, X);
-			Z = rotate(Z, DeltaY, X);
-
-			if (Y.y < 0.0f) {
-
-				Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
-				Y = cross(Z, X);
-
-			}
-		}
-
-		Position = Reference + Z * length(Position);
-	}
+	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT) { MoveCamera(); }
 
 	else if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT) {
 
 		GameObject* focus = App->editorScene->GetFocus();
+
 		if (focus != nullptr) {
 
 			Transform* transform = (Transform*)focus->FindComponent(COMPONENT_TYPE::TRANSFORM);
-			Look(vec3(transform->GetPosition().x, transform->GetPosition().y, transform->GetPosition().z), Reference, true);
+			Reference = vec3(transform->GetPosition().x, transform->GetPosition().y, transform->GetPosition().z);
+			MoveCamera();
 
 		}
 
@@ -108,7 +68,7 @@ update_status Camera3D::Update(float dt)
 	}
 
 	if (mouseWheel != 0 && App->editorScene->sceneWindowFocus) { Position -= Z * mouseWheel * speed; }
-	
+
 	CalculateViewMatrix();
 
 	return update_status::UPDATE_CONTINUE;
@@ -167,4 +127,48 @@ void Camera3D::CalculateViewMatrix() {
 }
 
 
+void Camera3D::MoveCamera() {
 
+	vec3 newPos(0, 0, 0);
+
+	int dx = -App->input->GetMouseXMotion();
+	int dy = -App->input->GetMouseYMotion();
+	float Sensitivity = 0.25f;
+
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y += speed;
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y -= speed;
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
+
+	Position += newPos;
+	Reference += newPos;
+	Position -= Reference;
+
+	if (dx != 0) {
+
+		float DeltaX = (float)dx * Sensitivity;
+		X = rotate(X, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+		Y = rotate(Y, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+		Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+
+	}
+
+	if (dy != 0) {
+
+		float DeltaY = (float)dy * Sensitivity;
+		Y = rotate(Y, DeltaY, X);
+		Z = rotate(Z, DeltaY, X);
+
+		if (Y.y < 0.0f) {
+
+			Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
+			Y = cross(Z, X);
+
+		}
+	}
+
+	Position = Reference + Z * length(Position);
+
+}
