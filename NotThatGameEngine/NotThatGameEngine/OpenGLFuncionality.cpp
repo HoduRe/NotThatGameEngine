@@ -22,6 +22,7 @@ bool SetOpenGL() {
 	GLenum error = glGetError();
 	if (error != GL_NO_ERROR) { return false; }
 
+	glColor3f(1.0f, 1.0f, 1.0f);
 	glEnable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
@@ -122,6 +123,7 @@ void DrawLines(float4x4 worldTransform, GLuint debugId, std::vector<float> debug
 		glColor3f(80.0f, 0.0f, 0.0f);
 		glDrawArrays(GL_LINES, NULL, debugVec.size());
 
+		glColor3f(1.0f, 1.0f, 1.0f);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glDisableClientState(GL_VERTEX_ARRAY);
 
