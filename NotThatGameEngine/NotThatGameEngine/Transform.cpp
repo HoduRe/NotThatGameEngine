@@ -74,6 +74,9 @@ void Transform::SetEulerAngles(float3 eulerAngles) {
 
 void Transform::SetScale(float3 _scale) {
 
+	if (_scale.x == 0) { _scale.x = 0.001; }
+	if (_scale.y == 0) { _scale.y = 0.001; }
+	if (_scale.z == 0) { _scale.z = 0.001; }
 	scale = _scale;
 	RecalculateTransform();
 

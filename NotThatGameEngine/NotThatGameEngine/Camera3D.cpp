@@ -57,7 +57,7 @@ update_status Camera3D::Update(float dt)
 		if (object != nullptr) {
 
 			float3 vector = object->worldTransform.TranslatePart();
-			Position.x = vector.x + 10;
+			Position.x = vector.x + 10;	// TODO: instead of arbitrary number, when I have boundingboxes, pick their length and vector + length 3 / 2 or so
 			Position.y = vector.y + 5;
 			Position.z = vector.z;
 			LookAt(vec3(vector.x, vector.y, vector.z));
