@@ -25,7 +25,7 @@ private:
 
 public:
 	
-	vec3 X, Y, Z, Position, Reference;
+	vec3 X, Y, Z, Position, Reference;	// XYZ are the camera axis (Z = camera forward, X = camera left, Y = camera up), position the camera position, reference where the camera is looking
 
 private:
 

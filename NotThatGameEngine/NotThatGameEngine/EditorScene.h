@@ -38,6 +38,7 @@ private:
 public:
 
 	std::vector<GameObject*> rootGameObjectsVec;
+	bool sceneWindowFocus;
 
 private:
 

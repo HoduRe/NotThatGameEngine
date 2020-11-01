@@ -5,7 +5,7 @@
 #pragma comment( lib, "Assimp/libx86/assimp.lib" )
 
 
-EditorScene::EditorScene(Application* app, bool start_enabled) : Module(app, start_enabled), gameObjectIdCount(0), rootGameObjectsVec(), stream(), defaultTextureId(0), focus(nullptr) {}
+EditorScene::EditorScene(Application* app, bool start_enabled) : Module(app, start_enabled), gameObjectIdCount(0), rootGameObjectsVec(), stream(), defaultTextureId(0), focus(nullptr), sceneWindowFocus(false) {}
 
 
 EditorScene::~EditorScene() {

@@ -435,11 +435,15 @@ void ManagerImGui::ConsoleWindow() {
 
 void ManagerImGui::SceneWindow() {
 
+	bool ret = false;
+
 	if (sceneWindow) {
 
 		ImGuiWindowFlags flag = ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse;
 
 		ImGui::Begin("Scene", &sceneWindow, flag);
+
+		ret = ImGui::IsWindowFocused();
 
 		ImVec2 vec2(ImGui::GetWindowWidth(), ImGui::GetWindowHeight());
 		ImVec2 uvMin = ImVec2(0.0f, 1.0f);
@@ -449,6 +453,9 @@ void ManagerImGui::SceneWindow() {
 
 		ImGui::End();
 	}
+
+	App->editorScene->sceneWindowFocus = ret;
+
 }
 
 

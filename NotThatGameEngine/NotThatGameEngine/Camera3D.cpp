@@ -83,7 +83,7 @@ update_status Camera3D::Update(float dt)
 		if (focus != nullptr) {
 
 			Transform* transform = (Transform*)focus->FindComponent(COMPONENT_TYPE::TRANSFORM);
-			Look(vec3(transform->GetPosition().x, transform->GetPosition().y, transform->GetPosition().z), Reference);
+			Look(vec3(transform->GetPosition().x, transform->GetPosition().y, transform->GetPosition().z), Reference, true);
 
 		}
 
@@ -107,10 +107,8 @@ update_status Camera3D::Update(float dt)
 		else { LOG("There is no gameObject selected.\n"); }
 	}
 
-	if (mouseWheel < 0) {  }
+	if (mouseWheel != 0 && App->editorScene->sceneWindowFocus) { Position -= Z * mouseWheel * speed; }
 	
-	if (mouseWheel > 0) {  }
-
 	CalculateViewMatrix();
 
 	return update_status::UPDATE_CONTINUE;
