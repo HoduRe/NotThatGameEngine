@@ -12,8 +12,11 @@ An engine for CITM's Engine project which focuses on skeletical animation
 	<li>F to center an object</li>
 	<li>Alt + Left click to rotate around object</li>
 	<li>Mouse wheel to zoom (when scene is focused)</li>
+	<li>Holding shift duplicates movement speed</li>
 	</ul>
 - All menus can be re-opened via Upper Menu tabs<br/>
+- Drag a model on the application to load it on screen<br/>
+- Drag a texture on the application to load it. If there is an object selected, it will apply that texture to the model<br/>
 
 ## Additional functionality:
 - Windows have docking options enabled<br/>
