@@ -33,7 +33,7 @@ bool Texture::Start() {
 
 	ilEnable(IL_ORIGIN_SET);
 	ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
-	
+
 	defaultTextureId = LoadTexture(App, "Library/Textures/Alex.png");
 	checkersTextureId = LoadTexture(App, "Library/Textures/Checker.png");
 	degenerateTextureId = LoadTexture(App, "Library/Textures/Degenerate.jpg");
@@ -43,7 +43,12 @@ bool Texture::Start() {
 }
 
 
-bool Texture::CleanUp() { return true; }
+bool Texture::CleanUp() {
+
+	glDeleteTextures(textureVec.size(), &textureVec[0].textureId);
+	return true;
+
+}
 
 
 update_status Texture::Update(float dt) {

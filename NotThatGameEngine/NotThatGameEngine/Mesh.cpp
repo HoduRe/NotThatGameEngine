@@ -11,6 +11,11 @@ Mesh::~Mesh() {
 	textureCoord.clear();
 	indices.clear();
 
+	glDeleteBuffers(1, &vertexId);
+	glDeleteBuffers(1, &normalsId);
+	glDeleteBuffers(1, &textureCoordId);
+	glDeleteBuffers(1, &indexId);
+
 }
 
 

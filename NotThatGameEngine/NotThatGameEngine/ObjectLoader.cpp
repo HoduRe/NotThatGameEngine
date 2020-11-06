@@ -164,6 +164,8 @@ void LoadMeshMaterial(Application* App, aiScene* scene, GameObject* newObject, i
 
 		}
 
+		else if (scene->mNumMaterials < 2) { LOG("This model's texture is not specified as Diffuse."); }
+
 	}
 
 	else { LOG("This model has no materials attached.\n"); }
