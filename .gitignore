@@ -17,10 +17,12 @@
 mono_crash.*
 
 # Build results
+[Dd]ebug/
 [Dd]ebugPublic/
 [Rr]eleases/
-x64/
+[Rr]eleases/
 x86/
+x64/
 [Aa][Rr][Mm]/
 [Aa][Rr][Mm]64/
 bld/
@@ -346,12 +348,3 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-NotThatGameEngine/NotThatGameEngine/Debug/NotThatG.6e3e62a5.tlog/CL.command.1.tlog
-NotThatGameEngine/NotThatGameEngine/Debug/NotThatG.6e3e62a5.tlog/CL.read.1.tlog
-NotThatGameEngine/NotThatGameEngine/Debug/NotThatG.6e3e62a5.tlog/CL.write.1.tlog
-NotThatGameEngine/NotThatGameEngine/Debug/NotThatG.6e3e62a5.tlog/link.command.1.tlog
-NotThatGameEngine/NotThatGameEngine/Debug/NotThatG.6e3e62a5.tlog/link.read.1.tlog
-NotThatGameEngine/NotThatGameEngine/Debug/NotThatG.6e3e62a5.tlog/link.write.1.tlog
-NotThatGameEngine/NotThatGameEngine/Debug/NotThatG.6e3e62a5.tlog/NotThatGameEngine.lastbuildstate
-NotThatGameEngine/NotThatGameEngine/Debug/NotThatG.6e3e62a5.tlog/unsuccessfulbuild
-NotThatGameEngine/NotThatGameEngine/Debug/vc142.idb
