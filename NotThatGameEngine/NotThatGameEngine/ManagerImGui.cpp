@@ -1,5 +1,6 @@
 #include "Application.h"
 
+#include "SaveLoad.h"
 #include "Assimp/include/version.h"
 #include "PhysFS/include/physfs.h"
 
@@ -654,6 +655,7 @@ void ManagerImGui::InspectorWindow() {
 
 						material = (Material*)focus->AddComponent(COMPONENT_TYPE::MATERIAL);
 						material->SetDiffuse(App->texture->defaultTextureId);
+						DataSaving::SaveMaterial(material);
 
 					}
 
@@ -661,6 +663,7 @@ void ManagerImGui::InspectorWindow() {
 
 						material = (Material*)focus->AddComponent(COMPONENT_TYPE::MATERIAL);
 						material->SetDiffuse(App->texture->checkersTextureId);
+						DataSaving::SaveMaterial(material);
 
 					}
 
@@ -668,6 +671,7 @@ void ManagerImGui::InspectorWindow() {
 
 						material = (Material*)focus->AddComponent(COMPONENT_TYPE::MATERIAL);
 						material->SetDiffuse(App->texture->degenerateTextureId);
+						DataSaving::SaveMaterial(material);
 
 					}
 

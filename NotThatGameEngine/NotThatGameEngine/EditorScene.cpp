@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "Importer.h"
 #include "Primitives.h"
+#include "SaveLoad.h"
 
 #pragma comment( lib, "Assimp/libx86/assimp.lib" )
 
@@ -187,6 +188,8 @@ bool EditorScene::AddPrimitive(PrimitiveEnum _type) {
 
 	mesh->SetVertices(mesh->vertices);
 	mesh->SetIndices(mesh->indices);
+
+	DataSaving::SaveMesh(mesh);
 
 	AddGameObject(newObject);
 

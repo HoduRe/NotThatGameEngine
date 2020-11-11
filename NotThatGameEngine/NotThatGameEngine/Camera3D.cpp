@@ -68,6 +68,7 @@ update_status Camera3D::Update(float dt)
 	}
 
 	if (mouseWheel != 0 && App->editorScene->sceneWindowFocus) { Position -= Z * mouseWheel * speed; }
+	else if (mouseWheel != 0) { LOG("Can't do Zoom without scene window selected."); }
 
 	CalculateViewMatrix();
 

@@ -134,6 +134,7 @@ void DataImporter::LoadMeshNode(Application* App, aiNode* node, aiScene* scene, 
 
 			App->editorScene->AddGameObject(newObject);
 
+			DataSaving::SaveMesh(mesh);
 		}
 
 	}
@@ -166,6 +167,8 @@ void DataImporter::LoadMeshMaterial(Application* App, aiScene* scene, GameObject
 		}
 
 		else if (scene->mNumMaterials < 2) { LOG("This model's texture is not specified as Diffuse."); }
+
+		DataSaving::SaveMaterial(material);
 
 	}
 
