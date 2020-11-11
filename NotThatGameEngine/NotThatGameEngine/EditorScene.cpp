@@ -189,7 +189,7 @@ bool EditorScene::AddPrimitive(PrimitiveEnum _type) {
 	mesh->SetVertices(mesh->vertices);
 	mesh->SetIndices(mesh->indices);
 
-	DataSaving::SaveMesh(mesh);
+	DataSaving::SaveMesh(App, mesh);
 
 	AddGameObject(newObject);
 

@@ -4,6 +4,7 @@
 #include "Globals.h"
 
 class Component;
+class Application;
 class Mesh;
 class Material;
 class TextureData;
@@ -13,9 +14,9 @@ class TextureData;
 
 namespace DataSaving {
 
-	void SaveMesh(Mesh* mesh/*, char** fileBuffer*/);
-	void SaveMaterial(Material* material/*, char** fileBuffer*/);
-	void SaveTexture(TextureData* texture, char** fileBuffer);
+	void SaveMesh(Application* App, Mesh* mesh/*, char** fileBuffer*/);
+	void SaveMaterial(Application* App, Material* material/*, char** fileBuffer*/);
+	void SaveTexture(Application* App, TextureData* texture, char** fileBuffer);
 
 }
 

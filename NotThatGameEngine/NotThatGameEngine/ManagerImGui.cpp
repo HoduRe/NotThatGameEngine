@@ -655,7 +655,7 @@ void ManagerImGui::InspectorWindow() {
 
 						material = (Material*)focus->AddComponent(COMPONENT_TYPE::MATERIAL);
 						material->SetDiffuse(App->texture->defaultTextureId);
-						DataSaving::SaveMaterial(material);
+						DataSaving::SaveMaterial(App, material);
 
 					}
 
@@ -663,7 +663,7 @@ void ManagerImGui::InspectorWindow() {
 
 						material = (Material*)focus->AddComponent(COMPONENT_TYPE::MATERIAL);
 						material->SetDiffuse(App->texture->checkersTextureId);
-						DataSaving::SaveMaterial(material);
+						DataSaving::SaveMaterial(App, material);
 
 					}
 
@@ -671,7 +671,7 @@ void ManagerImGui::InspectorWindow() {
 
 						material = (Material*)focus->AddComponent(COMPONENT_TYPE::MATERIAL);
 						material->SetDiffuse(App->texture->degenerateTextureId);
-						DataSaving::SaveMaterial(material);
+						DataSaving::SaveMaterial(App, material);
 
 					}
 

@@ -70,7 +70,7 @@ uint DataImporter::LoadTexture(Application* App, const char* path, const char* b
 		TextureData* texture = new TextureData(imageTest, path, GL_DIFFUSE, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT));
 
 		App->texture->AddTexture(texture);
-		DataSaving::SaveTexture(texture, (char**)&buffer);
+		DataSaving::SaveTexture(App, texture, (char**)&buffer);
 
 	}
 
@@ -134,7 +134,7 @@ void DataImporter::LoadMeshNode(Application* App, aiNode* node, aiScene* scene, 
 
 			App->editorScene->AddGameObject(newObject);
 
-			DataSaving::SaveMesh(mesh);
+			DataSaving::SaveMesh(App, mesh);
 		}
 
 	}
@@ -168,7 +168,7 @@ void DataImporter::LoadMeshMaterial(Application* App, aiScene* scene, GameObject
 
 		else if (scene->mNumMaterials < 2) { LOG("This model's texture is not specified as Diffuse."); }
 
-		DataSaving::SaveMaterial(material);
+		DataSaving::SaveMaterial(App, material);
 
 	}
 
