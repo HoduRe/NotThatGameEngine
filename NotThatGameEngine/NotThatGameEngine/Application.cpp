@@ -13,7 +13,7 @@ Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter
 	reset = new ResetModule(this);
 	imGui = new ManagerImGui(this);
 	eventManager = new ManagerEvent(this);
-	fileManager = new FileManager(this);
+	externalManager = new ExternalManager(this);
 	editorScene = new EditorScene(this);
 	texture = new Texture(this);
 
@@ -26,7 +26,7 @@ Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter
 	AddModule(eventManager);
 	AddModule(window);
 	AddModule(texture);
-	AddModule(fileManager);
+	AddModule(externalManager);
 	AddModule(camera);
 	AddModule(input);
 	AddModule(audio);

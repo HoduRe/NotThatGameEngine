@@ -1,12 +1,12 @@
-#include "ObjectLoader.h"
+#include "Importer.h"
+#include "SaveLoad.h"
 
-
-GameObject* LoadModel(Application* App, const char* path, const char* buffer, uint size, GameObject* parent, bool enabled) {
+GameObject* DataImporter::LoadModel(Application* App, const char* path, const char* buffer, uint size, GameObject* parent, bool enabled) {
 
 	GameObject* newObject = new GameObject(App->editorScene->GenerateId(), path, parent, enabled);	// TODO: convert path to only the name of the file with the FileSystem function :3
 
-	if (buffer == nullptr && size == 0) { size = App->fileManager->Load(path, (char**)&buffer); }
-	if (LoadScene(App, buffer, size, newObject, path)) {}
+	if (buffer == nullptr && size == 0) { size = App->externalManager->Load(path, (char**)&buffer); }
+	if (DataImporter::LoadScene(App, buffer, size, newObject, path)) {}
 	else {
 		delete newObject;
 		newObject = nullptr;
@@ -19,7 +19,7 @@ GameObject* LoadModel(Application* App, const char* path, const char* buffer, ui
 }
 
 
-bool LoadScene(Application* App, const char* buffer, uint size, GameObject* newObject, const char* path) {
+bool DataImporter::LoadScene(Application* App, const char* buffer, uint size, GameObject* newObject, const char* path) {
 
 	aiScene* scene = (aiScene*)aiImportFileFromMemory(buffer, size, aiProcessPreset_TargetRealtime_MaxQuality, nullptr);
 	aiMatrix4x4 trans;
@@ -32,7 +32,7 @@ bool LoadScene(Application* App, const char* buffer, uint size, GameObject* newO
 	App->editorScene->AddGameObject(newObject);
 	trans = scene->mRootNode->mTransformation;
 
-	if (scene->mRootNode->mNumChildren != 0) { for (int i = 0; i < scene->mRootNode->mNumChildren; i++) { LoadMeshNode(App, scene->mRootNode->mChildren[i], (aiScene*)scene, newObject, trans); } }
+	if (scene->mRootNode->mNumChildren != 0) { for (int i = 0; i < scene->mRootNode->mNumChildren; i++) { DataImporter::LoadMeshNode(App, scene->mRootNode->mChildren[i], (aiScene*)scene, newObject, trans); } }
 
 	aiReleaseImport(scene);
 
@@ -42,13 +42,13 @@ bool LoadScene(Application* App, const char* buffer, uint size, GameObject* newO
 }
 
 
-uint LoadTexture(Application* App, const char* path, const char* buffer, uint size) {
+uint DataImporter::LoadTexture(Application* App, const char* path, const char* buffer, uint size) {
 
-	uint imageTest = App->texture->IsTextureRepeated(path);
+	uint imageTest = App->texture->IsTextureRepeated(path);	// TODO: here texture should pass a UUID
 
 	if (imageTest == 0) {
 
-		if (buffer == nullptr && size == 0) { size = App->fileManager->Load(path, (char**)&buffer); }
+		if (buffer == nullptr && size == 0) { size = App->externalManager->Load(path, (char**)&buffer); }
 		ILboolean ret;
 
 		ilGenImages(1, &imageTest);
@@ -70,6 +70,7 @@ uint LoadTexture(Application* App, const char* path, const char* buffer, uint si
 		TextureData* texture = new TextureData(imageTest, path, GL_DIFFUSE, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT));
 
 		App->texture->AddTexture(texture);
+		DataSaving::SaveTexture(texture, (char**)&buffer);
 
 	}
 
@@ -78,7 +79,7 @@ uint LoadTexture(Application* App, const char* path, const char* buffer, uint si
 }
 
 
-void LoadMeshNode(Application* App, aiNode* node, aiScene* scene, GameObject* parent, aiMatrix4x4 accTransform) {
+void DataImporter::LoadMeshNode(Application* App, aiNode* node, aiScene* scene, GameObject* parent, aiMatrix4x4 accTransform) {
 
 	aiMatrix4x4 transform = accTransform * node->mTransformation;
 	Mesh* mesh;
@@ -127,9 +128,9 @@ void LoadMeshNode(Application* App, aiNode* node, aiScene* scene, GameObject* pa
 			LoadDataBufferUint(GL_ELEMENT_ARRAY_BUFFER, &mesh->indexId, mesh->indices.size(), mesh->indices.data());
 
 			transformation = (Transform*)newObject->FindComponent(COMPONENT_TYPE::TRANSFORM);
-			aiTransformTofloat4x4Transform(transform, transformation);
+			DataImporter::aiTransformTofloat4x4Transform(transform, transformation);
 
-			LoadMeshMaterial(App, scene, newObject, scene->mMeshes[node->mMeshes[i]]->mMaterialIndex);
+			DataImporter::LoadMeshMaterial(App, scene, newObject, scene->mMeshes[node->mMeshes[i]]->mMaterialIndex);
 
 			App->editorScene->AddGameObject(newObject);
 
@@ -142,7 +143,7 @@ void LoadMeshNode(Application* App, aiNode* node, aiScene* scene, GameObject* pa
 }
 
 
-void LoadMeshMaterial(Application* App, aiScene* scene, GameObject* newObject, int materialId) {
+void DataImporter::LoadMeshMaterial(Application* App, aiScene* scene, GameObject* newObject, int materialId) {
 
 	Material* material = nullptr;
 
@@ -156,7 +157,7 @@ void LoadMeshMaterial(Application* App, aiScene* scene, GameObject* newObject, i
 
 			if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
 
-				std::string FullPath = TEXTURES_PATH + App->fileManager->NormalizePath(Path.C_Str());	// TODO: do this better. It will need a function that iterates everything, yes. But do it
+				std::string FullPath = TEXTURES_PATH + App->externalManager->NormalizePath(Path.C_Str());	// TODO: do this better. It will need a function that iterates everything, yes. But do it
 				material->diffuseId = LoadTexture(App, FullPath.c_str());
 				LOG("Material with id = %u loaded.\n", material->diffuseId);
 
@@ -172,7 +173,7 @@ void LoadMeshMaterial(Application* App, aiScene* scene, GameObject* newObject, i
 
 }
 
-void aiTransformTofloat4x4Transform(aiMatrix4x4 matrix, Transform* transform) {
+void DataImporter::aiTransformTofloat4x4Transform(aiMatrix4x4 matrix, Transform* transform) {
 
 	aiVector3D position;
 	aiQuaternion rotation;

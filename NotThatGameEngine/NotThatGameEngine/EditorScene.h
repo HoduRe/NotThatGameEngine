@@ -42,7 +42,7 @@ public:
 
 private:
 
-	int gameObjectIdCount;	// TODO: remember to save this in the save file
+	int gameObjectIdCount;
 	aiLogStream stream;
 	uint defaultTextureId;
 	GameObject* focus;

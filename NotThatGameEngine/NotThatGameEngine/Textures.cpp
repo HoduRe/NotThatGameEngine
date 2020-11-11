@@ -1,8 +1,8 @@
 #include "Application.h"
-#include "ObjectLoader.h"
+#include "Importer.h"
 
 
-Texture::Texture(Application* app, bool start_enabled) : Module(app, start_enabled), textureVec(), defaultTextureId(0), checkersTextureId(0) {}
+Texture::Texture(Application* app, bool start_enabled) : Module(app, start_enabled), textureVec(), defaultTextureId(0), checkersTextureId(0), degenerateTextureId(0) {}
 
 
 Texture::~Texture() { textureVec.clear(); }
@@ -34,9 +34,9 @@ bool Texture::Start() {
 	ilEnable(IL_ORIGIN_SET);
 	ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
 
-	defaultTextureId = LoadTexture(App, "Library/Textures/Alex.png");
-	checkersTextureId = LoadTexture(App, "Library/Textures/Checker.png");
-	degenerateTextureId = LoadTexture(App, "Library/Textures/Degenerate.jpg");
+	defaultTextureId = DataImporter::LoadTexture(App, "Library/Textures/Alex.png");
+	checkersTextureId = DataImporter::LoadTexture(App, "Library/Textures/Checker.png");
+	degenerateTextureId = DataImporter::LoadTexture(App, "Library/Textures/Degenerate.jpg");
 	App->eventManager->GenerateEvent(EVENT_ENUM::DEFAULT_TEXTURE_LOADED);
 
 	return true;

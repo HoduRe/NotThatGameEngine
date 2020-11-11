@@ -1,5 +1,5 @@
-#ifndef __FileManager_H__
-#define __FileManager_H__
+#ifndef __ExternalManager_H__
+#define __ExternalManager_H__
 
 #include "Module.h"
 
@@ -20,13 +20,13 @@ enum class ResourceEnum {
 	UNKNOWN
 };
 
-class FileManager : public Module
+class ExternalManager : public Module
 {
 
 public:
 
-	FileManager(Application* app, bool start_enabled = true);
-	~FileManager();
+	ExternalManager(Application* app, bool start_enabled = true);
+	~ExternalManager();
 
 	bool Init();
 	update_status PreUpdate(float dt);

@@ -126,11 +126,14 @@
     <ClCompile Include="Primitives.cpp">
       <Filter>GameObjectLogic</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectLoader.cpp">
+    <ClCompile Include="ManagerExternal.cpp">
+      <Filter>Modular code</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveLoad.cpp">
       <Filter>GameObjectLogic</Filter>
     </ClCompile>
-    <ClCompile Include="ManagerFile.cpp">
-      <Filter>Modular code</Filter>
+    <ClCompile Include="Importer.cpp">
+      <Filter>GameObjectLogic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -245,11 +248,14 @@
     <ClInclude Include="Primitives.h">
       <Filter>GameObjectLogic</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectLoader.h">
+    <ClInclude Include="ManagerExternal.h">
+      <Filter>Modular code</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveLoad.h">
       <Filter>GameObjectLogic</Filter>
     </ClInclude>
-    <ClInclude Include="ManagerFile.h">
-      <Filter>Modular code</Filter>
+    <ClInclude Include="Importer.h">
+      <Filter>GameObjectLogic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

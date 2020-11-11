@@ -1,6 +1,6 @@
 #include "Application.h"
 #include "PathNode.h"
-#include "ObjectLoader.h"
+#include "Importer.h"
 
 #include "PhysFS/include/physfs.h"
 #include <fstream>
@@ -9,7 +9,7 @@
 #pragma comment( lib, "PhysFS/libx86/physfs.lib" )
 
 
-FileManager::FileManager(Application* app, bool start_enabled) : Module(app, start_enabled) {
+ExternalManager::ExternalManager(Application* app, bool start_enabled) : Module(app, start_enabled) {
 
 	char* base_path = SDL_GetBasePath();
 	PHYSFS_init(nullptr);
@@ -36,10 +36,10 @@ FileManager::FileManager(Application* app, bool start_enabled) : Module(app, sta
 }
 
 
-FileManager::~FileManager() { PHYSFS_deinit(); }
+ExternalManager::~ExternalManager() { PHYSFS_deinit(); }
 
 
-bool FileManager::Init() {
+bool ExternalManager::Init() {
 
 	bool ret = true;
 
@@ -49,10 +49,10 @@ bool FileManager::Init() {
 }
 
 
-bool FileManager::CleanUp() { return true; }
+bool ExternalManager::CleanUp() { return true; }
 
 
-update_status FileManager::PreUpdate(float dt) {
+update_status ExternalManager::PreUpdate(float dt) {
 
 	CheckListener(this);
 
@@ -60,19 +60,19 @@ update_status FileManager::PreUpdate(float dt) {
 }
 
 
-update_status FileManager::Update(float dt) {
+update_status ExternalManager::Update(float dt) {
 
 	return update_status::UPDATE_CONTINUE;
 }
 
 
-update_status FileManager::PostUpdate(float dt) {
+update_status ExternalManager::PostUpdate(float dt) {
 
 	return update_status::UPDATE_CONTINUE;
 }
 
 
-bool FileManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
+bool ExternalManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
 	std::string filePath;
 	char* buffer;
@@ -97,11 +97,11 @@ bool FileManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
 			switch (type) {
 			case ResourceEnum::MODEL:
-				LoadModel(App, filePath.c_str(), buffer, size);
+				DataImporter::LoadModel(App, filePath.c_str(), buffer, size);
 				break;
 
 			case ResourceEnum::TEXTURE:
-				id = LoadTexture(App, filePath.c_str(), buffer, size);
+				id = DataImporter::LoadTexture(App, filePath.c_str(), buffer, size);
 				App->eventManager->GenerateEvent(EVENT_ENUM::PUT_TEXTURE_TO_FOCUSED_MODEL, EVENT_ENUM::NULL_EVENT, (void*)id);
 				break;
 
@@ -123,7 +123,7 @@ bool FileManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 }
 
 
-bool FileManager::AddPath(const char* path_or_zip) {
+bool ExternalManager::AddPath(const char* path_or_zip) {
 
 	bool ret = false;
 
@@ -135,10 +135,10 @@ bool FileManager::AddPath(const char* path_or_zip) {
 }
 
 // Check if a file exists
-bool FileManager::Exists(const char* file) const { return PHYSFS_exists(file) != 0; }
+bool ExternalManager::Exists(const char* file) const { return PHYSFS_exists(file) != 0; }
 
 
-bool FileManager::CreateDir(const char* dir) {
+bool ExternalManager::CreateDir(const char* dir) {
 
 	if (IsDirectory(dir) == false) {
 
@@ -151,13 +151,13 @@ bool FileManager::CreateDir(const char* dir) {
 }
 
 
-bool FileManager::IsDirectory(const char* file) const { return PHYSFS_isDirectory(file) != 0; }
+bool ExternalManager::IsDirectory(const char* file) const { return PHYSFS_isDirectory(file) != 0; }
 
 
-const char* FileManager::GetWriteDir() const { return PHYSFS_getWriteDir(); }
+const char* ExternalManager::GetWriteDir() const { return PHYSFS_getWriteDir(); }
 
 
-void FileManager::DiscoverFiles(const char* directory, std::vector<std::string>& file_list, std::vector<std::string>& dir_list) const {
+void ExternalManager::DiscoverFiles(const char* directory, std::vector<std::string>& file_list, std::vector<std::string>& dir_list) const {
 
 	char** rc = PHYSFS_enumerateFiles(directory);
 	char** i;
@@ -175,7 +175,7 @@ void FileManager::DiscoverFiles(const char* directory, std::vector<std::string>&
 }
 
 
-void FileManager::GetAllFilesWithExtension(const char* directory, const char* extension, std::vector<std::string>& file_list) const {
+void ExternalManager::GetAllFilesWithExtension(const char* directory, const char* extension, std::vector<std::string>& file_list) const {
 
 	std::vector<std::string> files;
 	std::vector<std::string> dirs;
@@ -191,7 +191,7 @@ void FileManager::GetAllFilesWithExtension(const char* directory, const char* ex
 
 }
 
-PathNode FileManager::GetAllFiles(const char* directory, std::vector<std::string>* filter_ext, std::vector<std::string>* ignore_ext) const {
+PathNode ExternalManager::GetAllFiles(const char* directory, std::vector<std::string>* filter_ext, std::vector<std::string>* ignore_ext) const {
 
 	PathNode root;
 	if (Exists(directory)) {
@@ -239,7 +239,7 @@ PathNode FileManager::GetAllFiles(const char* directory, std::vector<std::string
 }
 
 
-void FileManager::GetRealDir(const char* path, std::string& output) const {
+void ExternalManager::GetRealDir(const char* path, std::string& output) const {
 
 	output = PHYSFS_getBaseDir();
 
@@ -253,7 +253,7 @@ void FileManager::GetRealDir(const char* path, std::string& output) const {
 }
 
 
-std::string FileManager::GetPathRelativeToAssets(const char* originalPath) const {
+std::string ExternalManager::GetPathRelativeToAssets(const char* originalPath) const {
 
 	std::string ret;
 	GetRealDir(originalPath, ret);
@@ -262,7 +262,7 @@ std::string FileManager::GetPathRelativeToAssets(const char* originalPath) const
 }
 
 
-bool FileManager::HasExtension(const char* path) const {
+bool ExternalManager::HasExtension(const char* path) const {
 
 	std::string ext = "";
 	SplitFilePath(path, nullptr, nullptr, &ext);
@@ -271,7 +271,7 @@ bool FileManager::HasExtension(const char* path) const {
 }
 
 
-bool FileManager::HasExtension(const char* path, std::string extension) const {
+bool ExternalManager::HasExtension(const char* path, std::string extension) const {
 
 	std::string ext = "";
 	SplitFilePath(path, nullptr, nullptr, &ext);
@@ -280,7 +280,7 @@ bool FileManager::HasExtension(const char* path, std::string extension) const {
 }
 
 
-bool FileManager::HasExtension(const char* path, std::vector<std::string> extensions) const {
+bool ExternalManager::HasExtension(const char* path, std::vector<std::string> extensions) const {
 
 	std::string ext = "";
 	SplitFilePath(path, nullptr, nullptr, &ext);
@@ -291,7 +291,7 @@ bool FileManager::HasExtension(const char* path, std::vector<std::string> extens
 }
 
 
-std::string FileManager::NormalizePath(const char* full_path) const {
+std::string ExternalManager::NormalizePath(const char* full_path) const {
 
 	std::string newPath(full_path);
 	for (int i = 0; i < newPath.size(); ++i) { if (newPath[i] == '\\') { newPath[i] = '/'; } }
@@ -300,7 +300,7 @@ std::string FileManager::NormalizePath(const char* full_path) const {
 }
 
 
-std::string FileManager::LocalizePath(std::string path) const {
+std::string ExternalManager::LocalizePath(std::string path) const {
 
 	std::string newPath;
 	std::string dirPath = PHYSFS_getBaseDir();
@@ -322,7 +322,7 @@ std::string FileManager::LocalizePath(std::string path) const {
 }
 
 
-void FileManager::SplitFilePath(const char* full_path, std::string* path, std::string* file, std::string* extension) const {
+void ExternalManager::SplitFilePath(const char* full_path, std::string* path, std::string* file, std::string* extension) const {
 
 	if (full_path != nullptr) {
 
@@ -355,7 +355,7 @@ void FileManager::SplitFilePath(const char* full_path, std::string* path, std::s
 }
 
 
-unsigned int FileManager::Load(const char* path, const char* file, char** buffer) const {
+unsigned int ExternalManager::Load(const char* path, const char* file, char** buffer) const {
 
 	std::string full_path(path);
 	full_path += file;
@@ -364,7 +364,7 @@ unsigned int FileManager::Load(const char* path, const char* file, char** buffer
 }
 
 
-uint FileManager::Load(const char* file, char** buffer) const {	// Read a whole file and put it in a new buffer
+uint ExternalManager::Load(const char* file, char** buffer) const {	// Read a whole file and put it in a new buffer
 
 	uint ret = 0;
 
@@ -405,7 +405,7 @@ uint FileManager::Load(const char* file, char** buffer) const {	// Read a whole 
 }
 
 
-bool FileManager::DuplicateFile(const char* file, const char* dstFolder, std::string& relativePath) {
+bool ExternalManager::DuplicateFile(const char* file, const char* dstFolder, std::string& relativePath) {
 
 	std::string fileStr, extensionStr;
 	SplitFilePath(file, nullptr, &fileStr, &extensionStr);
@@ -418,7 +418,7 @@ bool FileManager::DuplicateFile(const char* file, const char* dstFolder, std::st
 }
 
 
-bool FileManager::DuplicateFile(const char* srcFile, const char* dstFile) {
+bool ExternalManager::DuplicateFile(const char* srcFile, const char* dstFile) {
 
 	//TODO: Compare performance to calling Load(srcFile) and then Save(dstFile)
 	std::ifstream src;
@@ -454,7 +454,7 @@ int close_sdl_rwops(SDL_RWops* rw) {
 }
 
 
-uint FileManager::Save(const char* file, const void* buffer, unsigned int size, bool append) const {	// Save a whole buffer to disk
+uint ExternalManager::Save(const char* file, const void* buffer, unsigned int size, bool append) const {	// Save a whole buffer to disk
 
 	unsigned int ret = 0;
 	bool overwrite = PHYSFS_exists(file) != 0;
@@ -483,7 +483,7 @@ uint FileManager::Save(const char* file, const void* buffer, unsigned int size, 
 }
 
 
-bool FileManager::Remove(const char* file) {
+bool ExternalManager::Remove(const char* file) {
 
 	bool ret = false;
 
@@ -511,10 +511,10 @@ bool FileManager::Remove(const char* file) {
 }
 
 
-uint64 FileManager::GetLastModTime(const char* filename) { return PHYSFS_getLastModTime(filename); }
+uint64 ExternalManager::GetLastModTime(const char* filename) { return PHYSFS_getLastModTime(filename); }
 
 
-std::string FileManager::GetUniqueName(const char* path, const char* name) const {
+std::string ExternalManager::GetUniqueName(const char* path, const char* name) const {
 
 	//TODO: modify to distinguix files and dirs?
 	std::vector<std::string> files, dirs;
@@ -552,7 +552,7 @@ std::string FileManager::GetUniqueName(const char* path, const char* name) const
 }
 
 
-ResourceEnum FileManager::CheckResourceType(std::string name) {
+ResourceEnum ExternalManager::CheckResourceType(std::string name) {
 
 	std::string ext;
 

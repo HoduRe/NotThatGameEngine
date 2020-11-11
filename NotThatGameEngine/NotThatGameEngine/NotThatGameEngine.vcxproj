@@ -157,6 +157,7 @@
     <ClCompile Include="imgui_impl_opengl3.cpp" />
     <ClCompile Include="imgui_impl_sdl.cpp" />
     <ClCompile Include="imgui_widgets.cpp" />
+    <ClCompile Include="SaveLoad.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Material.cpp" />
@@ -165,10 +166,10 @@
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Camera3D.cpp" />
     <ClCompile Include="ManagerEvent.cpp" />
-    <ClCompile Include="ManagerFile.cpp" />
+    <ClCompile Include="ManagerExternal.cpp" />
     <ClCompile Include="ManagerImGui.cpp" />
     <ClCompile Include="Input.cpp" />
-    <ClCompile Include="ObjectLoader.cpp" />
+    <ClCompile Include="Importer.cpp" />
     <ClCompile Include="OpenGLFuncionality.cpp" />
     <ClCompile Include="Physics3D.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="imgui_impl_opengl3.h" />
     <ClInclude Include="imgui_impl_sdl.h" />
     <ClInclude Include="imgui_internal.h" />
+    <ClInclude Include="SaveLoad.h" />
     <ClInclude Include="imstb_rectpack.h" />
     <ClInclude Include="imstb_textedit.h" />
     <ClInclude Include="imstb_truetype.h" />
@@ -205,10 +207,10 @@
     <ClInclude Include="Audio.h" />
     <ClInclude Include="Camera3D.h" />
     <ClInclude Include="ManagerEvent.h" />
-    <ClInclude Include="ManagerFile.h" />
+    <ClInclude Include="ManagerExternal.h" />
     <ClInclude Include="ManagerImGui.h" />
     <ClInclude Include="Input.h" />
-    <ClInclude Include="ObjectLoader.h" />
+    <ClInclude Include="Importer.h" />
     <ClInclude Include="OpenGLFuncionality.h" />
     <ClInclude Include="Physics3D.h" />
     <ClInclude Include="Player.h" />

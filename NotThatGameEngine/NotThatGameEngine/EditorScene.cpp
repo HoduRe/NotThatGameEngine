@@ -1,5 +1,5 @@
 #include "Application.h"
-#include "ObjectLoader.h"
+#include "Importer.h"
 #include "Primitives.h"
 
 #pragma comment( lib, "Assimp/libx86/assimp.lib" )
@@ -40,7 +40,7 @@ bool EditorScene::Init() {
 bool EditorScene::Start()
 {
 
-	LoadModel(App, "Library/Meshes/BakerHouse.fbx");
+	DataImporter::LoadModel(App, "Library/Meshes/BakerHouse.fbx");
 
 	return true;
 }
