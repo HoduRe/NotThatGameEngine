@@ -28,6 +28,8 @@ bool SetOpenGL() {
 	glEnable(GL_LIGHTING);
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_TEXTURE_2D);
+
+	return true;
 }
 
 
