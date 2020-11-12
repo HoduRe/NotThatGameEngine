@@ -10,7 +10,7 @@ class Transform : public Component {
 
 public:
 
-	Transform(int _id, GameObject* _gameObject);
+	Transform(long long int _id, GameObject* _gameObject);
 	~Transform();
 
 	void Update();

@@ -11,7 +11,7 @@
 #endif
 
 
-Transform::Transform(int _id, GameObject* _gameObject) : Component(_id, _gameObject, COMPONENT_TYPE::TRANSFORM), position(0.0f, 0.0f, 0.0f),
+Transform::Transform(long long int _id, GameObject* _gameObject) : Component(_id, _gameObject, COMPONENT_TYPE::TRANSFORM), position(0.0f, 0.0f, 0.0f),
 rotationEuler(0.0f, 0.0f, 0.0f), scale(1.0f, 1.0f, 1.0f), rotation(Quat::identity) { RecalculateTransform(); }
 
 

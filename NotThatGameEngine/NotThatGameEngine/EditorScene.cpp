@@ -6,7 +6,8 @@
 #pragma comment( lib, "Assimp/libx86/assimp.lib" )
 
 
-EditorScene::EditorScene(Application* app, bool start_enabled) : Module(app, start_enabled), rootGameObjectsVec(), stream(), defaultTextureId(0), focus(nullptr), sceneWindowFocus(false) {}
+EditorScene::EditorScene(Application* app, bool start_enabled) : Module(app, start_enabled),
+rootGameObjectsVec(), stream(), defaultTextureId(0), focus(nullptr), sceneWindowFocus(false) {}
 
 
 EditorScene::~EditorScene() {
@@ -145,7 +146,7 @@ bool EditorScene::AddGameObject(GameObject* newObject) {	// This function doesn'
 
 bool EditorScene::AddPrimitive(PrimitiveEnum _type) {
 
-	GameObject* newObject = new GameObject(DataImporter::GenerateId(), "");
+	GameObject* newObject = new GameObject(GenerateId(), "");
 	Mesh* mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
 
 	switch (_type) {
@@ -194,7 +195,7 @@ bool EditorScene::AddPrimitive(PrimitiveEnum _type) {
 }
 
 
-void EditorScene::DeleteGameObject(int id) {
+void EditorScene::DeleteGameObject(long long int id) {
 
 	bool ret = false;
 
@@ -280,4 +281,5 @@ void EditorScene::SetFocus(GameObject* gameobject) { focus = gameobject; }
 GameObject* EditorScene::GetFocus() { return focus; }
 
 
+long long int EditorScene::GenerateId() { return 2; }
 

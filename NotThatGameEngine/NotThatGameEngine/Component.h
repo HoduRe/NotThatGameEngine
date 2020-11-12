@@ -19,7 +19,7 @@ class Component {
 
 public:
 
-	Component(int _id, GameObject* _gameObject, COMPONENT_TYPE _type, bool _enabled = true);
+	Component(long long int _id, GameObject* _gameObject, COMPONENT_TYPE _type, bool _enabled = true);
 	~Component();
 
 	virtual void Enable();
@@ -30,7 +30,7 @@ public:
 
 public:
 
-	int id;
+	long long int id;
 	bool enabled;
 	bool deleteComponent;
 	COMPONENT_TYPE type;

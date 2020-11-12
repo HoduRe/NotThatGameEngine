@@ -25,9 +25,10 @@ public:
 
 	bool AddPrimitive(PrimitiveEnum _type);
 	bool AddGameObject(GameObject* newObject);
-	void DeleteGameObject(int id);
+	void DeleteGameObject(long long int id);
 	void SetFocus(GameObject* gameobject = nullptr);
 	GameObject* GetFocus();
+	long long int GenerateId();
 
 private:
 

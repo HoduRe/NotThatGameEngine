@@ -10,7 +10,7 @@ class Material : public Component {
 
 public:
 
-	Material(int _id, GameObject* _gameObject);
+	Material(long long int _id, GameObject* _gameObject);
 	~Material();
 
 	void Update();

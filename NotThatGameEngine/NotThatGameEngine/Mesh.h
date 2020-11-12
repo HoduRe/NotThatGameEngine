@@ -10,7 +10,7 @@ class Mesh : public Component {
 
 public:
 
-	Mesh(int _id, GameObject* _gameObject);
+	Mesh(long long int _id, GameObject* _gameObject);
 	~Mesh();
 
 	void Update();

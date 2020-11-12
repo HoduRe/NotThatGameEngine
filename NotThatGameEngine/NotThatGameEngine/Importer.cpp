@@ -3,7 +3,7 @@
 
 GameObject* DataImporter::LoadModel(Application* App, const char* path, const char* buffer, uint size, GameObject* parent, bool enabled) {
 
-	GameObject* newObject = new GameObject(GenerateId(), path, parent, enabled);	// TODO: convert path to only the name of the file with the FileSystem function :3
+	GameObject* newObject = new GameObject(App->editorScene->GenerateId(), path, parent, enabled);	// TODO: convert path to only the name of the file with the FileSystem function :3
 
 	if (buffer == nullptr && size == 0) { size = App->externalManager->Load(path, (char**)&buffer); }
 	if (DataImporter::LoadScene(App, buffer, size, newObject, path)) {}
@@ -89,7 +89,7 @@ void DataImporter::LoadMeshNode(Application* App, aiNode* node, aiScene* scene, 
 
 		for (int i = 0; i < node->mNumMeshes; i++) {
 
-			GameObject* newObject = new GameObject(GenerateId(), "NewGameObject", parent);
+			GameObject* newObject = new GameObject(App->editorScene->GenerateId(), "NewGameObject", parent);
 
 			mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
 			mesh->meshName = scene->mMeshes[node->mMeshes[i]]->mName.C_Str();
@@ -173,15 +173,6 @@ void DataImporter::LoadMeshMaterial(Application* App, aiScene* scene, GameObject
 	}
 
 	else { LOG("This model has no materials attached.\n"); }
-
-}
-
-
-int DataImporter::GenerateId() {
-
-	int UUID = 2;
-
-	return UUID;
 
 }
 
