@@ -156,28 +156,28 @@ bool EditorScene::AddPrimitive(PrimitiveEnum _type) {
 	case PrimitiveEnum::PRIMITIVE_CUBE:
 
 		newObject->name = "Cube";
-		SetCubeVertices(3.0f, &mesh->vertices, &mesh->indices);
+		PrimitivesF::SetCubeVertices(3.0f, &mesh->vertices, &mesh->indices);
 
 		break;
 
 	case PrimitiveEnum::PRIMITIVE_SPHERE:
 
 		newObject->name = "Sphere";
-		SetSphereVertices(2.0f, 36, 18, &mesh->vertices, &mesh->indices);
+		PrimitivesF::SetSphereVertices(2.0f, 36, 18, &mesh->vertices, &mesh->indices);
 
 		break;
 
 	case PrimitiveEnum::PRIMITIVE_PYRAMID:
 
 		newObject->name = "Pyramid";
-		SetPyramidVertices(5.0f, 2.0f, &mesh->vertices, &mesh->indices);
+		PrimitivesF::SetPyramidVertices(5.0f, 2.0f, &mesh->vertices, &mesh->indices);
 
 		break;
 
 	case PrimitiveEnum::PRIMITIVE_CYLINDER:
 
 		newObject->name = "Cylinder";
-		SetCylinderVertices(8.0f, 3.0f, 30, &mesh->vertices, &mesh->indices);
+		PrimitivesF::SetCylinderVertices(8.0f, 3.0f, 30, &mesh->vertices, &mesh->indices);
 
 		break;
 

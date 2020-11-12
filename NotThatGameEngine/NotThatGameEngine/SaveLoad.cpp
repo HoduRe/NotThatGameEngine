@@ -4,23 +4,16 @@
 
 void DataSaving::SaveMesh(Application* App, Mesh* mesh/*, char** fileBuffer*/) {
 
-	//Buffers sizes? What does that mean?
-	int vertexSize = sizeof(mesh->vertices);
-	int indexSize = sizeof(mesh->indices);
-	int normalSize = sizeof(mesh->normals);
-	int textureCoordSize = sizeof(mesh->textureCoord);
+	int vertexSize = sizeof(float) * mesh->vertices.size();
+	int indexSize = sizeof(uint) * mesh->indices.size();
+	int normalSize = sizeof(float) * mesh->normals.size();
+	int textureCoordSize = sizeof(float) * mesh->textureCoord.size();
 
 	uint size = vertexSize + indexSize + normalSize + textureCoordSize;
 
-	// Allocate buffer size
 	char* buffer = new char[size];
 	char* cursor = buffer;
 
-	/*uint bytes = sizeof(mesh->buffersSize);
-	memcpy(cursor, mesh->buffersSize, bytes);
-	cursor += bytes;*/
-
-	// What happens when there are no indices or normals or whatever :)
 
 	memcpy(cursor, &mesh->vertices.at(0), vertexSize);
 	cursor += vertexSize;
