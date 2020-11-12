@@ -17,6 +17,7 @@ namespace DataImporter {
 	void LoadMeshMaterial(Application* App, aiScene* scene, GameObject* newObject, int materialId);
 	uint LoadTexture(Application* app, const char* path, const char* buffer = nullptr, uint size = 0);
 
+	int GenerateId();
 	void aiTransformTofloat4x4Transform(aiMatrix4x4 matrix, Transform* transform);
 }
 

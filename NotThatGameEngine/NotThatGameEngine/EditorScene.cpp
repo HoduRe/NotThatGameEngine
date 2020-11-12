@@ -6,7 +6,7 @@
 #pragma comment( lib, "Assimp/libx86/assimp.lib" )
 
 
-EditorScene::EditorScene(Application* app, bool start_enabled) : Module(app, start_enabled), gameObjectIdCount(0), rootGameObjectsVec(), stream(), defaultTextureId(0), focus(nullptr), sceneWindowFocus(false) {}
+EditorScene::EditorScene(Application* app, bool start_enabled) : Module(app, start_enabled), rootGameObjectsVec(), stream(), defaultTextureId(0), focus(nullptr), sceneWindowFocus(false) {}
 
 
 EditorScene::~EditorScene() {
@@ -90,9 +90,6 @@ bool EditorScene::CleanUp() {
 }
 
 
-int EditorScene::GenerateId() { return gameObjectIdCount++; }
-
-
 bool EditorScene::AddGameObject(GameObject* newObject) {	// This function doesn't work if you haven't added the parent previously!
 
 	bool ret = false;
@@ -148,7 +145,7 @@ bool EditorScene::AddGameObject(GameObject* newObject) {	// This function doesn'
 
 bool EditorScene::AddPrimitive(PrimitiveEnum _type) {
 
-	GameObject* newObject = new GameObject(GenerateId(), "");
+	GameObject* newObject = new GameObject(DataImporter::GenerateId(), "");
 	Mesh* mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
 
 	switch (_type) {

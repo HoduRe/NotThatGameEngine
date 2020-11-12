@@ -67,8 +67,7 @@ update_status Camera3D::Update(float dt)
 		else { LOG("There is no gameObject selected.\n"); }
 	}
 
-	if (mouseWheel != 0 && App->editorScene->sceneWindowFocus) { Position -= Z * mouseWheel * speed; }
-	else if (mouseWheel != 0) { LOG("Can't do Zoom without scene window selected."); }
+	if (mouseWheel != 0 && App->editorScene->sceneWindowFocus) { Position -= Z * mouseWheel * speed; }	// TODO: Zoom should be on hover, not on focus
 
 	CalculateViewMatrix();
 

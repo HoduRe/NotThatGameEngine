@@ -26,7 +26,6 @@ public:
 	bool AddPrimitive(PrimitiveEnum _type);
 	bool AddGameObject(GameObject* newObject);
 	void DeleteGameObject(int id);
-	int GenerateId();
 	void SetFocus(GameObject* gameobject = nullptr);
 	GameObject* GetFocus();
 
@@ -42,7 +41,6 @@ public:
 
 private:
 
-	int gameObjectIdCount;
 	aiLogStream stream;
 	uint defaultTextureId;
 	GameObject* focus;
