@@ -45,6 +45,7 @@ private:
 private:
 
 	int componentIdGenerator;
+	LCG idGenerator;
 
 };
 

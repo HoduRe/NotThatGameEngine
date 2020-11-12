@@ -2,7 +2,7 @@
 #include "OpenGLFuncionality.h"
 
 GameObject::GameObject(long long int _id, std::string _name, GameObject* _parent, bool _enabled, std::vector<GameObject*> children) :
-	name(_name), id(_id), worldTransform(), parent(_parent), childs(children), enabled(_enabled), components(), componentIdGenerator(0), deleteGameObject(false) {
+	name(_name), id(_id), worldTransform(), parent(_parent), childs(children), enabled(_enabled), components(), componentIdGenerator(0), deleteGameObject(false), idGenerator() {
 	AddComponent(COMPONENT_TYPE::TRANSFORM);
 }
 
@@ -129,7 +129,7 @@ bool GameObject::AddGameObjectByParent(GameObject* newObject) {
 }
 
 
-long long int GameObject::GenerateComponentId() { return 2; }
+long long int GameObject::GenerateComponentId() { return idGenerator.Int(); }
 
 
 bool GameObject::CheckChildDeletionById(long long int _id) {

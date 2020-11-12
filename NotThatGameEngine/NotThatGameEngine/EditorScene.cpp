@@ -7,7 +7,7 @@
 
 
 EditorScene::EditorScene(Application* app, bool start_enabled) : Module(app, start_enabled),
-rootGameObjectsVec(), stream(), defaultTextureId(0), focus(nullptr), sceneWindowFocus(false) {}
+rootGameObjectsVec(), stream(), defaultTextureId(0), focus(nullptr), sceneWindowFocus(false), idGenerator() {}
 
 
 EditorScene::~EditorScene() {
@@ -281,5 +281,5 @@ void EditorScene::SetFocus(GameObject* gameobject) { focus = gameobject; }
 GameObject* EditorScene::GetFocus() { return focus; }
 
 
-long long int EditorScene::GenerateId() { return 2; }
+long long int EditorScene::GenerateId() { return idGenerator.Int(); }
 

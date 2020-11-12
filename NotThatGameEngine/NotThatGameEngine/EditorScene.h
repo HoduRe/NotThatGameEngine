@@ -45,6 +45,7 @@ private:
 	aiLogStream stream;
 	uint defaultTextureId;
 	GameObject* focus;
+	LCG idGenerator;
 
 };
 
