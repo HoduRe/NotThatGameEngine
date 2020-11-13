@@ -44,7 +44,9 @@ bool DataImporter::LoadScene(Application* App, const char* buffer, uint size, Ga
 
 uint DataImporter::LoadTexture(Application* App, const char* path, const char* buffer, uint size) {
 
-	uint imageTest = App->texture->IsTextureRepeated(path);	// TODO: here texture should pass a UUID
+	std::string textureName;
+	App->externalManager->SplitFilePath(path, nullptr, &textureName);
+	uint imageTest = App->texture->IsTextureRepeated(textureName.c_str());
 
 	if (imageTest == 0) {
 
@@ -67,10 +69,10 @@ uint DataImporter::LoadTexture(Application* App, const char* path, const char* b
 		LoadGLTexture(&imageTest, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_BPP), ilGetInteger(IL_IMAGE_FORMAT), ilGetData());
 		ilDeleteImages(1, &imageTest);
 
-		TextureData* texture = new TextureData(imageTest, path, GL_DIFFUSE, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT));
+		TextureData* texture = new TextureData(imageTest, textureName.c_str(), GL_DIFFUSE, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), size, App->editorScene->GenerateId());
 
 		App->texture->AddTexture(texture);
-		DataSaving::SaveTexture(App, texture, (char**)&buffer);
+		DataSaving::SaveTexture(App, texture);
 
 	}
 

@@ -6,13 +6,16 @@
 struct TextureData {
 
 	TextureData();
-	TextureData(GLuint& _id, const char* textureName , GLenum _textureType, int width, int height);
+	TextureData(GLuint& _id, const char* _name, GLenum _textureType, int width, int height, int _size, int _UUID);
 
-	std::string path;
 	GLenum textureType;
 	GLuint textureId;
+	std::string name;
 	int width;
 	int height;
+	int size;
+
+	int textureUUID;
 };
 
 class Texture : public Module
@@ -29,7 +32,9 @@ public:
 	bool CleanUp();
 
 	void AddTexture(TextureData* texture);
-	uint IsTextureRepeated(const char* path);
+	uint IsTextureRepeated(GLuint id);
+	uint IsTextureRepeated(int id);
+	uint IsTextureRepeated(const char* _name);
 	TextureData* GetTextureData(GLuint id);
 
 public:

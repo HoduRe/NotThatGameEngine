@@ -8,11 +8,11 @@ Texture::Texture(Application* app, bool start_enabled) : Module(app, start_enabl
 Texture::~Texture() { textureVec.clear(); }
 
 
-TextureData::TextureData() : textureId(0), path(nullptr), textureType(0), width(0), height(0) {}
+TextureData::TextureData() : textureId(0), textureType(0), width(0), height(0), size(0), textureUUID(0), name() {}
 
 
-TextureData::TextureData(GLuint& _id, const char* textureName, GLenum _textureType, int _width, int _height) :
-	textureId(_id), path(textureName), textureType(_textureType), width(_width), height(_height) { }
+TextureData::TextureData(GLuint& _id, const char* _name, GLenum _textureType, int _width, int _height, int _size, int _UUID) :
+	textureId(_id), name(_name), textureType(_textureType), width(_width), height(_height), size(_size), textureUUID(_UUID) {}
 
 
 bool Texture::Init() {	// OpenGL has not been initialized yet
@@ -60,11 +60,35 @@ update_status Texture::Update(float dt) {
 void Texture::AddTexture(TextureData* texture) { textureVec.push_back(*texture); }
 
 
-uint Texture::IsTextureRepeated(const char* path) {
+uint Texture::IsTextureRepeated(GLuint id) {
 
 	for (int i = textureVec.size() - 1; i > -1; i--) {
 
-		if (textureVec[i].path == path) { return textureVec[i].textureId; }
+		if (textureVec[i].textureId == id) { return textureVec[i].textureId; }
+
+	}
+
+	return 0;
+}
+
+
+uint Texture::IsTextureRepeated(int id) {
+
+	for (int i = textureVec.size() - 1; i > -1; i--) {
+
+		if (textureVec[i].textureUUID == id) { return textureVec[i].textureId; }
+
+	}
+
+	return 0;
+}
+
+
+uint Texture::IsTextureRepeated(const char* _name) {
+
+	for (int i = textureVec.size() - 1; i > -1; i--) {
+
+		if (textureVec[i].name.c_str() == _name) { return textureVec[i].textureId; }
 
 	}
 

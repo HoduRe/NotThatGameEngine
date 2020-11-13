@@ -30,6 +30,7 @@ An engine for CITM's Engine project which focuses on skeletical animation
 - Obligued path for textures: the directory must be "Assets/Library/Textures/" <br/>
 - Do not move Checkers, Alex or Degenerate textures. They are internally loaded for the user to have by default, thus the path is hardcoded :) <br/>
 - Primitives do not have normals nor texture coordinates, thus they can't recieve a texture <br/>
+- Images can't have the same name, even if they are of different formats<br/>
 - Give the dragon time to load :')<br/>
 
 

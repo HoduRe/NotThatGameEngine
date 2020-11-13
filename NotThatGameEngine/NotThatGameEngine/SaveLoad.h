@@ -14,9 +14,9 @@ class TextureData;
 
 namespace DataSaving {
 
-	void SaveMesh(Application* App, Mesh* mesh/*, char** fileBuffer*/);
-	void SaveMaterial(Application* App, Material* material/*, char** fileBuffer*/);
-	void SaveTexture(Application* App, TextureData* texture, char** fileBuffer);
+	void SaveMesh(Application* App, Mesh* mesh);
+	void SaveMaterial(Application* App, Material* material);
+	void SaveTexture(Application* App, TextureData* texture);
 
 }
 
@@ -24,7 +24,7 @@ namespace DataLoading {
 
 	void LoadMesh(char* fileBuffer, Mesh* mesh);
 	void LoadMaterial(char* fileBuffer, Material* material);
-	void LoadTexture(char* fileBuffer, TextureData* texture);
+	uint LoadTexture(Application* App, const char* fileName);
 
 }
 

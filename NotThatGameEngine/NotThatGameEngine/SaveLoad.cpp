@@ -1,8 +1,8 @@
 #include "SaveLoad.h"
 #include "Application.h"
+#include "Importer.h"
 
-
-void DataSaving::SaveMesh(Application* App, Mesh* mesh/*, char** fileBuffer*/) {
+void DataSaving::SaveMesh(Application* App, Mesh* mesh) {
 
 	int intSize = sizeof(int);
 	int vertexSize = sizeof(float) * mesh->vertices.size();
@@ -62,14 +62,23 @@ void DataSaving::SaveMesh(Application* App, Mesh* mesh/*, char** fileBuffer*/) {
 
 }
 
-void DataSaving::SaveMaterial(Application* App, Material* material/*, char** fileBuffer*/) {
+void DataSaving::SaveMaterial(Application* App, Material* material) {
 	int a = 2;
 
 }
 
-void DataSaving::SaveTexture(Application* App, TextureData* texture, char** fileBuffer) {
-	int a = 2;
-	// THIS SHOULD ONLY BE CREATING A DDS, SO MAYBE RECIEVEING TEXTUREDATA IS NOT NEEDED... EXCEPT FOR UUIDS?
+void DataSaving::SaveTexture(Application* App, TextureData* texture) {
+
+	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);
+	ILuint size = ilSaveL(IL_DDS, nullptr, texture->textureId);
+	ILubyte* data = new ILubyte[size];
+
+	std::string path = "Assets/Library/Textures/" +  texture->name + ".DDS";
+
+	App->externalManager->Save(path.c_str(), data, size);
+
+	RELEASE_ARRAY(data);
+
 }
 
 void DataLoading::LoadMesh(char* fileBuffer, Mesh* mesh) {
@@ -139,7 +148,10 @@ void DataLoading::LoadMaterial(char* fileBuffer, Material* material) {
 
 }
 
-void DataLoading::LoadTexture(char* fileBuffer, TextureData* texture) {
+uint DataLoading::LoadTexture(Application* App, const char* fileName) {
 	//NOT CALLED
+	std::string textureName = TEXTURES_PATH + (std::string)fileName;
+	return DataImporter::LoadTexture(App, textureName.c_str());
+	// TODO: if resource manager begins after textures, we will load Alex.png and company, and then overwrite the DDS. Which is not wrong, but...
 }
 
