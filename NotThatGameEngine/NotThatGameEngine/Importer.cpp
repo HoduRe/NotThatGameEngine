@@ -51,12 +51,11 @@ uint DataImporter::LoadTexture(Application* App, const char* path, const char* b
 	if (imageTest == 0) {
 
 		if (buffer == nullptr && size == 0) { size = App->externalManager->Load(path, (char**)&buffer); }
-		ILboolean ret;
 
 		ilGenImages(1, &imageTest);
 		ilBindImage(imageTest);
 
-		ret = ilLoadL(IL_TYPE_UNKNOWN, buffer, size);
+		ILboolean ret = ilLoadL(IL_TYPE_UNKNOWN, buffer, size);
 
 		RELEASE_ARRAY(buffer);
 
@@ -67,12 +66,13 @@ uint DataImporter::LoadTexture(Application* App, const char* path, const char* b
 		}
 
 		LoadGLTexture(&imageTest, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_BPP), ilGetInteger(IL_IMAGE_FORMAT), ilGetData());
-		ilDeleteImages(1, &imageTest);
 
 		TextureData* texture = new TextureData(imageTest, textureName.c_str(), GL_DIFFUSE, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), size, App->editorScene->GenerateId());
 
 		App->texture->AddTexture(texture);
-		DataSaving::SaveTexture(App, texture);
+		DataSaving::SaveTexture(App, texture);	// TODO: so if I'm loading an imported DDS texture, I save it, but it's the same... I don't have editable textures, so why? Maybe this is solved by having a timer for resource manager?
+
+		ilDeleteImages(1, &imageTest);
 
 	}
 

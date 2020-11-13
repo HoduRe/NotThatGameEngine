@@ -69,13 +69,25 @@ void DataSaving::SaveMaterial(Application* App, Material* material) {
 
 void DataSaving::SaveTexture(Application* App, TextureData* texture) {
 
-	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);
-	ILuint size = ilSaveL(IL_DDS, nullptr, texture->textureId);
+	/*ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);
+	ILuint size = ilSaveL(IL_DDS, nullptr, 0);
 	ILubyte* data = new ILubyte[size];
+	size = ilSaveL(IL_DDS, data, size);
+	*/
+	char* buffer;
+	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);// To pick a specific DXT compression use
+	ILuint size = ilSaveL(IL_DDS, nullptr, 0); // Get the size of the data buffer
+	ILubyte* data = new ILubyte[size]; // allocate data buffer
 
-	std::string path = "Assets/Library/Textures/" +  texture->name + ".DDS";
+	if (size > 0) {
+		if (ilSaveL(IL_DDS, data, size) > 0) { // Save to buffer with the ilSaveIL function
 
-	App->externalManager->Save(path.c_str(), data, size);
+			std::string path = "Assets/" + (std::string)TEXTURES_PATH + texture->name + ".dds";
+
+			App->externalManager->Save(path.c_str(), data, size);
+		}
+
+	}
 
 	RELEASE_ARRAY(data);
 
