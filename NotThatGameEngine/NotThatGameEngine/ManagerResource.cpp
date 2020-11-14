@@ -1,5 +1,4 @@
 #include "ManagerResource.h"
-#include "parson/parson.h"
 
 ResourceManager::ResourceManager(Application* app, bool start_enabled) : Module(app, start_enabled) {}
 
@@ -8,8 +7,6 @@ ResourceManager::~ResourceManager() {}
 
 
 bool ResourceManager::Init() {
-
-	json_set_allocation_functions();
 
 	// TODO: Load scene in assets
 

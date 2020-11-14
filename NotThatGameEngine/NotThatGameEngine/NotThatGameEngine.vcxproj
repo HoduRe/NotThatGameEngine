@@ -157,6 +157,7 @@
     <ClCompile Include="imgui_impl_opengl3.cpp" />
     <ClCompile Include="imgui_impl_sdl.cpp" />
     <ClCompile Include="imgui_widgets.cpp" />
+    <ClCompile Include="JsonManager.cpp" />
     <ClCompile Include="ManagerResource.cpp" />
     <ClCompile Include="SaveLoad.cpp" />
     <ClCompile Include="Light.cpp" />
@@ -196,6 +197,7 @@
     <ClInclude Include="imgui_impl_opengl3.h" />
     <ClInclude Include="imgui_impl_sdl.h" />
     <ClInclude Include="imgui_internal.h" />
+    <ClInclude Include="JsonManager.h" />
     <ClInclude Include="ManagerResource.h" />
     <ClInclude Include="SaveLoad.h" />
     <ClInclude Include="imstb_rectpack.h" />

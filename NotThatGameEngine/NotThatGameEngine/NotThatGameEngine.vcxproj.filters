@@ -25,6 +25,9 @@
     <Filter Include="SceneManager\Components">
       <UniqueIdentifier>{a2f37aaa-9260-45e6-a70f-1ab82508e2d8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SceneManager\Data managing">
+      <UniqueIdentifier>{e9b0004e-7fd4-461e-80cb-a3845e2a086e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Color.cpp">
@@ -126,17 +129,20 @@
     <ClCompile Include="Primitives.cpp">
       <Filter>SceneManager</Filter>
     </ClCompile>
-    <ClCompile Include="ManagerExternal.cpp">
-      <Filter>Modular code</Filter>
-    </ClCompile>
     <ClCompile Include="SaveLoad.cpp">
-      <Filter>SceneManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Importer.cpp">
-      <Filter>SceneManager</Filter>
+      <Filter>SceneManager\Data managing</Filter>
     </ClCompile>
     <ClCompile Include="ManagerResource.cpp">
-      <Filter>SceneManager</Filter>
+      <Filter>SceneManager\Data managing</Filter>
+    </ClCompile>
+    <ClCompile Include="ManagerExternal.cpp">
+      <Filter>SceneManager\Data managing</Filter>
+    </ClCompile>
+    <ClCompile Include="Importer.cpp">
+      <Filter>SceneManager\Data managing</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonManager.cpp">
+      <Filter>SceneManager\Data managing</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -251,17 +257,20 @@
     <ClInclude Include="Primitives.h">
       <Filter>SceneManager</Filter>
     </ClInclude>
-    <ClInclude Include="ManagerExternal.h">
-      <Filter>Modular code</Filter>
-    </ClInclude>
     <ClInclude Include="SaveLoad.h">
-      <Filter>SceneManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Importer.h">
-      <Filter>SceneManager</Filter>
+      <Filter>SceneManager\Data managing</Filter>
     </ClInclude>
     <ClInclude Include="ManagerResource.h">
-      <Filter>SceneManager</Filter>
+      <Filter>SceneManager\Data managing</Filter>
+    </ClInclude>
+    <ClInclude Include="ManagerExternal.h">
+      <Filter>SceneManager\Data managing</Filter>
+    </ClInclude>
+    <ClInclude Include="Importer.h">
+      <Filter>SceneManager\Data managing</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonManager.h">
+      <Filter>SceneManager\Data managing</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
