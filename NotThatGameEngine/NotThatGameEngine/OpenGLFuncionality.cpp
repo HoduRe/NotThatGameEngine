@@ -9,7 +9,7 @@
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
-bool SetOpenGL() {
+bool OpenGLFunctionality::SetOpenGL() {
 
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -33,7 +33,7 @@ bool SetOpenGL() {
 }
 
 
-void LoadDataBufferFloat(int bufferType, GLuint* id, int size, float* data) {
+void OpenGLFunctionality::LoadDataBufferFloat(int bufferType, GLuint* id, int size, float* data) {
 
 	glGenBuffers(1, id);
 	glBindBuffer(bufferType, *id);
@@ -43,7 +43,7 @@ void LoadDataBufferFloat(int bufferType, GLuint* id, int size, float* data) {
 }
 
 
-void LoadDataBufferUint(int bufferType, GLuint* id, int size, GLuint* data) {
+void OpenGLFunctionality::LoadDataBufferUint(int bufferType, GLuint* id, int size, GLuint* data) {
 
 	glGenBuffers(1, id);
 	glBindBuffer(bufferType, *id);
@@ -53,7 +53,7 @@ void LoadDataBufferUint(int bufferType, GLuint* id, int size, GLuint* data) {
 }
 
 
-void LoadGLTexture(GLuint* _id, int width, int height, int bpp, int format, ILubyte* data) {
+void OpenGLFunctionality::LoadGLTexture(GLuint* _id, int width, int height, int bpp, int format, ILubyte* data) {
 
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	glGenTextures(1, _id);
@@ -69,7 +69,7 @@ void LoadGLTexture(GLuint* _id, int width, int height, int bpp, int format, ILub
 }
 
 
-void DrawMeshes(Mesh& mesh, float4x4 worldTransform, GLuint textureId) {
+void OpenGLFunctionality::DrawMeshes(Mesh& mesh, float4x4 worldTransform, GLuint textureId) {
 
 	glPushMatrix();
 	glMultMatrixf((float*)&worldTransform.Transposed());
@@ -110,7 +110,7 @@ void DrawMeshes(Mesh& mesh, float4x4 worldTransform, GLuint textureId) {
 }
 
 
-void DrawLines(float4x4 worldTransform, GLuint debugId, std::vector<float> debugVec) {
+void OpenGLFunctionality::DrawLines(float4x4 worldTransform, GLuint debugId, std::vector<float> debugVec) {
 
 	if (debugId != 0) {
 

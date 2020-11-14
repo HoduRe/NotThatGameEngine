@@ -99,6 +99,11 @@ void DataLoading::LoadMesh(char* fileBuffer, Mesh* mesh) {
 	int normalVecSize;
 	int textureCoordVecSize;
 
+	std::vector<float> vertices;
+	std::vector<float> normals;
+	std::vector<float> textureCoord;
+	std::vector<GLuint> indices;
+
 	memcpy(&vertexVecSize, cursor, sizeof(int));
 	cursor += sizeof(int);
 
@@ -115,7 +120,7 @@ void DataLoading::LoadMesh(char* fileBuffer, Mesh* mesh) {
 
 		float data;
 		memcpy(&data, cursor, sizeof(float));
-		mesh->vertices.push_back(data);
+		vertices.push_back(data);
 		cursor += sizeof(float);
 
 	}
@@ -124,7 +129,7 @@ void DataLoading::LoadMesh(char* fileBuffer, Mesh* mesh) {
 
 		uint data;
 		memcpy(&data, cursor, sizeof(uint));
-		mesh->indices.push_back(data);
+		indices.push_back(data);
 		cursor += sizeof(uint);
 
 	}
@@ -133,7 +138,7 @@ void DataLoading::LoadMesh(char* fileBuffer, Mesh* mesh) {
 
 		float data;
 		memcpy(&data, cursor, sizeof(float));
-		mesh->normals.push_back(data);
+		normals.push_back(data);
 		cursor += sizeof(float);
 
 	}
@@ -142,12 +147,15 @@ void DataLoading::LoadMesh(char* fileBuffer, Mesh* mesh) {
 
 		float data;
 		memcpy(&data, cursor, sizeof(float));
-		mesh->textureCoord.push_back(data);
+		textureCoord.push_back(data);
 		cursor += sizeof(float);
 
 	}
 
-	//TODO: We now need to upload data to OpenGL in memory. Do it here, or wherever it's needed to
+	mesh->SetVertices(vertices);
+	mesh->SetNormals(normals);
+	mesh->SetTextureCoord(textureCoord);
+	mesh->SetIndices(indices);
 
 }
 

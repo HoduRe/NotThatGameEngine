@@ -29,7 +29,7 @@ bool Renderer3D::Init()
 
 	// Vsync
 	SDL_GL_SetSwapInterval(1);
-	ret = SetOpenGL();
+	ret = OpenGLFunctionality::SetOpenGL();
 
 	if (ret) {
 
@@ -55,7 +55,7 @@ bool Renderer3D::Init()
 		glGenFramebuffers(1, &frameBufferId);
 		glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
 
-		LoadGLTexture(&sceneTextureId, SCREEN_WIDTH, SCREEN_HEIGHT, GL_RGBA, GL_RGBA, NULL);
+		OpenGLFunctionality::LoadGLTexture(&sceneTextureId, SCREEN_WIDTH, SCREEN_HEIGHT, GL_RGBA, GL_RGBA, NULL);
 
 		glGenRenderbuffers(1, &depthStencilId);
 		glBindRenderbuffer(GL_RENDERBUFFER, depthStencilId);

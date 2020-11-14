@@ -52,14 +52,14 @@ void GameObject::PostUpdate(uint& defaultTextureId) {
 
 		if (material != nullptr) {
 
-			if (material->diffuseId == 0) { DrawMeshes(*mesh, worldTransform, defaultTextureId); }
-			else { DrawMeshes(*mesh, worldTransform, material->diffuseId); }
+			if (material->diffuseId == 0) { OpenGLFunctionality::DrawMeshes(*mesh, worldTransform, defaultTextureId); }
+			else { OpenGLFunctionality::DrawMeshes(*mesh, worldTransform, material->diffuseId); }
 
 		}
 
-		else { DrawMeshes(*mesh, worldTransform, 0); }
+		else { OpenGLFunctionality::DrawMeshes(*mesh, worldTransform, 0); }
 
-		if (mesh->paintNormals) { DrawLines(worldTransform, mesh->DebugNormals(), mesh->debugNormals); }
+		if (mesh->paintNormals) { OpenGLFunctionality::DrawLines(worldTransform, mesh->DebugNormals(), mesh->debugNormals); }
 
 	}
 

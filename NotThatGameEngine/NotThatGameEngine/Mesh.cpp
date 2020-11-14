@@ -25,7 +25,7 @@ void Mesh::Update() {}
 void Mesh::SetVertices(std::vector<float> _vertices) {
 
 	vertices = _vertices;
-	LoadDataBufferFloat(GL_ARRAY_BUFFER, &vertexId, vertices.size(), vertices.data());
+	OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &vertexId, vertices.size(), vertices.data());
 
 }
 
@@ -33,7 +33,7 @@ void Mesh::SetVertices(std::vector<float> _vertices) {
 void Mesh::SetIndices(std::vector<GLuint> _indices) {
 
 	indices = _indices;
-	LoadDataBufferUint(GL_ELEMENT_ARRAY_BUFFER, &indexId, indices.size(), indices.data());
+	OpenGLFunctionality::LoadDataBufferUint(GL_ELEMENT_ARRAY_BUFFER, &indexId, indices.size(), indices.data());
 
 }
 
@@ -41,7 +41,7 @@ void Mesh::SetIndices(std::vector<GLuint> _indices) {
 void Mesh::SetNormals(std::vector<float> _normals) {
 
 	normals = _normals;
-	LoadDataBufferFloat(GL_NORMAL_ARRAY, &normalsId, normals.size(), normals.data());
+	OpenGLFunctionality::LoadDataBufferFloat(GL_NORMAL_ARRAY, &normalsId, normals.size(), normals.data());
 
 }
 
@@ -50,7 +50,7 @@ void Mesh::SetTextureCoord(std::vector<float> _textureCoord)
 {
 
 	textureCoord = _textureCoord;
-	LoadDataBufferFloat(GL_TEXTURE_COORD_ARRAY, &textureCoordId, textureCoord.size(), textureCoord.data());
+	OpenGLFunctionality::LoadDataBufferFloat(GL_TEXTURE_COORD_ARRAY, &textureCoordId, textureCoord.size(), textureCoord.data());
 
 }
 
@@ -76,7 +76,7 @@ GLuint Mesh::DebugNormals() {
 
 			}
 
-			LoadDataBufferFloat(GL_ARRAY_BUFFER, &debugNormalsId, debugNormals.size(), debugNormals.data());
+			OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &debugNormalsId, debugNormals.size(), debugNormals.data());
 
 		}
 

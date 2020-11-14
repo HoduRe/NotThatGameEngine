@@ -17,13 +17,17 @@
 
 class Mesh;
 
-bool SetOpenGL();
+namespace OpenGLFunctionality {
 
-void LoadDataBufferFloat(int bufferType, GLuint* id, int size, float* data);
-void LoadDataBufferUint(int bufferType, GLuint* id, int size, GLuint* data);
-void LoadGLTexture(GLuint* _id, int width, int height, int bpp, int format, ILubyte* data);
+	bool SetOpenGL();
 
-void DrawMeshes(Mesh& mesh, float4x4 worldTransform, GLuint textureId);
-void DrawLines(float4x4 worldTransform, GLuint debugId, std::vector<float> debugVec);
+	void LoadDataBufferFloat(int bufferType, GLuint* id, int size, float* data);
+	void LoadDataBufferUint(int bufferType, GLuint* id, int size, GLuint* data);
+	void LoadGLTexture(GLuint* _id, int width, int height, int bpp, int format, ILubyte* data);
+
+	void DrawMeshes(Mesh& mesh, float4x4 worldTransform, GLuint textureId);
+	void DrawLines(float4x4 worldTransform, GLuint debugId, std::vector<float> debugVec);
+
+}
 
 #endif
