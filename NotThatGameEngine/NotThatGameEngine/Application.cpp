@@ -14,12 +14,12 @@ Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter
 	imGui = new ManagerImGui(this);
 	eventManager = new ManagerEvent(this);
 	externalManager = new ExternalManager(this);
+	resourceManager = new ResourceManager(this);
 	editorScene = new EditorScene(this);
 	texture = new Texture(this);
 
 	// The order of calls is very important!
-	// Modules will Init() Start() and Update in this order
-	// They will CleanUp() in reverse order
+	// Modules will Init() Start() and Update in this order; CleanUp() in reverse order
 
 	// Main Modules
 	AddModule(reset);
@@ -34,6 +34,7 @@ Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter
 	AddModule(engineScene);
 	AddModule(editorScene);
 	AddModule(player);
+	AddModule(resourceManager);
 
 	// Renderer last!
 	AddModule(renderer3D);
@@ -186,7 +187,7 @@ void Application::log(const char file[], int line, const char* format, ...)
 	consoleVecSize++;
 
 	if (consoleVecSize >= 50) {
-		consoleVec.erase(consoleVec.begin()+consoleVec.size()-1);
+		consoleVec.erase(consoleVec.begin() + consoleVec.size() - 1);
 		consoleVecSize--;
 	}
 }

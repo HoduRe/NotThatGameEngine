@@ -135,6 +135,9 @@
     <ClCompile Include="Importer.cpp">
       <Filter>SceneManager</Filter>
     </ClCompile>
+    <ClCompile Include="ManagerResource.cpp">
+      <Filter>SceneManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h">
@@ -255,6 +258,9 @@
       <Filter>SceneManager</Filter>
     </ClInclude>
     <ClInclude Include="Importer.h">
+      <Filter>SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ManagerResource.h">
       <Filter>SceneManager</Filter>
     </ClInclude>
   </ItemGroup>

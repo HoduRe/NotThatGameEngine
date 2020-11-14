@@ -19,12 +19,6 @@ bool Texture::Init() {	// OpenGL has not been initialized yet
 
 	bool ret = true;
 
-	return ret;
-}
-
-
-bool Texture::Start() {
-
 	ilInit();
 	iluInit();
 	ilutInit();
@@ -33,6 +27,12 @@ bool Texture::Start() {
 
 	ilEnable(IL_ORIGIN_SET);
 	ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
+
+	return ret;
+}
+
+
+bool Texture::Start() {
 
 	defaultTextureId = DataImporter::LoadTexture(App, "Library/Textures/Alex.png");
 	checkersTextureId = DataImporter::LoadTexture(App, "Library/Textures/Checker.png");

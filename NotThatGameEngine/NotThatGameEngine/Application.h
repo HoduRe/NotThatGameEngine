@@ -18,6 +18,7 @@
 #include "ManagerExternal.h"
 #include "EditorScene.h"
 #include "Textures.h"
+#include "ManagerResource.h"
 
 #define LOG(format, ...) App->log(__FILE__, __LINE__, format, __VA_ARGS__);
 
@@ -36,6 +37,7 @@ public:
 	ManagerImGui* imGui;
 	ManagerEvent* eventManager;
 	ExternalManager* externalManager;
+	ResourceManager* resourceManager;
 	EditorScene* editorScene;
 	Texture* texture;
 
