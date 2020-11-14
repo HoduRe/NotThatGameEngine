@@ -54,7 +54,7 @@ void DataSaving::SaveMesh(Application* App, Mesh* mesh) {
 
 	}
 
-	std::string path = "Assets/Library/Meshes/" + mesh->meshName + ".NotThatExtension";	// TODO: it would be cool to have this be the UUID, then when an object is loaded with its components, it simply has to call the load function by UUID, and the functions uses that name no problem
+	std::string path = (std::string)MESHES_PATH + mesh->meshName + ".NotThatExtension";	// TODO: it would be cool to have this be the UUID, then when an object is loaded with its components, it simply has to call the load function by UUID, and the functions uses that name no problem
 
 	App->externalManager->Save(path.c_str(), buffer, size);
 
@@ -78,7 +78,7 @@ void DataSaving::SaveTexture(Application* App, TextureData* texture) {
 
 		if (ilSaveL(IL_DDS, data, size) > 0) {
 
-			std::string path = "Assets/" + (std::string)TEXTURES_PATH + texture->name + ".dds";
+			std::string path = (std::string)TEXTURES_PATH + texture->name + ".dds";
 			App->externalManager->Save(path.c_str(), data, size);
 
 		}
