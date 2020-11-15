@@ -94,28 +94,31 @@ void DataSaving::SaveTexture(Application* App, TextureData* texture) {
 void DataSaving::SaveGameObject(Application* App, JsonManager* manager, GameObject* gameObject) {
 
 	manager->SetString("Name", gameObject->name.c_str());
-	manager->SetNumber("ID", gameObject->id);
-	manager->SetNumber("ParentID", gameObject->parent ? gameObject->parent->id : 0);
+	manager->SetInt("ID", gameObject->id);
+	manager->SetInt("ParentID", gameObject->parent ? gameObject->parent->id : 0);
 
-	/*const C_Transform* transform = gameObject->GetComponent<C_Transform>();
+	Transform* transform = (Transform*)gameObject->FindComponent(COMPONENT_TYPE::TRANSFORM);
 
-	//Translation part
-	manager->SetArray("Translation").AddFloat3(transform->GetPosition());
-
-	//Rotation part
-	manager->SetArray("Rotation").AddQuat(transform->GetQuatRotation());
-
-	//Scale part
-	manager->SetArray("Scale").AddFloat3(transform->GetScale());
-	// TODO: Save transforms*/
+	JSON_Array* jsonObject = manager->OpenArray("Translation");
+	manager->AddFloat(jsonObject, transform->GetPosition().x);
+	manager->AddFloat(jsonObject, transform->GetPosition().y);
+	manager->AddFloat(jsonObject, transform->GetPosition().z);
+	jsonObject = manager->OpenArray("Rotation");
+	manager->AddFloat(jsonObject, transform->GetEulerAngles().x);
+	manager->AddFloat(jsonObject, transform->GetEulerAngles().y);
+	manager->AddFloat(jsonObject, transform->GetEulerAngles().z);
+	jsonObject = manager->OpenArray("Scale");
+	manager->AddFloat(jsonObject, transform->GetScale().x);
+	manager->AddFloat(jsonObject, transform->GetScale().y);
+	manager->AddFloat(jsonObject, transform->GetScale().z);
 
 	JSON_Array* gameObjectsArray = manager->OpenArray("Components");
 	const std::vector<Component*> components = gameObject->components;
 
 	for (uint i = 0; i < components.size(); i++) {
 
-		manager->SetNumber("ComponentType", (int)components[i]->type);
-		manager->SetNumber("ID", components[i]->id);
+		manager->SetInt("ComponentType", (int)components[i]->type);
+		manager->SetInt("ID", components[i]->id);
 		
 	}
 

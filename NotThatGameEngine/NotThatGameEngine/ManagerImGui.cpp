@@ -169,7 +169,11 @@ update_status ManagerImGui::SetMainMenuBar()
 
 			if (ImGui::MenuItem("Open", "Ctrl+O")) {}
 
-			if (ImGui::MenuItem("Save", "Ctrl+S")) {}
+			if (ImGui::MenuItem("Save", "Ctrl+S")) {
+
+				App->eventManager->GenerateEvent(EVENT_ENUM::SAVE_SCENE);
+
+			}
 
 			if (ImGui::MenuItem("Save As...")) {}
 

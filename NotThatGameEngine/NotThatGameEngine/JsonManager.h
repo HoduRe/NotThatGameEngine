@@ -22,14 +22,17 @@ public:
 	JsonManager(const char* buffer);	// Read file
 	~JsonManager();
 
-	void SetNumber(const char* name, int data);
+	void SetInt(const char* name, int data);
+	void SetFloat(const char* name, float data);
 	void SetString(const char* name, const char* data);
 	void SetBool(const char* name, bool data);
-	
+	void AddFloat(JSON_Array* arrayObject, const float& data);
+
 	int Serialize(char** buffer);
 
 	JSON_Array* OpenArray(const char* name);
 	JsonManager AddArrayNode(JSON_Array* jsonArray);
+	int GetArraySize(JSON_Array* jsonArray);
 
 private:
 

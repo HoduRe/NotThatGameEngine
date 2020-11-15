@@ -454,30 +454,30 @@ int close_sdl_rwops(SDL_RWops* rw) {
 }
 
 
-uint ExternalManager::Save(const char* file, const void* buffer, unsigned int size, bool append) const {	// Save a whole buffer to disk
+uint ExternalManager::Save(const char* path, const void* buffer, unsigned int size, bool append) const {	// Save a whole buffer to disk
 
 	unsigned int ret = 0;
-	bool overwrite = PHYSFS_exists(file) != 0;
-	PHYSFS_file* fs_file = (append) ? PHYSFS_openAppend(file) : PHYSFS_openWrite(file);
+	bool overwrite = PHYSFS_exists(path) != 0;
+	PHYSFS_file* fs_file = (append) ? PHYSFS_openAppend(path) : PHYSFS_openWrite(path);
 
 	if (fs_file != nullptr) {
 
 		uint written = (uint)PHYSFS_write(fs_file, (const void*)buffer, 1, size);
-		if (written != size) { LOG("[error] File System error while writing to file %s: %s.\n", file, PHYSFS_getLastError()); }
+		if (written != size) { LOG("[error] File System error while writing to file %s: %s.\n", path, PHYSFS_getLastError()); }
 
 		else {
 
-			if (append == true) { LOG("Added %u data to [%s%s].\n", size, GetWriteDir(), file); }
-			else if (overwrite == true) { LOG("File [%s%s] overwritten with %u bytes.\n", GetWriteDir(), file, size); }
-			else { LOG("New file created [%s%s] of %u bytes.\n", GetWriteDir(), file, size); }
+			if (append == true) { LOG("Added %u data to [%s%s].\n", size, GetWriteDir(), path); }
+			else if (overwrite == true) { LOG("File [%s%s] overwritten with %u bytes.\n", GetWriteDir(), path, size); }
+			else { LOG("New file created [%s%s] of %u bytes.\n", GetWriteDir(), path, size); }
 			ret = written;
 
 		}
 
-		if (PHYSFS_close(fs_file) == 0) { LOG("[error] File System error while closing file %s: %s.\n", file, PHYSFS_getLastError()); }
+		if (PHYSFS_close(fs_file) == 0) { LOG("[error] File System error while closing file %s: %s.\n", path, PHYSFS_getLastError()); }
 	}
 
-	else { LOG("[error] File System error while opening file %s: %s.\n", file, PHYSFS_getLastError()); }
+	else { LOG("[error] File System error while opening file %s: %s.\n", path, PHYSFS_getLastError()); }
 
 	return ret;
 }

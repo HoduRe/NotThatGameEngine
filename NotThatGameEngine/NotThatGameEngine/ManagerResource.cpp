@@ -30,13 +30,15 @@ bool ResourceManager::Init() {
 bool ResourceManager::Start()
 {
 
+	App->eventManager->EventRegister(EVENT_ENUM::SAVE_SCENE, this);
+	App->eventManager->EventRegister(EVENT_ENUM::LOAD_SCENE, this);
+
 	return true;
 }
 
 
 update_status ResourceManager::PreUpdate(float dt) {
 
-	CheckListener(this);
 	return update_status::UPDATE_CONTINUE;
 
 }
@@ -52,6 +54,7 @@ update_status ResourceManager::Update(float dt)
 
 update_status ResourceManager::PostUpdate(float dt) {
 
+	CheckListener(this);
 	return update_status::UPDATE_CONTINUE;
 
 }
@@ -71,7 +74,7 @@ void ResourceManager::LoadScene() {
 }
 
 
-void ResourceManager::SaveScene(char** buffer) {
+void ResourceManager::SaveScene() {
 
 	JsonManager file;
 	JSON_Array* gameObjectsArray = file.OpenArray("GameObjects");
@@ -80,9 +83,11 @@ void ResourceManager::SaveScene(char** buffer) {
 
 	for (uint i = 1; i < gameObjects.size(); i++) { DataSaving::SaveGameObject(App, &file.AddArrayNode(gameObjectsArray), gameObjects[i]); }
 
-	uint size = file.Serialize(buffer);
+	char* buffer = new char[file.GetArraySize(gameObjectsArray)];
+	uint size = file.Serialize(&buffer);
 
-	// Now save this through file system :3
+	std::string sceneName = SCENES_PATH + (std::string)"Scene1.json";
+	App->externalManager->Save(sceneName.c_str(), &buffer, size);
 
 }
 
@@ -91,7 +96,17 @@ bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
 	switch (eventId) {
 
-		// TODO: Recive load / save event
+	case EVENT_ENUM::SAVE_SCENE:
+
+		SaveScene();
+
+		break;
+
+	case EVENT_ENUM::LOAD_SCENE:
+
+		LoadScene();
+
+		break;
 
 	default:
 		break;

@@ -17,11 +17,12 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
+	void LoadScene();
+	void SaveScene();
+
 private:
 
 	bool ExecuteEvent(EVENT_ENUM _event, void* var);
-	void LoadScene();
-	void SaveScene(char** buffer);
 
 public:
 

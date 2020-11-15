@@ -34,11 +34,13 @@ Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter
 	AddModule(engineScene);
 	AddModule(editorScene);
 	AddModule(player);
-	AddModule(resourceManager);
-
+	
 	// Renderer last!
 	AddModule(renderer3D);
 	AddModule(imGui);
+
+	AddModule(resourceManager);
+
 }
 
 Application::~Application()

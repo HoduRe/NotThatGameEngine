@@ -1,5 +1,4 @@
 #include "JsonManager.h"
-#include "Globals.h"
 
 JsonManager::JsonManager() {
 
@@ -23,13 +22,19 @@ JsonManager::JsonManager(JSON_Object* object) : node(object) {}
 JsonManager::~JsonManager() { if (root_value) { json_value_free(root_value); } }
 
 
-void JsonManager::SetNumber(const char* name, int data) { json_object_set_number(node, name, data); }
+void JsonManager::SetInt(const char* name, int data) { json_object_set_number(node, name, data); }
+
+
+void JsonManager::SetFloat(const char* name, float data) { json_object_set_number(node, name, data); }
 
 
 void JsonManager::SetString(const char* name, const char* data) { json_object_set_string(node, name, data); }
 
 
 void JsonManager::SetBool(const char* name, bool data) { json_object_set_boolean(node, name, data); }
+
+
+void JsonManager::AddFloat(JSON_Array* arrayObject, const float& data) { json_array_append_number(arrayObject, data); }
 
 
 JSON_Array* JsonManager::OpenArray(const char* name) {
@@ -42,7 +47,7 @@ JSON_Array* JsonManager::OpenArray(const char* name) {
 
 JsonManager JsonManager::AddArrayNode(JSON_Array* jsonArray) {
 
-	uint size = json_array_get_count(jsonArray);
+	int size = json_array_get_count(jsonArray);
 	json_array_append_value(jsonArray, json_value_init_object());
 	size++;
 	return JsonManager(json_array_get_object(jsonArray, size - 1));
@@ -58,5 +63,9 @@ int JsonManager::Serialize(char** buffer) {
 	return size;
 
 }
+
+
+int JsonManager::GetArraySize(JSON_Array* jsonArray) { return json_array_get_count(jsonArray); }
+
 
 

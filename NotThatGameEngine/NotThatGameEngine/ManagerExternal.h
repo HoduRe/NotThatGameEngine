@@ -61,7 +61,7 @@ public:
 	bool DuplicateFile(const char* file, const char* dstFolder, std::string& relativePath);
 	bool DuplicateFile(const char* srcFile, const char* dstFile);
 
-	unsigned int Save(const char* file, const void* buffer, unsigned int size, bool append = false) const;
+	unsigned int Save(const char* path, const void* buffer, unsigned int size, bool append = false) const;
 	bool Remove(const char* file);
 
 	uint64 GetLastModTime(const char* filename);
