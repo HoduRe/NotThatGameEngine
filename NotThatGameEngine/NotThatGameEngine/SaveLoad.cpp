@@ -1,6 +1,7 @@
 #include "SaveLoad.h"
 #include "Application.h"
 #include "Importer.h"
+#include "JsonManager.h"
 
 void DataSaving::SaveMesh(Application* App, Mesh* mesh) {
 
@@ -89,6 +90,38 @@ void DataSaving::SaveTexture(Application* App, TextureData* texture) {
 
 }
 
+
+void DataSaving::SaveGameObject(Application* App, JsonManager* manager, GameObject* gameObject) {
+
+	manager->SetString("Name", gameObject->name.c_str());
+	manager->SetNumber("ID", gameObject->id);
+	manager->SetNumber("ParentID", gameObject->parent ? gameObject->parent->id : 0);
+
+	/*const C_Transform* transform = gameObject->GetComponent<C_Transform>();
+
+	//Translation part
+	manager->SetArray("Translation").AddFloat3(transform->GetPosition());
+
+	//Rotation part
+	manager->SetArray("Rotation").AddQuat(transform->GetQuatRotation());
+
+	//Scale part
+	manager->SetArray("Scale").AddFloat3(transform->GetScale());
+	// TODO: Save transforms*/
+
+	JSON_Array* gameObjectsArray = manager->OpenArray("Components");
+	const std::vector<Component*> components = gameObject->components;
+
+	for (uint i = 0; i < components.size(); i++) {
+
+		manager->SetNumber("ComponentType", (int)components[i]->type);
+		manager->SetNumber("ID", components[i]->id);
+		
+	}
+
+}
+
+
 void DataLoading::LoadMesh(char* fileBuffer, Mesh* mesh) {
 	//NOT CALLED
 
@@ -170,4 +203,12 @@ uint DataLoading::LoadTexture(Application* App, const char* fileName) {
 	return DataImporter::LoadTexture(App, textureName.c_str());
 	// TODO: if resource manager begins after textures, we will load Alex.png and company, and then overwrite the DDS. Which is not wrong, but...
 }
+
+
+void LoadGameObject(Application* App, GameObject* gameObject) {
+
+
+
+}
+
 

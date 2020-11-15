@@ -159,6 +159,7 @@
     <ClCompile Include="imgui_widgets.cpp" />
     <ClCompile Include="JsonManager.cpp" />
     <ClCompile Include="ManagerResource.cpp" />
+    <ClCompile Include="parson\parson.c" />
     <ClCompile Include="SaveLoad.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -199,6 +200,7 @@
     <ClInclude Include="imgui_internal.h" />
     <ClInclude Include="JsonManager.h" />
     <ClInclude Include="ManagerResource.h" />
+    <ClInclude Include="parson\parson.h" />
     <ClInclude Include="SaveLoad.h" />
     <ClInclude Include="imstb_rectpack.h" />
     <ClInclude Include="imstb_textedit.h" />

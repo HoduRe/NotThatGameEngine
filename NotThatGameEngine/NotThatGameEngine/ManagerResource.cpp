@@ -1,4 +1,8 @@
-#include "ManagerResource.h"
+#include "Application.h"
+#include "JsonManager.h"
+#include "GameObject.h"
+#include "SaveLoad.h"
+
 
 ResourceManager::ResourceManager(Application* app, bool start_enabled) : Module(app, start_enabled) {}
 
@@ -60,16 +64,25 @@ bool ResourceManager::CleanUp() {
 }
 
 
-void LoadScene() {
+void ResourceManager::LoadScene() {
 
 	// TODO: Load scene
 
 }
 
 
-void SaveScene() {
+void ResourceManager::SaveScene(char** buffer) {
 
-	// TODO: Save scene
+	JsonManager file;
+	JSON_Array* gameObjectsArray = file.OpenArray("GameObjects");
+
+	std::vector<GameObject*> gameObjects = App->editorScene->rootGameObjectsVec;
+
+	for (uint i = 1; i < gameObjects.size(); i++) { DataSaving::SaveGameObject(App, &file.AddArrayNode(gameObjectsArray), gameObjects[i]); }
+
+	uint size = file.Serialize(buffer);
+
+	// Now save this through file system :3
 
 }
 

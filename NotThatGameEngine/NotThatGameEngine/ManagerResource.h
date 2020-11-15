@@ -21,7 +21,7 @@ private:
 
 	bool ExecuteEvent(EVENT_ENUM _event, void* var);
 	void LoadScene();
-	void SaveScene();
+	void SaveScene(char** buffer);
 
 public:
 
