@@ -1,7 +1,6 @@
 #include "SaveLoad.h"
 #include "Application.h"
 #include "Importer.h"
-#include "JsonManager.h"
 
 void DataSaving::SaveMesh(Application* App, Mesh* mesh) {
 
@@ -91,34 +90,36 @@ void DataSaving::SaveTexture(Application* App, TextureData* texture) {
 }
 
 
-void DataSaving::SaveGameObject(Application* App, JsonManager* manager, GameObject* gameObject) {
+void DataSaving::SaveGameObject(Application* App, JSON_Object* node, GameObject* gameObject) {
 
-	manager->SetString("Name", gameObject->name.c_str());
-	manager->SetInt("ID", gameObject->id);
-	manager->SetInt("ParentID", gameObject->parent ? gameObject->parent->id : 0);
+	json_object_set_string(node, "Name", gameObject->name.c_str());
+	json_object_set_number(node, "ID", gameObject->id);
+	json_object_set_number(node, "ParentID", gameObject->parent ? gameObject->parent->id : 0);
 
 	Transform* transform = (Transform*)gameObject->FindComponent(COMPONENT_TYPE::TRANSFORM);
 
-	JSON_Array* jsonObject = manager->OpenArray("Translation");
-	manager->AddFloat(jsonObject, transform->GetPosition().x);
-	manager->AddFloat(jsonObject, transform->GetPosition().y);
-	manager->AddFloat(jsonObject, transform->GetPosition().z);
-	jsonObject = manager->OpenArray("Rotation");
-	manager->AddFloat(jsonObject, transform->GetEulerAngles().x);
-	manager->AddFloat(jsonObject, transform->GetEulerAngles().y);
-	manager->AddFloat(jsonObject, transform->GetEulerAngles().z);
-	jsonObject = manager->OpenArray("Scale");
-	manager->AddFloat(jsonObject, transform->GetScale().x);
-	manager->AddFloat(jsonObject, transform->GetScale().y);
-	manager->AddFloat(jsonObject, transform->GetScale().z);
+	JSON_Array* jsonObject = JsonManager::OpenArray(node, "Translation");
+	json_array_append_number(jsonObject, transform->GetPosition().x);
+	json_array_append_number(jsonObject, transform->GetPosition().x);
+	json_array_append_number(jsonObject, transform->GetPosition().x);
+	
+	jsonObject = JsonManager::OpenArray(node, "Rotation");
+	json_array_append_number(jsonObject, transform->GetEulerAngles().x);
+	json_array_append_number(jsonObject, transform->GetEulerAngles().y);
+	json_array_append_number(jsonObject, transform->GetEulerAngles().z);
 
-	JSON_Array* gameObjectsArray = manager->OpenArray("Components");
+	jsonObject = JsonManager::OpenArray(node, "Scale");
+	json_array_append_number(jsonObject, transform->GetScale().x);
+	json_array_append_number(jsonObject, transform->GetScale().y);
+	json_array_append_number(jsonObject, transform->GetScale().z);
+
+	JSON_Array* gameObjectsArray = JsonManager::OpenArray(node, "Components");
 	const std::vector<Component*> components = gameObject->components;
 
 	for (uint i = 0; i < components.size(); i++) {
 
-		manager->SetInt("ComponentType", (int)components[i]->type);
-		manager->SetInt("ID", components[i]->id);
+		json_object_set_number(node, "ComponentType", (int)components[i]->type);
+		json_object_set_number(node, "ID", components[i]->id);
 		
 	}
 

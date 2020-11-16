@@ -2,13 +2,13 @@
 #define __SAVELOAD_H__
 
 #include "Globals.h"
+#include "JsonManager.h"
 
 class Component;
 class Application;
 class Mesh;
 class Material;
 class TextureData;
-class JsonManager;
 class GameObject;
 
 /* When an obect is created and its data is uptaded, those functions must be called. It's not beautiful code, but when I got here everything was already creating the structure, then filling with the data,
@@ -19,7 +19,7 @@ namespace DataSaving {
 	void SaveMesh(Application* App, Mesh* mesh);
 	void SaveMaterial(Application* App, Material* material);
 	void SaveTexture(Application* App, TextureData* texture);
-	void SaveGameObject(Application* App, JsonManager* manager, GameObject* gameObject);
+	void SaveGameObject(Application* App, JSON_Object* node, GameObject* gameObject);
 
 }
 

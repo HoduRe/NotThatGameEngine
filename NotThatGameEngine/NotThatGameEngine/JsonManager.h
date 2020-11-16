@@ -10,35 +10,15 @@ struct json_value_t;
 typedef struct json_value_t  JSON_Value;
 
 struct json_array_t;
-typedef struct json_array_t  JSON_Array;
+typedef struct json_array_t  JSON_Array;	// TODO: Can I kaboom this?
 
 
-class JsonManager {
+namespace JsonManager {
 
-public:
-
-	JsonManager();	// Write file
-	JsonManager(JSON_Object* object);	// Write an array
-	JsonManager(const char* buffer);	// Read file
-	~JsonManager();
-
-	void SetInt(const char* name, int data);
-	void SetFloat(const char* name, float data);
-	void SetString(const char* name, const char* data);
-	void SetBool(const char* name, bool data);
-	void AddFloat(JSON_Array* arrayObject, const float& data);
-
-	int Serialize(char** buffer);
-
-	JSON_Array* OpenArray(const char* name);
-	JsonManager AddArrayNode(JSON_Array* jsonArray);
+	int Serialize(JSON_Value* value, char** buffer);
+	JSON_Array* OpenArray(JSON_Object* object, const char* name);
+	JSON_Object* AddArrayNode(JSON_Array* jsonArray);
 	int GetArraySize(JSON_Array* jsonArray);
-
-private:
-
-	JSON_Value* root_value = nullptr;
-	JSON_Object* node = nullptr;
-
 
 };
 

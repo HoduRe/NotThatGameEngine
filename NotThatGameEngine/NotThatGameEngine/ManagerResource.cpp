@@ -76,18 +76,19 @@ void ResourceManager::LoadScene() {
 
 void ResourceManager::SaveScene() {
 
-	JsonManager file;
-	JSON_Array* gameObjectsArray = file.OpenArray("GameObjects");
+	JSON_Value* root = json_value_init_object();
+	JSON_Object* node = json_value_get_object(root);
+	JSON_Array* gameObjectsArray = JsonManager::OpenArray(node, "GameObjects");
 
-	std::vector<GameObject*> gameObjects = App->editorScene->rootGameObjectsVec;
+	std::vector<GameObject*> gameObjects = App->editorScene->rootGameObjectsVec;	// TODO: What about you get all gameobjects childs and all that jam :)
 
-	for (uint i = 1; i < gameObjects.size(); i++) { DataSaving::SaveGameObject(App, &file.AddArrayNode(gameObjectsArray), gameObjects[i]); }
+	for (uint i = 0; i < gameObjects.size(); i++) { DataSaving::SaveGameObject(App, JsonManager::AddArrayNode(gameObjectsArray), gameObjects[i]); }
 
-	char* buffer = new char[file.GetArraySize(gameObjectsArray)];
-	uint size = file.Serialize(&buffer);
+	char* buffer = new char[JsonManager::GetArraySize(gameObjectsArray)];
+	uint size = JsonManager::Serialize(root, &buffer);
 
-	std::string sceneName = SCENES_PATH + (std::string)"Scene1.json";
-	App->externalManager->Save(sceneName.c_str(), &buffer, size);
+	std::string sceneName = SCENES_PATH + (std::string)"Scene1.txt";
+	App->externalManager->Save(sceneName.c_str(), buffer, size);
 
 }
 
