@@ -175,6 +175,23 @@ void ExternalManager::DiscoverFiles(const char* directory, std::vector<std::stri
 }
 
 
+void ExternalManager::DiscoverFiles(const char* directory, std::vector<std::string>& file_list) const {
+
+	char** rc = PHYSFS_enumerateFiles(directory);
+	char** i;
+
+	for (i = rc; *i != nullptr; i++) {
+
+		std::string str = std::string(directory) + std::string("/") + std::string(*i);
+		if (!IsDirectory(str.c_str())) { file_list.push_back(*i); }
+
+	}
+
+	PHYSFS_freeList(rc);
+
+}
+
+
 void ExternalManager::GetAllFilesWithExtension(const char* directory, const char* extension, std::vector<std::string>& file_list) const {
 
 	std::vector<std::string> files;

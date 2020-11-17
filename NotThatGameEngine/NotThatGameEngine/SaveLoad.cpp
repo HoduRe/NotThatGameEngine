@@ -101,38 +101,47 @@ void DataSaving::SaveTexture(Application* App, TextureData* texture) {	// Called
 
 void DataSaving::SaveGameObject(Application* App, JSON_Object* node, GameObject* gameObject) {
 
-	json_object_set_string(node, "Name", gameObject->name.c_str());
-	json_object_set_number(node, "ID", gameObject->id);
-	json_object_set_number(node, "ParentID", gameObject->parent ? gameObject->parent->id : 0);
+	json_object_set_string(node, JSON_NODE_NAME, gameObject->name.c_str());
+	json_object_set_number(node, JSON_NODE_ID, gameObject->id);
+	json_object_set_number(node, JSON_NODE_PARENT_ID, gameObject->parent ? gameObject->parent->id : 0);
 
 	Transform* transform = (Transform*)gameObject->FindComponent(COMPONENT_TYPE::TRANSFORM);
 
-	JSON_Array* jsonObject = JsonManager::OpenArray(node, "Translation");
+	JSON_Array* jsonObject (JsonManager::OpenArray(node, JSON_NODE_TRANSLATION));
 	json_array_append_number(jsonObject, transform->GetPosition().x);
 	json_array_append_number(jsonObject, transform->GetPosition().x);
 	json_array_append_number(jsonObject, transform->GetPosition().x);
-	
-	jsonObject = JsonManager::OpenArray(node, "Rotation");
+	jsonObject = nullptr;
+
+	jsonObject = JsonManager::OpenArray(node, JSON_NODE_ROTATION);
 	json_array_append_number(jsonObject, transform->GetEulerAngles().x);
 	json_array_append_number(jsonObject, transform->GetEulerAngles().y);
 	json_array_append_number(jsonObject, transform->GetEulerAngles().z);
+	jsonObject = nullptr;
 
-	jsonObject = JsonManager::OpenArray(node, "Scale");
+	jsonObject = JsonManager::OpenArray(node, JSON_NODE_SCALE);
 	json_array_append_number(jsonObject, transform->GetScale().x);
 	json_array_append_number(jsonObject, transform->GetScale().y);
 	json_array_append_number(jsonObject, transform->GetScale().z);
+	jsonObject = nullptr;
 
-	JSON_Array* gameComponentsArray = JsonManager::OpenArray(node, "Components");
+	// TODO: Why don't you save if object is enabled or not, prick
+
+	JSON_Array* gameComponentsArray (JsonManager::OpenArray(node, JSON_NODE_COMPONENTS));
 	const std::vector<Component*> components = gameObject->components;
 
 	for (uint i = 0; i < components.size(); i++) {
 
-		DataSaving::SaveComponent(App, components[i]);
-		json_array_append_string(gameComponentsArray, "ComponentType");
-		json_array_append_number(gameComponentsArray, (int)components[i]->type);
-		json_array_append_string(gameComponentsArray, "ComponentID");
-		json_array_append_number(gameComponentsArray, components[i]->id);
-		
+		if (components[i]->type != COMPONENT_TYPE::TRANSFORM) {
+
+			DataSaving::SaveComponent(App, components[i]);	// This saves as 4 components. Do as 2 using objects
+			json_array_append_string(gameComponentsArray, JSON_NODE_COMPONENT_TYPE);
+			json_array_append_number(gameComponentsArray, (int)components[i]->type);
+			json_array_append_string(gameComponentsArray, JSON_NODE_COMPONENT_ID);
+			json_array_append_number(gameComponentsArray, components[i]->id);
+
+		}
+
 	}
 
 }
@@ -242,7 +251,7 @@ uint DataLoading::LoadTexture(Application* App, const char* fileName) {
 	//NOT CALLED
 	std::string textureName = TEXTURES_PATH + (std::string)fileName;
 	return DataImporter::LoadTexture(App, textureName.c_str());
-	// TODO: if resource manager begins after textures, we will load Alex.png and company, and then overwrite the DDS. Which is not wrong, but...
+
 }
 
 

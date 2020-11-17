@@ -195,6 +195,24 @@ bool EditorScene::AddPrimitive(PrimitiveEnum _type) {
 }
 
 
+GameObject* EditorScene::FindGameObject(long long int id) {
+
+	GameObject* ret = nullptr;
+
+	for (int i = 0; i < rootGameObjectsVec.size(); i++) {
+		
+		if (rootGameObjectsVec[i]->id == id) { return rootGameObjectsVec[i]; }
+		else {
+			ret = rootGameObjectsVec[i]->FindGameObjectChild(id);
+			if (ret) { return ret; }
+		}
+	}
+
+	return ret;
+
+}
+
+
 void EditorScene::DeleteGameObject(long long int id) {
 
 	bool ret = false;

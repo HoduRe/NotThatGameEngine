@@ -15,7 +15,7 @@ struct TextureData {
 	int height;
 	int size;
 
-	int textureUUID;	// TODO: if we save via name, check repeated ones via name, find them via OpenGL ID... What is this for?
+	int textureUUID;	// TODO: if we save via name, check repeated ones via name, find them via OpenGL ID... We can kill this
 };
 
 class Texture : public Module

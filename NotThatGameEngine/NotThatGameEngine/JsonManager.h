@@ -20,6 +20,36 @@ namespace JsonManager {
 	JSON_Object* AddArrayNode(JSON_Array* jsonArray);
 	int GetArraySize(JSON_Array* jsonArray);
 
+	struct JsonValue {
+
+		JsonValue();
+		JsonValue(JSON_Value* _root);
+		~JsonValue();
+
+		JSON_Value* root;
+
+	};
+
+/*	struct JsonObject {
+
+		JsonObject();
+		JsonObject(JSON_Object* _object);
+		~JsonObject();
+
+		JSON_Object* object;
+
+	};
+
+	struct JsonArray {
+
+		JsonArray();
+		JsonArray(JSON_Array* _array);
+		~JsonArray();
+
+		JSON_Array* jsonArray;
+
+	};*/
+
 };
 
 

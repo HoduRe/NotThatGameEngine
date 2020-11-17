@@ -3,7 +3,20 @@
 
 #include "Module.h"
 
+#define JSON_NODE_GAMEOBJECTS "GameObjects"
+#define JSON_NODE_NAME "Name"
+#define JSON_NODE_ID "ID"
+#define JSON_NODE_PARENT_ID "ParentID"
+#define JSON_NODE_TRANSLATION "Translation"
+#define JSON_NODE_ROTATION "Rotation"
+#define JSON_NODE_SCALE "Scale"
+#define JSON_NODE_COMPONENTS "Components"
+#define JSON_NODE_COMPONENT_TYPE "ComponentType"
+#define JSON_NODE_COMPONENT_ID "ComponentID"
+
+
 class ResourceManager : public Module {
+
 
 public:
 
