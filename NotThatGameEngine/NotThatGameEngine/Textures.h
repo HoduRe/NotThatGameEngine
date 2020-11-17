@@ -15,7 +15,7 @@ struct TextureData {
 	int height;
 	int size;
 
-	int textureUUID;
+	int textureUUID;	// TODO: if we save via name, check repeated ones via name, find them via OpenGL ID... What is this for?
 };
 
 class Texture : public Module
@@ -36,6 +36,7 @@ public:
 	uint IsTextureRepeated(int id);
 	uint IsTextureRepeated(const char* _name);
 	TextureData* GetTextureData(GLuint id);
+	std::vector<TextureData> GetTextureVector();
 
 public:
 

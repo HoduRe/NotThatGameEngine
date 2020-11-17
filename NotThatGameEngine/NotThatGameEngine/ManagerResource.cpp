@@ -82,13 +82,15 @@ void ResourceManager::SaveScene() {
 
 	std::vector<GameObject*> gameObjects = App->editorScene->rootGameObjectsVec;	// TODO: What about you get all gameobjects childs and all that jam :)
 
-	for (uint i = 0; i < gameObjects.size(); i++) {
+	for (int i = 0; i < gameObjects.size(); i++) {
 
 		for (int j = 0; j < gameObjects[i]->childs.size(); j++) { gameObjects.push_back(gameObjects[i]->childs[j]); }
 
-		DataSaving::SaveGameObject(JsonManager::AddArrayNode(gameObjectsArray), gameObjects[i]);
+		DataSaving::SaveGameObject(App, JsonManager::AddArrayNode(gameObjectsArray), gameObjects[i]);
 
 	}
+
+	// TODO: Save cameras, lights...
 
 	char* buffer = new char[JsonManager::GetArraySize(gameObjectsArray)];
 	uint size = JsonManager::Serialize(root, &buffer);

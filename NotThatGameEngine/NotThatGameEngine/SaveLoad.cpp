@@ -12,8 +12,6 @@ void DataSaving::SaveMesh(Application* App, Mesh* mesh) {
 
 	uint size = intSize + intSize + intSize + intSize + vertexSize + indexSize + normalSize + textureCoordSize;
 
-	// Add sizes to buffer
-
 	char* buffer = new char[size];
 	char* cursor = buffer;
 
@@ -54,7 +52,7 @@ void DataSaving::SaveMesh(Application* App, Mesh* mesh) {
 
 	}
 
-	std::string path = (std::string)MESHES_PATH + mesh->meshName + ".NotThatExtension";	// TODO: it would be cool to have this be the UUID, then when an object is loaded with its components, it simply has to call the load function by UUID, and the functions uses that name no problem
+	std::string path = (std::string)MESHES_PATH + std::to_string(mesh->id) + ".NotThatMesh";
 
 	App->externalManager->Save(path.c_str(), buffer, size);
 
@@ -63,11 +61,22 @@ void DataSaving::SaveMesh(Application* App, Mesh* mesh) {
 }
 
 void DataSaving::SaveMaterial(Application* App, Material* material) {
-	int a = 2;
+
+	uint size = sizeof(uint);
+
+	char* buffer = new char[size];
+
+	memcpy(buffer, &material->diffuseId, size);
+
+	std::string path = (std::string)MATERIALS_PATH + std::to_string(material->id) + ".NotThatMaterial";
+
+	App->externalManager->Save(path.c_str(), buffer, size);
+
+	RELEASE_ARRAY(buffer);
 
 }
 
-void DataSaving::SaveTexture(Application* App, TextureData* texture) {
+void DataSaving::SaveTexture(Application* App, TextureData* texture) {	// Called everytime we load a texture to memory; no need to call it when saving scene (if it has to be called from somewhere else, remember to Bind the texture for DevIL)
 
 	char* buffer;
 	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);
@@ -90,7 +99,7 @@ void DataSaving::SaveTexture(Application* App, TextureData* texture) {
 }
 
 
-void DataSaving::SaveGameObject(JSON_Object* node, GameObject* gameObject) {
+void DataSaving::SaveGameObject(Application* App, JSON_Object* node, GameObject* gameObject) {
 
 	json_object_set_string(node, "Name", gameObject->name.c_str());
 	json_object_set_number(node, "ID", gameObject->id);
@@ -113,32 +122,35 @@ void DataSaving::SaveGameObject(JSON_Object* node, GameObject* gameObject) {
 	json_array_append_number(jsonObject, transform->GetScale().y);
 	json_array_append_number(jsonObject, transform->GetScale().z);
 
-	JSON_Array* gameObjectsArray = JsonManager::OpenArray(node, "Components");
+	JSON_Array* gameComponentsArray = JsonManager::OpenArray(node, "Components");
 	const std::vector<Component*> components = gameObject->components;
 
 	for (uint i = 0; i < components.size(); i++) {
 
-		json_object_set_number(node, "ComponentType", (int)components[i]->type);
-		json_object_set_number(node, "ComponentID", components[i]->id);
+		DataSaving::SaveComponent(App, components[i]);
+		json_array_append_string(gameComponentsArray, "ComponentType");
+		json_array_append_number(gameComponentsArray, (int)components[i]->type);
+		json_array_append_string(gameComponentsArray, "ComponentID");
+		json_array_append_number(gameComponentsArray, components[i]->id);
 		
 	}
 
 }
 
 
-void DataSaving::SaveComponent(JSON_Object* node, Component* component) {
+void DataSaving::SaveComponent(Application* App, Component* component) {
 
 	switch (component->type) {
 
 	case COMPONENT_TYPE::MESH:
 
-
+		DataSaving::SaveMesh(App, (Mesh*)component);
 
 		break;
 
 	case COMPONENT_TYPE::MATERIAL:
 
-
+		DataSaving::SaveMaterial(App, (Material*)component);
 
 		break;
 

@@ -104,5 +104,5 @@ TextureData* Texture::GetTextureData(GLuint id) {
 }
 
 
-
+std::vector<TextureData> Texture::GetTextureVector() { return textureVec; }
 
