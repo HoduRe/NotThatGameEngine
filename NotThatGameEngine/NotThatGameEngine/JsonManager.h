@@ -23,10 +23,10 @@ namespace JsonManager {
 	struct JsonValue {
 
 		JsonValue();
-		JsonValue(JSON_Value* _root);
+		JsonValue(JSON_Value* _value);
 		~JsonValue();
 
-		JSON_Value* root;
+		JSON_Value* value;
 
 	};
 

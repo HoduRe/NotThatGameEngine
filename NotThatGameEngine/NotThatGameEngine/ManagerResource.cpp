@@ -69,7 +69,7 @@ void ResourceManager::LoadScene() {
 	if (scenesVec.size() != 0) {	// TODO: Should we load more than one scene? No, right?
 
 		JsonManager::JsonValue root(json_parse_string(scenesVec[0].c_str()));
-		JSON_Object* node(json_value_get_object(root.root));
+		JSON_Object* node(json_value_get_object(root.value));
 		JSON_Array* gameObjectsArray(json_object_get_array(node, JSON_NODE_GAMEOBJECTS));
 
 		int size = JsonManager::GetArraySize(gameObjectsArray);
@@ -138,7 +138,7 @@ void ResourceManager::LoadScene() {
 void ResourceManager::SaveScene() {
 
 	JsonManager::JsonValue root(json_value_init_object());
-	JSON_Object* node(json_value_get_object(root.root));
+	JSON_Object* node(json_value_get_object(root.value));
 	JSON_Array* gameObjectsArray(JsonManager::OpenArray(node, JSON_NODE_GAMEOBJECTS));
 
 	std::vector<GameObject*> gameObjects = App->editorScene->rootGameObjectsVec;
@@ -154,7 +154,7 @@ void ResourceManager::SaveScene() {
 	// TODO: Save cameras, lights...
 
 	char* buffer = new char[JsonManager::GetArraySize(gameObjectsArray)];
-	uint size = JsonManager::Serialize(root.root, &buffer);
+	uint size = JsonManager::Serialize(root.value, &buffer);
 
 	std::string sceneName = LIBRARY_PATH + (std::string)"Scene1.NotThatScene";
 	App->externalManager->Save(sceneName.c_str(), buffer, size);

@@ -1,12 +1,12 @@
 #include "JsonManager.h"
 
-JsonManager::JsonValue::JsonValue() : root() {}
+JsonManager::JsonValue::JsonValue() : value() {}
 
 
-JsonManager::JsonValue::JsonValue(JSON_Value* _value) : root(_value) {}
+JsonManager::JsonValue::JsonValue(JSON_Value* _value) : value(_value) {}
 
 
-JsonManager::JsonValue::~JsonValue() { if (root) { json_value_free(root); } }
+JsonManager::JsonValue::~JsonValue() { if (value) { json_value_free(value); } }
 
 
 /*JsonManager::JsonObject::JsonObject() : object() {}

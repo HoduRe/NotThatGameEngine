@@ -134,11 +134,14 @@ void DataSaving::SaveGameObject(Application* App, JSON_Object* node, GameObject*
 
 		if (components[i]->type != COMPONENT_TYPE::TRANSFORM) {
 
-			DataSaving::SaveComponent(App, components[i]);	// This saves as 4 components. Do as 2 using objects
-			json_array_append_string(gameComponentsArray, JSON_NODE_COMPONENT_TYPE);
-			json_array_append_number(gameComponentsArray, (int)components[i]->type);
-			json_array_append_string(gameComponentsArray, JSON_NODE_COMPONENT_ID);
-			json_array_append_number(gameComponentsArray, components[i]->id);
+			json_array_append_value(gameComponentsArray, json_value_init_object());
+			JSON_Object* nodeComponent = json_array_get_object(gameComponentsArray, i-1);
+			// The i-1 is ugly, but since Transforms are mandatory, and they are created as the GameObject is initialized, it's probably safe
+
+			DataSaving::SaveComponent(App, components[i]);
+
+			json_object_set_number(nodeComponent, JSON_NODE_COMPONENT_TYPE, (int)components[i]->type);
+			json_object_set_number(nodeComponent, JSON_NODE_COMPONENT_ID, components[i]->id);
 
 		}
 
