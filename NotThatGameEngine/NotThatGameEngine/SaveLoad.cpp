@@ -90,7 +90,7 @@ void DataSaving::SaveTexture(Application* App, TextureData* texture) {
 }
 
 
-void DataSaving::SaveGameObject(Application* App, JSON_Object* node, GameObject* gameObject) {
+void DataSaving::SaveGameObject(JSON_Object* node, GameObject* gameObject) {
 
 	json_object_set_string(node, "Name", gameObject->name.c_str());
 	json_object_set_number(node, "ID", gameObject->id);
@@ -119,8 +119,33 @@ void DataSaving::SaveGameObject(Application* App, JSON_Object* node, GameObject*
 	for (uint i = 0; i < components.size(); i++) {
 
 		json_object_set_number(node, "ComponentType", (int)components[i]->type);
-		json_object_set_number(node, "ID", components[i]->id);
+		json_object_set_number(node, "ComponentID", components[i]->id);
 		
+	}
+
+}
+
+
+void DataSaving::SaveComponent(JSON_Object* node, Component* component) {
+
+	switch (component->type) {
+
+	case COMPONENT_TYPE::MESH:
+
+
+
+		break;
+
+	case COMPONENT_TYPE::MATERIAL:
+
+
+
+		break;
+
+	default:
+
+		break;
+
 	}
 
 }

@@ -19,7 +19,8 @@ namespace DataSaving {
 	void SaveMesh(Application* App, Mesh* mesh);
 	void SaveMaterial(Application* App, Material* material);
 	void SaveTexture(Application* App, TextureData* texture);
-	void SaveGameObject(Application* App, JSON_Object* node, GameObject* gameObject);
+	void SaveGameObject(JSON_Object* node, GameObject* gameObject);
+	void SaveComponent(JSON_Object* node, Component* component);
 
 }
 
