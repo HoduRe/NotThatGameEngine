@@ -14,9 +14,27 @@
 #define JSON_NODE_COMPONENT_TYPE "ComponentType"
 #define JSON_NODE_COMPONENT_ID "ComponentID"
 
-#define EXTENSION_SCENE ".NotThatScene"
+#define EXTENSION_SCENES ".NotThatScene"
+#define EXTENSION_MODELS ".NotThatModel"
+#define EXTENSION_MESHES ".NotThatMesh"
+#define EXTENSION_MATERIALS ".NotThatMaterial"
+#define EXTENSION_TEXTURES ".dds"
 
 class PathNode;
+
+enum class ResourceEnum {
+
+	NONE,
+
+	TEXTURE,
+	MODEL,
+	MESH,
+	MATERIAL,
+	SCENE,
+
+	UNKNOWN
+
+};
 
 class ResourceManager : public Module {
 
@@ -37,9 +55,12 @@ public:
 	void LoadScene(char* buffer);
 	void SaveScene();
 
+	ResourceEnum CheckResourceType(std::string name);	// TODO: When this module checks the File dropping, put this to private
+
 private:
 
 	std::vector<std::string> GetPathChildrenElements(PathNode loadingNode);
+	void LoadResourceByType(std::string name, ResourceEnum type = ResourceEnum::NONE);
 	bool ExecuteEvent(EVENT_ENUM _event, void* var);
 
 public:

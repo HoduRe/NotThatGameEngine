@@ -52,7 +52,7 @@ void DataSaving::SaveMesh(Application* App, Mesh* mesh) {
 
 	}
 
-	std::string path = (std::string)MESHES_PATH + std::to_string(mesh->id) + ".NotThatMesh";
+	std::string path = (std::string)MESHES_PATH + std::to_string(mesh->id) + EXTENSION_MESHES;
 
 	App->externalManager->Save(path.c_str(), buffer, size);
 
@@ -68,7 +68,7 @@ void DataSaving::SaveMaterial(Application* App, Material* material) {
 
 	memcpy(buffer, &material->diffuseId, size);
 
-	std::string path = (std::string)MATERIALS_PATH + std::to_string(material->id) + ".NotThatMaterial";
+	std::string path = (std::string)MATERIALS_PATH + std::to_string(material->id) + EXTENSION_MATERIALS;
 
 	App->externalManager->Save(path.c_str(), buffer, size);
 
@@ -87,7 +87,7 @@ void DataSaving::SaveTexture(Application* App, TextureData* texture) {	// Called
 
 		if (ilSaveL(IL_DDS, data, size) > 0) {
 
-			std::string path = (std::string)TEXTURES_PATH + texture->name + ".dds";
+			std::string path = (std::string)TEXTURES_PATH + texture->name + EXTENSION_TEXTURES;
 			App->externalManager->Save(path.c_str(), data, size);
 
 		}
@@ -107,7 +107,7 @@ void DataSaving::SaveGameObject(Application* App, JSON_Object* node, GameObject*
 
 	Transform* transform = (Transform*)gameObject->FindComponent(COMPONENT_TYPE::TRANSFORM);
 
-	JSON_Array* jsonObject (JsonManager::OpenArray(node, JSON_NODE_TRANSLATION));
+	JSON_Array* jsonObject(JsonManager::OpenArray(node, JSON_NODE_TRANSLATION));
 	json_array_append_number(jsonObject, transform->GetPosition().x);
 	json_array_append_number(jsonObject, transform->GetPosition().x);
 	json_array_append_number(jsonObject, transform->GetPosition().x);
@@ -127,7 +127,7 @@ void DataSaving::SaveGameObject(Application* App, JSON_Object* node, GameObject*
 
 	// TODO: Why don't you save if object is enabled or not, prick
 
-	JSON_Array* gameComponentsArray (JsonManager::OpenArray(node, JSON_NODE_COMPONENTS));
+	JSON_Array* gameComponentsArray(JsonManager::OpenArray(node, JSON_NODE_COMPONENTS));
 	const std::vector<Component*> components = gameObject->components;
 
 	for (uint i = 0; i < components.size(); i++) {
@@ -135,7 +135,7 @@ void DataSaving::SaveGameObject(Application* App, JSON_Object* node, GameObject*
 		if (components[i]->type != COMPONENT_TYPE::TRANSFORM) {
 
 			json_array_append_value(gameComponentsArray, json_value_init_object());
-			JSON_Object* nodeComponent = json_array_get_object(gameComponentsArray, i-1);
+			JSON_Object* nodeComponent = json_array_get_object(gameComponentsArray, i - 1);
 			// The i-1 is ugly, but since Transforms are mandatory, and they are created as the GameObject is initialized, it's probably safe
 
 			DataSaving::SaveComponent(App, components[i]);
@@ -250,18 +250,16 @@ void DataLoading::LoadMaterial(char* fileBuffer, Material* material) {
 
 }
 
-uint DataLoading::LoadTexture(Application* App, const char* fileName) {
-	//NOT CALLED
-	std::string textureName = TEXTURES_PATH + (std::string)fileName;
-	return DataImporter::LoadTexture(App, textureName.c_str());
-
-}
+uint DataLoading::LoadTexture(Application* App, const char* path) { return DataImporter::LoadTexture(App, path); }
 
 
-void LoadGameObject(Application* App, GameObject* gameObject) {
+void DataLoading::LoadGameObject(Application* App, GameObject* gameObject) {
 
 
 
 }
+
+
+
 
 

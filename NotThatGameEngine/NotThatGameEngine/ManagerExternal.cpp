@@ -89,7 +89,7 @@ bool ExternalManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 		filePath = LocalizePath(filePath);
 		size = Load(filePath.c_str(), &buffer);
 
-		type = CheckResourceType(filePath);
+		type = App->resourceManager->CheckResourceType(filePath);	// TODO: Since this should probably in the resource manager, this App call is a joke
 
 		if (size != 0) {
 
@@ -275,15 +275,6 @@ std::string ExternalManager::GetPathRelativeToAssets(const char* originalPath) c
 	std::string ret;
 	GetRealDir(originalPath, ret);
 	return ret;
-
-}
-
-
-std::string ExternalManager::GetExtension(const char* path) const {
-
-	std::string ext;
-	SplitFilePath(path, nullptr, nullptr, &ext);
-	return ext;
 
 }
 
@@ -574,22 +565,6 @@ std::string ExternalManager::GetUniqueName(const char* path, const char* name) c
 	}
 
 	return finalName;
-
-}
-
-
-ResourceEnum ExternalManager::CheckResourceType(std::string name) {
-
-	std::string ext;
-
-	SplitFilePath(name.c_str(), nullptr, nullptr, &ext);
-
-	static_assert(static_cast<int>(ResourceEnum::UNKNOWN) == 3, "Code Needs Update");
-
-	if (ext == "FBX" || ext == "fbx" || ext == "obj" || ext == "OBJ") { return ResourceEnum::MODEL; }
-	else if (ext == "tga" || ext == "png" || ext == "jpg" || ext == "TGA" || ext == "PNG" || ext == "JPG" || ext == "dds") { return ResourceEnum::TEXTURE; }
-
-	return ResourceEnum::UNKNOWN;
 
 }
 

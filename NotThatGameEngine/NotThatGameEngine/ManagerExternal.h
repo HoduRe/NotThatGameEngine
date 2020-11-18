@@ -11,17 +11,7 @@ struct aiFileIO;
 class Config;
 struct PathNode;
 
-enum class ResourceEnum {
-	NONE,
-
-	MODEL,
-	TEXTURE,
-
-	UNKNOWN
-};
-
-class ExternalManager : public Module
-{
+class ExternalManager : public Module {
 
 public:
 
@@ -47,7 +37,6 @@ public:
 	void GetRealDir(const char* path, std::string& output) const;
 	std::string GetPathRelativeToAssets(const char* originalPath) const;
 
-	std::string GetExtension(const char* path) const;
 	bool HasExtension(const char* path) const;
 	bool HasExtension(const char* path, std::string extension) const;
 	bool HasExtension(const char* path, std::vector<std::string> extensions) const;
@@ -72,8 +61,8 @@ public:
 public:
 
 private:
+
 	bool ExecuteEvent(EVENT_ENUM eventId, void* var);
-	ResourceEnum CheckResourceType(std::string name);
 
 };
 

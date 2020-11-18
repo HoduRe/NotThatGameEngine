@@ -68,20 +68,24 @@ void ResourceManager::LoadLibraryFiles() {
 
 	for (int i = 0; i < objectsVec.size(); i++) {
 
-		std::string extension = App->externalManager->GetExtension(objectsVec[i].c_str());
-		if ("." + extension == EXTENSION_SCENE) {
+		ResourceEnum extension = CheckResourceType(objectsVec[i]);
+		if (extension == ResourceEnum::SCENE) {
 
-			char* buffer;
+			LoadResourceByType(objectsVec[i], extension);
 
-			App->externalManager->Load(objectsVec[i].c_str(), &buffer);
-			LoadScene(buffer);
+			objectsVec.erase(objectsVec.begin() + i);
 
-			RELEASE_ARRAY(buffer);
+			for (int j = i; j < objectsVec.size(); j++) { if (extension == ResourceEnum::SCENE) { objectsVec.erase(objectsVec.begin() + j); } }
+
 			i = objectsVec.size();	// We only want to load one scene
 
 		}
 
 	}
+
+	for (int i = 0; i < objectsVec.size(); i++) { LoadResourceByType(objectsVec[i]); }
+
+	// TODO: Components still have to be added to their gameObject: do a function AddComponentBlind that revises all gameobjects components ID?
 
 
 	// TODO: Load other components (camera)
@@ -172,7 +176,7 @@ void ResourceManager::SaveScene() {
 	char* buffer = new char[JsonManager::GetArraySize(gameObjectsArray)];
 	uint size = JsonManager::Serialize(root.value, &buffer);
 
-	std::string sceneName = LIBRARY_PATH + (std::string)"Scene1" + EXTENSION_SCENE;
+	std::string sceneName = LIBRARY_PATH + (std::string)"Scene1" + EXTENSION_SCENES;
 	App->externalManager->Save(sceneName.c_str(), buffer, size);
 
 }
@@ -233,5 +237,74 @@ bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 }
 
 
+ResourceEnum ResourceManager::CheckResourceType(std::string name) {
+
+	std::string ext;
+
+	App->externalManager->SplitFilePath(name.c_str(), nullptr, nullptr, &ext);
+
+	ext = "." + ext;
+
+	static_assert(static_cast<int>(ResourceEnum::UNKNOWN) == 6, "Code Needs Update");
+
+	if (ext == EXTENSION_SCENES) { return ResourceEnum::SCENE; }
+	else if (ext == EXTENSION_MODELS) { return ResourceEnum::MODEL; }
+	else if (ext == EXTENSION_MESHES) { return ResourceEnum::MESH; }
+	else if (ext == EXTENSION_MATERIALS) { return ResourceEnum::MATERIAL; }
+	else if (ext == ".FBX" || ext == ".fbx" || ext == ".obj" || ext == ".OBJ") { return ResourceEnum::MODEL; }
+	else if (ext == ".tga" || ext == ".png" || ext == ".jpg" || ext == ".TGA" || ext == ".PNG" || ext == ".JPG" || ext == ".dds" || ext == EXTENSION_TEXTURES) { return ResourceEnum::TEXTURE; }
+
+	return ResourceEnum::UNKNOWN;
+
+}
+
+
+void ResourceManager::LoadResourceByType(std::string name, ResourceEnum type) {
+
+	ResourceEnum resourceType;
+	char* buffer = nullptr;
+
+	type == ResourceEnum::NONE ? resourceType = CheckResourceType(name) : resourceType = type;
+
+	switch (resourceType) {
+
+	case ResourceEnum::SCENE:
+
+		App->externalManager->Load(name.c_str(), &buffer);
+		LoadScene(buffer);
+
+		break;
+
+	case ResourceEnum::MODEL:
+
+
+
+		break;
+
+	case ResourceEnum::MESH:
+
+		//DataLoading::LoadMesh();
+
+		break;
+
+	case ResourceEnum::MATERIAL:
+
+		//DataLoading::LoadMaterial(App, name.c_str());
+
+		break;
+
+	case ResourceEnum::TEXTURE:
+
+		//DataLoading::LoadTexture(App, name.c_str());	// TODO: Uncomment this: the only problem is how we are saving textures in the .NotThatScene
+
+		break;
+
+	default:
+		break;
+	}
+
+	RELEASE_ARRAY(buffer);
+
+}
 
 
