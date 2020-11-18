@@ -14,6 +14,9 @@
 #define JSON_NODE_COMPONENT_TYPE "ComponentType"
 #define JSON_NODE_COMPONENT_ID "ComponentID"
 
+#define EXTENSION_SCENE ".NotThatScene"
+
+class PathNode;
 
 class ResourceManager : public Module {
 
@@ -30,11 +33,13 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
-	void LoadScene();
+	void LoadLibraryFiles();
+	void LoadScene(char* buffer);
 	void SaveScene();
 
 private:
 
+	std::vector<std::string> GetPathChildrenElements(PathNode loadingNode);
 	bool ExecuteEvent(EVENT_ENUM _event, void* var);
 
 public:

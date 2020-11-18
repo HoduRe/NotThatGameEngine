@@ -279,6 +279,15 @@ std::string ExternalManager::GetPathRelativeToAssets(const char* originalPath) c
 }
 
 
+std::string ExternalManager::GetExtension(const char* path) const {
+
+	std::string ext;
+	SplitFilePath(path, nullptr, nullptr, &ext);
+	return ext;
+
+}
+
+
 bool ExternalManager::HasExtension(const char* path) const {
 
 	std::string ext = "";

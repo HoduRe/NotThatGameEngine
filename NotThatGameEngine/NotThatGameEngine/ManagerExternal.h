@@ -47,6 +47,7 @@ public:
 	void GetRealDir(const char* path, std::string& output) const;
 	std::string GetPathRelativeToAssets(const char* originalPath) const;
 
+	std::string GetExtension(const char* path) const;
 	bool HasExtension(const char* path) const;
 	bool HasExtension(const char* path, std::string extension) const;
 	bool HasExtension(const char* path, std::vector<std::string> extensions) const;

@@ -74,7 +74,9 @@ enum class EVENT_ENUM
 	CREATE_CYLINDER,
 
 	SAVE_SCENE,
-	LOAD_SCENE
+	LOAD_SCENE,
+	SAVE_ENGINE,
+	LOAD_ENGINE
 };
 
 // Configuration -----------
