@@ -16,7 +16,7 @@ public:
 
 	void Update();
 	void PostUpdate(uint& defaultTextureId);
-	Component* AddComponent(COMPONENT_TYPE _type);
+	Component* AddComponent(COMPONENT_TYPE _type, long long int _id = 0);
 	bool AddGameObjectByParent(GameObject* newObject);
 	long long int GenerateComponentId();
 	bool CheckChildDeletionById(long long int _id);

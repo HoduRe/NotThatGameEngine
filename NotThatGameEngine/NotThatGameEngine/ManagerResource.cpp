@@ -68,7 +68,11 @@ void ResourceManager::LoadScene() {
 
 	if (scenesVec.size() != 0) {	// TODO: Should we load more than one scene? No, right?
 
-		JsonManager::JsonValue root(json_parse_string(scenesVec[0].c_str()));
+		char* buffer;
+		std::string scenePath = LIBRARY_PATH + scenesVec[0];
+		App->externalManager->Load(scenePath.c_str(), &buffer);	// If this becomes a for, change 0 to i
+
+		JsonManager::JsonValue root(json_parse_string(buffer));
 		JSON_Object* node(json_value_get_object(root.value));
 		JSON_Array* gameObjectsArray(json_object_get_array(node, JSON_NODE_GAMEOBJECTS));
 
@@ -105,32 +109,30 @@ void ResourceManager::LoadScene() {
 			transform->SetScale(float3(scaleX, scaleY, scaleZ));
 
 			JSON_Array* componentNode(json_object_get_array(itNode, JSON_NODE_COMPONENTS));
+			ComponentReader cReader;
 
 			for (int i = 0; i < JsonManager::GetArraySize(componentNode); i++) {
 
+				JSON_Object* nodeComponent = json_array_get_object(componentNode, i);
+				cReader.componentType = json_object_get_number(nodeComponent, JSON_NODE_COMPONENT_TYPE);
+				cReader.componentId = json_object_get_number(nodeComponent, JSON_NODE_COMPONENT_ID);
 
+				gameObject->AddComponent((COMPONENT_TYPE)cReader.componentType, cReader.componentId);
 
 			}
-
-//#define JSON_NODE_COMPONENTS "Components"
-//#define JSON_NODE_COMPONENT_TYPE "ComponentType"
-//#define JSON_NODE_COMPONENT_ID "ComponentID"
 
 			App->editorScene->AddGameObject(gameObject);
 
 		}
 
+		RELEASE_ARRAY(buffer);
+
 	}
-	// TODO: Load all gameobjects using JSON
-
-	// TODO: Load all gameobjects' components
-
-	// TODO: Add components to gameobjects
 
 	// TODO: Load other components (camera)
 
 
-	// TODO: Load other objects which are not "saved"
+	// TODO: Load other objects which are not "saved", in the Assets/Library folder
 
 }
 

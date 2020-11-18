@@ -69,16 +69,19 @@ void GameObject::PostUpdate(uint& defaultTextureId) {
 }
 
 
-Component* GameObject::AddComponent(COMPONENT_TYPE _type) {
+Component* GameObject::AddComponent(COMPONENT_TYPE _type, long long int _id) {
 
 	Component* component = nullptr;
+	long long int id = _id;
+
+	if (_id == 0) { id = GenerateComponentId(); }
 
 	switch (_type) {
 
 	case COMPONENT_TYPE::TRANSFORM:
 
 		component = FindComponent(COMPONENT_TYPE::TRANSFORM);
-		if (component == nullptr) { component = new Transform(GenerateComponentId(), this); }
+		if (component == nullptr) { component = new Transform(id, this); }
 		else { return component; }
 
 		break;
@@ -86,7 +89,7 @@ Component* GameObject::AddComponent(COMPONENT_TYPE _type) {
 	case COMPONENT_TYPE::MESH:
 
 		component = FindComponent(COMPONENT_TYPE::MESH);
-		if (component == nullptr) { component = new Mesh(GenerateComponentId(), this); }
+		if (component == nullptr) { component = new Mesh(id, this); }
 		else { return component; }
 
 		break;
@@ -94,7 +97,7 @@ Component* GameObject::AddComponent(COMPONENT_TYPE _type) {
 	case COMPONENT_TYPE::MATERIAL:
 
 		component = FindComponent(COMPONENT_TYPE::MATERIAL);
-		if (component == nullptr) { component = new Material(GenerateComponentId(), this); }
+		if (component == nullptr) { component = new Material(id, this); }
 		else { return component; }
 
 		break;

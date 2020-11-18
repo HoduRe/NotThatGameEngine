@@ -566,6 +566,8 @@ void ManagerImGui::InspectorWindow() {
 
 		if (focus != nullptr) {
 
+			ImGui::Text(focus->name.c_str());
+
 			Transform* transform = (Transform*)focus->FindComponent(COMPONENT_TYPE::TRANSFORM);
 			Material* material = (Material*)focus->FindComponent(COMPONENT_TYPE::MATERIAL);
 			Mesh* mesh = (Mesh*)focus->FindComponent(COMPONENT_TYPE::MESH);
