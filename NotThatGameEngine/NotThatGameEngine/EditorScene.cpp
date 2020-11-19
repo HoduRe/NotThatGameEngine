@@ -42,7 +42,7 @@ bool EditorScene::Init() {
 bool EditorScene::Start()
 {
 
-	DataImporter::LoadModel(App, "Library/Meshes/BakerHouse.fbx");
+	DataImporter::LoadModel(App, "Meshes/BakerHouse.fbx");
 
 	return true;
 }
@@ -114,7 +114,7 @@ bool EditorScene::AddGameObject(GameObject* newObject) {	// This function doesn'
 			for (int i = 0; i < size; i++) {
 
 				if (rootGameObjectsVec[i] == newObject->parent) {
-				
+
 					rootGameObjectsVec[i]->childs.push_back(newObject);
 					LOG("Object %s added into scene.\n", newObject->name.c_str());
 					return true;
@@ -125,10 +125,10 @@ bool EditorScene::AddGameObject(GameObject* newObject) {	// This function doesn'
 
 					ret = rootGameObjectsVec[i]->AddGameObjectByParent(newObject);
 					if (ret) {
-						
+
 						LOG("Object %s added into scene.\n", newObject->name.c_str());
 						return ret;
-					
+
 					}
 
 				}
@@ -200,7 +200,7 @@ GameObject* EditorScene::FindGameObject(long long int id) {
 	GameObject* ret = nullptr;
 
 	for (int i = 0; i < rootGameObjectsVec.size(); i++) {
-		
+
 		if (rootGameObjectsVec[i]->id == id) { return rootGameObjectsVec[i]; }
 		else {
 			ret = rootGameObjectsVec[i]->FindGameObjectChild(id);
@@ -234,6 +234,27 @@ void EditorScene::DeleteRootGameObjects() {
 
 }
 
+
+Component* EditorScene::FindGameObjectByComponent(long long int componentId) {
+
+	Component* ret = nullptr;
+
+	for (int i = 0; i < rootGameObjectsVec.size(); i++) {
+
+		for (int j = 0; j < rootGameObjectsVec[i]->components.size(); j++) {
+
+			if (rootGameObjectsVec[i]->components[j]->id == componentId) { return rootGameObjectsVec[i]->components[j]; }
+
+		}
+
+		ret = rootGameObjectsVec[i]->FindGameObjectChildByComponent(componentId);
+		if (ret) { return ret; }
+
+	}
+
+	return ret;
+
+}
 
 bool EditorScene::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 

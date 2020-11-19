@@ -31,12 +31,19 @@ void DataSaving::SaveMesh(Application* App, Mesh* mesh) {
 	memcpy(cursor, &vecSize, intSize);
 	cursor += intSize;
 
-	// TODO: not all primitives have indices...
-	memcpy(cursor, &mesh->vertices.at(0), vertexSize);
-	cursor += vertexSize;
+	if (mesh->vertices.size() > 0) {
 
-	memcpy(cursor, &mesh->indices.at(0), indexSize);
-	cursor += indexSize;
+		memcpy(cursor, &mesh->vertices.at(0), vertexSize);
+		cursor += vertexSize;
+
+	}
+
+	if (mesh->indices.size() > 0) {
+
+		memcpy(cursor, &mesh->indices.at(0), indexSize);
+		cursor += indexSize;
+
+	}
 
 	if (mesh->normals.size() > 0) {
 
@@ -253,9 +260,50 @@ void DataLoading::LoadMaterial(char* fileBuffer, Material* material) {
 uint DataLoading::LoadTexture(Application* App, const char* path) { return DataImporter::LoadTexture(App, path); }
 
 
-void DataLoading::LoadGameObject(Application* App, GameObject* gameObject) {
+void DataLoading::LoadGameObject(Application* App, JSON_Array* gameObjectsArray, int index) {
 
+	JSON_Object* itNode = json_array_get_object(gameObjectsArray, index);
 
+	std::string name = json_object_get_string(itNode, JSON_NODE_NAME);
+	long long int ID = json_object_get_number(itNode, JSON_NODE_ID);
+	int parentID = json_object_get_number(itNode, JSON_NODE_NAME);
+
+	JSON_Array* transformNode(json_object_get_array(itNode, JSON_NODE_TRANSLATION));
+	float translationX = json_value_get_number(json_array_get_value(transformNode, 0));
+	float translationY = json_value_get_number(json_array_get_value(transformNode, 1));
+	float translationZ = json_value_get_number(json_array_get_value(transformNode, 2));
+
+	transformNode = json_object_get_array(itNode, JSON_NODE_ROTATION);
+	float rotationX = json_value_get_number(json_array_get_value(transformNode, 0));
+	float rotationY = json_value_get_number(json_array_get_value(transformNode, 1));
+	float rotationZ = json_value_get_number(json_array_get_value(transformNode, 2));
+
+	transformNode = json_object_get_array(itNode, JSON_NODE_SCALE);
+	float scaleX = json_value_get_number(json_array_get_value(transformNode, 0));
+	float scaleY = json_value_get_number(json_array_get_value(transformNode, 1));
+	float scaleZ = json_value_get_number(json_array_get_value(transformNode, 2));
+
+	GameObject* gameObject = new GameObject(ID, name, App->editorScene->FindGameObject(parentID), true);	// TODO: when I load bool enabled, this true should be a variable
+
+	Transform* transform = (Transform*)gameObject->FindComponent(COMPONENT_TYPE::TRANSFORM);
+	transform->SetPosition(float3(translationX, translationY, translationZ));
+	transform->SetEulerAngles(float3(rotationX, rotationY, rotationZ));
+	transform->SetScale(float3(scaleX, scaleY, scaleZ));
+
+	JSON_Array* componentNode(json_object_get_array(itNode, JSON_NODE_COMPONENTS));
+	ComponentReader cReader;
+
+	for (int i = 0; i < JsonManager::GetArraySize(componentNode); i++) {
+
+		JSON_Object* nodeComponent = json_array_get_object(componentNode, i);
+		cReader.componentType = json_object_get_number(nodeComponent, JSON_NODE_COMPONENT_TYPE);
+		cReader.componentId = json_object_get_number(nodeComponent, JSON_NODE_COMPONENT_ID);
+
+		gameObject->AddComponent((COMPONENT_TYPE)cReader.componentType, cReader.componentId);
+
+	}
+
+	App->editorScene->AddGameObject(gameObject);
 
 }
 

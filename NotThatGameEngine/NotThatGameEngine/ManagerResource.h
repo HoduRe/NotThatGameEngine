@@ -69,13 +69,6 @@ public:
 
 private:
 
-	struct ComponentReader {
-
-		int componentType;
-		long long int componentId;
-
-	};
-
 };
 
 #endif

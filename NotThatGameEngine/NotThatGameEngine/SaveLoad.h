@@ -29,7 +29,14 @@ namespace DataLoading {
 	void LoadMesh(char* fileBuffer, Mesh* mesh);
 	void LoadMaterial(char* fileBuffer, Material* material);
 	uint LoadTexture(Application* App, const char* path);
-	void LoadGameObject(Application* App, GameObject* gameObject);
+	void LoadGameObject(Application* App, JSON_Array* gameObjectsArray, int index);
+
+	struct ComponentReader {
+
+		int componentType;
+		long long int componentId;
+
+	};
 
 }
 

@@ -27,6 +27,7 @@ public:
 	bool AddGameObject(GameObject* newObject);
 	GameObject* FindGameObject(long long int id);
 	void DeleteGameObject(long long int id);
+	Component* FindGameObjectByComponent(long long int componentId);
 	void SetFocus(GameObject* gameobject = nullptr);
 	GameObject* GetFocus();
 	long long int GenerateId();

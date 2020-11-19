@@ -85,9 +85,6 @@ void ResourceManager::LoadLibraryFiles() {
 
 	for (int i = 0; i < objectsVec.size(); i++) { LoadResourceByType(objectsVec[i]); }
 
-	// TODO: Components still have to be added to their gameObject: do a function AddComponentBlind that revises all gameobjects components ID?
-
-
 	// TODO: Load other components (camera)
 
 
@@ -105,52 +102,7 @@ void ResourceManager::LoadScene(char* buffer) {
 
 	int size = JsonManager::GetArraySize(gameObjectsArray);
 
-	for (int i = 0; i < size; i++) {
-
-		JSON_Object* itNode = json_array_get_object(gameObjectsArray, i);
-
-		std::string name = json_object_get_string(itNode, JSON_NODE_NAME);
-		long long int ID = json_object_get_number(itNode, JSON_NODE_ID);
-		int parentID = json_object_get_number(itNode, JSON_NODE_NAME);
-
-		JSON_Array* transformNode(json_object_get_array(itNode, JSON_NODE_TRANSLATION));
-		float translationX = json_value_get_number(json_array_get_value(transformNode, 0));
-		float translationY = json_value_get_number(json_array_get_value(transformNode, 1));
-		float translationZ = json_value_get_number(json_array_get_value(transformNode, 2));
-
-		transformNode = json_object_get_array(itNode, JSON_NODE_ROTATION);
-		float rotationX = json_value_get_number(json_array_get_value(transformNode, 0));
-		float rotationY = json_value_get_number(json_array_get_value(transformNode, 1));
-		float rotationZ = json_value_get_number(json_array_get_value(transformNode, 2));
-
-		transformNode = json_object_get_array(itNode, JSON_NODE_SCALE);
-		float scaleX = json_value_get_number(json_array_get_value(transformNode, 0));
-		float scaleY = json_value_get_number(json_array_get_value(transformNode, 1));
-		float scaleZ = json_value_get_number(json_array_get_value(transformNode, 2));
-
-		GameObject* gameObject = new GameObject(ID, name, App->editorScene->FindGameObject(parentID), true);	// TODO: when I load bool enabled, this true should be a variable
-
-		Transform* transform = (Transform*)gameObject->FindComponent(COMPONENT_TYPE::TRANSFORM);
-		transform->SetPosition(float3(translationX, translationY, translationZ));
-		transform->SetEulerAngles(float3(rotationX, rotationY, rotationZ));
-		transform->SetScale(float3(scaleX, scaleY, scaleZ));
-
-		JSON_Array* componentNode(json_object_get_array(itNode, JSON_NODE_COMPONENTS));
-		ComponentReader cReader;
-
-		for (int i = 0; i < JsonManager::GetArraySize(componentNode); i++) {
-
-			JSON_Object* nodeComponent = json_array_get_object(componentNode, i);
-			cReader.componentType = json_object_get_number(nodeComponent, JSON_NODE_COMPONENT_TYPE);
-			cReader.componentId = json_object_get_number(nodeComponent, JSON_NODE_COMPONENT_ID);
-
-			gameObject->AddComponent((COMPONENT_TYPE)cReader.componentType, cReader.componentId);
-
-		}
-
-		App->editorScene->AddGameObject(gameObject);
-
-	}
+	for (int i = 0; i < size; i++) { DataLoading::LoadGameObject(App, gameObjectsArray, i); }
 
 }
 
@@ -251,8 +203,8 @@ ResourceEnum ResourceManager::CheckResourceType(std::string name) {
 	else if (ext == EXTENSION_MODELS) { return ResourceEnum::MODEL; }
 	else if (ext == EXTENSION_MESHES) { return ResourceEnum::MESH; }
 	else if (ext == EXTENSION_MATERIALS) { return ResourceEnum::MATERIAL; }
-	else if (ext == ".FBX" || ext == ".fbx" || ext == ".obj" || ext == ".OBJ") { return ResourceEnum::MODEL; }
-	else if (ext == ".tga" || ext == ".png" || ext == ".jpg" || ext == ".TGA" || ext == ".PNG" || ext == ".JPG" || ext == ".dds" || ext == EXTENSION_TEXTURES) { return ResourceEnum::TEXTURE; }
+	else if (ext == ".FBX" || ext == ".fbx" || ext == ".OBJ" || ext == ".obj") { return ResourceEnum::MODEL; }
+	else if (ext == ".tga" || ext == ".png" || ext == ".jpg" || ext == ".dds"|| ext == ".TGA" || ext == ".PNG" || ext == ".JPG" || ext == ".DDS" || ext == EXTENSION_TEXTURES) { return ResourceEnum::TEXTURE; }
 
 	return ResourceEnum::UNKNOWN;
 
@@ -262,7 +214,10 @@ ResourceEnum ResourceManager::CheckResourceType(std::string name) {
 void ResourceManager::LoadResourceByType(std::string name, ResourceEnum type) {
 
 	ResourceEnum resourceType;
+	Mesh* mesh = nullptr;
+	Material* material = nullptr;
 	char* buffer = nullptr;
+	std::string fileName;
 
 	type == ResourceEnum::NONE ? resourceType = CheckResourceType(name) : resourceType = type;
 
@@ -283,19 +238,35 @@ void ResourceManager::LoadResourceByType(std::string name, ResourceEnum type) {
 
 	case ResourceEnum::MESH:
 
-		//DataLoading::LoadMesh();
+		App->externalManager->SplitFilePath(name.c_str(), nullptr, &fileName);
+		mesh = (Mesh*)App->editorScene->FindGameObjectByComponent((long long int)std::stoi(fileName));
+
+		if (mesh != nullptr) {
+
+			App->externalManager->Load(name.c_str(), &buffer);
+			DataLoading::LoadMesh(buffer, mesh);
+
+		}
 
 		break;
 
 	case ResourceEnum::MATERIAL:
 
-		//DataLoading::LoadMaterial(App, name.c_str());
+		App->externalManager->SplitFilePath(name.c_str(), nullptr, &fileName);
+		material = (Material*)App->editorScene->FindGameObjectByComponent((long long int)std::stoi(fileName));
+
+		if (material != nullptr) {
+
+			App->externalManager->Load(name.c_str(), &buffer);
+			DataLoading::LoadMaterial(buffer, material);
+
+		}
 
 		break;
 
 	case ResourceEnum::TEXTURE:
 
-		//DataLoading::LoadTexture(App, name.c_str());	// TODO: Uncomment this: the only problem is how we are saving textures in the .NotThatScene
+		DataLoading::LoadTexture(App, name.c_str());
 
 		break;
 

@@ -23,6 +23,7 @@ public:
 	void SetDeleteGameObject();
 	Component* FindComponent(COMPONENT_TYPE _type);
 	std::vector<Component*> FindComponents(COMPONENT_TYPE _type);
+	Component* FindGameObjectChildByComponent(long long int componentId);
 	GameObject* FindGameObjectChild(long long int id);
 
 public:

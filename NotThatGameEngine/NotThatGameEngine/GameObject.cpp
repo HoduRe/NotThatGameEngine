@@ -200,6 +200,24 @@ std::vector<Component*> GameObject::FindComponents(COMPONENT_TYPE _type) {
 }
 
 
+Component* GameObject::FindGameObjectChildByComponent(long long int componentId) {
+
+	Component* ret = nullptr;
+
+	for (int i = 0; i < components.size(); i++) { if (components[i]->id == componentId) { return components[i]; } }
+
+	for (int i = 0; i < childs.size(); i++) {
+
+		ret = childs[i]->FindGameObjectChildByComponent(componentId);
+		if (ret) { return ret; }
+
+	}
+
+	return ret;
+
+}
+
+
 GameObject* GameObject::FindGameObjectChild(long long int id) {
 
 	GameObject* ret = nullptr;

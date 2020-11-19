@@ -34,9 +34,9 @@ bool Texture::Init() {	// OpenGL has not been initialized yet
 
 bool Texture::Start() {
 
-	defaultTextureId = DataImporter::LoadTexture(App, "Library/Textures/Alex.png");
-	checkersTextureId = DataImporter::LoadTexture(App, "Library/Textures/Checker.png");
-	degenerateTextureId = DataImporter::LoadTexture(App, "Library/Textures/Degenerate.jpg");
+	defaultTextureId = DataImporter::LoadTexture(App, "Textures/Alex.png");
+	checkersTextureId = DataImporter::LoadTexture(App, "Textures/Checker.png");
+	degenerateTextureId = DataImporter::LoadTexture(App, "Textures/Degenerate.jpg");
 	App->eventManager->GenerateEvent(EVENT_ENUM::DEFAULT_TEXTURE_LOADED);
 
 	return true;
