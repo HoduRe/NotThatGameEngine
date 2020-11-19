@@ -29,7 +29,6 @@
 #define PARTICLES_PATH "Library/ParticleSystems/"
 #define SHADERS_PATH "Library/Shaders/"
 #define SCENES_PATH "Library/Scenes/"
-#define OBLIGUED_PATH "Assets/"
 
 // Deletes an array of buffers
 #define RELEASE_ARRAY( x )\

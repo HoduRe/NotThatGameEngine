@@ -632,8 +632,10 @@ void ManagerImGui::InspectorWindow() {
 
 				if (material != nullptr && material->diffuseId != 0) {
 
-					ImGui::Text("Path: %s", textureData->name.c_str());
-					ImGui::Text("ID: %i", textureData->textureUUID);
+					std::string name = textureData->name + ".dds";
+
+					ImGui::Text("Name: %s", name.c_str());
+					ImGui::Text("OpenGL ID: %i", textureData->textureId);
 					ImGui::Text("Width: %d", textureData->width);
 					ImGui::Text("Height: %d", textureData->height);
 					if (material->diffuseId != App->texture->checkersTextureId) { if (ImGui::Button("Switch to Checkers Texture")) { material->SetDiffuse(App->texture->checkersTextureId); } }

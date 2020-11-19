@@ -6,7 +6,7 @@
 struct TextureData {
 
 	TextureData();
-	TextureData(GLuint& _id, const char* _name, GLenum _textureType, int width, int height, int _size, int _UUID);
+	TextureData(GLuint& _id, const char* _name, GLenum _textureType, int width, int height, int _size);
 
 	GLenum textureType;
 	GLuint textureId;
@@ -15,7 +15,6 @@ struct TextureData {
 	int height;
 	int size;
 
-	int textureUUID;	// TODO: if we save via name, check repeated ones via name, find them via OpenGL ID... We can kill this
 };
 
 class Texture : public Module
@@ -33,7 +32,6 @@ public:
 
 	void AddTexture(TextureData* texture);
 	uint IsTextureRepeated(GLuint id);
-	uint IsTextureRepeated(int id);
 	uint IsTextureRepeated(const char* _name);
 	TextureData* GetTextureData(GLuint id);
 	std::vector<TextureData> GetTextureVector();

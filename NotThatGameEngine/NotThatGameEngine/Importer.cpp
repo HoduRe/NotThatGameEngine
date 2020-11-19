@@ -44,22 +44,35 @@ bool DataImporter::LoadScene(Application* App, const char* buffer, uint size, Ga
 
 uint DataImporter::LoadTexture(Application* App, const char* path, const char* buffer, uint size) {
 
-	std::string textureName;
-	App->externalManager->SplitFilePath(path, nullptr, &textureName);
+	std::string textureName, extension;
+	App->externalManager->SplitFilePath(path, nullptr, &textureName, &extension);
 	uint imageTest = App->texture->IsTextureRepeated(textureName.c_str());
 
 	if (imageTest == 0) {
 
-		if (buffer == nullptr && size == 0) { size = App->externalManager->Load(path, (char**)&buffer); }
-
 		ilGenImages(1, &imageTest);
 		ilBindImage(imageTest);
+
+		if (buffer == nullptr && size == 0) { size = App->externalManager->Load(path, (char**)&buffer); }
 
 		ILboolean ret = ilLoadL(IL_TYPE_UNKNOWN, buffer, size);
 
 		RELEASE_ARRAY(buffer);
 
-		if (ret == IL_TRUE) { LOG("Texture with path %s loaded.\n", path); }
+		if (ret == IL_TRUE) {
+			
+			if ("." + extension != EXTENSION_TEXTURES) {	// Always working with our .dds textures!!
+
+				std::string path = DataSaving::SaveTexture(App, textureName);
+				ilDeleteImages(1, &imageTest);
+				return LoadTexture(App, path.c_str());
+
+			}
+
+			LOG("Texture with path %s loaded.\n", path);
+
+		}
+		
 		else {
 			LOG("Texture with path %s failed to load.\n", path);
 			return 0;
@@ -67,10 +80,10 @@ uint DataImporter::LoadTexture(Application* App, const char* path, const char* b
 
 		OpenGLFunctionality::LoadGLTexture(&imageTest, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_BPP), ilGetInteger(IL_IMAGE_FORMAT), ilGetData());
 
-		TextureData* texture = new TextureData(imageTest, textureName.c_str(), GL_DIFFUSE, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), size, App->editorScene->GenerateId());
+		TextureData* texture = new TextureData(imageTest, textureName.c_str(), GL_DIFFUSE, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), size);
 
 		App->texture->AddTexture(texture);
-		DataSaving::SaveTexture(App, texture);	// TODO: so if I'm loading an imported DDS texture, I save it, but it's the same... I don't have editable textures, so why? Maybe this is solved by having a timer for resource manager?
+		DataSaving::SaveTexture(App, texture->name);	// TODO: so if I'm loading an imported DDS texture, I save it, but it's the same... I don't have editable textures, so why? Maybe this is solved by having a timer for resource manager?
 
 		ilDeleteImages(1, &imageTest);
 
@@ -160,7 +173,7 @@ void DataImporter::LoadMeshMaterial(Application* App, aiScene* scene, GameObject
 
 			if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
 
-				std::string FullPath = TEXTURES_PATH + App->externalManager->NormalizePath(Path.C_Str());	// TODO: do this better. It will need a function that iterates everything, yes. But do it
+				std::string FullPath = "Textures/" + App->externalManager->NormalizePath(Path.C_Str());	// TODO: do this better. It will need a function that iterates everything, yes. But do it
 				material->diffuseId = LoadTexture(App, FullPath.c_str());
 				LOG("Material with id = %u loaded.\n", material->diffuseId);
 

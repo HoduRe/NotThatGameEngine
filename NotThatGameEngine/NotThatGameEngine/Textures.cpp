@@ -8,11 +8,11 @@ Texture::Texture(Application* app, bool start_enabled) : Module(app, start_enabl
 Texture::~Texture() { textureVec.clear(); }
 
 
-TextureData::TextureData() : textureId(0), textureType(0), width(0), height(0), size(0), textureUUID(0), name() {}
+TextureData::TextureData() : textureId(0), textureType(0), width(0), height(0), size(0), name() {}
 
 
-TextureData::TextureData(GLuint& _id, const char* _name, GLenum _textureType, int _width, int _height, int _size, int _UUID) :
-	textureId(_id), name(_name), textureType(_textureType), width(_width), height(_height), size(_size), textureUUID(_UUID) {}
+TextureData::TextureData(GLuint& _id, const char* _name, GLenum _textureType, int _width, int _height, int _size) :
+	textureId(_id), name(_name), textureType(_textureType), width(_width), height(_height), size(_size) {}
 
 
 bool Texture::Init() {	// OpenGL has not been initialized yet
@@ -34,7 +34,7 @@ bool Texture::Init() {	// OpenGL has not been initialized yet
 
 bool Texture::Start() {
 
-	defaultTextureId = DataImporter::LoadTexture(App, "Textures/Alex.png");
+	defaultTextureId = DataImporter::LoadTexture(App, "Textures/Alex.png");	// TODO: load them without hardcoding. This may require having these textures be TextureData instead of ints?
 	checkersTextureId = DataImporter::LoadTexture(App, "Textures/Checker.png");
 	degenerateTextureId = DataImporter::LoadTexture(App, "Textures/Degenerate.jpg");
 	App->eventManager->GenerateEvent(EVENT_ENUM::DEFAULT_TEXTURE_LOADED);
@@ -72,23 +72,16 @@ uint Texture::IsTextureRepeated(GLuint id) {
 }
 
 
-uint Texture::IsTextureRepeated(int id) {
-
-	for (int i = textureVec.size() - 1; i > -1; i--) {
-
-		if (textureVec[i].textureUUID == id) { return textureVec[i].textureId; }
-
-	}
-
-	return 0;
-}
-
-
 uint Texture::IsTextureRepeated(const char* _name) {
 
 	for (int i = textureVec.size() - 1; i > -1; i--) {
 
-		if (textureVec[i].name.c_str() == _name) { return textureVec[i].textureId; }
+		if (textureVec[i].name == _name) {
+
+			LOG("Texture with name %s repeated.\n", _name);
+			return textureVec[i].textureId;
+
+		}
 
 	}
 

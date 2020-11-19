@@ -83,25 +83,27 @@ void DataSaving::SaveMaterial(Application* App, Material* material) {
 
 }
 
-void DataSaving::SaveTexture(Application* App, TextureData* texture) {	// Called everytime we load a texture to memory; no need to call it when saving scene (if it has to be called from somewhere else, remember to Bind the texture for DevIL)
+std::string DataSaving::SaveTexture(Application* App, std::string textureName) {	// Called everytime we load a texture to memory; no need to call it when saving scene (if it has to be called from somewhere else, remember to Bind the texture for DevIL)
 
-	char* buffer;
 	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);
 	ILuint size = ilSaveL(IL_DDS, nullptr, 0);
-	ILubyte* data = new ILubyte[size];
+	std::string path;
 
 	if (size > 0) {
 
+		ILubyte* data = new ILubyte[size];
+
 		if (ilSaveL(IL_DDS, data, size) > 0) {
 
-			std::string path = (std::string)TEXTURES_PATH + texture->name + EXTENSION_TEXTURES;
+			path = (std::string)TEXTURES_PATH + textureName + EXTENSION_TEXTURES;
 			App->externalManager->Save(path.c_str(), data, size);
 
 		}
 
+		RELEASE_ARRAY(data);
 	}
 
-	RELEASE_ARRAY(data);
+	return path;
 
 }
 
