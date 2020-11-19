@@ -69,15 +69,38 @@ void DataSaving::SaveMesh(Application* App, Mesh* mesh) {
 
 void DataSaving::SaveMaterial(Application* App, Material* material) {
 
-	uint size = sizeof(uint);
-
-	char* buffer = new char[size];
-
-	memcpy(buffer, &material->diffuseId, size);
-
 	std::string path = (std::string)MATERIALS_PATH + std::to_string(material->id) + EXTENSION_MATERIALS;
+	char* buffer = nullptr;
+	uint bufferSize;
+	std::string textureName;
+	int nameSize;
 
-	App->externalManager->Save(path.c_str(), buffer, size);
+	if (material->diffuseId != 0) {
+
+		textureName = App->texture->GetTextureData(material->diffuseId)->name;
+		nameSize = textureName.size();
+		bufferSize = textureName.size() + sizeof(int);
+
+		buffer = new char[bufferSize];
+		char* cursor = buffer;
+
+		memcpy(cursor, &nameSize, sizeof(int));
+		cursor += sizeof(int);
+
+		memcpy(cursor, textureName.c_str(), nameSize);
+
+		App->externalManager->Save(path.c_str(), buffer, bufferSize);
+
+	}
+
+	else {
+		
+		nameSize = 0;
+		buffer = new char[sizeof(int)];
+		memcpy(buffer, &nameSize, sizeof(int));
+		App->externalManager->Save(path.c_str(), buffer, 0);
+	
+	}
 
 	RELEASE_ARRAY(buffer);
 
@@ -254,8 +277,18 @@ void DataLoading::LoadMesh(char* fileBuffer, Mesh* mesh) {
 
 }
 
-void DataLoading::LoadMaterial(char* fileBuffer, Material* material) {
-	//NOT CALLED
+void DataLoading::LoadMaterial(Application* App, char* fileBuffer, Material* material) {
+
+	char* cursor = fileBuffer;
+
+	int nameSize;
+	memcpy(&nameSize, cursor, sizeof(int));
+	cursor += sizeof(int);
+
+	std::string name;
+	memcpy((void*)name.c_str(), cursor, nameSize+1);	// I was about to write something very disturbing. Happy thoughts, happy thoughts
+
+	material->diffuseId = App->texture->IsTextureRepeated(name.c_str());
 
 }
 
