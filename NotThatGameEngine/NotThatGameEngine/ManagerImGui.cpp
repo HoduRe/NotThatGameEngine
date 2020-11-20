@@ -11,7 +11,7 @@ sliderBrightness(1.0f), sliderWidth(SCREEN_WIDTH* SCREEN_SIZE), sliderHeight(SCR
 fullscreen(WIN_FULLSCREEN), resizable(WIN_RESIZABLE), borderless(WIN_BORDERLESS), fullDesktop(WIN_FULLSCREEN_DESKTOP), refreshRate(0),
 AVX(false), AVX2(false), AltiVec(false), MMX(false), RDTSC(false), SSE(false), SSE2(false), SSE3(false), SSE41(false), SSE42(false),
 showDemoWindow(false), defaultButtonsMenu(false), aboutWindow(false), configMenu(false), appActive(false), consoleMenu(true), sceneWindow(true), hierarchyWindow(true), inspectorWindow(true),
-Devil(), Assimp(), PhysFS(), GLEW()
+Devil(), Assimp(), PhysFS(), GLEW(), loadFileMenu(false)
 {}
 
 
@@ -125,6 +125,7 @@ update_status ManagerImGui::Update(float dt) {
 	SceneWindow();
 	HierarchyWindow();
 	InspectorWindow();
+	if (loadFileMenu) { LoadFileMenu(ASSETS_PATH, nullptr); }
 
 	ImGui::EndFrame();
 
@@ -156,8 +157,7 @@ bool ManagerImGui::CleanUp()
 }
 
 
-update_status ManagerImGui::SetMainMenuBar()
-{
+update_status ManagerImGui::SetMainMenuBar() {
 
 	update_status ret = update_status::UPDATE_CONTINUE;
 
@@ -167,15 +167,11 @@ update_status ManagerImGui::SetMainMenuBar()
 
 			if (ImGui::MenuItem("New")) {}
 
-			if (ImGui::MenuItem("Open", "Ctrl+O")) {}
+			if (ImGui::MenuItem("Open")) {}
 
-			if (ImGui::MenuItem("Save", "Ctrl+S")) {
+			if (ImGui::MenuItem("Save Scene")) { App->eventManager->GenerateEvent(EVENT_ENUM::SAVE_SCENE); }
 
-				App->eventManager->GenerateEvent(EVENT_ENUM::SAVE_SCENE);
-
-			}
-
-			if (ImGui::MenuItem("Save As...")) {}
+			if (ImGui::MenuItem("Load Scene")) { loadFileMenu = true; }
 
 			if (ImGui::MenuItem("Close App")) { ret = update_status::UPDATE_STOP; }
 
@@ -227,7 +223,7 @@ update_status ManagerImGui::SetMainMenuBar()
 			ImGui::EndMenu();
 
 		}
-		
+
 		if (ImGui::BeginMenu("Configuration")) {
 
 			if (ImGui::MenuItem("App options")) { configMenu = !configMenu; }
@@ -699,6 +695,92 @@ void ManagerImGui::InspectorWindow() {
 		}
 
 		ImGui::End();
+	}
+
+}
+
+
+void ManagerImGui::LoadFileMenu(const char* directory, const char* extension) {
+
+	ImGui::OpenPopup("Load File");
+
+	if (ImGui::BeginPopupModal("Load File", &loadFileMenu, ImGuiWindowFlags_AlwaysAutoResize)) {
+
+		in_modal = true;
+
+		ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 5.0f);
+		ImGui::BeginChild("File Browser", ImVec2(0, 300), true);
+
+		DrawDirectoryRecursively(directory, extension);
+
+		ImGui::EndChild();
+		ImGui::PopStyleVar();
+
+		ImGui::PushItemWidth(250.f);
+		if (ImGui::InputText("##file_selector", selected_file, FILE_MAX, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll)) { file_dialog = ready_to_close; }
+
+		ImGui::PopItemWidth();
+		ImGui::SameLine();
+		if (ImGui::Button("Ok", ImVec2(50, 20))) { file_dialog = ready_to_close; }
+		ImGui::SameLine();	// TODO: CLEAN HEADER VARIABLES, AND MAKE IT ACTUALLY DO SOMETHING WHEN TRIGGERED OK (clean functionality)
+
+		if (ImGui::Button("Cancel", ImVec2(50, 20))) {
+
+			file_dialog = ready_to_close;
+			selected_file[0] = '\0';
+
+		}
+
+		ImGui::EndPopup();
+
+	}
+
+	else { in_modal = false; }
+
+}
+
+
+void ManagerImGui::DrawDirectoryRecursively(const char* directory, const char* extension) {
+
+	std::vector<std::string> files;
+	std::vector<std::string> dirs;
+
+	std::string dir((directory) ? directory : "");
+	dir += "/";
+
+	App->externalManager->DiscoverFiles(dir.c_str(), files, dirs);
+
+	for (std::vector<std::string>::const_iterator it = dirs.begin(); it != dirs.end(); ++it)
+	{
+		if (ImGui::TreeNodeEx((dir + (*it)).c_str(), 0, "%s/", (*it).c_str()))
+		{
+			DrawDirectoryRecursively((dir + (*it)).c_str(), extension);
+			ImGui::TreePop();
+		}
+	}
+
+	std::sort(files.begin(), files.end());
+
+	for (std::vector<std::string>::const_iterator it = files.begin(); it != files.end(); ++it)
+	{
+		const std::string& str = *it;
+
+		bool ok = true;
+
+		if (extension && str.substr(str.find_last_of(".") + 1) != extension)
+			ok = false;
+
+		if (ok && ImGui::TreeNodeEx(str.c_str(), ImGuiTreeNodeFlags_Leaf))
+		{
+			if (ImGui::IsItemClicked()) {
+				sprintf_s(selected_file, FILE_MAX, "%s%s", dir.c_str(), str.c_str());
+
+				if (ImGui::IsMouseDoubleClicked(0))
+					file_dialog = ready_to_close;
+			}
+
+			ImGui::TreePop();
+		}
 	}
 
 }

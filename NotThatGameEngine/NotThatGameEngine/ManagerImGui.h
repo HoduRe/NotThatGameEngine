@@ -23,6 +23,8 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
+	void LoadFileMenu(const char* directory = nullptr, const char* extension = nullptr);
+
 	std::string AppName();
 	float sliderDt;
 	float sliderBrightness;
@@ -63,6 +65,7 @@ private:
 	bool sceneWindow;
 	bool hierarchyWindow;
 	bool inspectorWindow;
+	bool loadFileMenu;
 
 	std::string positionX;
 	std::string positionY;
@@ -82,9 +85,22 @@ private:
 	void SceneWindow();
 	void HierarchyWindow();
 	void InspectorWindow();
+	void DrawDirectoryRecursively(const char* directory, const char* extension);
 
 	void AddChildNode(GameObject* nextObject, int index);
 	float StringToFloat(std::string _string);
+
+#define FILE_MAX 250
+	enum
+	{
+		closed,
+		opened,
+		ready_to_close
+	} file_dialog = closed;
+	bool in_modal;
+	char selected_file[FILE_MAX];
+	std::string file_dialog_filter;
+
 };
 
 #endif
