@@ -158,9 +158,10 @@
     <ClCompile Include="imgui_impl_sdl.cpp" />
     <ClCompile Include="imgui_widgets.cpp" />
     <ClCompile Include="JsonManager.cpp" />
+    <ClCompile Include="Load.cpp" />
     <ClCompile Include="ManagerResource.cpp" />
     <ClCompile Include="parson\parson.c" />
-    <ClCompile Include="SaveLoad.cpp" />
+    <ClCompile Include="Save.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Material.cpp" />
@@ -172,7 +173,7 @@
     <ClCompile Include="ManagerExternal.cpp" />
     <ClCompile Include="ManagerImGui.cpp" />
     <ClCompile Include="Input.cpp" />
-    <ClCompile Include="Importer.cpp" />
+    <ClCompile Include="ModelImporter.cpp" />
     <ClCompile Include="OpenGLFuncionality.cpp" />
     <ClCompile Include="Physics3D.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -199,9 +200,10 @@
     <ClInclude Include="imgui_impl_sdl.h" />
     <ClInclude Include="imgui_internal.h" />
     <ClInclude Include="JsonManager.h" />
+    <ClInclude Include="Load.h" />
     <ClInclude Include="ManagerResource.h" />
     <ClInclude Include="parson\parson.h" />
-    <ClInclude Include="SaveLoad.h" />
+    <ClInclude Include="Save.h" />
     <ClInclude Include="imstb_rectpack.h" />
     <ClInclude Include="imstb_textedit.h" />
     <ClInclude Include="imstb_truetype.h" />
@@ -216,7 +218,7 @@
     <ClInclude Include="ManagerExternal.h" />
     <ClInclude Include="ManagerImGui.h" />
     <ClInclude Include="Input.h" />
-    <ClInclude Include="Importer.h" />
+    <ClInclude Include="ModelImporter.h" />
     <ClInclude Include="OpenGLFuncionality.h" />
     <ClInclude Include="Physics3D.h" />
     <ClInclude Include="Player.h" />

@@ -1,6 +1,6 @@
 #include "Application.h"
 #include "PathNode.h"
-#include "Importer.h"
+#include "ModelImporter.h"
 
 #include "PhysFS/include/physfs.h"
 #include <fstream>
@@ -43,8 +43,6 @@ bool ExternalManager::Init() {
 
 	bool ret = true;
 
-	App->eventManager->EventRegister(EVENT_ENUM::FILE_DROPPED, this);
-
 	return ret;
 }
 
@@ -69,58 +67,6 @@ update_status ExternalManager::Update(float dt) {
 update_status ExternalManager::PostUpdate(float dt) {
 
 	return update_status::UPDATE_CONTINUE;
-}
-
-
-bool ExternalManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
-
-	std::string filePath;
-	std::string extension;
-	char* buffer;
-	uint size;
-	uint id;
-	ResourceEnum type;
-
-	switch (eventId) {
-
-	case EVENT_ENUM::FILE_DROPPED:	// TODO: Very much feeling like this is just repeating the ManagerResource LoadByType or something function...
-
-		filePath = (char*)var;
-		filePath = NormalizePath(filePath.c_str());
-		filePath = LocalizePath(filePath);
-		size = Load(filePath.c_str(), &buffer);
-
-		type = App->resourceManager->CheckResourceType(filePath);	// TODO: Since this should probably in the resource manager, this App call is a joke
-
-		if (size != 0) {
-
-			if (type != ResourceEnum::UNKNOWN) { LOG("File with path %s, with readable format, has been dropped into the engine.", filePath.c_str()); }
-
-			switch (type) {
-			case ResourceEnum::MODEL:
-				DataImporter::LoadModel(App, filePath.c_str(), buffer, size);
-				break;
-
-			case ResourceEnum::TEXTURE:
-				id = DataImporter::LoadTexture(App, filePath.c_str(), buffer, size);
-				App->eventManager->GenerateEvent(EVENT_ENUM::PUT_TEXTURE_TO_FOCUSED_MODEL, EVENT_ENUM::NULL_EVENT, (void*)id);
-				break;
-
-			default:
-				break;
-			}
-
-		}
-
-		break;
-
-	default:
-		break;
-
-	}
-
-	return false;
-
 }
 
 
@@ -323,7 +269,7 @@ std::string ExternalManager::LocalizePath(std::string path) const {
 	std::string newPath;
 	std::string dirPath = PHYSFS_getBaseDir();
 	dirPath = NormalizePath(dirPath.c_str());		// In debug / release it doesn't work; it does if you put the build in the folder that contains the project (user-centric)
-	//std::string obliguedPath = "Assets/";			// Uncomment to habilitate drag and drop from Assets
+	std::string obliguedPath = "Assets/";			// Uncomment to habilitate drag and drop from Assets
 	//std::string obliguedPath = "Library/";		// Uncomment to habilitate drag and drop from Library
 
 	int size = path.size(), i = 0, j = 0;
@@ -331,8 +277,8 @@ std::string ExternalManager::LocalizePath(std::string path) const {
 	char char1, char2;
 
 	while (path[j] == dirPath[j] && j < size) { j++; }
-	//while (path[j] != obliguedPath[0] && j < size) { j++; }
-	//while (path[j] == obliguedPath[i] && j < size) { j++; i++; }
+	while (path[j] != obliguedPath[0] && j < size) { j++; }
+	while (path[j] == obliguedPath[i] && j < size) { j++; i++; }
 
 	for (j; j < size; j++) { newPath.push_back(path[j]); }
 

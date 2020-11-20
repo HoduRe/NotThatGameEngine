@@ -1,6 +1,6 @@
 #include "Application.h"
 
-#include "SaveLoad.h"
+#include "Save.h"
 #include "Assimp/include/version.h"
 #include "PhysFS/include/physfs.h"
 
@@ -613,7 +613,7 @@ void ManagerImGui::InspectorWindow() {
 
 				if (mesh != nullptr) {
 
-					ImGui::Text("%s", mesh->meshName.c_str());
+					ImGui::Text("Mesh ID: %i", mesh->id);
 					ImGui::Text("Vertices ID: %u", mesh->vertexId);
 					ImGui::Text("Normals ID: %u", mesh->normalsId);
 					ImGui::Text("Texture coordinates ID: %u", mesh->textureCoordId);

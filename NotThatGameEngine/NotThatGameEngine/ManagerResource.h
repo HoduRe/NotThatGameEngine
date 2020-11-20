@@ -27,7 +27,8 @@ enum class ResourceEnum {
 	NONE,
 
 	TEXTURE,
-	MODEL,
+	EXTERNAL_MODEL,
+	OWN_MODEL,
 	MESH,
 	MATERIAL,
 	SCENE,
@@ -52,8 +53,6 @@ public:
 	bool CleanUp();
 
 	void LoadLibraryFiles();
-	void LoadScene(char* buffer);
-	void SaveScene();
 
 	ResourceEnum CheckResourceType(std::string name);	// TODO: When this module checks the File dropping, put this to private
 

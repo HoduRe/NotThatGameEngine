@@ -1,7 +1,7 @@
 #include "Application.h"
-#include "JsonManager.h"
-#include "GameObject.h"
-#include "SaveLoad.h"
+#include "Save.h"
+#include "Load.h"
+#include "ModelImporter.h"
 #include "PathNode.h"
 
 ResourceManager::ResourceManager(Application* app, bool start_enabled) : Module(app, start_enabled) {}
@@ -24,6 +24,7 @@ bool ResourceManager::Start()
 
 	App->eventManager->EventRegister(EVENT_ENUM::SAVE_SCENE, this);
 	App->eventManager->EventRegister(EVENT_ENUM::LOAD_SCENE, this);
+	App->eventManager->EventRegister(EVENT_ENUM::FILE_DROPPED, this);
 
 	return true;
 }
@@ -59,7 +60,6 @@ bool ResourceManager::CleanUp() {
 }
 
 
-// TODO: Move LoadScene and SaveScene to SaveLoad.h, or the new place to be saving things (SaveLoadComponents, SaveLoadX...), because if we implement models, we will have to have an intermedium between gameobject and scene
 void ResourceManager::LoadLibraryFiles() {
 
 	PathNode loadingFilesNode = App->externalManager->GetAllFiles(LIBRARY_PATH);
@@ -103,48 +103,6 @@ void ResourceManager::LoadLibraryFiles() {
 }
 
 
-void ResourceManager::LoadScene(char* buffer) {
-
-	JsonManager::JsonValue root(json_parse_string(buffer));
-	JSON_Object* node(json_value_get_object(root.value));
-	JSON_Array* gameObjectsArray(json_object_get_array(node, JSON_NODE_GAMEOBJECTS));
-
-	int size = JsonManager::GetArraySize(gameObjectsArray);
-
-	for (int i = 0; i < size; i++) { DataLoading::LoadGameObject(App, gameObjectsArray, i); }
-
-}
-
-
-void ResourceManager::SaveScene() {
-
-	JsonManager::JsonValue root(json_value_init_object());
-	JSON_Object* node(json_value_get_object(root.value));
-	JSON_Array* gameObjectsArray(JsonManager::OpenArray(node, JSON_NODE_GAMEOBJECTS));
-
-	std::vector<GameObject*> gameObjects = App->editorScene->rootGameObjectsVec;
-
-	for (int i = 0; i < gameObjects.size(); i++) {
-
-		for (int j = 0; j < gameObjects[i]->childs.size(); j++) { gameObjects.push_back(gameObjects[i]->childs[j]); } // TODO: This should be called recursively :)
-
-		DataSaving::SaveGameObject(App, JsonManager::AddArrayNode(gameObjectsArray), gameObjects[i]);
-
-	}
-
-	// TODO: Save cameras, lights...
-
-	char* buffer = new char[JsonManager::GetArraySize(gameObjectsArray)];
-	uint size = JsonManager::Serialize(root.value, &buffer);
-
-	std::string sceneName = LIBRARY_PATH + (std::string)"Scene1" + EXTENSION_SCENES;
-	App->externalManager->Save(sceneName.c_str(), buffer, size);
-
-	RELEASE_ARRAY(buffer);
-
-}
-
-
 std::vector<std::string> ResourceManager::GetPathChildrenElements(PathNode loadingNode) {
 
 	std::vector<std::string> objectsVec;
@@ -168,37 +126,67 @@ std::vector<std::string> ResourceManager::GetPathChildrenElements(PathNode loadi
 
 bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
+	std::string filePath;
+	std::string extension;
+	char* buffer;
+	uint size;
+	uint id;
+	ResourceEnum type;
+
 	switch (eventId) {
 
 	case EVENT_ENUM::SAVE_SCENE:
 
-		SaveScene();
+		DataSaving::SaveScene(App);
 
 		break;
 
 	case EVENT_ENUM::LOAD_SCENE:
 
-		break;
-
-	case EVENT_ENUM::SAVE_ENGINE:
-
-
-
-		break;
-
-	case EVENT_ENUM::LOAD_ENGINE:
-
 		LoadLibraryFiles();
 
 		break;
 
-	default:
-		break;
+	case EVENT_ENUM::FILE_DROPPED:
+
+		filePath = (char*)var;
+		filePath = App->externalManager->NormalizePath(filePath.c_str());
+		filePath = App->externalManager->LocalizePath(filePath);
+		size = App->externalManager->Load(filePath.c_str(), &buffer);
+
+		type = CheckResourceType(filePath);
+
+		if (size != 0) {
+
+			switch (type) {
+
+			case ResourceEnum::EXTERNAL_MODEL:
+
+				ModelImporter::LoadNewModel(App, filePath.c_str(), buffer, size);
+				break;
+
+			case ResourceEnum::TEXTURE:
+
+				id = DataLoading::LoadTexture(App, filePath.c_str(), buffer, size);
+				App->eventManager->GenerateEvent(EVENT_ENUM::PUT_TEXTURE_TO_FOCUSED_MODEL, EVENT_ENUM::NULL_EVENT, (void*)id);
+				break;
+
+				break;
+
+			case ResourceEnum::UNKNOWN:
+			
+				LOG("File with path %s, with readable format, has been dropped into the engine.", filePath.c_str());
+				break;
+
+			default:
+				break;
+			}
+
+			return true;
+		}
 	}
 
-	return true;
 }
-
 
 ResourceEnum ResourceManager::CheckResourceType(std::string name) {
 
@@ -208,13 +196,13 @@ ResourceEnum ResourceManager::CheckResourceType(std::string name) {
 
 	ext = "." + ext;
 
-	static_assert(static_cast<int>(ResourceEnum::UNKNOWN) == 6, "Code Needs Update");
+	static_assert(static_cast<int>(ResourceEnum::UNKNOWN) == 7, "Code Needs Update");
 
 	if (ext == EXTENSION_SCENES) { return ResourceEnum::SCENE; }
-	else if (ext == EXTENSION_MODELS) { return ResourceEnum::MODEL; }
+	else if (ext == EXTENSION_MODELS) { return ResourceEnum::OWN_MODEL; }
 	else if (ext == EXTENSION_MESHES) { return ResourceEnum::MESH; }
 	else if (ext == EXTENSION_MATERIALS) { return ResourceEnum::MATERIAL; }
-	else if (ext == ".FBX" || ext == ".fbx" || ext == ".OBJ" || ext == ".obj") { return ResourceEnum::MODEL; }
+	else if (ext == ".FBX" || ext == ".fbx" || ext == ".OBJ" || ext == ".obj") { return ResourceEnum::EXTERNAL_MODEL; }
 	else if (ext == ".tga" || ext == ".png" || ext == ".jpg" || ext == ".dds" || ext == ".TGA" || ext == ".PNG" || ext == ".JPG" || ext == ".DDS" || ext == EXTENSION_TEXTURES) { return ResourceEnum::TEXTURE; }
 
 	return ResourceEnum::UNKNOWN;
@@ -237,11 +225,11 @@ void ResourceManager::LoadResourceByType(std::string name, ResourceEnum type) {
 	case ResourceEnum::SCENE:
 
 		App->externalManager->Load(name.c_str(), &buffer);
-		LoadScene(buffer);
+		DataLoading::LoadScene(App, buffer);
 
 		break;
 
-	case ResourceEnum::MODEL:
+	case ResourceEnum::OWN_MODEL:
 
 
 

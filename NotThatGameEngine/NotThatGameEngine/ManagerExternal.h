@@ -62,8 +62,6 @@ public:
 
 private:
 
-	bool ExecuteEvent(EVENT_ENUM eventId, void* var);
-
 };
 
 #endif

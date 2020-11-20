@@ -129,16 +129,10 @@
     <ClCompile Include="Primitives.cpp">
       <Filter>SceneManager</Filter>
     </ClCompile>
-    <ClCompile Include="SaveLoad.cpp">
-      <Filter>SceneManager\Data managing</Filter>
-    </ClCompile>
     <ClCompile Include="ManagerResource.cpp">
       <Filter>SceneManager\Data managing</Filter>
     </ClCompile>
     <ClCompile Include="ManagerExternal.cpp">
-      <Filter>SceneManager\Data managing</Filter>
-    </ClCompile>
-    <ClCompile Include="Importer.cpp">
       <Filter>SceneManager\Data managing</Filter>
     </ClCompile>
     <ClCompile Include="JsonManager.cpp">
@@ -146,6 +140,15 @@
     </ClCompile>
     <ClCompile Include="parson\parson.c">
       <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelImporter.cpp">
+      <Filter>SceneManager\Data managing</Filter>
+    </ClCompile>
+    <ClCompile Include="Load.cpp">
+      <Filter>SceneManager\Data managing</Filter>
+    </ClCompile>
+    <ClCompile Include="Save.cpp">
+      <Filter>SceneManager\Data managing</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -260,16 +263,10 @@
     <ClInclude Include="Primitives.h">
       <Filter>SceneManager</Filter>
     </ClInclude>
-    <ClInclude Include="SaveLoad.h">
-      <Filter>SceneManager\Data managing</Filter>
-    </ClInclude>
     <ClInclude Include="ManagerResource.h">
       <Filter>SceneManager\Data managing</Filter>
     </ClInclude>
     <ClInclude Include="ManagerExternal.h">
-      <Filter>SceneManager\Data managing</Filter>
-    </ClInclude>
-    <ClInclude Include="Importer.h">
       <Filter>SceneManager\Data managing</Filter>
     </ClInclude>
     <ClInclude Include="JsonManager.h">
@@ -277,6 +274,15 @@
     </ClInclude>
     <ClInclude Include="parson\parson.h">
       <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelImporter.h">
+      <Filter>SceneManager\Data managing</Filter>
+    </ClInclude>
+    <ClInclude Include="Load.h">
+      <Filter>SceneManager\Data managing</Filter>
+    </ClInclude>
+    <ClInclude Include="Save.h">
+      <Filter>SceneManager\Data managing</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
