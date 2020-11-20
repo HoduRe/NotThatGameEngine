@@ -149,7 +149,7 @@ void ExternalManager::GetAllFilesWithExtension(const char* directory, const char
 
 		std::string ext;
 		SplitFilePath(files[i].c_str(), nullptr, nullptr, &ext);
-		if (ext == extension) { file_list.push_back(files[i]); }
+		if ("." + ext == extension) { file_list.push_back(files[i]); }
 
 	}
 
@@ -269,8 +269,8 @@ std::string ExternalManager::LocalizePath(std::string path) const {
 	std::string newPath;
 	std::string dirPath = PHYSFS_getBaseDir();
 	dirPath = NormalizePath(dirPath.c_str());		// In debug / release it doesn't work; it does if you put the build in the folder that contains the project (user-centric)
-	std::string obliguedPath = "Assets/";			// Uncomment to habilitate drag and drop from Assets
-	//std::string obliguedPath = "Library/";		// Uncomment to habilitate drag and drop from Library
+	std::string obliguedPath = ASSETS_PATH;			// Uncomment to habilitate drag and drop from Assets
+	//std::string obliguedPath = LIBRARY_PATH;		// Uncomment to habilitate drag and drop from Library
 
 	int size = path.size(), i = 0, j = 0;
 	bool directorySkipped = false;

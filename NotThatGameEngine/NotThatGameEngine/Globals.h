@@ -18,6 +18,7 @@
 #define RADTODEG 57.295779513082320876f
 #define PI acos(-1)
 
+#define ASSETS_PATH "Assets/"
 #define LIBRARY_PATH "Library/"
 #define FOLDERS_PATH "Library/Folders/"
 #define MESHES_PATH "Library/Meshes/"

@@ -64,8 +64,10 @@ void ResourceManager::LoadLibraryFiles() {
 
 	PathNode loadingFilesNode = App->externalManager->GetAllFiles(LIBRARY_PATH);
 
-	std::vector<std::string> objectsVec = GetPathChildrenElements(loadingFilesNode);
 	std::vector<std::string> sceneVec;
+	App->externalManager->GetAllFilesWithExtension(ASSETS_PATH, EXTENSION_SCENES, sceneVec);
+
+	std::vector<std::string> objectsVec = GetPathChildrenElements(loadingFilesNode);
 	std::vector<std::string> textureVec;
 	std::vector<std::string> componentVec;
 
@@ -78,6 +80,8 @@ void ResourceManager::LoadLibraryFiles() {
 
 	}
 
+	for (int i = 0; i < textureVec.size(); i++) { LoadResourceByType(textureVec[i], ResourceEnum::TEXTURE); }
+
 	if (sceneVec.size() != 0) { LoadResourceByType(sceneVec[0], ResourceEnum::SCENE); }	// We only want to load one scene
 	else {
 
@@ -86,15 +90,9 @@ void ResourceManager::LoadLibraryFiles() {
 
 	}
 
-	for (int i = 0; i < textureVec.size(); i++) { LoadResourceByType(textureVec[i], ResourceEnum::TEXTURE); }
-
 	for (int i = 0; i < objectsVec.size(); i++) { LoadResourceByType(objectsVec[i]); }
 
 	// TODO: Load other components (camera)
-
-
-	// TODO: Load other objects which are not "saved", in the Assets/Library folder
-
 
 	objectsVec.clear();
 	sceneVec.clear();
