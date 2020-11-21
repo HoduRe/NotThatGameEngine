@@ -2,8 +2,8 @@
 An engine for CITM's Engine project which focuses on skeletical animation
 
 ## Creators:
-<li>[Me (Hodu): ][1]</li>
-<li>Lots of [hopes and dreams][2]</li>
+<li>[Me (Hodu): ](https://github.com/ferba93)</li>
+<li>Lots of [hopes and dreams](https://images-na.ssl-images-amazon.com/images/I/91Hv6KacesL.jpg)</li>
 
 ## Instructions:
 - Camera controls:<br/>
@@ -34,18 +34,12 @@ An engine for CITM's Engine project which focuses on skeletical animation
 - Thanks to [Ricard Pillosu](https://github.com/d0n3val/Edu-Game-Engine) and [Marc Garrigó](https://github.com/markitus18/Thor-Engine) for their code samples, which helped guide myself <br/>
 - Thanks to my friends:<br/>
 	<ul>
-	<li>[Aarón Guerrero][3]</li>
-	<li>[Adrià Serrano][4]</li>
-	<li>[Alex Melenchón][5]</li>
-	<li>[José Luís Redondo][6]</li>
-	<li>[Oscar Pérez][7]</li>
+	<li>[Aarón Guerrero](https://github.com/AaronGCProg)</li>
+	<li>[Adrià Serrano](https://github.com/adriaserrano97)</li>
+	<li>[Alex Melenchón](https://github.com/AlexMelenchon)</li>
+	<li>[José Luis Redondo](https://github.com/jose-tello)</li>
+	<li>[Oscar Pérez](https://github.com/oscarpm5)</li>
 	</ul>
 for being honestly awesome and helping throughout this project. <br/>
 
-[1]: https://github.com/ferba93
-[2]: https://images-na.ssl-images-amazon.com/images/I/91Hv6KacesL.jpg
-[3]: https://github.com/AaronGCProg
-[4]: https://github.com/adriaserrano97
-[5]: https://github.com/AlexMelenchon
-[6]: https://github.com/jose-tello
-[7]: https://github.com/oscarpm5
+
