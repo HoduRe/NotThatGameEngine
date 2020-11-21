@@ -8,6 +8,8 @@
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
 
+#define FILE_MAX_LENGTH 250
+
 class GameObject;
 
 class ManagerImGui : public Module
@@ -90,16 +92,7 @@ private:
 	void AddChildNode(GameObject* nextObject, int index);
 	float StringToFloat(std::string _string);
 
-#define FILE_MAX 250
-	enum
-	{
-		closed,
-		opened,
-		ready_to_close
-	} file_dialog = closed;
-	bool in_modal;
-	char selected_file[FILE_MAX];
-	std::string file_dialog_filter;
+	char selectedFileName[FILE_MAX_LENGTH];
 
 };
 

@@ -25,6 +25,7 @@ bool ResourceManager::Start()
 	App->eventManager->EventRegister(EVENT_ENUM::SAVE_SCENE, this);
 	App->eventManager->EventRegister(EVENT_ENUM::LOAD_SCENE, this);
 	App->eventManager->EventRegister(EVENT_ENUM::FILE_DROPPED, this);
+	App->eventManager->EventRegister(EVENT_ENUM::FILE_LOADED, this);
 
 	return true;
 }
@@ -146,6 +147,7 @@ bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 		break;
 
 	case EVENT_ENUM::FILE_DROPPED:
+	case EVENT_ENUM::FILE_LOADED:
 
 		filePath = (char*)var;
 		filePath = App->externalManager->NormalizePath(filePath.c_str());
@@ -264,6 +266,12 @@ void ResourceManager::LoadResourceByType(std::string name, ResourceEnum type) {
 	case ResourceEnum::TEXTURE:
 
 		DataLoading::LoadTexture(App, name.c_str());
+
+		break;
+
+	case ResourceEnum::UNKNOWN:
+
+		LOG("Unknown resource type for file %s.\n", name.c_str());
 
 		break;
 

@@ -11,7 +11,7 @@ sliderBrightness(1.0f), sliderWidth(SCREEN_WIDTH* SCREEN_SIZE), sliderHeight(SCR
 fullscreen(WIN_FULLSCREEN), resizable(WIN_RESIZABLE), borderless(WIN_BORDERLESS), fullDesktop(WIN_FULLSCREEN_DESKTOP), refreshRate(0),
 AVX(false), AVX2(false), AltiVec(false), MMX(false), RDTSC(false), SSE(false), SSE2(false), SSE3(false), SSE41(false), SSE42(false),
 showDemoWindow(false), defaultButtonsMenu(false), aboutWindow(false), configMenu(false), appActive(false), consoleMenu(true), sceneWindow(true), hierarchyWindow(true), inspectorWindow(true),
-Devil(), Assimp(), PhysFS(), GLEW(), loadFileMenu(false)
+Devil(), Assimp(), PhysFS(), GLEW(), loadFileMenu(false), selectedFileName()
 {}
 
 
@@ -171,7 +171,7 @@ update_status ManagerImGui::SetMainMenuBar() {
 
 			if (ImGui::MenuItem("Save Scene")) { App->eventManager->GenerateEvent(EVENT_ENUM::SAVE_SCENE); }
 
-			if (ImGui::MenuItem("Load Scene")) { loadFileMenu = true; }
+			if (ImGui::MenuItem("Load Asset")) { loadFileMenu = true; }
 
 			if (ImGui::MenuItem("Close App")) { ret = update_status::UPDATE_STOP; }
 
@@ -706,8 +706,6 @@ void ManagerImGui::LoadFileMenu(const char* directory, const char* extension) {
 
 	if (ImGui::BeginPopupModal("Load File", &loadFileMenu, ImGuiWindowFlags_AlwaysAutoResize)) {
 
-		in_modal = true;
-
 		ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 5.0f);
 		ImGui::BeginChild("File Browser", ImVec2(0, 300), true);
 
@@ -717,25 +715,25 @@ void ManagerImGui::LoadFileMenu(const char* directory, const char* extension) {
 		ImGui::PopStyleVar();
 
 		ImGui::PushItemWidth(250.f);
-		if (ImGui::InputText("##file_selector", selected_file, FILE_MAX, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll)) { file_dialog = ready_to_close; }
+		ImGui::InputText("##file_selector", selectedFileName, FILE_MAX_LENGTH, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll);
 
 		ImGui::PopItemWidth();
 		ImGui::SameLine();
-		if (ImGui::Button("Ok", ImVec2(50, 20))) { file_dialog = ready_to_close; }
-		ImGui::SameLine();	// TODO: CLEAN HEADER VARIABLES, AND MAKE IT ACTUALLY DO SOMETHING WHEN TRIGGERED OK (clean functionality)
 
-		if (ImGui::Button("Cancel", ImVec2(50, 20))) {
-
-			file_dialog = ready_to_close;
-			selected_file[0] = '\0';
-
+		if (ImGui::Button("Ok", ImVec2(50, 20))) {
+			
+			App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADED, EVENT_ENUM::NULL_EVENT, &selectedFileName);
+			loadFileMenu = false;
+		
 		}
+
+		ImGui::SameLine();
+
+		if (ImGui::Button("Cancel", ImVec2(50, 20))) { selectedFileName[0] = '\0'; }
 
 		ImGui::EndPopup();
 
 	}
-
-	else { in_modal = false; }
 
 }
 
@@ -773,10 +771,16 @@ void ManagerImGui::DrawDirectoryRecursively(const char* directory, const char* e
 		if (ok && ImGui::TreeNodeEx(str.c_str(), ImGuiTreeNodeFlags_Leaf))
 		{
 			if (ImGui::IsItemClicked()) {
-				sprintf_s(selected_file, FILE_MAX, "%s%s", dir.c_str(), str.c_str());
 
-				if (ImGui::IsMouseDoubleClicked(0))
-					file_dialog = ready_to_close;
+				sprintf_s(selectedFileName, FILE_MAX_LENGTH, "%s%s", dir.c_str(), str.c_str());
+
+				if (ImGui::IsMouseDoubleClicked(0)) {
+
+					App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADED, EVENT_ENUM::NULL_EVENT, &selectedFileName);
+					loadFileMenu = false;
+
+				}
+
 			}
 
 			ImGui::TreePop();
