@@ -149,35 +149,40 @@ bool EditorScene::AddGameObject(GameObject* newObject) {	// This function doesn'
 
 bool EditorScene::AddPrimitive(PrimitiveEnum _type) {
 
-	GameObject* newObject = new GameObject(GenerateId(), "");
-	Mesh* mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
+	GameObject* newObject = nullptr;
+	Mesh* mesh = nullptr;
+	long long int id = GenerateId();
 
 	switch (_type) {
 
 	case PrimitiveEnum::PRIMITIVE_CUBE:
 
-		newObject->name = "Cube";
+		newObject = new GameObject(id, std::to_string(id), "Cube");
+		mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
 		PrimitivesF::SetCubeVertices(3.0f, &mesh->vertices, &mesh->indices);
 
 		break;
 
 	case PrimitiveEnum::PRIMITIVE_SPHERE:
 
-		newObject->name = "Sphere";
+		newObject = new GameObject(id, std::to_string(id), "Sphere");
+		mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
 		PrimitivesF::SetSphereVertices(2.0f, 36, 18, &mesh->vertices, &mesh->indices);
 
 		break;
 
 	case PrimitiveEnum::PRIMITIVE_PYRAMID:
 
-		newObject->name = "Pyramid";
+		newObject = new GameObject(id, std::to_string(id), "Pyramid");
+		mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
 		PrimitivesF::SetPyramidVertices(5.0f, 2.0f, &mesh->vertices, &mesh->indices);
 
 		break;
 
 	case PrimitiveEnum::PRIMITIVE_CYLINDER:
 
-		newObject->name = "Cylinder";
+		newObject = new GameObject(id, std::to_string(id), "Cylinder");
+		mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
 		PrimitivesF::SetCylinderVertices(8.0f, 3.0f, 30, &mesh->vertices, &mesh->indices);
 
 		break;

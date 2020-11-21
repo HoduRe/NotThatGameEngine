@@ -171,6 +171,10 @@ bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 				App->eventManager->GenerateEvent(EVENT_ENUM::PUT_TEXTURE_TO_FOCUSED_MODEL, EVENT_ENUM::NULL_EVENT, (void*)id);
 				break;
 
+			case ResourceEnum::SCENE:
+
+				DataLoading::LoadScene(App, buffer);
+
 				break;
 
 			case ResourceEnum::UNKNOWN:
