@@ -7,7 +7,6 @@
 #include "Window.h"
 #include "Input.h"
 #include "Audio.h"
-#include "Scene.h"
 #include "Renderer3D.h"
 #include "Camera3D.h"
 #include "ResetModule.h"
@@ -26,7 +25,6 @@ public:
 	Window* window;
 	Input* input;
 	Audio* audio;
-	Scene* engineScene;
 	Renderer3D* renderer3D;
 	Camera3D* camera;
 	ResetModule* reset;

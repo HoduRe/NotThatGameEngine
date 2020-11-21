@@ -5,7 +5,6 @@ Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter
 	window = new Window(this);
 	input = new Input(this);
 	audio = new Audio(this, true);
-	engineScene = new Scene(this);
 	renderer3D = new Renderer3D(this);
 	camera = new Camera3D(this);
 	reset = new ResetModule(this);
@@ -28,7 +27,6 @@ Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter
 	AddModule(camera);
 	AddModule(input);
 	AddModule(audio);
-	AddModule(engineScene);
 	AddModule(editorScene);
 	
 	// Renderer last!

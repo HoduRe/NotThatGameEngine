@@ -87,9 +87,6 @@
     <ClCompile Include="Audio.cpp">
       <Filter>Modular code</Filter>
     </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Modular code</Filter>
-    </ClCompile>
     <ClCompile Include="ResetModule.cpp">
       <Filter>Modular code</Filter>
     </ClCompile>
@@ -213,9 +210,6 @@
       <Filter>Modular code</Filter>
     </ClInclude>
     <ClInclude Include="Audio.h">
-      <Filter>Modular code</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
       <Filter>Modular code</Filter>
     </ClInclude>
     <ClInclude Include="ResetModule.h">

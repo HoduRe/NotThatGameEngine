@@ -9,11 +9,10 @@ bool ResetModule::Start() {
 	return true;
 }
 
-update_status ResetModule::Update(float dt) {	// IF YOU ARE TO USE THIS, UPDATE WITH THE NEW MODULES
+update_status ResetModule::Update(float dt) {	// IF YOU ARE TO USE THIS, CLEANUP AND START OF NECESSARY MODULES
 
 	if (reset == true) {
-		App->engineScene->CleanUp();
-		App->engineScene->Start();
+
 		reset = false;
 	}
 
