@@ -72,12 +72,6 @@
     <ClCompile Include="Window.cpp">
       <Filter>Modular code</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Modular code</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics3D.cpp">
-      <Filter>Modular code</Filter>
-    </ClCompile>
     <ClCompile Include="Input.cpp">
       <Filter>Modular code</Filter>
     </ClCompile>
@@ -204,12 +198,6 @@
       <Filter>Modular code</Filter>
     </ClInclude>
     <ClInclude Include="Window.h">
-      <Filter>Modular code</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Modular code</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics3D.h">
       <Filter>Modular code</Filter>
     </ClInclude>
     <ClInclude Include="Input.h">

@@ -8,8 +8,6 @@ Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter
 	engineScene = new Scene(this);
 	renderer3D = new Renderer3D(this);
 	camera = new Camera3D(this);
-	physics = new Physics3D(this);
-	player = new Player(this);
 	reset = new ResetModule(this);
 	imGui = new ManagerImGui(this);
 	eventManager = new ManagerEvent(this);
@@ -30,10 +28,8 @@ Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter
 	AddModule(camera);
 	AddModule(input);
 	AddModule(audio);
-	AddModule(physics);
 	AddModule(engineScene);
 	AddModule(editorScene);
-	AddModule(player);
 	
 	// Renderer last!
 	AddModule(renderer3D);

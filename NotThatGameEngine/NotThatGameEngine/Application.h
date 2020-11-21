@@ -10,8 +10,6 @@
 #include "Scene.h"
 #include "Renderer3D.h"
 #include "Camera3D.h"
-#include "Physics3D.h"
-#include "Player.h"
 #include "ResetModule.h"
 #include "ManagerImGui.h"
 #include "ManagerEvent.h"
@@ -31,8 +29,6 @@ public:
 	Scene* engineScene;
 	Renderer3D* renderer3D;
 	Camera3D* camera;
-	Physics3D* physics;
-	Player* player;
 	ResetModule* reset;
 	ManagerImGui* imGui;
 	ManagerEvent* eventManager;
