@@ -33,11 +33,13 @@ An engine for CITM's Engine project which focuses on skeletical animation
 - Give the dragon time to load :')<br/>
 - Thanks to [Ricard Pillosu](https://github.com/d0n3val/Edu-Game-Engine) and [Marc Garrigó](https://github.com/markitus18/Thor-Engine) for their code samples, which helped guide myself <br/>
 - Thanks to my friends:<br/>
-<li>[Aarón Guerrero: ](https://github.com/AaronGCProg)</li>
-<li>[Adrià Serrano: ](https://github.com/adriaserrano97)</li>
-<li>[Alex Melenchón: ](https://github.com/AlexMelenchon)</li>
-<li>[José Luis Redondo: ](https://github.com/jose-tello)</li>
-<li>[Oscar Pérez: ](https://github.com/oscarpm5)</li>
+	<ul>
+	<li>[Aarón Guerrero: ](https://github.com/AaronGCProg)</li>
+	<li>[Adrià Serrano: ](https://github.com/adriaserrano97)</li>
+	<li>[Alex Melenchón: ](https://github.com/AlexMelenchon)</li>
+	<li>[José Luis Redondo: ](https://github.com/jose-tello)</li>
+	<li>[Oscar Pérez: ](https://github.com/oscarpm5)</li>
+	</ul>
 for being honestly awesome and helping throughout this project. <br/>
 
 
