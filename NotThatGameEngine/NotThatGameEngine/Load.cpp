@@ -205,11 +205,13 @@ uint DataLoading::LoadTexture(Application* App, const char* path, const char* bu
 		TextureData* texture = new TextureData(imageTest, textureName.c_str(), GL_DIFFUSE, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), size);
 
 		App->texture->AddTexture(texture);
-		DataSaving::SaveTexture(App, texture->name);	// TODO: so if I'm loading an imported DDS texture, I save it, but it's the same... I don't have editable textures, so why? Maybe this is solved by having a timer for resource manager?
+		DataSaving::SaveTexture(App, texture->name);
 
 		ilDeleteImages(1, &imageTest);
 
 	}
+
+	else { LOG("Repeated texture %s.\n", textureName.c_str()); }
 
 	return imageTest;
 

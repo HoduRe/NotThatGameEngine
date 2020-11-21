@@ -23,7 +23,7 @@ void DataSaving::SaveScene(Application* App) {
 	char* buffer = new char[JsonManager::GetArraySize(gameObjectsArray)];
 	uint size = JsonManager::Serialize(root.value, &buffer);
 
-	std::string sceneName = ASSETS_PATH + (std::string)"Scene1" + EXTENSION_SCENES;
+	std::string sceneName = SCENES_PATH + (std::string)"Scene1" + EXTENSION_SCENES;
 	App->externalManager->Save(sceneName.c_str(), buffer, size);
 
 	RELEASE_ARRAY(buffer);

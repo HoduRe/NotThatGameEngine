@@ -33,6 +33,7 @@ ExternalManager::ExternalManager(Application* app, bool start_enabled) : Module(
 	CreateDir(PARTICLES_PATH);
 	CreateDir(SHADERS_PATH);
 	CreateDir(SCENES_PATH);
+
 }
 
 
@@ -268,17 +269,20 @@ std::string ExternalManager::LocalizePath(std::string path) const {
 
 	std::string newPath;
 	std::string dirPath = PHYSFS_getBaseDir();
-	dirPath = NormalizePath(dirPath.c_str());		// In debug / release it doesn't work; it does if you put the build in the folder that contains the project (user-centric)
-	std::string obliguedPath = ASSETS_PATH;			// Uncomment to habilitate drag and drop from Assets
-	//std::string obliguedPath = LIBRARY_PATH;		// Uncomment to habilitate drag and drop from Library
+	dirPath = NormalizePath(dirPath.c_str());
+	std::string obliguedPath;
+
+	if (_DEBUG) { obliguedPath = ASSETS_PATH + (std::string)"/"; }
 
 	int size = path.size(), i = 0, j = 0;
 	bool directorySkipped = false;
 	char char1, char2;
 
 	while (path[j] == dirPath[j] && j < size) { j++; }
-	while (path[j] != obliguedPath[0] && j < size) { j++; }
-	while (path[j] == obliguedPath[i] && j < size) { j++; i++; }
+	if (obliguedPath.size() != 0) {
+		while (path[j] != obliguedPath[0] && j < size) { j++; }
+		while (path[j] == obliguedPath[i] && j < size) { j++; i++; }
+	}
 
 	for (j; j < size; j++) { newPath.push_back(path[j]); }
 

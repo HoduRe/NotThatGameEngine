@@ -74,7 +74,7 @@ void ResourceManager::LoadLibraryFiles() {
 
 	for (int i = 0; i < objectsVec.size(); i++) {
 
-		ResourceEnum type = CheckResourceType(objectsVec[i]);
+		ResourceEnum type = CheckResourceType(objectsVec[i], &std::string());
 		if (type == ResourceEnum::SCENE) { sceneVec.push_back(objectsVec[i]); }
 		else if (type == ResourceEnum::TEXTURE) { textureVec.push_back(objectsVec[i]); }
 		else if (type == ResourceEnum::MATERIAL || type == ResourceEnum::MESH) { componentVec.push_back(objectsVec[i]); }
@@ -126,10 +126,13 @@ std::vector<std::string> ResourceManager::GetPathChildrenElements(PathNode loadi
 bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
 	std::string filePath;
+	std::string path;
+	std::string fileName;
 	std::string extension;
 	char* buffer;
 	uint size;
 	uint id;
+	long long int idAux;
 	ResourceEnum type;
 
 	switch (eventId) {
@@ -152,9 +155,19 @@ bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 		filePath = (char*)var;
 		filePath = App->externalManager->NormalizePath(filePath.c_str());
 		filePath = App->externalManager->LocalizePath(filePath);
-		size = App->externalManager->Load(filePath.c_str(), &buffer);
 
-		type = CheckResourceType(filePath);
+		type = CheckResourceType(filePath, &extension, &fileName);
+		path = GetPathFromType(type);
+		extension = ConvertLoadExtension(type, extension);
+
+		if (App->externalManager->Exists((path + fileName + extension).c_str())) {
+		
+			if (type == ResourceEnum::EXTERNAL_MODEL) { extension = EXTENSION_MODELS; }
+			filePath = path + fileName + extension;
+		
+		}
+
+		size = App->externalManager->Load(filePath.c_str(), &buffer);
 
 		if (size != 0) {
 
@@ -163,6 +176,11 @@ bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 			case ResourceEnum::EXTERNAL_MODEL:
 
 				ModelImporter::LoadNewModel(App, filePath.c_str(), buffer, size);
+				break;
+
+			case ResourceEnum::OWN_MODEL:
+
+				// TODO: Load the original model, changing components and gameobjects IDs
 				break;
 
 			case ResourceEnum::TEXTURE:
@@ -178,7 +196,7 @@ bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 				break;
 
 			case ResourceEnum::UNKNOWN:
-			
+
 				LOG("File with path %s, with readable format, has been dropped into the engine.", filePath.c_str());
 				break;
 
@@ -192,22 +210,24 @@ bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
 }
 
-ResourceEnum ResourceManager::CheckResourceType(std::string name) {
+ResourceEnum ResourceManager::CheckResourceType(std::string name, std::string* extension, std::string* fileName) {
 
-	std::string ext;
+	App->externalManager->SplitFilePath(name.c_str(), nullptr, fileName, extension);
+	std::string dot = ".";
 
-	App->externalManager->SplitFilePath(name.c_str(), nullptr, nullptr, &ext);
-
-	ext = "." + ext;
+	*extension = dot + *extension;
 
 	static_assert(static_cast<int>(ResourceEnum::UNKNOWN) == 7, "Code Needs Update");
 
-	if (ext == EXTENSION_SCENES) { return ResourceEnum::SCENE; }
-	else if (ext == EXTENSION_MODELS) { return ResourceEnum::OWN_MODEL; }
-	else if (ext == EXTENSION_MESHES) { return ResourceEnum::MESH; }
-	else if (ext == EXTENSION_MATERIALS) { return ResourceEnum::MATERIAL; }
-	else if (ext == ".FBX" || ext == ".fbx" || ext == ".OBJ" || ext == ".obj") { return ResourceEnum::EXTERNAL_MODEL; }
-	else if (ext == ".tga" || ext == ".png" || ext == ".jpg" || ext == ".dds" || ext == ".TGA" || ext == ".PNG" || ext == ".JPG" || ext == ".DDS" || ext == EXTENSION_TEXTURES) { return ResourceEnum::TEXTURE; }
+	if (*extension == EXTENSION_SCENES) { return ResourceEnum::SCENE; }
+	else if (*extension == EXTENSION_MODELS) { return ResourceEnum::OWN_MODEL; }
+	else if (*extension == EXTENSION_MESHES) { return ResourceEnum::MESH; }
+	else if (*extension == EXTENSION_MATERIALS) { return ResourceEnum::MATERIAL; }
+	else if (*extension == ".FBX" || *extension == ".fbx" || *extension == ".OBJ" || *extension == ".obj") { return ResourceEnum::EXTERNAL_MODEL; }
+	else if (*extension == ".tga" || *extension == ".png" || *extension == ".jpg" || *extension == ".dds" || *extension == ".TGA"
+		|| *extension == ".PNG" || *extension == ".JPG" || *extension == ".DDS" || *extension == EXTENSION_TEXTURES) {
+		return ResourceEnum::TEXTURE;
+	}
 
 	return ResourceEnum::UNKNOWN;
 
@@ -222,7 +242,7 @@ void ResourceManager::LoadResourceByType(std::string name, ResourceEnum type) {
 	char* buffer = nullptr;
 	std::string fileName;
 
-	type == ResourceEnum::NONE ? resourceType = CheckResourceType(name) : resourceType = type;
+	type == ResourceEnum::NONE ? resourceType = CheckResourceType(name, &std::string()) : resourceType = type;
 
 	switch (resourceType) {
 
@@ -288,3 +308,40 @@ void ResourceManager::LoadResourceByType(std::string name, ResourceEnum type) {
 }
 
 
+std::string ResourceManager::GetPathFromType(ResourceEnum type) {
+
+	switch (type) {
+
+	case ResourceEnum::SCENE: return SCENES_PATH;
+
+	case ResourceEnum::OWN_MODEL: return MODELS_PATH;
+
+	case ResourceEnum::MESH: return MESHES_PATH;
+
+	case ResourceEnum::MATERIAL: return MATERIALS_PATH;
+
+	case ResourceEnum::TEXTURE: return TEXTURES_PATH;
+
+	case ResourceEnum::UNKNOWN:
+	default:
+		return "";
+	}
+
+}
+
+
+std::string ResourceManager::ConvertLoadExtension(ResourceEnum type, std::string extension) {
+
+	switch (type) {
+
+	case ResourceEnum::TEXTURE: return EXTENSION_TEXTURES;
+	case ResourceEnum::EXTERNAL_MODEL: return EXTENSION_MODELS;
+
+	default:
+		break;
+
+	}
+
+	return extension;
+
+}
