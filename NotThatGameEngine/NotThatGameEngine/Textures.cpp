@@ -50,7 +50,7 @@ bool Texture::Start() {
 
 bool Texture::CleanUp() {
 
-	glDeleteTextures(textureVec.size(), &textureVec[0].textureId);
+	if (textureVec.size() != 0) { glDeleteTextures(textureVec.size(), &textureVec[0].textureId); }
 	return true;
 
 }

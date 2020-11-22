@@ -286,6 +286,8 @@ std::string ExternalManager::LocalizePath(std::string path) const {
 
 	for (j; j < size; j++) { newPath.push_back(path[j]); }
 
+	if (newPath.size() == 0) { newPath = path; }	// If newPath has nothing, path may already be localized
+
 	return newPath;
 
 }

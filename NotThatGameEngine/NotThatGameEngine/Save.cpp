@@ -10,13 +10,7 @@ void DataSaving::SaveScene(Application* App) {
 
 	std::vector<GameObject*> gameObjects = App->editorScene->rootGameObjectsVec;
 
-	for (int i = 0; i < gameObjects.size(); i++) {
-
-		for (int j = 0; j < gameObjects[i]->childs.size(); j++) { gameObjects.push_back(gameObjects[i]->childs[j]); } // TODO: This should be called recursively :)
-
-		SaveGameObject(App, JsonManager::AddArrayNode(gameObjectsArray), gameObjects[i]);
-
-	}
+	for (int i = 0; i < gameObjects.size(); i++) { RecursiveChildCall(App, gameObjectsArray, gameObjects[i]); }
 
 	// TODO: Save cameras, lights...
 
@@ -27,6 +21,14 @@ void DataSaving::SaveScene(Application* App) {
 	App->externalManager->Save(sceneName.c_str(), buffer, size);
 
 	RELEASE_ARRAY(buffer);
+
+}
+
+
+void DataSaving::RecursiveChildCall(Application* App, JSON_Array* gameObjectsArray, GameObject* gameObject) {
+
+	SaveGameObject(App, JsonManager::AddArrayNode(gameObjectsArray), gameObject);
+	for (int j = 0; j < gameObject->childs.size(); j++) { RecursiveChildCall(App, gameObjectsArray, gameObject->childs[j]); }
 
 }
 
@@ -60,17 +62,7 @@ void DataSaving::SaveGameObject(Application* App, JSON_Object* node, GameObject*
 	json_object_set_boolean(node, JSON_NODE_ENABLED, gameObject->enabled);
 	json_object_set_string(node, JSON_NODE_MODEL_NAME, gameObject->originalName.c_str());
 
-	SaveModel(App, gameObject);
-
-}
-
-
-void DataSaving::SaveModel(Application* App, GameObject* gameObject) {
-
-	JsonManager::JsonValue root(json_value_init_object());
-	JSON_Object* node(json_value_get_object(root.value));
 	JSON_Array* gameComponentsArray(JsonManager::OpenArray(node, JSON_NODE_COMPONENTS));
-
 	const std::vector<Component*> components = gameObject->components;
 
 	for (uint i = 0; i < components.size(); i++) {
@@ -90,10 +82,26 @@ void DataSaving::SaveModel(Application* App, GameObject* gameObject) {
 
 	}
 
+}
+
+
+void DataSaving::SaveModel(Application* App, GameObject* gameObject, std::string modelName) {
+
+	JsonManager::JsonValue root(json_value_init_object());
+	JSON_Object* node(json_value_get_object(root.value));
+	JSON_Array* gameComponentsArray(JsonManager::OpenArray(node, JSON_NODE_GAMEOBJECTS));
+
+	std::string nameSave = gameObject->name;
+	gameObject->name = modelName;
+
+	RecursiveChildCall(App, gameComponentsArray, gameObject);
+
+	gameObject->name = nameSave;
+
 	char* buffer = new char[JsonManager::GetArraySize(gameComponentsArray)];
 	uint size = JsonManager::Serialize(root.value, &buffer);
 
-	std::string sceneName = MODELS_PATH + (std::string)gameObject->originalName + EXTENSION_MODELS;
+	std::string sceneName = MODELS_PATH + modelName + EXTENSION_MODELS;
 	App->externalManager->Save(sceneName.c_str(), buffer, size);
 
 	RELEASE_ARRAY(buffer);
@@ -193,12 +201,12 @@ void DataSaving::SaveMaterial(Application* App, Material* material) {
 	}
 
 	else {
-		
+
 		nameSize = 0;
 		buffer = new char[sizeof(int)];
 		memcpy(buffer, &nameSize, sizeof(int));
 		App->externalManager->Save(path.c_str(), buffer, 0);
-	
+
 	}
 
 	RELEASE_ARRAY(buffer);
@@ -231,7 +239,7 @@ std::string DataSaving::SaveTexture(Application* App, std::string textureName) {
 
 
 void DataSaving::SaveComponent(Application* App, Component* component) {
-
+	
 	switch (component->type) {
 
 	case COMPONENT_TYPE::MESH:

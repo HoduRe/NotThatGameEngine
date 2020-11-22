@@ -100,8 +100,6 @@ bool EditorScene::AddGameObject(GameObject* newObject) {	// This function doesn'
 
 	if (newObject != nullptr) {
 
-		newObject->name = newObject->name + std::to_string(newObject->id);
-
 		if (newObject->parent == nullptr) {
 
 			rootGameObjectsVec.push_back(newObject);

@@ -22,8 +22,6 @@
 #define EXTENSION_MATERIALS ".NotThatMaterial"
 #define EXTENSION_TEXTURES ".dds"
 
-class PathNode;
-
 enum class ResourceEnum {
 
 	NONE,
@@ -55,14 +53,15 @@ public:
 	bool CleanUp();
 
 	void LoadLibraryFiles();
+	bool IsLoadedInLibrary(std::string* filePath, ResourceEnum* type);
+	void LoadResourceByType(std::string name, ResourceEnum type = ResourceEnum::NONE);
+	ResourceEnum CheckResourceType(std::string name, std::string* extension, std::string* fileName = nullptr);
 
 private:
 
 	std::vector<std::string> GetPathChildrenElements(PathNode loadingNode);
-	void LoadResourceByType(std::string name, ResourceEnum type = ResourceEnum::NONE);
 	std::string GetPathFromType(ResourceEnum type);
 	std::string ConvertLoadExtension(ResourceEnum type, std::string extension);
-	ResourceEnum CheckResourceType(std::string name, std::string* extension, std::string* fileName = nullptr);
 	bool ExecuteEvent(EVENT_ENUM _event, void* var);
 
 public:

@@ -12,6 +12,8 @@ void DataLoading::LoadScene(Application* App, char* buffer) {
 
 	for (int i = 0; i < size; i++) { LoadGameObject(App, gameObjectsArray, i); }
 
+	// TODO: Load other components (camera)
+
 }
 
 
@@ -21,7 +23,7 @@ void DataLoading::LoadGameObject(Application* App, JSON_Array* gameObjectsArray,
 
 	std::string name = json_object_get_string(itNode, JSON_NODE_NAME);
 	long long int ID = json_object_get_number(itNode, JSON_NODE_ID);
-	int parentID = json_object_get_number(itNode, JSON_NODE_NAME);
+	int parentID = json_object_get_number(itNode, JSON_NODE_PARENT_ID);
 
 	JSON_Array* transformNode(json_object_get_array(itNode, JSON_NODE_TRANSLATION));
 	float translationX = json_value_get_number(json_array_get_value(transformNode, 0));
@@ -48,21 +50,9 @@ void DataLoading::LoadGameObject(Application* App, JSON_Array* gameObjectsArray,
 	transform->SetEulerAngles(float3(rotationX, rotationY, rotationZ));
 	transform->SetScale(float3(scaleX, scaleY, scaleZ));
 
-	LoadModel(App, gameObject);
-
 	App->editorScene->AddGameObject(gameObject);
 
-}
-
-
-void DataLoading::LoadModel(Application* App, GameObject* gameObject) {
-
-	char* buffer;
-	App->externalManager->Load((MODELS_PATH + gameObject->originalName + EXTENSION_MODELS).c_str(), &buffer);
-
-	JsonManager::JsonValue root(json_parse_string(buffer));
-	JSON_Object* node(json_value_get_object(root.value));
-	JSON_Array* componentNode(json_object_get_array(node, JSON_NODE_COMPONENTS));
+	JSON_Array* componentNode(json_object_get_array(itNode, JSON_NODE_COMPONENTS));
 	ComponentReader cReader;
 
 	for (int i = 0; i < JsonManager::GetArraySize(componentNode); i++) {
@@ -73,9 +63,56 @@ void DataLoading::LoadModel(Application* App, GameObject* gameObject) {
 
 		gameObject->AddComponent((COMPONENT_TYPE)cReader.componentType, cReader.componentId);
 
+		ResourceEnum type;
+		if (cReader.componentType == 2) { type = ResourceEnum::MESH; }
+		else if (cReader.componentType == 3) { type = ResourceEnum::MATERIAL; }
+
+		App->resourceManager->LoadResourceByType(std::to_string(cReader.componentId), type);
+
 	}
 
-	RELEASE_ARRAY(buffer);
+}
+
+
+GameObject* DataLoading::LoadModel(Application* App, char* buffer) {
+
+	JsonManager::JsonValue root(json_parse_string(buffer));
+	JSON_Object* node(json_value_get_object(root.value));
+	JSON_Array* gameObjectsArray(json_object_get_array(node, JSON_NODE_GAMEOBJECTS));
+	GameObject* gameObject = nullptr;
+
+	int size = JsonManager::GetArraySize(gameObjectsArray);
+
+	for (int i = 0; i < size; i++) { LoadGameObject(App, gameObjectsArray, i); }
+
+	if (size > 0) {
+
+		JSON_Object* itNode = json_array_get_object(gameObjectsArray, 0);
+		gameObject = App->editorScene->FindGameObject(json_object_get_number(itNode, JSON_NODE_ID));
+
+		NewGameObjectFromModel(App, gameObject);
+		gameObject->name = gameObject->name + std::to_string(gameObject->id);
+
+	}
+
+	return gameObject;
+
+}
+
+
+void DataLoading::NewGameObjectFromModel(Application* App, GameObject* gameObject) {
+
+	long long int id = App->editorScene->GenerateId();
+	gameObject->id = id;
+
+	for (int i = 0; i < gameObject->components.size(); i++) {
+
+		id = App->editorScene->GenerateId();
+		gameObject->components[i]->id = id;
+
+	}
+
+	for (int i = 0; i < gameObject->childs.size(); i++) { NewGameObjectFromModel(App, gameObject->childs[i]); }
 
 }
 

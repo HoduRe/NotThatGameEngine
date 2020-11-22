@@ -4,19 +4,42 @@
 
 GameObject* ModelImporter::LoadNewModel(Application* App, const char* path, const char* buffer, uint size, GameObject* parent, bool enabled) {
 
+	std::string filePath = path;
+	ResourceEnum type;
 	std::string originalName;
+
 	App->externalManager->SplitFilePath(path, nullptr, &originalName);
+	GameObject* newObject = new GameObject(App->editorScene->GenerateId(), originalName, originalName, parent, enabled);
 
-	GameObject* newObject = new GameObject(App->editorScene->GenerateId(), originalName, originalName, parent, enabled);	// TODO: convert path to only the name of the file with the FileSystem function :3
+	if (!App->resourceManager->IsLoadedInLibrary(&filePath, &type)) {
 
-	if (buffer == nullptr && size == 0) { size = App->externalManager->Load(path, (char**)&buffer); }
-	if (ModelImporter::LoadNewModelComponents(App, buffer, size, newObject, path)) {}
-	else {
-		delete newObject;
-		newObject = nullptr;
+		if (buffer == nullptr && size == 0) { size = App->externalManager->Load(path, (char**)&buffer); }
+		if (ModelImporter::LoadNewModelComponents(App, buffer, size, newObject, path)) {
+
+			DataSaving::SaveModel(App, newObject, originalName);
+			RecursiveChildCall(App, newObject);
+
+		}
+
+		else {
+			delete newObject;
+			newObject = nullptr;
+		}
+
+		RELEASE_ARRAY(buffer);
+
 	}
 
-	RELEASE_ARRAY(buffer);
+	else {
+
+		char* bufferAux = nullptr;
+		App->externalManager->Load(filePath.c_str(), &bufferAux);
+		if (bufferAux != nullptr) { newObject = DataLoading::LoadModel(App, bufferAux); }
+
+		else { LOG("Model with path %s couldn't load.\n", path); }
+		RELEASE_ARRAY(bufferAux);
+
+	}
 
 	return newObject;
 
@@ -102,7 +125,6 @@ void ModelImporter::LoadNewModelMesh(Application* App, aiNode* node, aiScene* sc
 
 			App->editorScene->AddGameObject(newObject);
 
-			DataSaving::SaveMesh(App, mesh);
 		}
 
 	}
@@ -136,8 +158,6 @@ void ModelImporter::LoadNewModelMaterial(Application* App, aiScene* scene, GameO
 
 		else if (scene->mNumMaterials < 2) { LOG("This model's texture is not specified as Diffuse."); }
 
-		DataSaving::SaveMaterial(App, material);
-
 	}
 
 	else { LOG("This model has no materials attached.\n"); }
@@ -156,6 +176,15 @@ void ModelImporter::aiTransformTofloat4x4Transform(aiMatrix4x4 matrix, Transform
 	transform->SetPosition(float3(position.x, position.y, position.z));
 	transform->SetRotation(Quat(rotation.x, rotation.y, rotation.z, rotation.w));
 	transform->SetScale(float3(scale.x, scale.y, scale.z));	// TODO: I can optimize this by calling directly the recalculation matrix, but with a function that takes position, rotation and scale as values to recalculate it with
+
+}
+
+
+void ModelImporter::RecursiveChildCall(Application* App, GameObject* gameObject) {
+
+	gameObject->id = App->editorScene->GenerateId();
+	for (int j = 0; j < gameObject->components.size(); j++) { gameObject->components[j]->id = App->editorScene->GenerateId(); }
+	for (int j = 0; j < gameObject->childs.size(); j++) { RecursiveChildCall(App, gameObject->childs[j]); }
 
 }
 

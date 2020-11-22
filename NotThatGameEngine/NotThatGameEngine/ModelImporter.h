@@ -17,6 +17,7 @@ namespace ModelImporter {
 	void LoadNewModelMaterial(Application* App, aiScene* scene, GameObject* newObject, int materialId);
 
 	void aiTransformTofloat4x4Transform(aiMatrix4x4 matrix, Transform* transform);
+	void RecursiveChildCall(Application* App, GameObject* gameObject);
 
 }
 
