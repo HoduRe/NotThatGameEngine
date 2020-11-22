@@ -60,7 +60,6 @@ void DataSaving::SaveGameObject(Application* App, JSON_Object* node, GameObject*
 	jsonObject = nullptr;
 
 	json_object_set_boolean(node, JSON_NODE_ENABLED, gameObject->enabled);
-	json_object_set_string(node, JSON_NODE_MODEL_NAME, gameObject->originalName.c_str());
 
 	JSON_Array* gameComponentsArray(JsonManager::OpenArray(node, JSON_NODE_COMPONENTS));
 	const std::vector<Component*> components = gameObject->components;

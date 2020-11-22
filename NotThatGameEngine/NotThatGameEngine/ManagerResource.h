@@ -11,7 +11,6 @@
 #define JSON_NODE_ROTATION "Rotation"
 #define JSON_NODE_SCALE "Scale"
 #define JSON_NODE_ENABLED "Enabled"
-#define JSON_NODE_MODEL_NAME "ModelName"
 #define JSON_NODE_COMPONENTS "Components"
 #define JSON_NODE_COMPONENT_TYPE "ComponentType"
 #define JSON_NODE_COMPONENT_ID "ComponentID"

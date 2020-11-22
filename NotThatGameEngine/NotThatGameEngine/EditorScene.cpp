@@ -155,7 +155,7 @@ bool EditorScene::AddPrimitive(PrimitiveEnum _type) {
 
 	case PrimitiveEnum::PRIMITIVE_CUBE:
 
-		newObject = new GameObject(id, std::to_string(id), "Cube");
+		newObject = new GameObject(id, "Cube");
 		mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
 		PrimitivesF::SetCubeVertices(3.0f, &mesh->vertices, &mesh->indices);
 
@@ -163,7 +163,7 @@ bool EditorScene::AddPrimitive(PrimitiveEnum _type) {
 
 	case PrimitiveEnum::PRIMITIVE_SPHERE:
 
-		newObject = new GameObject(id, std::to_string(id), "Sphere");
+		newObject = new GameObject(id, "Sphere");
 		mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
 		PrimitivesF::SetSphereVertices(2.0f, 36, 18, &mesh->vertices, &mesh->indices);
 
@@ -171,7 +171,7 @@ bool EditorScene::AddPrimitive(PrimitiveEnum _type) {
 
 	case PrimitiveEnum::PRIMITIVE_PYRAMID:
 
-		newObject = new GameObject(id, std::to_string(id), "Pyramid");
+		newObject = new GameObject(id, "Pyramid");
 		mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
 		PrimitivesF::SetPyramidVertices(5.0f, 2.0f, &mesh->vertices, &mesh->indices);
 
@@ -179,7 +179,7 @@ bool EditorScene::AddPrimitive(PrimitiveEnum _type) {
 
 	case PrimitiveEnum::PRIMITIVE_CYLINDER:
 
-		newObject = new GameObject(id, std::to_string(id), "Cylinder");
+		newObject = new GameObject(id, "Cylinder");
 		mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
 		PrimitivesF::SetCylinderVertices(8.0f, 3.0f, 30, &mesh->vertices, &mesh->indices);
 

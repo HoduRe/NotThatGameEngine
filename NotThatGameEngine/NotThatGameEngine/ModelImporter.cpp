@@ -9,7 +9,7 @@ GameObject* ModelImporter::LoadNewModel(Application* App, const char* path, cons
 	std::string originalName;
 
 	App->externalManager->SplitFilePath(path, nullptr, &originalName);
-	GameObject* newObject = new GameObject(App->editorScene->GenerateId(), originalName, originalName, parent, enabled);
+	GameObject* newObject = new GameObject(App->editorScene->GenerateId(), originalName, parent, enabled);
 
 	if (!App->resourceManager->IsLoadedInLibrary(&filePath, &type)) {
 
@@ -81,7 +81,7 @@ void ModelImporter::LoadNewModelMesh(Application* App, aiNode* node, aiScene* sc
 
 			long long int id = App->editorScene->GenerateId();
 
-			GameObject* newObject = new GameObject(id, std::to_string(id), "NewGameObject", parent);
+			GameObject* newObject = new GameObject(id, "NewGameObject", parent);
 
 			mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
 

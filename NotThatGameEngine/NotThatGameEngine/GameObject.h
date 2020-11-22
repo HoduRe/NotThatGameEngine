@@ -11,7 +11,7 @@ class GameObject {
 
 public:
 
-	GameObject(long long int _id, std::string _originalName, std::string _name = "NewGameObject", GameObject* parent = nullptr, bool enabled = true, std::vector<GameObject*> children = std::vector<GameObject*>());
+	GameObject(long long int _id, std::string _name = "NewGameObject", GameObject* parent = nullptr, bool enabled = true, std::vector<GameObject*> children = std::vector<GameObject*>());
 	~GameObject();
 
 	void Update();
@@ -29,7 +29,6 @@ public:
 public:
 
 	std::string name;
-	const std::string originalName;
 	GameObject* parent;
 	float4x4 worldTransform;
 	std::vector<GameObject*> childs;

@@ -41,9 +41,8 @@ void DataLoading::LoadGameObject(Application* App, JSON_Array* gameObjectsArray,
 	float scaleZ = json_value_get_number(json_array_get_value(transformNode, 2));
 
 	bool enabled = json_object_get_boolean(itNode, JSON_NODE_ENABLED);
-	std::string originalName = json_object_get_string(itNode, JSON_NODE_MODEL_NAME);
 
-	GameObject* gameObject = new GameObject(ID, originalName, name, App->editorScene->FindGameObject(parentID), enabled);
+	GameObject* gameObject = new GameObject(ID, name, App->editorScene->FindGameObject(parentID), enabled);
 
 	Transform* transform = (Transform*)gameObject->FindComponent(COMPONENT_TYPE::TRANSFORM);
 	transform->SetPosition(float3(translationX, translationY, translationZ));

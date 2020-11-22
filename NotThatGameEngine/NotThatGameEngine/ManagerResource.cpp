@@ -64,7 +64,7 @@ bool ResourceManager::CleanUp() {
 void ResourceManager::LoadLibraryFiles() {
 
 	std::vector<std::string> sceneVec;
-	App->externalManager->GetAllFilesWithExtension(ASSETS_PATH, EXTENSION_SCENES, sceneVec);
+	App->externalManager->GetAllFilesWithExtension(SCENES_PATH, EXTENSION_SCENES, sceneVec);
 
 	std::vector<std::string> textureVec;
 	App->externalManager->GetAllFilesWithExtension(TEXTURES_PATH, EXTENSION_TEXTURES, textureVec);
