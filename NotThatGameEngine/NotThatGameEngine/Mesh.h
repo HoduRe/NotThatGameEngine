@@ -3,6 +3,7 @@
 
 #include "Component.h"
 #include "OpenGLFuncionality.h"
+#include "MathGeoLib/include/MathGeoLib.h"
 
 class GameObject;
 
@@ -38,6 +39,8 @@ public:
 	std::vector<float> debugNormals;
 
 	bool paintNormals;
+
+	AABB boundingBox;
 
 };
 

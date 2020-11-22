@@ -52,6 +52,8 @@ void GameObject::PostUpdate(uint& defaultTextureId) {
 
 	if (mesh != nullptr) {
 
+		ManageAABB(mesh);
+
 		if (material != nullptr) {
 
 			if (material->diffuseId == 0) { OpenGLFunctionality::DrawMeshes(*mesh, worldTransform, defaultTextureId); }
@@ -238,3 +240,22 @@ GameObject* GameObject::FindGameObjectChild(long long int id) {
 }
 
 
+void GameObject::ManageAABB(Mesh* mesh) {
+
+	AABB obb = mesh->boundingBox;
+	obb.Transform(worldTransform);
+	mesh->boundingBox.SetNegativeInfinity();
+	mesh->boundingBox.Enclose(obb);
+	std::vector<float> cornerVec;
+	for (int i = 0; i < 8; i++) {
+
+		float3 corner = mesh->boundingBox.CornerPoint(i);
+		cornerVec.push_back(corner.x);
+		cornerVec.push_back(corner.y);
+		cornerVec.push_back(corner.z);
+
+	}
+
+	OpenGLFunctionality::DrawBox(cornerVec);
+
+}

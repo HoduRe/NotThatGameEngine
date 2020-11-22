@@ -43,6 +43,7 @@ private:
 
 	void CheckGameObjectDeletion();
 	void CheckComponentDeletion();
+	void ManageAABB(Mesh* mesh);
 
 private:
 

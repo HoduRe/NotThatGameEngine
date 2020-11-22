@@ -1,7 +1,10 @@
 #include "Mesh.h"
 
 Mesh::Mesh(long long int _id, GameObject* _gameObject) : Component(_id, _gameObject, COMPONENT_TYPE::MESH), vertexId(0), indexId(0), normalsId(0), textureCoordId(0),
-vertices(), normals(), textureCoord(), indices(), paintNormals(false), debugNormalsId(0), debugNormals() {}
+vertices(), normals(), textureCoord(), indices(), paintNormals(false), debugNormalsId(0), debugNormals()
+{
+	boundingBox.SetNegativeInfinity();
+}
 
 
 Mesh::~Mesh() {
@@ -26,6 +29,8 @@ void Mesh::SetVertices(std::vector<float> _vertices) {
 
 	vertices = _vertices;
 	OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &vertexId, vertices.size(), vertices.data());
+
+	for (int i = 0; i < vertices.size(); i += 3) { boundingBox.Enclose(float3(vertices[i], vertices[i + 1], vertices[i + 2])); }
 
 }
 
@@ -68,11 +73,11 @@ GLuint Mesh::DebugNormals() {
 			for (int i = 0; i < verticesSize; i += 3) {
 
 				debugNormals.push_back(vertices[i]);
-				debugNormals.push_back(vertices[i+1]);
-				debugNormals.push_back(vertices[i+2]);
+				debugNormals.push_back(vertices[i + 1]);
+				debugNormals.push_back(vertices[i + 2]);
 				debugNormals.push_back(vertices[i] + normals[i]);
-				debugNormals.push_back(vertices[i+1] + normals[i+1]);
-				debugNormals.push_back(vertices[i+2] + normals[i+2]);
+				debugNormals.push_back(vertices[i + 1] + normals[i + 1]);
+				debugNormals.push_back(vertices[i + 2] + normals[i + 2]);
 
 			}
 

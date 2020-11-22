@@ -133,3 +133,41 @@ void OpenGLFunctionality::DrawLines(float4x4 worldTransform, GLuint debugId, std
 	}
 
 }
+
+
+void OpenGLFunctionality::DrawBox(std::vector<float> vertices) {
+
+	glBegin(GL_LINES);
+	glColor3f(0.0f, 80.0f, 0.0f);
+
+	glVertex3f(vertices[0], vertices[1], vertices[2]);
+	glVertex3f(vertices[12], vertices[13], vertices[14]);
+	glVertex3f(vertices[0], vertices[1], vertices[2]);
+	glVertex3f(vertices[3], vertices[4], vertices[5]);
+	glVertex3f(vertices[0], vertices[1], vertices[2]);
+	glVertex3f(vertices[6], vertices[7], vertices[8]);
+	glVertex3f(vertices[6], vertices[7], vertices[8]);
+	glVertex3f(vertices[9], vertices[10], vertices[11]);
+	glVertex3f(vertices[3], vertices[4], vertices[5]);
+	glVertex3f(vertices[9], vertices[10], vertices[11]);
+	glVertex3f(vertices[12], vertices[13], vertices[14]);
+	glVertex3f(vertices[15], vertices[16], vertices[17]);
+	glVertex3f(vertices[12], vertices[13], vertices[14]);
+	glVertex3f(vertices[18], vertices[19], vertices[20]);
+	glVertex3f(vertices[15], vertices[16], vertices[17]);
+	glVertex3f(vertices[21], vertices[22], vertices[23]);
+	glVertex3f(vertices[18], vertices[19], vertices[20]);
+	glVertex3f(vertices[21], vertices[22], vertices[23]);
+	glVertex3f(vertices[6], vertices[7], vertices[8]);
+	glVertex3f(vertices[18], vertices[19], vertices[20]);
+	glVertex3f(vertices[3], vertices[4], vertices[5]);
+	glVertex3f(vertices[15], vertices[16], vertices[17]);
+	glVertex3f(vertices[9], vertices[10], vertices[11]);
+	glVertex3f(vertices[21], vertices[22], vertices[23]);
+
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glEnd();
+
+}
+
+
