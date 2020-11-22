@@ -69,15 +69,9 @@ private:
 	bool inspectorWindow;
 	bool loadFileMenu;
 
-	std::string positionX;
-	std::string positionY;
-	std::string positionZ;
-	std::string rotationX;
-	std::string rotationY;
-	std::string rotationZ;
-	std::string scaleX;
-	std::string scaleY;
-	std::string scaleZ;
+	float3 position;
+	float3 rotationEuler;
+	float3 scaling;
 
 	void DefaultButtons();
 	update_status SetMainMenuBar();
@@ -90,7 +84,6 @@ private:
 	void DrawDirectoryRecursively(const char* directory, const char* extension);
 
 	void AddChildNode(GameObject* nextObject, int index);
-	float StringToFloat(std::string _string);
 
 	char selectedFileName[FILE_MAX_LENGTH];
 

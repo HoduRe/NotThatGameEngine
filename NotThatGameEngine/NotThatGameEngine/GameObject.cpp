@@ -242,14 +242,17 @@ GameObject* GameObject::FindGameObjectChild(long long int id) {
 
 void GameObject::ManageAABB(Mesh* mesh) {
 
-	AABB obb = mesh->boundingBox;
+	OBB obb = mesh->boundingBox;
 	obb.Transform(worldTransform);
-	mesh->boundingBox.SetNegativeInfinity();
-	mesh->boundingBox.Enclose(obb);
+
+	AABB newBoundingBox;
+	newBoundingBox.SetNegativeInfinity();
+	newBoundingBox.Enclose(obb);
 	std::vector<float> cornerVec;
+	
 	for (int i = 0; i < 8; i++) {
 
-		float3 corner = mesh->boundingBox.CornerPoint(i);
+		float3 corner = newBoundingBox.CornerPoint(i);
 		cornerVec.push_back(corner.x);
 		cornerVec.push_back(corner.y);
 		cornerVec.push_back(corner.z);

@@ -11,7 +11,7 @@ sliderBrightness(1.0f), sliderWidth(SCREEN_WIDTH* SCREEN_SIZE), sliderHeight(SCR
 fullscreen(WIN_FULLSCREEN), resizable(WIN_RESIZABLE), borderless(WIN_BORDERLESS), fullDesktop(WIN_FULLSCREEN_DESKTOP), refreshRate(0),
 AVX(false), AVX2(false), AltiVec(false), MMX(false), RDTSC(false), SSE(false), SSE2(false), SSE3(false), SSE41(false), SSE42(false),
 showDemoWindow(false), defaultButtonsMenu(false), aboutWindow(false), configMenu(false), appActive(false), consoleMenu(true), sceneWindow(true), hierarchyWindow(true), inspectorWindow(true),
-Devil(), Assimp(), PhysFS(), GLEW(), loadFileMenu(false), selectedFileName()
+Devil(), Assimp(), PhysFS(), GLEW(), loadFileMenu(false), selectedFileName(), position(), rotationEuler(), scaling()
 {}
 
 
@@ -571,38 +571,29 @@ void ManagerImGui::InspectorWindow() {
 			if (material != nullptr && material->diffuseId != 0) { textureData = App->texture->GetTextureData(material->diffuseId); }
 
 
-			float3 position = transform->GetPosition();
-			float3 rotationEuler = transform->GetEulerAngles();
-			float3 scale = transform->GetScale();
-
-			positionX = std::to_string(position.x);
-			positionY = std::to_string(position.y);
-			positionZ = std::to_string(position.z);
-			rotationX = std::to_string(rotationEuler.x);
-			rotationY = std::to_string(rotationEuler.y);
-			rotationZ = std::to_string(rotationEuler.z);
-			scaleX = std::to_string(scale.x);
-			scaleY = std::to_string(scale.y);
-			scaleZ = std::to_string(scale.z);
+			position = transform->GetPosition();
+			rotationEuler = transform->GetEulerAngles();
+			scaling = transform->GetScale();
 
 			if (ImGui::CollapsingHeader("Transform")) {
 
 				ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_CharsDecimal | ImGuiInputTextFlags_CharsNoBlank | ImGuiInputTextFlags_AutoSelectAll;
 
 				ImGui::Text("Position:");
-				if (ImGui::InputText("Position X", (char*)positionX.c_str(), positionX.size(), input_text_flags)) { transform->SetPosition(float3(StringToFloat(positionX), StringToFloat(positionY), StringToFloat(positionZ))); }
-				if (ImGui::InputText("Position Y", (char*)positionY.c_str(), positionY.size(), input_text_flags)) { transform->SetPosition(float3(StringToFloat(positionX), StringToFloat(positionY), StringToFloat(positionZ))); }
-				if (ImGui::InputText("Position Z", (char*)positionZ.c_str(), positionZ.size(), input_text_flags)) { transform->SetPosition(float3(StringToFloat(positionX), StringToFloat(positionY), StringToFloat(positionZ))); }
+				if (ImGui::InputFloat("Position X", &position.x, 0.0f, 0.0f, "%.4f", input_text_flags)) { transform->SetPosition(position); }
+				if (ImGui::InputFloat("Position Y", &position.y, 0.0f, 0.0f, "%.4f", input_text_flags)) { transform->SetPosition(position); }
+				if (ImGui::InputFloat("Position Z", &position.z, 0.0f, 0.0f, "%.4f", input_text_flags)) { transform->SetPosition(position); }
 
 				ImGui::Text("Rotation:");
-				if (ImGui::InputText("Rotation X", (char*)rotationX.c_str(), rotationX.size(), input_text_flags)) { transform->SetEulerAngles(float3(StringToFloat(rotationX), StringToFloat(rotationY), StringToFloat(rotationZ))); }
-				if (ImGui::InputText("Rotation Y", (char*)rotationY.c_str(), rotationY.size(), input_text_flags)) { transform->SetEulerAngles(float3(StringToFloat(rotationX), StringToFloat(rotationY), StringToFloat(rotationZ))); }
-				if (ImGui::InputText("Rotation Z", (char*)rotationZ.c_str(), rotationZ.size(), input_text_flags)) { transform->SetEulerAngles(float3(StringToFloat(rotationX), StringToFloat(rotationY), StringToFloat(rotationZ))); }
+				if (ImGui::InputFloat("Rotation X", &rotationEuler.x, 0.0f, 0.0f, "%.4f", input_text_flags)) { transform->SetEulerAngles(rotationEuler); }
+				if (ImGui::InputFloat("Rotation Y", &rotationEuler.y, 0.0f, 0.0f, "%.4f", input_text_flags)) { transform->SetEulerAngles(rotationEuler); }
+				if (ImGui::InputFloat("Rotation Z", &rotationEuler.z, 0.0f, 0.0f, "%.4f", input_text_flags)) { transform->SetEulerAngles(rotationEuler); }
 
 				ImGui::Text("Scale:");
-				if (ImGui::InputText("Scale X", (char*)scaleX.c_str(), scaleX.size(), input_text_flags)) { transform->SetScale(float3(StringToFloat(scaleX), StringToFloat(scaleY), StringToFloat(scaleZ))); }
-				if (ImGui::InputText("Scale Y", (char*)scaleY.c_str(), scaleY.size(), input_text_flags)) { transform->SetScale(float3(StringToFloat(scaleX), StringToFloat(scaleY), StringToFloat(scaleZ))); }
-				if (ImGui::InputText("Scale Z", (char*)scaleZ.c_str(), scaleZ.size(), input_text_flags)) { transform->SetScale(float3(StringToFloat(scaleX), StringToFloat(scaleY), StringToFloat(scaleZ))); }
+				if (ImGui::InputFloat("Scale X", &scaling.x, 0.0f, 0.0f, "%.4f", input_text_flags)) { transform->SetScale(scaling); }
+				if (ImGui::InputFloat("Scale Y", &scaling.y, 0.0f, 0.0f, "%.4f", input_text_flags)) { transform->SetScale(scaling); }
+				if (ImGui::InputFloat("Scale Z", &scaling.z, 0.0f, 0.0f, "%.4f", input_text_flags)) { transform->SetScale(scaling); }
+
 			}
 
 			if (ImGui::CollapsingHeader("Mesh")) {
@@ -791,10 +782,6 @@ void ManagerImGui::DrawDirectoryRecursively(const char* directory, const char* e
 
 
 std::string ManagerImGui::AppName() { return appName; }
-
-
-float ManagerImGui::StringToFloat(std::string _string) { return std::stof("0" + _string); }
-
 
 
 
