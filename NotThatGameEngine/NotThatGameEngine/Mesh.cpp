@@ -41,7 +41,7 @@ void Mesh::SetIndices(std::vector<GLuint> _indices) {
 void Mesh::SetNormals(std::vector<float> _normals) {
 
 	normals = _normals;
-	OpenGLFunctionality::LoadDataBufferFloat(GL_NORMAL_ARRAY, &normalsId, normals.size(), normals.data());
+	OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &normalsId, normals.size(), normals.data());
 
 }
 
@@ -50,7 +50,7 @@ void Mesh::SetTextureCoord(std::vector<float> _textureCoord)
 {
 
 	textureCoord = _textureCoord;
-	OpenGLFunctionality::LoadDataBufferFloat(GL_TEXTURE_COORD_ARRAY, &textureCoordId, textureCoord.size(), textureCoord.data());
+	OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &textureCoordId, textureCoord.size(), textureCoord.data());
 
 }
 

@@ -252,7 +252,7 @@ void ResourceManager::LoadResourceByType(std::string name, ResourceEnum type) {
 
 	case ResourceEnum::TEXTURE:
 
-		DataLoading::LoadTexture(App, (TEXTURES_PATH + name + EXTENSION_TEXTURES).c_str());
+		DataLoading::LoadTexture(App, (TEXTURES_PATH + name).c_str());
 
 		break;
 
