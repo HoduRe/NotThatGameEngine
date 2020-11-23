@@ -209,10 +209,10 @@ void DataLoading::LoadMaterial(Application* App, char* fileBuffer, Material* mat
 
 }
 
-uint DataLoading::LoadTexture(Application* App, const char* path, const char* buffer, uint size) {
+uint DataLoading::LoadTexture(Application* App, std::string path, const char* buffer, uint size) {
 
 	std::string textureName, extension;
-	App->externalManager->SplitFilePath(path, nullptr, &textureName, &extension);
+	App->externalManager->SplitFilePath(path.c_str(), nullptr, &textureName, &extension);
 	uint imageTest = App->texture->IsTextureRepeated(textureName.c_str());
 
 	if (imageTest == 0) {
@@ -220,7 +220,7 @@ uint DataLoading::LoadTexture(Application* App, const char* path, const char* bu
 		ilGenImages(1, &imageTest);
 		ilBindImage(imageTest);
 
-		if (buffer == nullptr && size == 0) { size = App->externalManager->Load(path, (char**)&buffer); }
+		if (buffer == nullptr && size == 0) { size = App->externalManager->Load(path.c_str(), (char**)&buffer); }
 
 		ILboolean ret = ilLoadL(IL_TYPE_UNKNOWN, buffer, size);
 
@@ -230,9 +230,9 @@ uint DataLoading::LoadTexture(Application* App, const char* path, const char* bu
 
 			if ("." + extension != EXTENSION_TEXTURES) {	// Always working with our .dds textures!!
 
-				std::string path = DataSaving::SaveTexture(App, textureName);
+				std::string pathAux = DataSaving::SaveTexture(App, textureName);
 				ilDeleteImages(1, &imageTest);
-				return LoadTexture(App, path.c_str());
+				return LoadTexture(App, pathAux.c_str());
 
 			}
 

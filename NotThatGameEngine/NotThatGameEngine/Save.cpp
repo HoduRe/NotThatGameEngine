@@ -52,8 +52,8 @@ void DataSaving::SaveGameObject(Application* App, JSON_Object* node, GameObject*
 
 	JSON_Array* jsonObject(JsonManager::OpenArray(node, JSON_NODE_TRANSLATION));
 	json_array_append_number(jsonObject, transform->GetPosition().x);
-	json_array_append_number(jsonObject, transform->GetPosition().x);
-	json_array_append_number(jsonObject, transform->GetPosition().x);
+	json_array_append_number(jsonObject, transform->GetPosition().y);
+	json_array_append_number(jsonObject, transform->GetPosition().z);
 	jsonObject = nullptr;
 
 	jsonObject = JsonManager::OpenArray(node, JSON_NODE_ROTATION);
@@ -210,10 +210,25 @@ void DataSaving::SaveMaterial(Application* App, Material* material) {
 
 	else {
 
-		nameSize = 0;
-		buffer = new char[sizeof(int)];
-		memcpy(buffer, &nameSize, sizeof(int));
-		App->externalManager->Save(path.c_str(), buffer, 0);
+		TextureData* data = App->texture->GetTextureData(App->texture->defaultTextureId);
+
+		if (data != nullptr) {
+		
+			textureName = data->name;
+			nameSize = textureName.size();
+			bufferSize = textureName.size() + sizeof(int);
+
+			buffer = new char[bufferSize];
+			char* cursor = buffer;
+
+			memcpy(cursor, &nameSize, sizeof(int));
+			cursor += sizeof(int);
+
+			memcpy(cursor, textureName.c_str(), nameSize);
+
+			App->externalManager->Save(path.c_str(), buffer, bufferSize);
+		
+		}
 
 	}
 

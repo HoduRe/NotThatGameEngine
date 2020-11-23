@@ -19,7 +19,7 @@ GameObject* ModelImporter::LoadNewModel(Application* App, const char* path, cons
 
 	App->externalManager->SplitFilePath(path, nullptr, &originalName);
 	GameObject* newObject = new GameObject(App->editorScene->GenerateId(), originalName, parent, enabled);
-
+	
 	if (!App->resourceManager->IsLoadedInLibrary(&filePath, &type)) {
 
 		if (buffer == nullptr && size == 0) { size = App->externalManager->Load(path, (char**)&buffer); }
@@ -112,6 +112,7 @@ void ModelImporter::LoadNewModelMesh(Application* App, aiNode* node, aiScene* sc
 				mesh->normals.push_back(pNormal->z);
 			}
 
+			mesh->CalculateBoundingBoxes();
 			LOG("New mesh with %d vertices.\n", mesh->vertices.size());
 
 			for (unsigned int j = 0; j < paiMesh->mNumFaces; j++) {		// Indices
@@ -149,7 +150,6 @@ void ModelImporter::LoadNewModelMaterial(Application* App, aiScene* scene, GameO
 
 	if (scene->mNumMaterials > 0) {
 
-		material = (Material*)newObject->AddComponent(COMPONENT_TYPE::MATERIAL);
 		const aiMaterial* pMaterial = scene->mMaterials[materialId];
 		aiString Path;
 
@@ -157,7 +157,10 @@ void ModelImporter::LoadNewModelMaterial(Application* App, aiScene* scene, GameO
 
 			if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
 
-				std::string FullPath = "Textures/" + App->externalManager->NormalizePath(Path.C_Str());	// TODO: do this better. It will need a function that iterates everything, yes. But do it
+				std::string name;
+				App->externalManager->SplitFilePath(Path.C_Str(), nullptr, &name);
+				material = (Material*)newObject->AddComponent(COMPONENT_TYPE::MATERIAL);
+				std::string FullPath = App->resourceManager->FindPathFromFileName(name);
 				material->diffuseId = DataLoading::LoadTexture(App, FullPath.c_str());
 				LOG("Material with id = %u loaded.\n", material->diffuseId);
 

@@ -55,6 +55,7 @@ public:
 	void LoadLibraryFiles();
 	bool IsLoadedInLibrary(std::string* filePath, ResourceEnum* type);
 	void LoadResourceByType(std::string name, ResourceEnum type = ResourceEnum::NONE);
+	std::string FindPathFromFileName(std::string fileName, PathNode* node = nullptr);
 	ResourceEnum CheckResourceType(std::string name, std::string* extension, std::string* fileName = nullptr);
 
 private:
@@ -66,7 +67,7 @@ private:
 
 public:
 
-
+	PathNode assetsFiles;
 
 private:
 

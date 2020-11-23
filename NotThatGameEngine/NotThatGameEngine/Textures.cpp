@@ -103,6 +103,8 @@ TextureData* Texture::GetTextureData(GLuint id) {
 	int size = textureVec.size();
 	for (int i = 0; i < size; i++) { if (textureVec[i].textureId == id) { return &textureVec[i]; } }
 
+	return nullptr;
+
 }
 
 

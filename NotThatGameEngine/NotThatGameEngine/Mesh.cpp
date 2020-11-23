@@ -29,8 +29,7 @@ void Mesh::SetVertices(std::vector<float> _vertices) {
 
 	vertices = _vertices;
 	OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &vertexId, vertices.size(), vertices.data());
-
-	for (int i = 0; i < vertices.size(); i += 3) { boundingBox.Enclose(float3(vertices[i], vertices[i + 1], vertices[i + 2])); }
+	CalculateBoundingBoxes();
 
 }
 
@@ -92,4 +91,5 @@ GLuint Mesh::DebugNormals() {
 }
 
 
+void Mesh::CalculateBoundingBoxes() { for (int i = 0; i < vertices.size(); i += 3) { boundingBox.Enclose(float3(vertices[i], vertices[i + 1], vertices[i + 2])); } }
 

@@ -16,6 +16,7 @@ ResourceManager::~ResourceManager() {}
 
 bool ResourceManager::Init() {
 
+	assetsFiles = App->externalManager->GetAllFiles(ASSETS_PATH);
 	LoadLibraryFiles();
 
 	return true;
@@ -66,6 +67,8 @@ bool ResourceManager::CleanUp() {
 
 
 void ResourceManager::LoadLibraryFiles() {
+
+	// MAYBE USE assetsFiles
 
 	std::vector<std::string> sceneVec;
 	App->externalManager->GetAllFilesWithExtension(SCENES_PATH, EXTENSION_SCENES, sceneVec);
@@ -340,3 +343,28 @@ bool ResourceManager::IsLoadedInLibrary(std::string* filePath, ResourceEnum* typ
 	return false;
 
 }
+
+
+std::string ResourceManager::FindPathFromFileName(std::string fileName, PathNode* node) {
+
+	std::string returnName;
+
+	if (node == nullptr) { node = &assetsFiles; }
+
+	for (int i = 0; i < node->children.size(); i++) {
+
+		if (node->children[i].localPath == fileName) { return App->externalManager->NormalizePath(node->children[i].path.c_str()); }
+		else {
+			
+			returnName = FindPathFromFileName(fileName, &node->children[i]);
+			if (returnName.empty() == false) { return returnName; }
+		
+		}
+
+	}
+
+	return "";
+
+}
+
+

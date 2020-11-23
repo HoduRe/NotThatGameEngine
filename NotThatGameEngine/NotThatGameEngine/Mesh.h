@@ -19,6 +19,7 @@ public:
 	void SetIndices(std::vector<GLuint> _indices);
 	void SetNormals(std::vector<float> _normals);
 	void SetTextureCoord(std::vector<float> _textureCoord);
+	void CalculateBoundingBoxes();
 
 	GLuint DebugNormals();
 

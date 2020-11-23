@@ -53,7 +53,7 @@ bool EditorScene::Start()
 	App->camera->Move(vec3(0.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
-	ModelImporter::LoadNewModel(App, "Meshes/BakerHouse.fbx");
+	ModelImporter::LoadNewModel(App, "Meshes/Street environment_V01.FBX");
 
 	return true;
 }
