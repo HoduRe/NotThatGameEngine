@@ -12,6 +12,7 @@
 #include "Transform.h"
 #include "Mesh.h"
 #include "Material.h"
+#include "Input.h"
 
 #include "Save.h"
 #include "Assimp/include/version.h"
@@ -29,7 +30,7 @@ sliderBrightness(1.0f), sliderWidth(SCREEN_WIDTH* SCREEN_SIZE), sliderHeight(SCR
 fullscreen(WIN_FULLSCREEN), resizable(WIN_RESIZABLE), borderless(WIN_BORDERLESS), fullDesktop(WIN_FULLSCREEN_DESKTOP), refreshRate(0),
 AVX(false), AVX2(false), AltiVec(false), MMX(false), RDTSC(false), SSE(false), SSE2(false), SSE3(false), SSE41(false), SSE42(false),
 showDemoWindow(false), defaultButtonsMenu(false), aboutWindow(false), configMenu(false), appActive(false), consoleMenu(true), sceneWindow(true), hierarchyWindow(true), inspectorWindow(true),
-Devil(), Assimp(), PhysFS(), GLEW(), loadFileMenu(false), selectedFileName(), position(), rotationEuler(), scaling()
+Devil(), Assimp(), PhysFS(), GLEW(), loadFileMenu(false), selectedFileName(), position(), rotationEuler(), scaling(), itemHovered(nullptr), itemFocusedLastFrame(nullptr)
 {}
 
 
@@ -160,6 +161,33 @@ update_status ManagerImGui::PostUpdate(float dt)
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	SDL_GL_SwapWindow(App->window->window);	// Swaps current window with the other used by OpenGL (by default it uses double-buffered contexts)
+
+
+	bool hasParent = false;
+	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP && App->editorScene->GetFocus() != nullptr && App->editorScene->GetFocus() != itemHovered) {
+
+		if (App->editorScene->GetFocus()->parent != nullptr) {
+
+			for (int i = 0; i < App->editorScene->GetFocus()->parent->childs.size(); i++) {
+
+				hasParent = true;
+				if (App->editorScene->GetFocus()->parent->childs[i]->id == App->editorScene->GetFocus()->id) {
+
+					App->editorScene->GetFocus()->parent->childs.erase(App->editorScene->GetFocus()->parent->childs.begin() + i);
+					i = App->editorScene->GetFocus()->parent->childs.size();
+
+				}
+
+			}
+
+		}
+
+		App->editorScene->GetFocus()->parent = itemHovered;
+		if (itemHovered != nullptr) { itemHovered->childs.push_back(App->editorScene->GetFocus()); }
+		else if (itemHovered == nullptr && hasParent) { App->editorScene->rootGameObjectsVec.push_back(App->editorScene->GetFocus()); }
+	}
+
+	itemFocusedLastFrame = App->editorScene->GetFocus();
 
 	return ret;
 }
@@ -480,11 +508,12 @@ void ManagerImGui::SceneWindow() {
 
 void ManagerImGui::HierarchyWindow() {
 
+	itemHovered = nullptr;
+
 	if (hierarchyWindow) {
 
 		int size = App->editorScene->rootGameObjectsVec.size();
-		static ImGuiTreeNodeFlags base_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
-		static int selection_mask = (1 << 2);
+		ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
 
 		ImGui::Begin("Scene Objects", &hierarchyWindow);
 
@@ -505,17 +534,18 @@ void ManagerImGui::HierarchyWindow() {
 
 		for (int i = 0; i < size; i++) {
 
-			ImGuiTreeNodeFlags node_flags = base_flags;
-			const bool is_selected = (selection_mask & (1 << i)) != 0;
 			bool node_open;
 			int childSize = App->editorScene->rootGameObjectsVec[i]->childs.size();
 
-			if (is_selected) { node_flags |= ImGuiTreeNodeFlags_Selected; }
+			if (App->editorScene->GetFocus() != nullptr) {
+				if (App->editorScene->GetFocus()->id == App->editorScene->rootGameObjectsVec[i]->id) { node_flags |= ImGuiTreeNodeFlags_Selected; }
+			}
 
 			if (childSize != 0) {
 
 				node_open = ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, App->editorScene->rootGameObjectsVec[i]->name.c_str(), i);
 				if (ImGui::IsItemClicked()) { App->editorScene->SetFocus(App->editorScene->rootGameObjectsVec[i]); }
+				if (ImGui::IsItemHovered()) { itemHovered = App->editorScene->rootGameObjectsVec[i]; }
 
 				if (node_open) {
 
@@ -531,7 +561,12 @@ void ManagerImGui::HierarchyWindow() {
 				node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
 				node_open = ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, App->editorScene->rootGameObjectsVec[i]->name.c_str(), i);
 				if (ImGui::IsItemClicked()) { App->editorScene->SetFocus(App->editorScene->rootGameObjectsVec[i]); }
+				if (ImGui::IsItemHovered()) { itemHovered = App->editorScene->rootGameObjectsVec[i]; }
 
+			}
+
+			if (itemHovered != nullptr) {
+				if (itemHovered->id == App->editorScene->rootGameObjectsVec[i]->id) { node_flags |= ImGuiTreeNodeFlags_Selected; }
 			}
 
 		}
@@ -539,30 +574,31 @@ void ManagerImGui::HierarchyWindow() {
 		ImGui::End();
 	}
 
-	/*	if (test_drag_and_drop && ImGui::BeginDragDropSource()) {
-	ImGui::SetDragDropPayload("_TREENODE", NULL, 0);
-	ImGui::Text("This is a drag and drop source");
-	ImGui::EndDragDropSource();
-	}*/	// TODO: this may or may not be usasble for dragging hierarchies
-
 }
 
 
 void ManagerImGui::AddChildNode(GameObject* nextObject, int index) {
 
-	static ImGuiTreeNodeFlags base_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
-	static int selection_mask = (1 << 2);
-	ImGuiTreeNodeFlags node_flags = base_flags;
-	const bool is_selected = (selection_mask & (1 << index)) != 0;
+	ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
 	bool node_open;
 	int childSize = nextObject->childs.size();
 
-	if (is_selected) { node_flags |= ImGuiTreeNodeFlags_Selected; }
+	if (App->editorScene->GetFocus() != nullptr) {
+		if (App->editorScene->GetFocus()->id == nextObject->id) { node_flags |= ImGuiTreeNodeFlags_Selected; }
+	}
 
 	if (childSize != 0) {
 
 		node_open = ImGui::TreeNodeEx((void*)(intptr_t)index, node_flags, nextObject->name.c_str(), index);
 		if (ImGui::IsItemClicked()) { App->editorScene->SetFocus(nextObject); }
+		if (ImGui::IsItemHovered()) {
+
+			itemHovered = nextObject;
+			if (itemHovered != nullptr && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && itemHovered->id != nextObject->id) {
+				if (itemHovered->id == nextObject->id) { node_flags |= ImGuiTreeNodeFlags_Selected; }
+			}
+		}
+
 
 		if (node_open) {
 
@@ -578,9 +614,16 @@ void ManagerImGui::AddChildNode(GameObject* nextObject, int index) {
 		node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
 		node_open = ImGui::TreeNodeEx((void*)(intptr_t)index, node_flags, nextObject->name.c_str(), index);
 		if (ImGui::IsItemClicked()) { App->editorScene->SetFocus(nextObject); }
+		if (ImGui::IsItemHovered()) {
+
+			itemHovered = nextObject;
+			if (itemHovered != nullptr && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && itemHovered->id != nextObject->id) {
+				if (itemHovered->id == nextObject->id) { node_flags |= ImGuiTreeNodeFlags_Selected; }
+			}
+		}
+
 
 	}
-
 
 }
 

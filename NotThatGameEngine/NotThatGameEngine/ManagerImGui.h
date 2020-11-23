@@ -9,9 +9,10 @@
 
 class GameObject;
 
-class ManagerImGui : public Module
-{
+class ManagerImGui : public Module{
+
 public:
+
 	ManagerImGui(Application* app, bool start_enabled = true);
 	~ManagerImGui();
 
@@ -86,6 +87,8 @@ private:
 	float3 scaling;
 
 	char selectedFileName[FILE_MAX_LENGTH];
+	GameObject* itemHovered;
+	GameObject* itemFocusedLastFrame;
 
 };
 

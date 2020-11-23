@@ -34,8 +34,8 @@ Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter
 	AddModule(window);
 	AddModule(texture);
 	AddModule(externalManager);
-	AddModule(camera);
 	AddModule(input);
+	AddModule(camera);
 	AddModule(audio);
 	AddModule(editorScene);
 	
