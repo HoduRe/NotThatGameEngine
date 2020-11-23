@@ -121,8 +121,7 @@ update_status Input::PreUpdate(float dt)
 		}
 	}
 
-	if (quit == true || keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP)
-		return update_status::UPDATE_STOP;
+	if (quit == true) { return update_status::UPDATE_STOP; }
 
 	return update_status::UPDATE_CONTINUE;
 }

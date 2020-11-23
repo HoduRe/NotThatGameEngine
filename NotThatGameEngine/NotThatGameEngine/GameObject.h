@@ -28,6 +28,7 @@ public:
 	std::vector<Component*> FindComponents(COMPONENT_TYPE _type);
 	Component* FindGameObjectChildByComponent(long long int componentId);
 	GameObject* FindGameObjectChild(long long int id);
+	void CheckComponentDeletion();
 
 public:
 
@@ -44,8 +45,6 @@ public:
 
 private:
 
-	void CheckGameObjectDeletion();
-	void CheckComponentDeletion();
 	void ManageAABB(Mesh* mesh);
 
 private:

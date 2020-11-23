@@ -14,12 +14,6 @@ GameObject::GameObject(long long int _id, std::string _name, GameObject* _parent
 
 GameObject::~GameObject() {
 
-	for (int i = childs.size() - 1; i > -1; i--)
-	{
-		delete childs[i];
-		childs[i] = nullptr;
-	}
-
 	for (int i = components.size() - 1; i > -1; i--) {
 		delete components[i];
 		components[i] = nullptr;
@@ -71,7 +65,6 @@ void GameObject::PostUpdate(uint& defaultTextureId) {
 
 	}
 
-	CheckGameObjectDeletion();
 	CheckComponentDeletion();
 
 }
@@ -176,19 +169,6 @@ void GameObject::SetDeleteGameObject() {
 void GameObject::CheckComponentDeletion() { for (int i = components.size() - 1; i > -1; i--) { if (components[i]->deleteComponent) { components.erase(components.begin() + i); } } }
 
 
-void GameObject::CheckGameObjectDeletion() {
-
-	for (int i = childs.size() - 1; i > -1; i--)
-	{
-		if (childs[i]->deleteGameObject) {
-			delete childs[i];
-			childs[i] = nullptr;
-		}
-	}
-
-}
-
-
 Component* GameObject::FindComponent(COMPONENT_TYPE _type) {
 
 	int size = components.size();
@@ -253,7 +233,7 @@ void GameObject::ManageAABB(Mesh* mesh) {
 	newBoundingBox.SetNegativeInfinity();
 	newBoundingBox.Enclose(obb);
 	std::vector<float> cornerVec;
-	
+
 	for (int i = 0; i < 8; i++) {
 
 		float3 corner = newBoundingBox.CornerPoint(i);

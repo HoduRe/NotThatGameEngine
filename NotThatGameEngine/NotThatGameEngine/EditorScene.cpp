@@ -5,6 +5,7 @@
 #include "Renderer3D.h"
 #include "ModelImporter.h"
 #include "Textures.h"
+#include "Input.h"
 #include "Primitives.h"
 #include "Save.h"
 #include "GameObject.h"
@@ -82,10 +83,12 @@ update_status EditorScene::PostUpdate(float dt) {
 
 	App->renderer3D->SetFrameBuffer(App->renderer3D->frameBufferId);
 
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) { if (focus != nullptr) { focus->deleteGameObject = true; } }
+
 	int size = rootGameObjectsVec.size();
 	for (int i = 0; i < size; i++) { rootGameObjectsVec[i]->PostUpdate(defaultTextureId); }
 
-	DeleteRootGameObjects();
+	for (int i = size - 1; i > -1; i--) { DeleteFromRootGameObjects(rootGameObjectsVec[i], i); }
 
 	App->renderer3D->SetFrameBuffer(0);
 
@@ -227,7 +230,7 @@ GameObject* EditorScene::FindGameObject(long long int id) {
 }
 
 
-void EditorScene::DeleteGameObject(long long int id) {
+void EditorScene::SetDeleteGameObject(long long int id) {
 
 	bool ret = false;
 
@@ -242,9 +245,40 @@ void EditorScene::DeleteGameObject(long long int id) {
 }
 
 
-void EditorScene::DeleteRootGameObjects() {
+void EditorScene::DeleteFromRootGameObjects(GameObject* gameobject, int index) {
 
-	for (int i = rootGameObjectsVec.size() - 1; i > -1; i--) { if (rootGameObjectsVec[i]->deleteGameObject) { rootGameObjectsVec.erase(rootGameObjectsVec.begin() + i); } }
+
+	for (int i = gameobject->childs.size() - 1; i > -1; i--) {
+
+		if (gameobject->deleteGameObject) { DeleteGameObject(gameobject->childs[i], i); }
+		else { DeleteFromRootGameObjects(gameobject->childs[i], i); }
+
+	}
+
+	if (gameobject->deleteGameObject) {
+
+		if (gameobject->parent == nullptr) { rootGameObjectsVec.erase(rootGameObjectsVec.begin() + index); }
+		else { gameobject->parent->childs.erase(gameobject->parent->childs.begin() + index); }
+		if (focus == gameobject) { focus = nullptr; }
+
+		delete gameobject;
+
+	}
+
+}
+
+
+void EditorScene::DeleteGameObject(GameObject* gameObject, int index) {
+
+	if (gameObject->parent != nullptr) { gameObject->parent->childs.erase(gameObject->parent->childs.begin() + index); }
+
+	for (int i = gameObject->childs.size() - 1; i > -1; i--) {
+
+		DeleteFromRootGameObjects(gameObject->childs[i], i);
+		if (focus == gameObject) { focus = nullptr; }
+		delete gameObject;
+
+	}
 
 }
 

@@ -31,7 +31,7 @@ public:
 	bool AddPrimitive(PrimitiveEnum _type);
 	bool AddGameObject(GameObject* newObject);
 	GameObject* FindGameObject(long long int id);
-	void DeleteGameObject(long long int id);
+	void SetDeleteGameObject(long long int id);
 	Component* FindGameObjectByComponent(long long int componentId);
 	void SetFocus(GameObject* gameobject = nullptr);
 	GameObject* GetFocus();
@@ -40,7 +40,8 @@ public:
 private:
 
 	bool ExecuteEvent(EVENT_ENUM _event, void* var);
-	void DeleteRootGameObjects();
+	void DeleteFromRootGameObjects(GameObject* gameobject, int index);
+	void DeleteGameObject(GameObject* gameObject, int index);
 
 public:
 

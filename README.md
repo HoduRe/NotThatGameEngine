@@ -17,6 +17,8 @@ An engine for CITM's Engine project which focuses on skeletical animation
 - All menus can be re-opened via Upper Menu tabs<br/>
 - Drag a model on the application to load it on screen<br/>
 - Drag a texture on the application to load it. If there is an object selected, it will apply that texture to the model<br/>
+- Create GO creates a game object child to whatever is focused<br/>
+- Delete GO deletes the focused game object and its childs<br/>
 
 ## Additional functionality:
 - Windows have docking options enabled<br/>

@@ -488,6 +488,21 @@ void ManagerImGui::HierarchyWindow() {
 
 		ImGui::Begin("Scene Objects", &hierarchyWindow);
 
+		if (ImGui::Button("CreateGO")) {
+
+			if (App->editorScene->GetFocus() == nullptr) { App->editorScene->AddGameObject(new GameObject(App->editorScene->GenerateId())); }
+			else { App->editorScene->AddGameObject(new GameObject(App->editorScene->GenerateId(), "NewGameObject", App->editorScene->GetFocus())); }
+
+		}
+
+		ImGui::SameLine();
+
+		if (ImGui::Button("DeleteGO")) {
+
+			if (App->editorScene->GetFocus() != nullptr) { App->editorScene->SetDeleteGameObject(App->editorScene->GetFocus()->id); }
+
+		}
+
 		for (int i = 0; i < size; i++) {
 
 			ImGuiTreeNodeFlags node_flags = base_flags;
@@ -730,10 +745,10 @@ void ManagerImGui::LoadFileMenu(const char* directory, const char* extension) {
 		ImGui::SameLine();
 
 		if (ImGui::Button("Ok", ImVec2(50, 20))) {
-			
+
 			App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADED, EVENT_ENUM::NULL_EVENT, &selectedFileName);
 			loadFileMenu = false;
-		
+
 		}
 
 		ImGui::SameLine();
