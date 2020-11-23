@@ -1,9 +1,11 @@
-#pragma once
+#ifndef __LIGHT_H__
+#define __LIGHT_H__
+
 #include "Color.h"
 #include "glmath.h"
 
-struct Light
-{
+struct Light {
+
 	Light();
 
 	void Init();
@@ -17,4 +19,7 @@ struct Light
 
 	int ref;
 	bool on;
+
 };
+
+#endif

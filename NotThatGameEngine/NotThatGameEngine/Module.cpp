@@ -1,5 +1,6 @@
 #include "Module.h"
 #include "Application.h"
+#include "ManagerEvent.h"
 
 Module::Module(Application* parent, bool start_enabled) : App(parent), enabled(start_enabled){}
 

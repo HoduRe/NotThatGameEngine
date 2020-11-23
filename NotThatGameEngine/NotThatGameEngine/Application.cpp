@@ -1,4 +1,16 @@
 #include "Application.h"
+#include "Module.h"
+#include "Window.h"
+#include "Input.h"
+#include "Audio.h"
+#include "Renderer3D.h"
+#include "Camera3D.h"
+#include "ManagerImGui.h"
+#include "ManagerEvent.h"
+#include "ManagerExternal.h"
+#include "EditorScene.h"
+#include "Textures.h"
+#include "ManagerResource.h"
 
 Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter(0), framerate(0), consoleVecSize(0)
 {
@@ -7,7 +19,6 @@ Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter
 	audio = new Audio(this, true);
 	renderer3D = new Renderer3D(this);
 	camera = new Camera3D(this);
-	reset = new ResetModule(this);
 	imGui = new ManagerImGui(this);
 	eventManager = new ManagerEvent(this);
 	externalManager = new ExternalManager(this);
@@ -19,7 +30,6 @@ Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter
 	// Modules will Init() Start() and Update in this order; CleanUp() in reverse order
 
 	// Main Modules
-	AddModule(reset);
 	AddModule(eventManager);
 	AddModule(window);
 	AddModule(texture);

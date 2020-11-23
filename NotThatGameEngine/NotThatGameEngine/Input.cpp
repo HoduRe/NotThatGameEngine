@@ -1,5 +1,9 @@
 #include "Application.h"
+#include "Input.h"
 #include "ManagerImGui.h"
+#include "ManagerEvent.h"
+#include "SDL/include/SDL.h"
+#include "imgui_impl_sdl.h"
 
 #define MAX_KEYS 300
 

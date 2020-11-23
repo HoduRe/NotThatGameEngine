@@ -1,4 +1,9 @@
 #include "Application.h"
+#include "Window.h"
+#include "ManagerEvent.h"
+#include "ManagerImGui.h"
+#include "Renderer3D.h"
+#include "SDL/include/SDL.h"
 
 Window::Window(Application* app, bool start_enabled) : Module(app, start_enabled), window(NULL), screen_surface(NULL), width(SCREEN_WIDTH* SCREEN_SIZE), height(SCREEN_HEIGHT* SCREEN_SIZE)
 {}

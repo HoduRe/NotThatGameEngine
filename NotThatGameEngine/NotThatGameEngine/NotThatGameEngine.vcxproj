@@ -176,7 +176,6 @@
     <ClCompile Include="ModelImporter.cpp" />
     <ClCompile Include="OpenGLFuncionality.cpp" />
     <ClCompile Include="Renderer3D.cpp" />
-    <ClCompile Include="ResetModule.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -218,7 +217,6 @@
     <ClInclude Include="ModelImporter.h" />
     <ClInclude Include="OpenGLFuncionality.h" />
     <ClInclude Include="Renderer3D.h" />
-    <ClInclude Include="ResetModule.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Window.h" />

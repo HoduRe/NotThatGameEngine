@@ -3,10 +3,7 @@
 
 #include "Module.h"
 #include "Globals.h"
-
-#include "imgui.h"
-#include "imgui_impl_sdl.h"
-#include "imgui_impl_opengl3.h"
+#include "MathGeoLib/include/MathGeoLib.h"
 
 #define FILE_MAX_LENGTH 250
 
@@ -39,6 +36,21 @@ public:
 	bool vsync;
 
 private:
+
+	void DefaultButtons();
+	update_status SetMainMenuBar();
+	void AboutMenu();
+	update_status DefaultWindow();
+	void ConsoleWindow();
+	void SceneWindow();
+	void HierarchyWindow();
+	void InspectorWindow();
+	void DrawDirectoryRecursively(const char* directory, const char* extension);
+
+	void AddChildNode(GameObject* nextObject, int index);
+
+private:
+
 	char* SDL;
 	std::string GLEW;
 	std::string ImGui;
@@ -72,18 +84,6 @@ private:
 	float3 position;
 	float3 rotationEuler;
 	float3 scaling;
-
-	void DefaultButtons();
-	update_status SetMainMenuBar();
-	void AboutMenu();
-	update_status DefaultWindow();
-	void ConsoleWindow();
-	void SceneWindow();
-	void HierarchyWindow();
-	void InspectorWindow();
-	void DrawDirectoryRecursively(const char* directory, const char* extension);
-
-	void AddChildNode(GameObject* nextObject, int index);
 
 	char selectedFileName[FILE_MAX_LENGTH];
 

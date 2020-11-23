@@ -2,12 +2,15 @@
 #define __IMPORTER_H__
 
 #include "Globals.h"
-#include "OpenGLFuncionality.h"
-#include "Application.h"
+#include "Assimp/include/matrix4x4.h"
 
+class Application;
 class GameObject;
 class Component;
 class Mesh;
+class Transform;
+class aiNode;
+class aiScene;
 
 namespace ModelImporter {
 
@@ -17,7 +20,7 @@ namespace ModelImporter {
 	void LoadNewModelMaterial(Application* App, aiScene* scene, GameObject* newObject, int materialId);
 
 	void aiTransformTofloat4x4Transform(aiMatrix4x4 matrix, Transform* transform);
-	void RecursiveChildCall(Application* App, GameObject* gameObject);
+	void RecursiveChildCallToChangeID(Application* App, GameObject* gameObject);
 
 }
 

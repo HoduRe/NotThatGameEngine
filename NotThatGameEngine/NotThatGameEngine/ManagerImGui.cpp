@@ -1,8 +1,26 @@
 #include "Application.h"
+#include "ManagerImGui.h"
+#include "Window.h"
+#include "Renderer3D.h"
+#include "Camera3D.h"
+#include "ManagerEvent.h"
+#include "Audio.h"
+#include "EditorScene.h"
+#include "Textures.h"
+#include "ManagerExternal.h"
+#include "GameObject.h"
+#include "Transform.h"
+#include "Mesh.h"
+#include "Material.h"
 
 #include "Save.h"
 #include "Assimp/include/version.h"
 #include "PhysFS/include/physfs.h"
+
+#include "imgui.h"
+#include "imgui_impl_sdl.h"
+#include "imgui_impl_opengl3.h"
+
 
 #include <shellapi.h>
 

@@ -1,7 +1,6 @@
 #ifndef __EVENTMANAGER_H__
 #define __EVENTMANAGER_H__
 
-#include "SDL/include/SDL.h"
 #include "Module.h"
 #include <map>
 

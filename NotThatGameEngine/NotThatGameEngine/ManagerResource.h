@@ -2,6 +2,7 @@
 #define __MANAGER_RESOURCE_H__
 
 #include "Module.h"
+#include "PathNode.h"
 
 #define JSON_NODE_GAMEOBJECTS "GameObjects"
 #define JSON_NODE_NAME "Name"

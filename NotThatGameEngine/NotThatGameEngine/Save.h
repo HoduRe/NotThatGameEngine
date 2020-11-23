@@ -4,8 +4,8 @@
 #include "Globals.h"
 #include "JsonManager.h"
 
-class Component;
 class Application;
+class Component;
 class Mesh;
 class Material;
 class GameObject;

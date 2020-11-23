@@ -1,13 +1,18 @@
 #ifndef __EDITORSCENE_H__
 #define __EDITORSCENE_H__
 
-#include "GameObject.h"
 #include "Module.h"
+#include "Primitives.h"
 
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
 #include "Assimp/include/Importer.hpp"
 #include "Assimp/include/postprocess.h"
+
+#include "MathGeoLib/include/Algorithm/Random/LCG.h"
+
+class GameObject;
+class Component;
 
 class EditorScene : public Module {
 

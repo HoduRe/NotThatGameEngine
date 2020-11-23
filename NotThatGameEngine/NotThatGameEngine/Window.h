@@ -2,9 +2,10 @@
 #define __Window_H__
 
 #include "Module.h"
-#include "SDL/include/SDL.h"
 
 class Application;
+struct SDL_Window;
+struct SDL_Surface;
 
 class Window : public Module
 {

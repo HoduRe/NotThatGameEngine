@@ -3,7 +3,6 @@
 
 #include "Globals.h"
 #include "glew-2.1.0/include/GL/glew.h"
-#include "OpenGLFuncionality.h"
 
 enum class PrimitiveEnum {
 	PRIMITIVE_NONE,

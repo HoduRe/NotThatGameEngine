@@ -1,5 +1,9 @@
 #include "GameObject.h"
 #include "OpenGLFuncionality.h"
+#include "Component.h"
+#include "Transform.h"
+#include "Mesh.h"
+#include "Material.h"
 
 GameObject::GameObject(long long int _id, std::string _name, GameObject* _parent, bool _enabled, std::vector<GameObject*> children) :
 	name(_name), id(_id), worldTransform(), parent(_parent), childs(children), enabled(_enabled), components(), deleteGameObject(false), idGenerator() {

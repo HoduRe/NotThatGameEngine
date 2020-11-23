@@ -1,8 +1,6 @@
 #ifndef __JSON_MANAGER__
 #define __JSON_MANAGER__
 
-#include "parson/parson.h"
-
 struct json_object_t;
 typedef struct json_object_t JSON_Object;
 

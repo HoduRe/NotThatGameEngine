@@ -2,10 +2,13 @@
 #define __GAME_OBJECT_H__
 
 #include "Globals.h"
-#include "Component.h"
-#include "Transform.h"
-#include "Mesh.h"
-#include "Material.h"
+#include "MathGeoLib/include/MathGeoLib.h"
+
+class Component;
+class Transform;
+class Mesh;
+class Material;
+enum class COMPONENT_TYPE;
 
 class GameObject {
 

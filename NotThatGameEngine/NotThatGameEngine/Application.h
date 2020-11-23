@@ -3,19 +3,19 @@
 
 #include "Globals.h"
 #include "Timer.h"
-#include "Module.h"
-#include "Window.h"
-#include "Input.h"
-#include "Audio.h"
-#include "Renderer3D.h"
-#include "Camera3D.h"
-#include "ResetModule.h"
-#include "ManagerImGui.h"
-#include "ManagerEvent.h"
-#include "ManagerExternal.h"
-#include "EditorScene.h"
-#include "Textures.h"
-#include "ManagerResource.h"
+
+class Module;
+class Window;
+class Input;
+class Audio;
+class Renderer3D;
+class Camera3D;
+class ManagerImGui;
+class ManagerEvent;
+class ExternalManager;
+class ResourceManager;
+class EditorScene;
+class Texture;
 
 #define LOG(format, ...) App->log(__FILE__, __LINE__, format, __VA_ARGS__);
 
@@ -27,7 +27,6 @@ public:
 	Audio* audio;
 	Renderer3D* renderer3D;
 	Camera3D* camera;
-	ResetModule* reset;
 	ManagerImGui* imGui;
 	ManagerEvent* eventManager;
 	ExternalManager* externalManager;

@@ -1,4 +1,5 @@
 #include "Primitives.h"
+#include "OpenGLFuncionality.h"
 
 
 void PrimitivesF::SetCubeVertices(float _edgeLength, std::vector<float>* vertices, std::vector<GLuint>* indices) {

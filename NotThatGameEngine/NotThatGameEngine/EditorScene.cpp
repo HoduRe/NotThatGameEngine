@@ -1,7 +1,15 @@
 #include "Application.h"
+#include "EditorScene.h"
+#include "ManagerEvent.h"
+#include "Camera3D.h"
+#include "Renderer3D.h"
 #include "ModelImporter.h"
+#include "Textures.h"
 #include "Primitives.h"
 #include "Save.h"
+#include "GameObject.h"
+#include "Material.h"
+#include "Mesh.h"
 
 #pragma comment( lib, "Assimp/libx86/assimp.lib" )
 

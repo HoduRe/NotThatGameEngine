@@ -1,6 +1,10 @@
 #include "Application.h"
+#include "Textures.h"
 #include "Load.h"
-
+#include "Devil/include/il.h"
+#include "Devil/include/ilu.h"
+#include "Devil/include/ilut.h"
+#include "ManagerEvent.h"
 
 Texture::Texture(Application* app, bool start_enabled) : Module(app, start_enabled), textureVec(), defaultTextureId(0), checkersTextureId(0), degenerateTextureId(0) {}
 

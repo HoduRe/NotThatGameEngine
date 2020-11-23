@@ -1,4 +1,8 @@
 #include "Application.h"
+#include "ManagerResource.h"
+#include "ManagerEvent.h"
+#include "ManagerExternal.h"
+#include "EditorScene.h"
 #include "Save.h"
 #include "Load.h"
 #include "ModelImporter.h"

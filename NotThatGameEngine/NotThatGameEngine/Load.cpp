@@ -1,6 +1,15 @@
-#include "Load.h"
 #include "Application.h"
+#include "Load.h"
 #include "Save.h"
+#include "ManagerResource.h"
+#include "EditorScene.h"
+#include "ManagerExternal.h"
+#include "Textures.h"
+#include "GameObject.h"
+#include "Transform.h"
+#include "Mesh.h"
+#include "Material.h"
+#include "parson/parson.h"
 
 void DataLoading::LoadScene(Application* App, char* buffer) {
 

@@ -1,7 +1,9 @@
 #include "Application.h"
+#include "ManagerExternal.h"
 #include "PathNode.h"
 #include "ModelImporter.h"
 
+#include "SDL/include/SDL.h"
 #include "PhysFS/include/physfs.h"
 #include <fstream>
 #include <filesystem>

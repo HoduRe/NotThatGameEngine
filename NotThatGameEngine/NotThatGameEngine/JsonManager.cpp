@@ -1,4 +1,5 @@
 #include "JsonManager.h"
+#include "parson/parson.h"
 
 JsonManager::JsonValue::JsonValue() : value() {}
 

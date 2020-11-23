@@ -1,6 +1,15 @@
+#include "OpenGLFuncionality.h"
+#include "Application.h"
 #include "ModelImporter.h"
+#include "EditorScene.h"
+#include "ManagerExternal.h"
+#include "GameObject.h"
+#include "ManagerResource.h"
 #include "Save.h"
 #include "Load.h"
+#include "Mesh.h"
+#include "Material.h"
+#include "Transform.h"
 
 GameObject* ModelImporter::LoadNewModel(Application* App, const char* path, const char* buffer, uint size, GameObject* parent, bool enabled) {
 
@@ -17,7 +26,7 @@ GameObject* ModelImporter::LoadNewModel(Application* App, const char* path, cons
 		if (ModelImporter::LoadNewModelComponents(App, buffer, size, newObject, path)) {
 
 			DataSaving::SaveModel(App, newObject, originalName);
-			RecursiveChildCall(App, newObject);
+			RecursiveChildCallToChangeID(App, newObject);
 
 		}
 
@@ -180,11 +189,11 @@ void ModelImporter::aiTransformTofloat4x4Transform(aiMatrix4x4 matrix, Transform
 }
 
 
-void ModelImporter::RecursiveChildCall(Application* App, GameObject* gameObject) {
+void ModelImporter::RecursiveChildCallToChangeID(Application* App, GameObject* gameObject) {
 
 	gameObject->id = App->editorScene->GenerateId();
 	for (int j = 0; j < gameObject->components.size(); j++) { gameObject->components[j]->id = App->editorScene->GenerateId(); }
-	for (int j = 0; j < gameObject->childs.size(); j++) { RecursiveChildCall(App, gameObject->childs[j]); }
+	for (int j = 0; j < gameObject->childs.size(); j++) { RecursiveChildCallToChangeID(App, gameObject->childs[j]); }
 
 }
 

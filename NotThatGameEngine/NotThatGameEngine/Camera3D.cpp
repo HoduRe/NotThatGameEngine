@@ -1,4 +1,10 @@
 #include "Application.h"
+#include "Camera3D.h"
+#include "Input.h"
+#include "SDL/include/SDL.h"
+#include "GameObject.h"
+#include "Transform.h"
+#include "EditorScene.h"
 
 Camera3D::Camera3D(Application* app, bool start_enabled) : Module(app, start_enabled) {
 

@@ -1,6 +1,15 @@
 #include "Save.h"
 #include "Application.h"
-#include "JsonManager.h"
+#include "EditorScene.h"
+#include "ManagerExternal.h"
+#include "ManagerResource.h"
+#include "Textures.h"
+#include "GameObject.h"
+#include "Transform.h"
+#include "Component.h"
+#include "Mesh.h"
+#include "Material.h"
+#include "parson/parson.h"
 
 void DataSaving::SaveScene(Application* App) {
 

@@ -2,9 +2,7 @@
 #define __MODULERENDER3D__
 
 #include "Module.h"
-#include "glmath.h"
 #include "Light.h"
-#include "Primitives.h"
 #include "OpenGLFuncionality.h"
 
 #define MAX_LIGHTS 8

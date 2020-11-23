@@ -1,64 +1,49 @@
 #include "ManagerEvent.h"
 
 
-Event::Event()
-{
+Event::Event() {
+
 	id = EVENT_ENUM::NULL_EVENT;
 	idTrigger = EVENT_ENUM::NULL_EVENT;
+
 }
 
-Event::Event(EVENT_ENUM idValue, EVENT_ENUM idTriggerValue)
-{
+Event::Event(EVENT_ENUM idValue, EVENT_ENUM idTriggerValue) {
+
 	id = idValue;
 	idTrigger = idTriggerValue;
+
 }
 
-Event::~Event()
-{
-}
+Event::~Event() {}
 
-ManagerEvent::ManagerEvent(Application* app, bool start_enabled) : Module(app, start_enabled)
-{}
+ManagerEvent::ManagerEvent(Application* app, bool start_enabled) : Module(app, start_enabled) {}
 
 
-// Destructor
-ManagerEvent::~ManagerEvent()
-{}
+ManagerEvent::~ManagerEvent() {}
 
 
-//// Called before quitting
-bool ManagerEvent::CleanUp()
-{
+bool ManagerEvent::CleanUp() {
+
 	CleanListenerMap();
 
 	eventVector.clear();
 	variablesVector.clear();
 
 	return true;
+
 }
 
-void ManagerEvent::GenerateEvent(EVENT_ENUM eventId, EVENT_ENUM eventTriggerId, void* var)
-{
+void ManagerEvent::GenerateEvent(EVENT_ENUM eventId, EVENT_ENUM eventTriggerId, void* var) {
 
-	if (eventId != EVENT_ENUM::NULL_EVENT)
-	{
+	if (eventId != EVENT_ENUM::NULL_EVENT) {
+
 		Event newEvent(eventId, eventTriggerId);
-
 		EVENT_ENUM eventCheck = CheckEventTrigger(eventId);
 
-		if (eventCheck != EVENT_ENUM::NULL_EVENT)
-		{
-			FireEvent(eventCheck);
-		}
-
-		if (eventTriggerId == EVENT_ENUM::NULL_EVENT)
-		{
-			FireEvent(eventId);
-		}
-		else
-		{
-			eventVector.push_back(newEvent);
-		}
+		if (eventCheck != EVENT_ENUM::NULL_EVENT) { FireEvent(eventCheck); }
+		if (eventTriggerId == EVENT_ENUM::NULL_EVENT) { FireEvent(eventId); }
+		else { eventVector.push_back(newEvent); }
 
 	}
 
@@ -66,45 +51,43 @@ void ManagerEvent::GenerateEvent(EVENT_ENUM eventId, EVENT_ENUM eventTriggerId, 
 
 }
 
-void ManagerEvent::FireEvent(EVENT_ENUM eventId) const
-{
+void ManagerEvent::FireEvent(EVENT_ENUM eventId) const {
 
-	if (eventId != EVENT_ENUM::NULL_EVENT)
-	{
-		if (eventListenersMap.size() == 0)
-			return;
+	if (eventId != EVENT_ENUM::NULL_EVENT) {
 
-		if (eventListenersMap.count(eventId) == 1)
-		{
+		if (eventListenersMap.size() == 0) { return; }
+
+		if (eventListenersMap.count(eventId) == 1) {
+
 			std::vector<Module*> listeners = eventListenersMap.at(eventId);
 			int numElem = listeners.size();
-			for (int i = 0; i < numElem; i++)
-			{
-				listeners[i]->AddEvent(eventId);
-			}
+			for (int i = 0; i < numElem; i++) { listeners[i]->AddEvent(eventId); }
 			listeners.clear();
+
 		}
 	}
 
 }
 
-EVENT_ENUM ManagerEvent::CheckEventTrigger(EVENT_ENUM eventTrigger)
-{
-	EVENT_ENUM ret= EVENT_ENUM::NULL_EVENT;
+EVENT_ENUM ManagerEvent::CheckEventTrigger(EVENT_ENUM eventTrigger) {
+
+	EVENT_ENUM ret = EVENT_ENUM::NULL_EVENT;
 
 	int numElem = eventVector.size();
 
-	for (int i = 0; i < numElem; i++)
-	{
-		if (eventVector[i].idTrigger == eventTrigger)
-		{
-			ret= eventVector[i].id;
+	for (int i = 0; i < numElem; i++) {
+
+		if (eventVector[i].idTrigger == eventTrigger) {
+
+			ret = eventVector[i].id;
 			eventVector.erase(eventVector.begin() + i);
 			break;
+
 		}
 	}
-	
+
 	return ret;
+
 }
 
 //returns true if the event has been registered or if the new listener has been added, else returns false
@@ -121,7 +104,7 @@ bool ManagerEvent::EventRegister(EVENT_ENUM event, Module* mod)
 	}
 	//if listener has already been added don't add
 	//else add a new listener
-	else if (FindListener(event, mod)==-1)
+	else if (FindListener(event, mod) == -1)
 	{
 		eventListenersMap[event].push_back(mod);
 		ret = true;
@@ -139,10 +122,10 @@ bool ManagerEvent::EventUnRegister(EVENT_ENUM event, Module* mod)
 
 	//if event does exist
 	if (eventListenersMap.count(event))
-	{	
+	{
 		//then if listener does exist erase the element
 		int i = FindListener(event, mod);
-		if (i!=-1)
+		if (i != -1)
 		{
 			EraseListener(event, mod, i);
 			ret = true;
@@ -150,7 +133,7 @@ bool ManagerEvent::EventUnRegister(EVENT_ENUM event, Module* mod)
 
 	}
 
-	
+
 	return ret;
 }
 
@@ -184,10 +167,10 @@ int ManagerEvent::FindListener(EVENT_ENUM event, Module* mod)
 }
 
 
-std::vector<Module*>::iterator ManagerEvent::EraseListener(EVENT_ENUM event, Module* mod,int vecId)
+std::vector<Module*>::iterator ManagerEvent::EraseListener(EVENT_ENUM event, Module* mod, int vecId)
 {
-	std::vector<Module*>::iterator iter=eventListenersMap[event].begin();
-	
+	std::vector<Module*>::iterator iter = eventListenersMap[event].begin();
+
 	//generate the iterator for the given ID
 	for (int i = 0; i < vecId; i++)
 	{
@@ -196,7 +179,7 @@ std::vector<Module*>::iterator ManagerEvent::EraseListener(EVENT_ENUM event, Mod
 
 	//delete the listener
 	eventListenersMap[event].erase(iter);
-	
+
 	//if there are no more listeners delete the map event entry
 	if (eventListenersMap[event].size() <= 0)
 	{
@@ -207,10 +190,7 @@ std::vector<Module*>::iterator ManagerEvent::EraseListener(EVENT_ENUM event, Mod
 }
 
 
-void  ManagerEvent::CleanListenerMap()
-{
-	eventListenersMap.clear();
-}
+void  ManagerEvent::CleanListenerMap() { eventListenersMap.clear(); }
 
 
 void ManagerEvent::CleanVariable(EVENT_ENUM event) {
@@ -220,7 +200,7 @@ void ManagerEvent::CleanVariable(EVENT_ENUM event) {
 }
 
 
-VariableStorage::VariableStorage(EVENT_ENUM _id, void* _var) : id(_id), varBuffer(_var){}
+VariableStorage::VariableStorage(EVENT_ENUM _id, void* _var) : id(_id), varBuffer(_var) {}
 
 
 VariableStorage::~VariableStorage() { varBuffer = nullptr; }

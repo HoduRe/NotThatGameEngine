@@ -2,6 +2,7 @@
 #define __TEXTURES_H__
 
 #include "Module.h"
+#include "glew-2.1.0/include/GL/glew.h"
 
 struct TextureData {
 
