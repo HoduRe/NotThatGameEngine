@@ -45,6 +45,7 @@ private:
 	void ConsoleWindow();
 	void SceneWindow();
 	void HierarchyWindow();
+	void HierarchyManagement();
 	void InspectorWindow();
 	void DrawDirectoryRecursively(const char* directory, const char* extension);
 

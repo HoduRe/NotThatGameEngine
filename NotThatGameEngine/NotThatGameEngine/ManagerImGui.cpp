@@ -162,32 +162,7 @@ update_status ManagerImGui::PostUpdate(float dt)
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	SDL_GL_SwapWindow(App->window->window);	// Swaps current window with the other used by OpenGL (by default it uses double-buffered contexts)
 
-
-	bool hasParent = false;
-	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP && App->editorScene->GetFocus() != nullptr && App->editorScene->GetFocus() != itemHovered) {
-
-		if (App->editorScene->GetFocus()->parent != nullptr) {
-
-			for (int i = 0; i < App->editorScene->GetFocus()->parent->childs.size(); i++) {
-
-				hasParent = true;
-				if (App->editorScene->GetFocus()->parent->childs[i]->id == App->editorScene->GetFocus()->id) {
-
-					App->editorScene->GetFocus()->parent->childs.erase(App->editorScene->GetFocus()->parent->childs.begin() + i);
-					i = App->editorScene->GetFocus()->parent->childs.size();
-
-				}
-
-			}
-
-		}
-
-		App->editorScene->GetFocus()->parent = itemHovered;
-		if (itemHovered != nullptr) { itemHovered->childs.push_back(App->editorScene->GetFocus()); }
-		else if (itemHovered == nullptr && hasParent) { App->editorScene->rootGameObjectsVec.push_back(App->editorScene->GetFocus()); }
-	}
-
-	itemFocusedLastFrame = App->editorScene->GetFocus();
+	HierarchyManagement();
 
 	return ret;
 }
@@ -509,6 +484,7 @@ void ManagerImGui::SceneWindow() {
 void ManagerImGui::HierarchyWindow() {
 
 	itemHovered = nullptr;
+	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN) { App->editorScene->SetFocus(nullptr); }
 
 	if (hierarchyWindow) {
 
@@ -565,10 +541,6 @@ void ManagerImGui::HierarchyWindow() {
 
 			}
 
-			if (itemHovered != nullptr) {
-				if (itemHovered->id == App->editorScene->rootGameObjectsVec[i]->id) { node_flags |= ImGuiTreeNodeFlags_Selected; }
-			}
-
 		}
 
 		ImGui::End();
@@ -591,14 +563,7 @@ void ManagerImGui::AddChildNode(GameObject* nextObject, int index) {
 
 		node_open = ImGui::TreeNodeEx((void*)(intptr_t)index, node_flags, nextObject->name.c_str(), index);
 		if (ImGui::IsItemClicked()) { App->editorScene->SetFocus(nextObject); }
-		if (ImGui::IsItemHovered()) {
-
-			itemHovered = nextObject;
-			if (itemHovered != nullptr && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && itemHovered->id != nextObject->id) {
-				if (itemHovered->id == nextObject->id) { node_flags |= ImGuiTreeNodeFlags_Selected; }
-			}
-		}
-
+		if (ImGui::IsItemHovered()) { itemHovered = nextObject; }
 
 		if (node_open) {
 
@@ -614,14 +579,7 @@ void ManagerImGui::AddChildNode(GameObject* nextObject, int index) {
 		node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
 		node_open = ImGui::TreeNodeEx((void*)(intptr_t)index, node_flags, nextObject->name.c_str(), index);
 		if (ImGui::IsItemClicked()) { App->editorScene->SetFocus(nextObject); }
-		if (ImGui::IsItemHovered()) {
-
-			itemHovered = nextObject;
-			if (itemHovered != nullptr && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && itemHovered->id != nextObject->id) {
-				if (itemHovered->id == nextObject->id) { node_flags |= ImGuiTreeNodeFlags_Selected; }
-			}
-		}
-
+		if (ImGui::IsItemHovered()) { itemHovered = nextObject; }
 
 	}
 
@@ -853,6 +811,50 @@ void ManagerImGui::DrawDirectoryRecursively(const char* directory, const char* e
 			ImGui::TreePop();
 		}
 	}
+
+}
+
+
+void ManagerImGui::HierarchyManagement() {
+
+	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP && App->editorScene->GetFocus() != nullptr && App->editorScene->GetFocus() != itemHovered) {
+
+		if (App->editorScene->GetFocus()->parent != nullptr) {
+
+			for (int i = 0; i < App->editorScene->GetFocus()->parent->childs.size(); i++) {
+
+				if (App->editorScene->GetFocus()->parent->childs[i]->id == App->editorScene->GetFocus()->id) {
+
+					App->editorScene->GetFocus()->parent->childs.erase(App->editorScene->GetFocus()->parent->childs.begin() + i);
+					i = App->editorScene->GetFocus()->parent->childs.size();
+
+				}
+
+			}
+
+		}
+
+		else {
+
+			for (int i = 0; i < App->editorScene->rootGameObjectsVec.size(); i++) {
+
+				if (App->editorScene->rootGameObjectsVec[i]->id == App->editorScene->GetFocus()->id) {
+
+					App->editorScene->rootGameObjectsVec.erase(App->editorScene->rootGameObjectsVec.begin() + i);
+					i = App->editorScene->rootGameObjectsVec.size();
+
+				}
+
+			}
+
+		}
+
+		App->editorScene->GetFocus()->parent = itemHovered;
+		if (itemHovered != nullptr) { itemHovered->childs.push_back(App->editorScene->GetFocus()); }
+		else if (itemHovered == nullptr) { App->editorScene->rootGameObjectsVec.push_back(App->editorScene->GetFocus()); }
+	}
+
+	itemFocusedLastFrame = App->editorScene->GetFocus();
 
 }
 
