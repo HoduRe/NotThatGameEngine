@@ -521,7 +521,14 @@ void ManagerImGui::HierarchyWindow() {
 
 				node_open = ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, App->editorScene->rootGameObjectsVec[i]->name.c_str(), i);
 				if (ImGui::IsItemClicked()) { App->editorScene->SetFocus(App->editorScene->rootGameObjectsVec[i]); }
-				if (ImGui::IsItemHovered()) { itemHovered = App->editorScene->rootGameObjectsVec[i]; }
+				if (ImGui::IsMouseHoveringRect(ImGui::GetItemRectMin(), ImGui::GetItemRectMax())) {
+					
+					itemHovered = App->editorScene->rootGameObjectsVec[i];
+					ImGui::BeginTooltip();
+					ImGui::Text("Hovering on %s.", (App->editorScene->rootGameObjectsVec[i]->name + std::to_string(App->editorScene->rootGameObjectsVec[i]->id)).c_str());
+					ImGui::EndTooltip();
+
+				}
 
 				if (node_open) {
 
@@ -537,7 +544,14 @@ void ManagerImGui::HierarchyWindow() {
 				node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
 				node_open = ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, App->editorScene->rootGameObjectsVec[i]->name.c_str(), i);
 				if (ImGui::IsItemClicked()) { App->editorScene->SetFocus(App->editorScene->rootGameObjectsVec[i]); }
-				if (ImGui::IsItemHovered()) { itemHovered = App->editorScene->rootGameObjectsVec[i]; }
+				if (ImGui::IsMouseHoveringRect(ImGui::GetItemRectMin(), ImGui::GetItemRectMax())) {
+
+					itemHovered = App->editorScene->rootGameObjectsVec[i];
+					ImGui::BeginTooltip();
+					ImGui::Text("Hovering on %s.", (App->editorScene->rootGameObjectsVec[i]->name + std::to_string(App->editorScene->rootGameObjectsVec[i]->id)).c_str());
+					ImGui::EndTooltip();
+
+				}
 
 			}
 
@@ -563,7 +577,14 @@ void ManagerImGui::AddChildNode(GameObject* nextObject, int index) {
 
 		node_open = ImGui::TreeNodeEx((void*)(intptr_t)index, node_flags, nextObject->name.c_str(), index);
 		if (ImGui::IsItemClicked()) { App->editorScene->SetFocus(nextObject); }
-		if (ImGui::IsItemHovered()) { itemHovered = nextObject; }
+		if (ImGui::IsMouseHoveringRect(ImGui::GetItemRectMin(), ImGui::GetItemRectMax())) {
+
+			itemHovered = nextObject;
+			ImGui::BeginTooltip();
+			ImGui::Text("Hovering on %s.", (nextObject->name + std::to_string(nextObject->id)).c_str());
+			ImGui::EndTooltip();
+
+		}
 
 		if (node_open) {
 
@@ -579,7 +600,14 @@ void ManagerImGui::AddChildNode(GameObject* nextObject, int index) {
 		node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
 		node_open = ImGui::TreeNodeEx((void*)(intptr_t)index, node_flags, nextObject->name.c_str(), index);
 		if (ImGui::IsItemClicked()) { App->editorScene->SetFocus(nextObject); }
-		if (ImGui::IsItemHovered()) { itemHovered = nextObject; }
+		if (ImGui::IsMouseHoveringRect(ImGui::GetItemRectMin(), ImGui::GetItemRectMax())) {
+
+			itemHovered = nextObject;
+			ImGui::BeginTooltip();
+			ImGui::Text("Hovering on %s.", (nextObject->name + std::to_string(nextObject->id)).c_str());
+			ImGui::EndTooltip();
+
+		}
 
 	}
 
@@ -596,7 +624,7 @@ void ManagerImGui::InspectorWindow() {
 
 		if (focus != nullptr) {
 
-			ImGui::Text(focus->name.c_str());
+			ImGui::Text((focus->name + std::to_string(focus->id)).c_str());
 
 			Transform* transform = (Transform*)focus->FindComponent(COMPONENT_TYPE::TRANSFORM);
 			Material* material = (Material*)focus->FindComponent(COMPONENT_TYPE::MATERIAL);

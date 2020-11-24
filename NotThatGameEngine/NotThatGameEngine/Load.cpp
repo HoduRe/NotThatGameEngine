@@ -99,7 +99,6 @@ GameObject* DataLoading::LoadModel(Application* App, char* buffer) {
 		gameObject = App->editorScene->FindGameObject(json_object_get_number(itNode, JSON_NODE_ID));
 
 		NewGameObjectFromModel(App, gameObject);
-		gameObject->name = gameObject->name + std::to_string(gameObject->id);
 
 	}
 
