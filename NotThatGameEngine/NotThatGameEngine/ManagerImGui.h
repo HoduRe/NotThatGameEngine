@@ -8,6 +8,7 @@
 #define FILE_MAX_LENGTH 250
 
 class GameObject;
+class ImVec2;
 
 class ManagerImGui : public Module{
 
@@ -50,6 +51,8 @@ private:
 	void DrawDirectoryRecursively(const char* directory, const char* extension);
 
 	void AddChildNode(GameObject* nextObject, int index);
+
+	bool MouseIsInside(ImVec2* position, ImVec2* size);
 
 private:
 

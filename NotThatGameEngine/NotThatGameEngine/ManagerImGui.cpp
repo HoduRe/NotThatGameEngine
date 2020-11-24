@@ -484,16 +484,17 @@ void ManagerImGui::SceneWindow() {
 void ManagerImGui::HierarchyWindow() {
 
 	itemHovered = nullptr;
-	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN) { App->editorScene->SetFocus(nullptr); }
 
 	if (hierarchyWindow) {
 
 		int size = App->editorScene->rootGameObjectsVec.size();
-		ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
 
 		ImGui::Begin("Scene Objects", &hierarchyWindow);
+		ImVec2 windowPos = ImGui::GetWindowPos();
+		ImVec2 windowSize = ImGui::GetWindowSize();
 
-		if (ImGui::Button("CreateGO")) {
+		ImGui::Button("CreateGO");
+		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN && ImGui::IsItemClicked()) {
 
 			if (App->editorScene->GetFocus() == nullptr) { App->editorScene->AddGameObject(new GameObject(App->editorScene->GenerateId())); }
 			else { App->editorScene->AddGameObject(new GameObject(App->editorScene->GenerateId(), "NewGameObject", App->editorScene->GetFocus())); }
@@ -502,14 +503,16 @@ void ManagerImGui::HierarchyWindow() {
 
 		ImGui::SameLine();
 
-		if (ImGui::Button("DeleteGO")) {
-
+		ImGui::Button("DeleteGO");
+		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN && ImGui::IsItemClicked()) {
 			if (App->editorScene->GetFocus() != nullptr) { App->editorScene->SetDeleteGameObject(App->editorScene->GetFocus()->id); }
-
 		}
+
+		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN && MouseIsInside(&windowPos, &windowSize)) {App->editorScene->SetFocus(nullptr); }
 
 		for (int i = 0; i < size; i++) {
 
+			ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
 			bool node_open;
 			int childSize = App->editorScene->rootGameObjectsVec[i]->childs.size();
 
@@ -889,5 +892,21 @@ void ManagerImGui::HierarchyManagement() {
 
 std::string ManagerImGui::AppName() { return appName; }
 
+
+bool ManagerImGui::MouseIsInside(ImVec2* position, ImVec2* size) {
+
+	if (App->input->GetMouseX() > position->x && App->input->GetMouseX() < position->x + size->x) {
+
+		if (App->input->GetMouseY() > position->y && App->input->GetMouseY() < position->y + size->y) {
+
+			return true;
+
+		}
+
+	}
+
+	return false;
+
+}
 
 
