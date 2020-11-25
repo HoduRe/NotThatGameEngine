@@ -9,6 +9,7 @@ enum class COMPONENT_TYPE {
 	TRANSFORM,
 	MESH,
 	MATERIAL,
+	CAMERA,
 
 	ERROR_TYPE
 };

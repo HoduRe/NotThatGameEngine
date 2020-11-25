@@ -12,6 +12,7 @@
 #include "Transform.h"
 #include "Mesh.h"
 #include "Material.h"
+#include "Camera.h"
 #include "Input.h"
 
 #include "Save.h"
@@ -632,6 +633,7 @@ void ManagerImGui::InspectorWindow() {
 			Transform* transform = (Transform*)focus->FindComponent(COMPONENT_TYPE::TRANSFORM);
 			Material* material = (Material*)focus->FindComponent(COMPONENT_TYPE::MATERIAL);
 			Mesh* mesh = (Mesh*)focus->FindComponent(COMPONENT_TYPE::MESH);
+			Camera* camera = (Camera*)focus->FindComponent(COMPONENT_TYPE::CAMERA);
 			TextureData* textureData = nullptr;
 			if (material != nullptr && material->diffuseId != 0) { textureData = App->texture->GetTextureData(material->diffuseId); }
 
@@ -745,6 +747,19 @@ void ManagerImGui::InspectorWindow() {
 					ImGui::Text("Don't want to ruin the fun, but...\nThere's no mesh to apply texture to.");
 
 				}
+
+			}
+
+			if (ImGui::CollapsingHeader("Camera")) {
+
+				if (camera == nullptr) {
+
+					if(ImGui::Button("Create camera")){ camera = (Camera*)focus->AddComponent(COMPONENT_TYPE::CAMERA); }
+
+				}
+
+				else{ if (ImGui::Button("Destroy camera")) { focus->SetDeleteComponent(COMPONENT_TYPE::CAMERA); } }
+
 
 			}
 

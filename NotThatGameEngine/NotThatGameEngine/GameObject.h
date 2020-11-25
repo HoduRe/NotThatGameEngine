@@ -23,7 +23,8 @@ public:
 	bool AddGameObjectByParent(GameObject* newObject);
 	long long int GenerateComponentId();
 	bool CheckChildDeletionById(long long int _id);
-	void SetDeleteGameObject();
+	void SetDeleteGameObject(bool deleteBool = true);
+	void SetDeleteComponent(COMPONENT_TYPE _type);
 	Component* FindComponent(COMPONENT_TYPE _type);
 	std::vector<Component*> FindComponents(COMPONENT_TYPE _type);
 	Component* FindGameObjectChildByComponent(long long int componentId);

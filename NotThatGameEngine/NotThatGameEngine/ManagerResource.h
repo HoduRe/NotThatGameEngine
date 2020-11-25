@@ -53,8 +53,10 @@ public:
 	bool CleanUp();
 
 	void LoadLibraryFiles();
+	void ImportAssetsFile(PathNode* child);
 	bool IsLoadedInLibrary(std::string* filePath, ResourceEnum* type);
 	void LoadResourceByType(std::string name, ResourceEnum type = ResourceEnum::NONE);
+	void ImportAssetResourceByType(std::string name, ResourceEnum type = ResourceEnum::NONE);
 	std::string FindPathFromFileName(std::string fileName, PathNode* node = nullptr);
 	ResourceEnum CheckResourceType(std::string name, std::string* extension, std::string* fileName = nullptr);
 

@@ -54,7 +54,19 @@ bool EditorScene::Start()
 	App->camera->Move(vec3(0.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
-	ModelImporter::LoadNewModel(App, "Meshes/Street environment_V01.FBX");
+	// TODO: Delete this. This only exists because there is a bug when loading a file that has been imported before we start the editor loop
+	bool loaded = false;
+	for (int i = 0; i < rootGameObjectsVec.size(); i++) {
+		
+		if (rootGameObjectsVec[i]->name == "Street environment_V01") {
+			
+			loaded = true;
+			rootGameObjectsVec[i]->SetDeleteGameObject(false);
+		
+		}
+
+	}
+	if (loaded == false) { ModelImporter::LoadNewModel(App, "Meshes/Street environment_V01.FBX"); }
 
 	return true;
 }
@@ -125,7 +137,7 @@ bool EditorScene::AddGameObject(GameObject* newObject) {	// This function doesn'
 
 			for (int i = 0; i < size; i++) {
 
-				if (rootGameObjectsVec[i] == newObject->parent) {
+				if (rootGameObjectsVec[i]->id == newObject->parent->id) {
 
 					rootGameObjectsVec[i]->childs.push_back(newObject);
 					LOG("Object %s added into scene.\n", newObject->name.c_str());
@@ -221,7 +233,7 @@ GameObject* EditorScene::FindGameObject(long long int id) {
 		if (rootGameObjectsVec[i]->id == id) { return rootGameObjectsVec[i]; }
 		else {
 			ret = rootGameObjectsVec[i]->FindGameObjectChild(id);
-			if (ret) { return ret; }
+			if (ret != nullptr) { return ret; }
 		}
 	}
 

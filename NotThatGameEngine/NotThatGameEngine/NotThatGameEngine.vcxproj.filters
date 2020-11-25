@@ -138,6 +138,9 @@
     <ClCompile Include="glmath.cpp">
       <Filter>Utility</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>SceneManager\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h">
@@ -259,6 +262,9 @@
     </ClInclude>
     <ClInclude Include="glmath.h">
       <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>SceneManager\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

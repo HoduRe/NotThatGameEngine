@@ -7,6 +7,7 @@
 #include "Load.h"
 #include "ModelImporter.h"
 #include "PathNode.h"
+#include "GameObject.h"
 
 ResourceManager::ResourceManager(Application* app, bool start_enabled) : Module(app, start_enabled) {}
 
@@ -68,7 +69,7 @@ bool ResourceManager::CleanUp() {
 
 void ResourceManager::LoadLibraryFiles() {
 
-	// MAYBE USE assetsFiles
+	for (int i = 0; i < assetsFiles.children.size(); i++) { ImportAssetsFile(&assetsFiles.children[i]); }
 
 	std::vector<std::string> sceneVec;
 	App->externalManager->GetAllFilesWithExtension(SCENES_PATH, EXTENSION_SCENES, sceneVec);
@@ -88,6 +89,18 @@ void ResourceManager::LoadLibraryFiles() {
 
 	sceneVec.clear();
 	textureVec.clear();
+
+}
+
+
+void ResourceManager::ImportAssetsFile(PathNode* child) {
+
+	std::string extension;
+	ResourceEnum type;
+	bool loaded = IsLoadedInLibrary(&child->path, &type);
+	if(loaded){}
+	else { ImportAssetResourceByType(child->path, type); }
+	for (int i = 0; i < child->children.size(); i++) { ImportAssetsFile(&child->children[i]); }
 
 }
 
@@ -278,6 +291,47 @@ void ResourceManager::LoadResourceByType(std::string name, ResourceEnum type) {
 }
 
 
+void ResourceManager::ImportAssetResourceByType(std::string name, ResourceEnum type) {
+
+	ResourceEnum resourceType;
+	char* buffer = nullptr;
+	std::string fileName;
+	GameObject* gameObject;
+
+	type == ResourceEnum::NONE ? resourceType = CheckResourceType(name, &std::string()) : resourceType = type;
+
+	switch (resourceType) {
+
+	case ResourceEnum::EXTERNAL_MODEL:
+
+		App->externalManager->Load((ASSETS_PATH + name).c_str(), &buffer);
+		gameObject = ModelImporter::LoadNewModel(App, (ASSETS_PATH + name).c_str());
+		DataSaving::SaveModel(App, gameObject, gameObject->name);
+		gameObject->SetDeleteGameObject();
+
+		break;
+
+	case ResourceEnum::TEXTURE:
+
+		DataLoading::LoadTexture(App, name.c_str());
+
+		break;
+
+	case ResourceEnum::UNKNOWN:
+
+		LOG("Unknown resource type for file %s.\n", name.c_str());
+
+		break;
+
+	default:
+		break;
+	}
+
+	RELEASE_ARRAY(buffer);
+
+}
+
+
 std::string ResourceManager::GetPathFromType(ResourceEnum type) {
 
 	switch (type) {
@@ -355,10 +409,10 @@ std::string ResourceManager::FindPathFromFileName(std::string fileName, PathNode
 
 		if (node->children[i].localPath == fileName) { return App->externalManager->NormalizePath(node->children[i].path.c_str()); }
 		else {
-			
+
 			returnName = FindPathFromFileName(fileName, &node->children[i]);
 			if (returnName.empty() == false) { return returnName; }
-		
+
 		}
 
 	}

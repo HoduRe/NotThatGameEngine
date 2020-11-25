@@ -4,6 +4,7 @@
 #include "Transform.h"
 #include "Mesh.h"
 #include "Material.h"
+#include "Camera.h"
 
 GameObject::GameObject(long long int _id, std::string _name, GameObject* _parent, bool _enabled, std::vector<GameObject*> children) :
 	name(_name), id(_id), worldTransform(), parent(_parent), childs(children), enabled(_enabled), components(), deleteGameObject(false), idGenerator() {
@@ -103,6 +104,14 @@ Component* GameObject::AddComponent(COMPONENT_TYPE _type, long long int _id) {
 
 		break;
 
+	case COMPONENT_TYPE::CAMERA:
+
+		component = FindComponent(COMPONENT_TYPE::CAMERA);
+		if (component == nullptr) { component = new Camera(id, this); }
+		else { return component; }
+
+		break;
+
 	default:
 		assert(true == false);
 		break;
@@ -156,12 +165,20 @@ bool GameObject::CheckChildDeletionById(long long int _id) {
 }
 
 
-void GameObject::SetDeleteGameObject() {
+void GameObject::SetDeleteGameObject(bool deleteBool) {
 
-	deleteGameObject = true;
+	deleteGameObject = deleteBool;
 
 	int size = childs.size();
-	for (int i = 0; i < size; i++) { childs[i]->SetDeleteGameObject(); }
+	for (int i = 0; i < size; i++) { childs[i]->SetDeleteGameObject(deleteBool); }
+
+}
+
+
+void GameObject::SetDeleteComponent(COMPONENT_TYPE _type) {
+
+	Component* component = FindComponent(_type);
+	component->deleteComponent = true;
 
 }
 
