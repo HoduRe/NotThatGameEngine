@@ -13,6 +13,8 @@
 
 void DataLoading::LoadScene(Application* App, char* buffer) {
 
+	App->editorScene->DeleteAllGameObjects();
+
 	JsonManager::JsonValue root(json_parse_string(buffer));
 	JSON_Object* node(json_value_get_object(root.value));
 	JSON_Array* gameObjectsArray(json_object_get_array(node, JSON_NODE_GAMEOBJECTS));

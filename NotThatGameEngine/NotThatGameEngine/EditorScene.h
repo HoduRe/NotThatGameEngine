@@ -36,12 +36,14 @@ public:
 	void SetFocus(GameObject* gameobject = nullptr);
 	GameObject* GetFocus();
 	long long int GenerateId();
+	void DeleteFromRootGameObjects(GameObject* gameobject, int index);
+	void DeleteAllGameObjects();
 
 private:
 
 	bool ExecuteEvent(EVENT_ENUM _event, void* var);
-	void DeleteFromRootGameObjects(GameObject* gameobject, int index);
 	void DeleteGameObject(GameObject* gameObject, int index);
+	void DeleteLoop(GameObject* gameObject);
 
 public:
 

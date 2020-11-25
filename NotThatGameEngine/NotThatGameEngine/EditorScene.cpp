@@ -57,12 +57,12 @@ bool EditorScene::Start()
 	// TODO: Delete this. This only exists because there is a bug when loading a file that has been imported before we start the editor loop
 	bool loaded = false;
 	for (int i = 0; i < rootGameObjectsVec.size(); i++) {
-		
+
 		if (rootGameObjectsVec[i]->name == "Street environment_V01") {
-			
+
 			loaded = true;
 			rootGameObjectsVec[i]->SetDeleteGameObject(false);
-		
+
 		}
 
 	}
@@ -253,6 +253,27 @@ void EditorScene::SetDeleteGameObject(long long int id) {
 			if (ret) { return; }
 		}
 	}
+
+}
+
+
+void EditorScene::DeleteAllGameObjects() {
+
+	for (int i = rootGameObjectsVec.size() - 1; i > -1; i--) { DeleteLoop(rootGameObjectsVec[i]); }
+	rootGameObjectsVec.clear();
+
+}
+
+
+void EditorScene::DeleteLoop(GameObject* gameObject) {
+
+	for (int i = 0; i < gameObject->childs.size(); i++) {
+
+		DeleteLoop(gameObject->childs[i]);
+		delete gameObject->childs[i];
+
+	}
+
 
 }
 
