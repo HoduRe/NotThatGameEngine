@@ -6,7 +6,7 @@
 #include "Transform.h"
 #include "EditorScene.h"
 
-Camera3D::Camera3D(Application* app, bool start_enabled) : Module(app, start_enabled) {
+Camera3D::Camera3D(Application* app, bool start_enabled) : Module(app, start_enabled)/*, camera(0, nullptr)*/ {
 
 	CalculateViewMatrix();
 

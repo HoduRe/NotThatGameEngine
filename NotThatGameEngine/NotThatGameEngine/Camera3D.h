@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "glmath.h"
+#include "Camera.h"
 
 class Camera3D : public Module
 {
@@ -32,6 +33,7 @@ private:
 
 	mat4x4 ViewMatrix, ViewMatrixInverse;
 	float speed;
+//	Camera camera;
 
 };
 
