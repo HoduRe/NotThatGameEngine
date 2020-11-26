@@ -2,7 +2,8 @@
 #define __GAME_OBJECT_H__
 
 #include "Globals.h"
-#include "MathGeoLib/include/MathGeoLib.h"
+#include "MathGeoLib/src/MathGeoLib.h"
+#include "MathGeoLib/src/MathBuildConfig.h"
 
 class Component;
 class Transform;

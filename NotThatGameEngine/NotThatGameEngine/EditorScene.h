@@ -9,7 +9,7 @@
 #include "Assimp/include/Importer.hpp"
 #include "Assimp/include/postprocess.h"
 
-#include "MathGeoLib/include/Algorithm/Random/LCG.h"
+#include "MathGeoLib/src/Algorithm/Random/LCG.h"
 
 class GameObject;
 class Component;

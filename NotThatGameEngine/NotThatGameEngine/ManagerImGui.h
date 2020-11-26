@@ -3,7 +3,7 @@
 
 #include "Module.h"
 #include "Globals.h"
-#include "MathGeoLib/include/MathGeoLib.h"
+#include "MathGeoLib/src/MathGeoLib.h"
 
 #define FILE_MAX_LENGTH 250
 

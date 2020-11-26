@@ -2,7 +2,7 @@
 #define __CAMERA_H__
 
 #include "Component.h"
-#include "MathGeoLib/include/MathGeoLib.h"
+#include "MathGeoLib/src/MathGeoLib.h"
 
 class Camera : public Component {
 
@@ -11,8 +11,11 @@ public:
 	Camera(long long int _id, GameObject* _gameObject);
 	~Camera();
 
-	void Update();
-	void PostUpdate();
+	void UpdateTransform();
+	void SetFOV(float FOV);
+	float GetFOV();
+	void SetAspectRatio(float aspectRatio);
+	void LookAt(float3 position);
 
 public:
 

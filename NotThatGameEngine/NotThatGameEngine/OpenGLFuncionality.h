@@ -6,7 +6,7 @@
 #include "SDL/include/SDL.h"
 #include "SDL/include/SDL_opengl.h"
 
-#include "MathGeoLib/include/MathGeoLib.h"
+#include "MathGeoLib/src/MathGeoLib.h"
 
 #include "Devil/include/il.h"
 #include "Devil/include/ilu.h"

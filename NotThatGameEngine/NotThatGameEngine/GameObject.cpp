@@ -40,9 +40,11 @@ void GameObject::PostUpdate(uint& defaultTextureId) {
 
 	// TODO: try implementing dirty flag ;)
 	Transform* transform = (Transform*)FindComponent(COMPONENT_TYPE::TRANSFORM);
+	Camera* camera = (Camera*)FindComponent(COMPONENT_TYPE::CAMERA);
 
 	if (parent != nullptr) { transform->RecalculateTransformFromParent(parent->worldTransform); }
 	else { worldTransform = transform->transform; }
+	if (camera != nullptr) { camera->UpdateTransform(); }
 
 	for (int i = childs.size() - 1; i > -1; i--) { childs[i]->PostUpdate(defaultTextureId); }
 
