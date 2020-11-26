@@ -9,6 +9,7 @@ class Component;
 class Transform;
 class Mesh;
 class Material;
+class Camera;
 enum class COMPONENT_TYPE;
 
 class GameObject {
@@ -25,8 +26,7 @@ public:
 	bool CheckChildDeletionById(long long int _id);
 	void SetDeleteGameObject(bool deleteBool = true);
 	void SetDeleteComponent(COMPONENT_TYPE _type);
-	Component* FindComponent(COMPONENT_TYPE _type);
-	std::vector<Component*> FindComponents(COMPONENT_TYPE _type);
+	Component* GetComponent(COMPONENT_TYPE _type);
 	Component* FindGameObjectChildByComponent(long long int componentId);
 	GameObject* FindGameObjectChild(long long int id);
 	void CheckComponentDeletion();
@@ -40,7 +40,10 @@ public:
 
 	long long int id;
 	bool enabled;
-	std::vector<Component*> components;
+	Mesh* mesh;	// Ugly code? Yes. More efficient code? Y E S
+	Material* material;
+	Camera* camera;
+	Transform* transform;
 
 	bool deleteGameObject;
 

@@ -10,6 +10,7 @@
 #include "Transform.h"
 #include "Mesh.h"
 #include "Material.h"
+#include "Camera.h"
 #include "parson/parson.h"
 
 void DataLoading::LoadScene(Application* App, char* buffer) {
@@ -56,7 +57,7 @@ void DataLoading::LoadGameObject(Application* App, JSON_Array* gameObjectsArray,
 
 	GameObject* gameObject = new GameObject(ID, name, App->editorScene->FindGameObject(parentID), enabled);
 
-	Transform* transform = (Transform*)gameObject->FindComponent(COMPONENT_TYPE::TRANSFORM);
+	Transform* transform = (Transform*)gameObject->GetComponent(COMPONENT_TYPE::TRANSFORM);
 	transform->SetPosition(float3(translationX, translationY, translationZ));
 	transform->SetEulerAngles(float3(rotationX, rotationY, rotationZ));
 	transform->SetScale(float3(scaleX, scaleY, scaleZ));
@@ -115,12 +116,10 @@ void DataLoading::NewGameObjectFromModel(Application* App, GameObject* gameObjec
 	long long int id = App->idGenerator.Int();
 	gameObject->id = id;
 
-	for (int i = 0; i < gameObject->components.size(); i++) {
-
-		id = App->idGenerator.Int();
-		gameObject->components[i]->id = id;
-
-	}
+	if (gameObject->transform != nullptr) { gameObject->transform->id = App->idGenerator.Int(); }
+	if (gameObject->mesh != nullptr) { gameObject->mesh->id = App->idGenerator.Int(); }
+	if (gameObject->material != nullptr) { gameObject->material->id = App->idGenerator.Int(); }
+	if (gameObject->camera != nullptr) { gameObject->camera->id = App->idGenerator.Int(); }
 
 	for (int i = 0; i < gameObject->childs.size(); i++) { NewGameObjectFromModel(App, gameObject->childs[i]); }
 

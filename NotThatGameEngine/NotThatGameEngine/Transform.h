@@ -13,8 +13,6 @@ public:
 	Transform(long long int _id, GameObject* _gameObject);
 	~Transform();
 
-	void Update();
-
 	void RecalculateTransformFromParent(float4x4& parentPosition);
 
 	void SetPosition(float3 position);

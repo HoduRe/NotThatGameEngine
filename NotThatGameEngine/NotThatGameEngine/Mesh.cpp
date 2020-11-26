@@ -22,9 +22,6 @@ Mesh::~Mesh() {
 }
 
 
-void Mesh::Update() {}
-
-
 void Mesh::SetVertices(std::vector<float> _vertices) {
 
 	vertices = _vertices;

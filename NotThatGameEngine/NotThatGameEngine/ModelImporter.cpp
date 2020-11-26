@@ -10,6 +10,7 @@
 #include "Mesh.h"
 #include "Material.h"
 #include "Transform.h"
+#include "Camera.h"
 
 GameObject* ModelImporter::LoadNewModel(Application* App, const char* path, const char* buffer, uint size, GameObject* parent, bool enabled) {
 
@@ -128,7 +129,7 @@ void ModelImporter::LoadNewModelMesh(Application* App, aiNode* node, aiScene* sc
 			OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->textureCoordId, mesh->textureCoord.size(), mesh->textureCoord.data());
 			OpenGLFunctionality::LoadDataBufferUint(GL_ELEMENT_ARRAY_BUFFER, &mesh->indexId, mesh->indices.size(), mesh->indices.data());
 
-			transformation = (Transform*)newObject->FindComponent(COMPONENT_TYPE::TRANSFORM);
+			transformation = (Transform*)newObject->GetComponent(COMPONENT_TYPE::TRANSFORM);
 			ModelImporter::aiTransformTofloat4x4Transform(transform, transformation);
 
 			ModelImporter::LoadNewModelMaterial(App, scene, newObject, scene->mMeshes[node->mMeshes[i]]->mMaterialIndex);
@@ -195,7 +196,10 @@ void ModelImporter::aiTransformTofloat4x4Transform(aiMatrix4x4 matrix, Transform
 void ModelImporter::RecursiveChildCallToChangeID(Application* App, GameObject* gameObject) {
 
 	gameObject->id = App->idGenerator.Int();
-	for (int j = 0; j < gameObject->components.size(); j++) { gameObject->components[j]->id = App->idGenerator.Int(); }
+	if (gameObject->transform != nullptr) { gameObject->transform->id = App->idGenerator.Int(); }
+	if (gameObject->mesh != nullptr) { gameObject->mesh->id = App->idGenerator.Int(); }
+	if (gameObject->material != nullptr) { gameObject->material->id = App->idGenerator.Int(); }
+	if (gameObject->camera != nullptr) { gameObject->camera->id = App->idGenerator.Int(); }
 	for (int j = 0; j < gameObject->childs.size(); j++) { RecursiveChildCallToChangeID(App, gameObject->childs[j]); }
 
 }

@@ -14,7 +14,6 @@ public:
 	Mesh(long long int _id, GameObject* _gameObject);
 	~Mesh();
 
-	void Update();
 	void SetVertices(std::vector<float> _vertices);
 	void SetIndices(std::vector<GLuint> _indices);
 	void SetNormals(std::vector<float> _normals);

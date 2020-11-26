@@ -25,7 +25,6 @@ public:
 
 	virtual void Enable();
 	virtual void Disable();
-	virtual void Update();
 
 	void SetComponentDelete();
 

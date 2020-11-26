@@ -631,10 +631,10 @@ void ManagerImGui::InspectorWindow() {
 
 			ImGui::Text((focus->name + std::to_string(focus->id)).c_str());
 
-			Transform* transform = (Transform*)focus->FindComponent(COMPONENT_TYPE::TRANSFORM);
-			Material* material = (Material*)focus->FindComponent(COMPONENT_TYPE::MATERIAL);
-			Mesh* mesh = (Mesh*)focus->FindComponent(COMPONENT_TYPE::MESH);
-			Camera* camera = (Camera*)focus->FindComponent(COMPONENT_TYPE::CAMERA);
+			Transform* transform = (Transform*)focus->GetComponent(COMPONENT_TYPE::TRANSFORM);
+			Material* material = (Material*)focus->GetComponent(COMPONENT_TYPE::MATERIAL);
+			Mesh* mesh = (Mesh*)focus->GetComponent(COMPONENT_TYPE::MESH);
+			Camera* camera = (Camera*)focus->GetComponent(COMPONENT_TYPE::CAMERA);
 			TextureData* textureData = nullptr;
 			if (material != nullptr && material->diffuseId != 0) { textureData = App->texture->GetTextureData(material->diffuseId); }
 

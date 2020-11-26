@@ -13,8 +13,6 @@ public:
 	Material(long long int _id, GameObject* _gameObject);
 	~Material();
 
-	void Update();
-
 	void SetDiffuse(uint id);
 
 public:

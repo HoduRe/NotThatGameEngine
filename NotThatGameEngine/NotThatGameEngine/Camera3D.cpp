@@ -47,7 +47,7 @@ update_status Camera3D::Update(float dt)
 
 		if (focus != nullptr) {
 
-			Transform* transform = (Transform*)focus->FindComponent(COMPONENT_TYPE::TRANSFORM);
+			Transform* transform = (Transform*)focus->GetComponent(COMPONENT_TYPE::TRANSFORM);
 			Reference = vec3(transform->GetPosition().x, transform->GetPosition().y, transform->GetPosition().z);
 			MoveCamera();
 

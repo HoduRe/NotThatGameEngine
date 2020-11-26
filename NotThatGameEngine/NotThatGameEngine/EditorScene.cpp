@@ -11,6 +11,8 @@
 #include "GameObject.h"
 #include "Material.h"
 #include "Mesh.h"
+#include "Transform.h"
+#include "Camera.h"
 
 #pragma comment( lib, "Assimp/libx86/assimp.lib" )
 
@@ -322,11 +324,10 @@ Component* EditorScene::FindGameObjectByComponent(long long int componentId) {
 
 	for (int i = 0; i < rootGameObjectsVec.size(); i++) {
 
-		for (int j = 0; j < rootGameObjectsVec[i]->components.size(); j++) {
-
-			if (rootGameObjectsVec[i]->components[j]->id == componentId) { return rootGameObjectsVec[i]->components[j]; }
-
-		}
+		if (rootGameObjectsVec[i]->transform != nullptr) { if (rootGameObjectsVec[i]->transform->id == componentId) { return rootGameObjectsVec[i]->transform; } }
+		if (rootGameObjectsVec[i]->mesh != nullptr) { if (rootGameObjectsVec[i]->mesh->id == componentId) { return rootGameObjectsVec[i]->mesh; } }
+		if (rootGameObjectsVec[i]->material != nullptr) { if (rootGameObjectsVec[i]->material->id == componentId) { return rootGameObjectsVec[i]->material; } }
+		if (rootGameObjectsVec[i]->camera != nullptr) { if (rootGameObjectsVec[i]->camera->id == componentId) { return rootGameObjectsVec[i]->camera; } }
 
 		ret = rootGameObjectsVec[i]->FindGameObjectChildByComponent(componentId);
 		if (ret) { return ret; }
@@ -376,7 +377,7 @@ bool EditorScene::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
 		if (focus != nullptr) {
 
-			material = (Material*)focus->FindComponent(COMPONENT_TYPE::MATERIAL);
+			material = (Material*)focus->GetComponent(COMPONENT_TYPE::MATERIAL);
 
 			if (material != nullptr) { material->diffuseId = (uint)var; }
 			else { LOG("This object has no material. Assign it a material through the inspector.\n"); }

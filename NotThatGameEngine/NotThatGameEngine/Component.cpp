@@ -13,9 +13,6 @@ void Component::Enable() { enabled = true; }
 void Component::Disable() { enabled = false; }
 
 
-void Component::Update() {}
-
-
 void Component::SetComponentDelete() { deleteComponent = true; }
 
 

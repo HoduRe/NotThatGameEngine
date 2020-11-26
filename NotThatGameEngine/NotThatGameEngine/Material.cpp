@@ -6,9 +6,6 @@ Material::Material(long long int _id, GameObject* _gameObject) : Component(_id, 
 Material::~Material() {}
 
 
-void Material::Update() {}
-
-
 void Material::SetDiffuse(uint id) { diffuseId = id; }
 
 

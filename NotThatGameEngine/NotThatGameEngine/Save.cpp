@@ -9,6 +9,7 @@
 #include "Component.h"
 #include "Mesh.h"
 #include "Material.h"
+#include "Camera.h"
 #include "parson/parson.h"
 
 void DataSaving::SaveScene(Application* App) {
@@ -48,7 +49,7 @@ void DataSaving::SaveGameObject(Application* App, JSON_Object* node, GameObject*
 	json_object_set_number(node, JSON_NODE_ID, gameObject->id);
 	json_object_set_number(node, JSON_NODE_PARENT_ID, gameObject->parent ? gameObject->parent->id : 0);
 
-	Transform* transform = (Transform*)gameObject->FindComponent(COMPONENT_TYPE::TRANSFORM);
+	Transform* transform = (Transform*)gameObject->GetComponent(COMPONENT_TYPE::TRANSFORM);
 
 	JSON_Array* jsonObject(JsonManager::OpenArray(node, JSON_NODE_TRANSLATION));
 	json_array_append_number(jsonObject, transform->GetPosition().x);
@@ -71,22 +72,34 @@ void DataSaving::SaveGameObject(Application* App, JSON_Object* node, GameObject*
 	json_object_set_boolean(node, JSON_NODE_ENABLED, gameObject->enabled);
 
 	JSON_Array* gameComponentsArray(JsonManager::OpenArray(node, JSON_NODE_COMPONENTS));
-	const std::vector<Component*> components = gameObject->components;
 
-	for (uint i = 0; i < components.size(); i++) {
+	if (gameObject->mesh != nullptr) {
 
-		if (components[i]->type != COMPONENT_TYPE::TRANSFORM) {
+		json_array_append_value(gameComponentsArray, json_value_init_object());	// TODO: Make this into a function
+		JSON_Object* nodeComponent = json_array_get_object(gameComponentsArray, 0);
+		SaveComponent(App, gameObject->mesh);
+		json_object_set_number(nodeComponent, JSON_NODE_COMPONENT_TYPE, (int)gameObject->mesh->type);
+		json_object_set_number(nodeComponent, JSON_NODE_COMPONENT_ID, gameObject->mesh->id);
 
-			json_array_append_value(gameComponentsArray, json_value_init_object());
-			JSON_Object* nodeComponent = json_array_get_object(gameComponentsArray, i - 1);
-			// The i-1 is ugly, but since Transforms are mandatory, and they are created as the GameObject is initialized, it's probably safe
+	}
 
-			SaveComponent(App, components[i]);
+	if (gameObject->material != nullptr) {
+	
+		json_array_append_value(gameComponentsArray, json_value_init_object());	// TODO: Make this into a function
+		JSON_Object* nodeComponent = json_array_get_object(gameComponentsArray, 1);
+		SaveComponent(App, gameObject->material);
+		json_object_set_number(nodeComponent, JSON_NODE_COMPONENT_TYPE, (int)gameObject->material->type);
+		json_object_set_number(nodeComponent, JSON_NODE_COMPONENT_ID, gameObject->material->id);
 
-			json_object_set_number(nodeComponent, JSON_NODE_COMPONENT_TYPE, (int)components[i]->type);
-			json_object_set_number(nodeComponent, JSON_NODE_COMPONENT_ID, components[i]->id);
+	}
 
-		}
+	if (gameObject->camera != nullptr) {
+	
+		json_array_append_value(gameComponentsArray, json_value_init_object());	// TODO: Make this into a function
+		JSON_Object* nodeComponent = json_array_get_object(gameComponentsArray, 2);
+		SaveComponent(App, gameObject->camera);
+		json_object_set_number(nodeComponent, JSON_NODE_COMPONENT_TYPE, (int)gameObject->camera->type);
+		json_object_set_number(nodeComponent, JSON_NODE_COMPONENT_ID, gameObject->camera->id);
 
 	}
 

@@ -7,18 +7,23 @@
 #include "Camera.h"
 
 GameObject::GameObject(long long int _id, std::string _name, GameObject* _parent, bool _enabled, std::vector<GameObject*> children) :
-	name(_name), id(_id), worldTransform(), parent(_parent), childs(children), enabled(_enabled), components(), deleteGameObject(false), idGenerator() {
+	name(_name), id(_id), worldTransform(), parent(_parent), childs(children), enabled(_enabled), deleteGameObject(false), idGenerator(),
+	mesh(nullptr), material(nullptr), transform(nullptr), camera(nullptr) {
 
 	AddComponent(COMPONENT_TYPE::TRANSFORM, idGenerator.Int());
-
 }
 
 GameObject::~GameObject() {
 
-	for (int i = components.size() - 1; i > -1; i--) {
-		delete components[i];
-		components[i] = nullptr;
-	}
+	delete mesh;
+	delete material;
+	delete transform;
+	delete camera;
+
+	mesh = nullptr;
+	material = nullptr;
+	transform = nullptr;
+	camera = nullptr;
 
 	parent = nullptr;
 
@@ -30,26 +35,18 @@ void GameObject::Update() {
 	int size = childs.size();
 	for (int i = 0; i < size; i++) { if (childs[i]->enabled) { childs[i]->Update(); } }
 
-	size = components.size();
-	for (int i = 0; i < size; i++) { if (components[i]->enabled) { components[i]->Update(); } }
-
 }
 
 
 void GameObject::PostUpdate(uint& defaultTextureId) {
 
 	// TODO: try implementing dirty flag ;)
-	Transform* transform = (Transform*)FindComponent(COMPONENT_TYPE::TRANSFORM);
-	Camera* camera = (Camera*)FindComponent(COMPONENT_TYPE::CAMERA);
 
 	if (parent != nullptr) { transform->RecalculateTransformFromParent(parent->worldTransform); }
 	else { worldTransform = transform->transform; }
 	if (camera != nullptr) { camera->UpdateTransform(); }
 
 	for (int i = childs.size() - 1; i > -1; i--) { childs[i]->PostUpdate(defaultTextureId); }
-
-	Mesh* mesh = (Mesh*)FindComponent(COMPONENT_TYPE::MESH);
-	Material* material = (Material*)FindComponent(COMPONENT_TYPE::MATERIAL);
 
 	if (mesh != nullptr) {
 
@@ -75,52 +72,21 @@ void GameObject::PostUpdate(uint& defaultTextureId) {
 
 Component* GameObject::AddComponent(COMPONENT_TYPE _type, long long int id) {
 
-	Component* component = nullptr;
-
 	if (id == -1) { id = idGenerator.Int(); }
 
 	switch (_type) {
 
-	case COMPONENT_TYPE::TRANSFORM:
-
-		component = FindComponent(COMPONENT_TYPE::TRANSFORM);
-		if (component == nullptr) { component = new Transform(id, this); }
-		else { return component; }
-
-		break;
-
-	case COMPONENT_TYPE::MESH:
-
-		component = FindComponent(COMPONENT_TYPE::MESH);
-		if (component == nullptr) { component = new Mesh(id, this); }
-		else { return component; }
-
-		break;
-
-	case COMPONENT_TYPE::MATERIAL:
-
-		component = FindComponent(COMPONENT_TYPE::MATERIAL);
-		if (component == nullptr) { component = new Material(id, this); }
-		else { return component; }
-
-		break;
-
-	case COMPONENT_TYPE::CAMERA:
-
-		component = FindComponent(COMPONENT_TYPE::CAMERA);
-		if (component == nullptr) { component = new Camera(id, this); }
-		else { return component; }
-
-		break;
-
+	case COMPONENT_TYPE::TRANSFORM: if (transform == nullptr) { return transform = new Transform(id, this); }
+	case COMPONENT_TYPE::MESH: if (mesh == nullptr) { return mesh = new Mesh(id, this); }
+	case COMPONENT_TYPE::MATERIAL: if (material == nullptr) { return material = new Material(id, this); }
+	case COMPONENT_TYPE::CAMERA: if (camera == nullptr) { return camera = new Camera(id, this); }
 	default:
 		assert(true == false);
 		break;
 	}
 
-	components.push_back(component);
+	return nullptr;
 
-	return component;
 }
 
 
@@ -175,30 +141,35 @@ void GameObject::SetDeleteGameObject(bool deleteBool) {
 
 void GameObject::SetDeleteComponent(COMPONENT_TYPE _type) {
 
-	Component* component = FindComponent(_type);
+	Component* component = GetComponent(_type);
 	component->deleteComponent = true;
 
 }
 
 
-void GameObject::CheckComponentDeletion() { for (int i = components.size() - 1; i > -1; i--) { if (components[i]->deleteComponent) { components.erase(components.begin() + i); } } }
+void GameObject::CheckComponentDeletion() {
 
-
-Component* GameObject::FindComponent(COMPONENT_TYPE _type) {
-
-	int size = components.size();
-	for (int i = 0; i < size; i++) { if (components[i]->type == _type) { return components[i]; } }
-	return nullptr;
+	if (mesh != nullptr) { if (mesh->deleteComponent) { delete mesh; } }
+	if (material != nullptr) { if (material->deleteComponent) { delete material; } }
+	if (camera != nullptr) { if (camera->deleteComponent) { delete camera; } }
 
 }
 
 
-std::vector<Component*> GameObject::FindComponents(COMPONENT_TYPE _type) {
+Component* GameObject::GetComponent(COMPONENT_TYPE _type) {
 
-	std::vector<Component*> vec;
-	int size = components.size();
-	for (int i = 0; i < size; i++) { if (components[i]->type == _type) { vec.push_back(components[i]); } }
-	return vec;
+	switch (_type) {
+
+	case COMPONENT_TYPE::TRANSFORM: return transform;
+	case COMPONENT_TYPE::MESH: return mesh;
+	case COMPONENT_TYPE::MATERIAL: return material;
+	case COMPONENT_TYPE::CAMERA: return camera;
+	default:
+		assert(true == false);
+		break;
+	}
+
+	return nullptr;
 
 }
 
@@ -207,7 +178,10 @@ Component* GameObject::FindGameObjectChildByComponent(long long int componentId)
 
 	Component* ret = nullptr;
 
-	for (int i = 0; i < components.size(); i++) { if (components[i]->id == componentId) { return components[i]; } }
+	if (transform != nullptr) { if (transform->id == componentId) { return transform; } }
+	if (mesh != nullptr) { if (mesh->id == componentId) { return mesh; } }
+	if (material != nullptr) { if (material->id == componentId) { return material; } }
+	if (camera != nullptr) { if (camera->id == componentId) { return camera; } }
 
 	for (int i = 0; i < childs.size(); i++) {
 
