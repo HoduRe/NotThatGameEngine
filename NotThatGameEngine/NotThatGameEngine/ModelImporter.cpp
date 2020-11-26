@@ -18,7 +18,7 @@ GameObject* ModelImporter::LoadNewModel(Application* App, const char* path, cons
 	std::string originalName;
 
 	App->externalManager->SplitFilePath(path, nullptr, &originalName);
-	GameObject* newObject = new GameObject(App->editorScene->GenerateId(), originalName, parent, enabled);
+	GameObject* newObject = new GameObject(App->idGenerator.Int(), originalName, parent, enabled);
 	
 	if (!App->resourceManager->IsLoadedInLibrary(&filePath, &type)) {
 
@@ -88,7 +88,7 @@ void ModelImporter::LoadNewModelMesh(Application* App, aiNode* node, aiScene* sc
 
 		for (int i = 0; i < node->mNumMeshes; i++) {
 
-			long long int id = App->editorScene->GenerateId();
+			long long int id = App->idGenerator.Int();
 
 			GameObject* newObject = new GameObject(id, "NewGameObject", parent);
 
@@ -194,8 +194,8 @@ void ModelImporter::aiTransformTofloat4x4Transform(aiMatrix4x4 matrix, Transform
 
 void ModelImporter::RecursiveChildCallToChangeID(Application* App, GameObject* gameObject) {
 
-	gameObject->id = App->editorScene->GenerateId();
-	for (int j = 0; j < gameObject->components.size(); j++) { gameObject->components[j]->id = App->editorScene->GenerateId(); }
+	gameObject->id = App->idGenerator.Int();
+	for (int j = 0; j < gameObject->components.size(); j++) { gameObject->components[j]->id = App->idGenerator.Int(); }
 	for (int j = 0; j < gameObject->childs.size(); j++) { RecursiveChildCallToChangeID(App, gameObject->childs[j]); }
 
 }

@@ -7,6 +7,7 @@
 #include "Audio.h"
 #include "EditorScene.h"
 #include "Textures.h"
+#include "TextureData.h"
 #include "ManagerExternal.h"
 #include "GameObject.h"
 #include "Transform.h"
@@ -497,8 +498,8 @@ void ManagerImGui::HierarchyWindow() {
 		ImGui::Button("CreateGO");
 		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN && ImGui::IsItemClicked()) {
 
-			if (App->editorScene->GetFocus() == nullptr) { App->editorScene->AddGameObject(new GameObject(App->editorScene->GenerateId())); }
-			else { App->editorScene->AddGameObject(new GameObject(App->editorScene->GenerateId(), "NewGameObject", App->editorScene->GetFocus())); }
+			if (App->editorScene->GetFocus() == nullptr) { App->editorScene->AddGameObject(new GameObject(App->idGenerator.Int())); }
+			else { App->editorScene->AddGameObject(new GameObject(App->idGenerator.Int(), "NewGameObject", App->editorScene->GetFocus())); }
 
 		}
 

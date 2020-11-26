@@ -9,7 +9,7 @@
 GameObject::GameObject(long long int _id, std::string _name, GameObject* _parent, bool _enabled, std::vector<GameObject*> children) :
 	name(_name), id(_id), worldTransform(), parent(_parent), childs(children), enabled(_enabled), components(), deleteGameObject(false), idGenerator() {
 
-	AddComponent(COMPONENT_TYPE::TRANSFORM);
+	AddComponent(COMPONENT_TYPE::TRANSFORM, idGenerator.Int());
 
 }
 
@@ -73,12 +73,11 @@ void GameObject::PostUpdate(uint& defaultTextureId) {
 }
 
 
-Component* GameObject::AddComponent(COMPONENT_TYPE _type, long long int _id) {
+Component* GameObject::AddComponent(COMPONENT_TYPE _type, long long int id) {
 
 	Component* component = nullptr;
-	long long int id = _id;
 
-	if (_id == 0) { id = GenerateComponentId(); }
+	if (id == -1) { id = idGenerator.Int(); }
 
 	switch (_type) {
 
@@ -142,9 +141,6 @@ bool GameObject::AddGameObjectByParent(GameObject* newObject) {
 
 	return false;
 }
-
-
-long long int GameObject::GenerateComponentId() { return idGenerator.Int(); }
 
 
 bool GameObject::CheckChildDeletionById(long long int _id) {

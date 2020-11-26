@@ -1,6 +1,8 @@
 #ifndef __COMPONENT_H__
 #define __COMPONENT_H__
 
+#include "Resource.h"
+
 class GameObject;
 
 enum class COMPONENT_TYPE {
@@ -14,7 +16,7 @@ enum class COMPONENT_TYPE {
 	ERROR_TYPE
 };
 
-class Component {
+class Component : public Resource {
 
 public:
 
@@ -26,6 +28,10 @@ public:
 	virtual void Update();
 
 	void SetComponentDelete();
+
+private:
+
+	ResourceEnum ConvertComponentTypeToResourceType(COMPONENT_TYPE type);
 
 public:
 

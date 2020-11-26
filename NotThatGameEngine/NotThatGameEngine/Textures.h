@@ -3,23 +3,9 @@
 
 #include "Module.h"
 #include "glew-2.1.0/include/GL/glew.h"
+#include "TextureData.h"
 
-struct TextureData {
-
-	TextureData();
-	TextureData(GLuint& _id, const char* _name, GLenum _textureType, int width, int height, int _size);
-
-	GLenum textureType;
-	GLuint textureId;
-	std::string name;
-	int width;
-	int height;
-	int size;
-
-};
-
-class Texture : public Module
-{
+class Texture : public Module {
 
 public:
 

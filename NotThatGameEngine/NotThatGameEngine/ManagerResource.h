@@ -18,6 +18,7 @@
 
 #define EXTENSION_SCENES ".NotThatScene"
 #define EXTENSION_MODELS ".NotThatModel"
+#define EXTENSION_CAMERA ".NotThatCamera"
 #define EXTENSION_MESHES ".NotThatMesh"
 #define EXTENSION_MATERIALS ".NotThatMaterial"
 #define EXTENSION_TEXTURES ".dds"
@@ -26,12 +27,13 @@ enum class ResourceEnum {
 
 	NONE,
 
-	TEXTURE,
+	CAMERA,
 	EXTERNAL_MODEL,
-	OWN_MODEL,
 	MESH,
 	MATERIAL,
+	OWN_MODEL,
 	SCENE,
+	TEXTURE,
 
 	UNKNOWN
 
@@ -69,9 +71,8 @@ private:
 
 public:
 
-	PathNode assetsFiles;
-
 private:
+
 
 };
 

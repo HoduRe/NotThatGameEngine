@@ -9,8 +9,6 @@
 #include "Assimp/include/Importer.hpp"
 #include "Assimp/include/postprocess.h"
 
-#include "MathGeoLib/src/Algorithm/Random/LCG.h"
-
 class GameObject;
 class Component;
 
@@ -35,7 +33,6 @@ public:
 	Component* FindGameObjectByComponent(long long int componentId);
 	void SetFocus(GameObject* gameobject = nullptr);
 	GameObject* GetFocus();
-	long long int GenerateId();
 	void DeleteFromRootGameObjects(GameObject* gameobject, int index);
 	void DeleteAllGameObjects();
 
@@ -55,7 +52,6 @@ private:
 	aiLogStream stream;
 	uint defaultTextureId;
 	GameObject* focus;
-	LCG idGenerator;
 
 };
 

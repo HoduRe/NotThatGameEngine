@@ -5,6 +5,7 @@
 #include "EditorScene.h"
 #include "ManagerExternal.h"
 #include "Textures.h"
+#include "TextureData.h"
 #include "GameObject.h"
 #include "Transform.h"
 #include "Mesh.h"
@@ -111,12 +112,12 @@ GameObject* DataLoading::LoadModel(Application* App, char* buffer) {
 
 void DataLoading::NewGameObjectFromModel(Application* App, GameObject* gameObject) {
 
-	long long int id = App->editorScene->GenerateId();
+	long long int id = App->idGenerator.Int();
 	gameObject->id = id;
 
 	for (int i = 0; i < gameObject->components.size(); i++) {
 
-		id = App->editorScene->GenerateId();
+		id = App->idGenerator.Int();
 		gameObject->components[i]->id = id;
 
 	}
@@ -248,7 +249,7 @@ uint DataLoading::LoadTexture(Application* App, std::string path, const char* bu
 
 		OpenGLFunctionality::LoadGLTexture(&imageTest, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_BPP), ilGetInteger(IL_IMAGE_FORMAT), ilGetData());
 
-		TextureData* texture = new TextureData(imageTest, textureName.c_str(), GL_DIFFUSE, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), size);
+		TextureData* texture = new TextureData(imageTest, App->idGenerator.Int(), textureName.c_str(), GL_DIFFUSE, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), size);
 
 		App->texture->AddTexture(texture);
 		DataSaving::SaveTexture(App, texture->name);

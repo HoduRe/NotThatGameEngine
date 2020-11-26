@@ -12,7 +12,7 @@
 #include "Textures.h"
 #include "ManagerResource.h"
 
-Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter(0), framerate(0), consoleVecSize(0)
+Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter(0), framerate(0), consoleVecSize(0), idGenerator()
 {
 	window = new Window(this);
 	input = new Input(this);

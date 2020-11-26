@@ -16,7 +16,7 @@
 
 
 EditorScene::EditorScene(Application* app, bool start_enabled) : Module(app, start_enabled),
-rootGameObjectsVec(), stream(), defaultTextureId(0), focus(nullptr), sceneWindowFocus(false), idGenerator() {}
+rootGameObjectsVec(), stream(), defaultTextureId(0), focus(nullptr), sceneWindowFocus(false) {}
 
 
 EditorScene::~EditorScene() {
@@ -172,7 +172,7 @@ bool EditorScene::AddPrimitive(PrimitiveEnum _type) {
 
 	GameObject* newObject = nullptr;
 	Mesh* mesh = nullptr;
-	long long int id = GenerateId();
+	long long int id = App->idGenerator.Int();
 
 	switch (_type) {
 
@@ -399,7 +399,4 @@ void EditorScene::SetFocus(GameObject* gameobject) { focus = gameobject; }
 
 
 GameObject* EditorScene::GetFocus() { return focus; }
-
-
-long long int EditorScene::GenerateId() { return idGenerator.Int(); }
 

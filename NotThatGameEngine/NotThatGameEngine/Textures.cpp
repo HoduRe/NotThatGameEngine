@@ -12,13 +12,6 @@ Texture::Texture(Application* app, bool start_enabled) : Module(app, start_enabl
 Texture::~Texture() { textureVec.clear(); }
 
 
-TextureData::TextureData() : textureId(0), textureType(0), width(0), height(0), size(0), name() {}
-
-
-TextureData::TextureData(GLuint& _id, const char* _name, GLenum _textureType, int _width, int _height, int _size) :
-	textureId(_id), name(_name), textureType(_textureType), width(_width), height(_height), size(_size) {}
-
-
 bool Texture::Init() {	// OpenGL has not been initialized yet
 
 	bool ret = true;

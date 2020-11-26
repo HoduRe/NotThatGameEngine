@@ -198,6 +198,7 @@
     <ClCompile Include="MathGeoLib\src\Math\TransformOps.cpp" />
     <ClCompile Include="MathGeoLib\src\Time\Clock.cpp" />
     <ClCompile Include="parson\parson.c" />
+    <ClCompile Include="Resource.cpp" />
     <ClCompile Include="Save.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -213,6 +214,7 @@
     <ClCompile Include="ModelImporter.cpp" />
     <ClCompile Include="OpenGLFuncionality.cpp" />
     <ClCompile Include="Renderer3D.cpp" />
+    <ClCompile Include="TextureData.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -301,6 +303,7 @@
     <ClInclude Include="MathGeoLib\src\Math\TransformOps.h" />
     <ClInclude Include="MathGeoLib\src\Time\Clock.h" />
     <ClInclude Include="parson\parson.h" />
+    <ClInclude Include="Resource.h" />
     <ClInclude Include="Save.h" />
     <ClInclude Include="imstb_rectpack.h" />
     <ClInclude Include="imstb_textedit.h" />
@@ -319,6 +322,7 @@
     <ClInclude Include="ModelImporter.h" />
     <ClInclude Include="OpenGLFuncionality.h" />
     <ClInclude Include="Renderer3D.h" />
+    <ClInclude Include="TextureData.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Window.h" />

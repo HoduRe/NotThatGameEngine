@@ -3,6 +3,7 @@
 
 #include "Globals.h"
 #include "Timer.h"
+#include "MathGeoLib/src/Algorithm/Random/LCG.h"
 
 class Module;
 class Window;
@@ -63,6 +64,7 @@ public:
 	std::vector<float> msVec;
 	int msVecCounter;
 	int framerateVecCounter;
+	LCG idGenerator;
 
 private:
 

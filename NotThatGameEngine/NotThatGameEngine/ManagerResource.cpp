@@ -17,8 +17,7 @@ ResourceManager::~ResourceManager() {}
 
 bool ResourceManager::Init() {
 
-	assetsFiles = App->externalManager->GetAllFiles(ASSETS_PATH);
-	LoadLibraryFiles();
+	PathNode assetsFiles = App->externalManager->GetAllFiles(ASSETS_PATH);
 
 	return true;
 
@@ -68,8 +67,6 @@ bool ResourceManager::CleanUp() {
 
 
 void ResourceManager::LoadLibraryFiles() {
-
-	for (int i = 0; i < assetsFiles.children.size(); i++) { ImportAssetsFile(&assetsFiles.children[i]); }
 
 	std::vector<std::string> sceneVec;
 	App->externalManager->GetAllFilesWithExtension(SCENES_PATH, EXTENSION_SCENES, sceneVec);
@@ -200,12 +197,13 @@ ResourceEnum ResourceManager::CheckResourceType(std::string name, std::string* e
 
 	*extension = dot + *extension;
 
-	static_assert(static_cast<int>(ResourceEnum::UNKNOWN) == 7, "Code Needs Update");
+	static_assert(static_cast<int>(ResourceEnum::UNKNOWN) == 8, "Code Needs Update");
 
 	if (*extension == EXTENSION_SCENES) { return ResourceEnum::SCENE; }
 	else if (*extension == EXTENSION_MODELS) { return ResourceEnum::OWN_MODEL; }
 	else if (*extension == EXTENSION_MESHES) { return ResourceEnum::MESH; }
 	else if (*extension == EXTENSION_MATERIALS) { return ResourceEnum::MATERIAL; }
+	else if (*extension == EXTENSION_CAMERA) { return ResourceEnum::CAMERA; }
 	else if (*extension == ".FBX" || *extension == ".fbx" || *extension == ".OBJ" || *extension == ".obj") { return ResourceEnum::EXTERNAL_MODEL; }
 	else if (*extension == ".tga" || *extension == ".png" || *extension == ".jpg" || *extension == ".dds" || *extension == ".TGA"
 		|| *extension == ".PNG" || *extension == ".JPG" || *extension == ".DDS" || *extension == EXTENSION_TEXTURES) {
@@ -403,7 +401,7 @@ std::string ResourceManager::FindPathFromFileName(std::string fileName, PathNode
 
 	std::string returnName;
 
-	if (node == nullptr) { node = &assetsFiles; }
+	if (node == nullptr) { node; }
 
 	for (int i = 0; i < node->children.size(); i++) {
 
