@@ -9,7 +9,7 @@
 #include "PathNode.h"
 #include "GameObject.h"
 
-ResourceManager::ResourceManager(Application* app, bool start_enabled) : Module(app, start_enabled) {}
+ResourceManager::ResourceManager(Application* app, bool start_enabled) : Module(app, start_enabled), assetsMap(), libraryMap(), memoryMap() {}
 
 
 ResourceManager::~ResourceManager() {}
@@ -18,6 +18,8 @@ ResourceManager::~ResourceManager() {}
 bool ResourceManager::Init() {
 
 	PathNode assetsFiles = App->externalManager->GetAllFiles(ASSETS_PATH);
+
+	CheckAssetsImported(assetsFiles);
 
 	return true;
 
@@ -95,30 +97,30 @@ void ResourceManager::ImportAssetsFile(PathNode* child) {
 	std::string extension;
 	ResourceEnum type;
 	bool loaded = IsLoadedInLibrary(&child->path, &type);
-	if(loaded){}
+	if (loaded) {}
 	else { ImportAssetResourceByType(child->path, type); }
 	for (int i = 0; i < child->children.size(); i++) { ImportAssetsFile(&child->children[i]); }
 
 }
 
 
-std::vector<std::string> ResourceManager::GetPathChildrenElements(PathNode loadingNode) {
-
-	std::vector<std::string> objectsVec;
+void ResourceManager::CheckAssetsImported(PathNode loadingNode) {
 
 	for (int i = 0; i < loadingNode.children.size(); i++) {
 
-		if (loadingNode.children[i].isFile) { objectsVec.push_back(loadingNode.children[i].path); }
-		else {
+		if (loadingNode.children[i].isFile) { SearchFileInFileMap(&loadingNode.children[i].path); }
 
-			std::vector<std::string> newVector = GetPathChildrenElements(loadingNode.children[i]);
-			objectsVec.insert(objectsVec.end(), newVector.begin(), newVector.end());
-
-		}
+		CheckAssetsImported(loadingNode.children[i]);
 
 	}
 
-	return objectsVec;
+}
+
+
+void ResourceManager::SearchFileInFileMap(std::string* filePath) {
+
+	if(libraryMap.count(*filePath) == 1){}
+	else{/*TODO: import from library*/}
 
 }
 

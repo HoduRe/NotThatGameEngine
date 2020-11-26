@@ -199,6 +199,7 @@
     <ClCompile Include="MathGeoLib\src\Time\Clock.cpp" />
     <ClCompile Include="parson\parson.c" />
     <ClCompile Include="Resource.cpp" />
+    <ClCompile Include="ResourceMaps.cpp" />
     <ClCompile Include="Save.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Main.cpp" />

@@ -261,6 +261,9 @@
     <ClCompile Include="TextureData.cpp">
       <Filter>SceneManager\Resources</Filter>
     </ClCompile>
+    <ClCompile Include="ResourceMaps.cpp">
+      <Filter>SceneManager\Data managing</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h">

@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "PathNode.h"
+#include <map>
 
 #define JSON_NODE_GAMEOBJECTS "GameObjects"
 #define JSON_NODE_NAME "Name"
@@ -39,8 +40,36 @@ enum class ResourceEnum {
 
 };
 
-class ResourceManager : public Module {
+class FileInfo {
+public:
+	FileInfo();
+	~FileInfo();
+	std::string fileName;
+	int id;
+	int lastTimeChanged;
+	ResourceEnum type;
+	bool checked;
+};
 
+
+class LibraryInfo {
+public:
+	LibraryInfo();
+	~LibraryInfo();
+	std::string fileName;
+	ResourceEnum type;
+};
+
+
+class MemoryInfo {
+public:
+	MemoryInfo();
+	~MemoryInfo();
+	std::string libraryPath;
+};
+
+
+class ResourceManager : public Module {
 
 public:
 
@@ -64,15 +93,19 @@ public:
 
 private:
 
-	std::vector<std::string> GetPathChildrenElements(PathNode loadingNode);
+	void CheckAssetsImported(PathNode loadingNode);
 	std::string GetPathFromType(ResourceEnum type);
 	std::string ConvertLoadExtension(ResourceEnum type, std::string extension);
 	bool ExecuteEvent(EVENT_ENUM _event, void* var);
+	void SearchFileInFileMap(std::string* filePath);
 
 public:
 
 private:
 
+	std::map<std::string, FileInfo> assetsMap;	// Key is filePath
+	std::map<std::string, LibraryInfo> libraryMap;	// Key is filePath
+	std::map<int, MemoryInfo> memoryMap;	// Key is id
 
 };
 
