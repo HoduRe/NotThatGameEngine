@@ -17,12 +17,23 @@
 #define JSON_NODE_COMPONENT_TYPE "ComponentType"
 #define JSON_NODE_COMPONENT_ID "ComponentID"
 
+#define JSON_NODE_MAP_DATA "MapData"
+#define JSON_NODE_MAP_FILENAME "FileName"
+#define JSON_NODE_MAP_FILEPATH "FilePath"
+#define JSON_NODE_MAP_ID "ID"
+#define JSON_NODE_MAP_LAST_CHANGE "LastTimeChanged"
+#define JSON_NODE_MAP_TYPE "Type"
+
 #define EXTENSION_SCENES ".NotThatScene"
 #define EXTENSION_MODELS ".NotThatModel"
 #define EXTENSION_CAMERA ".NotThatCamera"
 #define EXTENSION_MESHES ".NotThatMesh"
 #define EXTENSION_MATERIALS ".NotThatMaterial"
 #define EXTENSION_TEXTURES ".dds"
+#define EXTENSION_MAP ".NotThatMap"
+
+#define ASSETS_MAP "AssetsMap"
+#define LIBRARY_MAP "LibraryMap"
 
 enum class ResourceEnum {
 
@@ -43,11 +54,11 @@ enum class ResourceEnum {
 class FileInfo {
 public:
 	FileInfo();
+	FileInfo(std::string _filePath, int _id, int _lastChange);
 	~FileInfo();
-	std::string fileName;
+	std::string filePath;
 	int id;
 	int lastTimeChanged;
-	ResourceEnum type;
 	bool checked;
 };
 
@@ -55,8 +66,9 @@ public:
 class LibraryInfo {
 public:
 	LibraryInfo();
+	LibraryInfo(std::string _filePath, ResourceEnum _type);
 	~LibraryInfo();
-	std::string fileName;
+	std::string filePath;
 	ResourceEnum type;
 };
 
@@ -84,27 +96,30 @@ public:
 	bool CleanUp();
 
 	void LoadLibraryFiles();
-	void ImportAssetsFile(PathNode* child);
 	bool IsLoadedInLibrary(std::string* filePath, ResourceEnum* type);
 	void LoadResourceByType(std::string name, ResourceEnum type = ResourceEnum::NONE);
-	void ImportAssetResourceByType(std::string name, ResourceEnum type = ResourceEnum::NONE);
+	void ImportAssetResourceByType(std::string path, std::string name, ResourceEnum type);
 	std::string FindPathFromFileName(std::string fileName, PathNode* node = nullptr);
-	ResourceEnum CheckResourceType(std::string name, std::string* extension, std::string* fileName = nullptr);
+	ResourceEnum CheckTypeByExtension(std::string extension);
 
 private:
 
-	void CheckAssetsImported(PathNode loadingNode);
+	void CheckLibraryFiles(PathNode* libraryFiles);
+	void CheckAssetsImported(PathNode* loadingNode);
+	void ImportToLibrary(std::string filePath, std::string fileName, std::string extension);
+	void CheckDeletedAssets();
+
 	std::string GetPathFromType(ResourceEnum type);
 	std::string ConvertLoadExtension(ResourceEnum type, std::string extension);
 	bool ExecuteEvent(EVENT_ENUM _event, void* var);
-	void SearchFileInFileMap(std::string* filePath);
+	void SearchFileInFileMap(std::string filePath);
 
 public:
 
 private:
 
-	std::map<std::string, FileInfo> assetsMap;	// Key is filePath
-	std::map<std::string, LibraryInfo> libraryMap;	// Key is filePath
+	std::map<std::string, FileInfo> assetsMap;	// Key is fileName
+	std::map<std::string, LibraryInfo> libraryMap;	// Key is fileName
 	std::map<int, MemoryInfo> memoryMap;	// Key is id
 
 };

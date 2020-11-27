@@ -5,7 +5,7 @@
 #include "EditorScene.h"
 #include "Save.h"
 #include "Load.h"
-#include "ModelImporter.h"
+#include "Import.h"
 #include "PathNode.h"
 #include "GameObject.h"
 
@@ -18,21 +18,26 @@ ResourceManager::~ResourceManager() {}
 bool ResourceManager::Init() {
 
 	PathNode assetsFiles = App->externalManager->GetAllFiles(ASSETS_PATH);
+	PathNode libraryFiles = App->externalManager->GetAllFiles(ASSETS_PATH);
 
-	CheckAssetsImported(assetsFiles);
+	DataLoading::LoadAssetsMap(App, &assetsMap);
+	DataLoading::LoadLibraryMap(App, &libraryMap);
+	CheckLibraryFiles(&libraryFiles);
+	CheckAssetsImported(&assetsFiles);
+	CheckDeletedAssets();
+
+	App->eventManager->EventRegister(EVENT_ENUM::SAVE_SCENE, this);
+	App->eventManager->EventRegister(EVENT_ENUM::LOAD_SCENE, this);
+	App->eventManager->EventRegister(EVENT_ENUM::FILE_DROPPED, this);
+	App->eventManager->EventRegister(EVENT_ENUM::FILE_LOADED, this);
 
 	return true;
 
 }
 
 
-bool ResourceManager::Start()
-{
+bool ResourceManager::Start() {
 
-	App->eventManager->EventRegister(EVENT_ENUM::SAVE_SCENE, this);
-	App->eventManager->EventRegister(EVENT_ENUM::LOAD_SCENE, this);
-	App->eventManager->EventRegister(EVENT_ENUM::FILE_DROPPED, this);
-	App->eventManager->EventRegister(EVENT_ENUM::FILE_LOADED, this);
 
 	return true;
 }
@@ -63,7 +68,148 @@ update_status ResourceManager::PostUpdate(float dt) {
 
 bool ResourceManager::CleanUp() {
 
+	DataSaving::SaveAssetsMap(App, &assetsMap);
+	DataSaving::SaveLibraryMap(App, &libraryMap);
+
 	return true;
+
+}
+
+
+void ResourceManager::CheckLibraryFiles(PathNode* loadingNode) {
+
+	for (int i = 0; i < loadingNode->children.size(); i++) {
+
+		if (loadingNode->children[i].isFile) {
+
+			if (libraryMap.count(loadingNode->children[i].path) == 0) {
+
+				std::string fileName, extension;
+				App->externalManager->SplitFilePath(loadingNode->children[i].path.c_str(), nullptr, &fileName, &extension);
+				libraryMap.insert(std::pair<std::string, LibraryInfo>(fileName, LibraryInfo(loadingNode->children[i].path, ResourceEnum(CheckTypeByExtension(extension)))));
+
+			}
+
+		}
+
+		CheckLibraryFiles(&loadingNode->children[i]);
+
+	}
+
+}
+
+
+void ResourceManager::CheckAssetsImported(PathNode* loadingNode) {
+
+	for (int i = 0; i < loadingNode->children.size(); i++) {
+
+		if (loadingNode->children[i].isFile) { SearchFileInFileMap(loadingNode->children[i].path); }
+
+		CheckAssetsImported(&loadingNode->children[i]);
+
+	}
+
+}
+
+
+void ResourceManager::SearchFileInFileMap(std::string filePath) {
+
+	std::string fileName, extension;
+	App->externalManager->SplitFilePath(filePath.c_str(), nullptr, &fileName, &extension);
+
+	if (assetsMap.count(fileName) == 1) {
+
+		assetsMap[filePath].checked = true;
+		if (assetsMap[filePath].lastTimeChanged) {/*Replace file on Library/ and update time*/ }
+
+	}
+
+	else { assetsMap.insert(std::pair<std::string, FileInfo>(fileName, FileInfo(filePath, App->idGenerator.Int(), 0/*TODO: Generate dates*/))); }
+
+	if (libraryMap.count(fileName) == 0) { ImportToLibrary(filePath, fileName, extension); }
+
+}
+
+
+void ResourceManager::ImportToLibrary(std::string filePath, std::string fileName, std::string extension) {
+
+	ResourceEnum type = CheckTypeByExtension(extension);
+	ImportAssetResourceByType(filePath, fileName, type);
+
+}
+
+
+ResourceEnum ResourceManager::CheckTypeByExtension(std::string extension) {
+
+	extension = "." + extension;
+
+	static_assert(static_cast<int>(ResourceEnum::UNKNOWN) == 8, "Code Needs Update");
+
+	if (extension == EXTENSION_SCENES) { return ResourceEnum::SCENE; }
+	else if (extension == EXTENSION_MODELS) { return ResourceEnum::OWN_MODEL; }
+	else if (extension == EXTENSION_MESHES) { return ResourceEnum::MESH; }
+	else if (extension == EXTENSION_MATERIALS) { return ResourceEnum::MATERIAL; }
+	else if (extension == EXTENSION_CAMERA) { return ResourceEnum::CAMERA; }
+	else if (extension == ".FBX" || extension == ".fbx" || extension == ".OBJ" || extension == ".obj") { return ResourceEnum::EXTERNAL_MODEL; }
+	else if (extension == ".tga" || extension == ".png" || extension == ".jpg" || extension == ".dds" || extension == ".TGA"
+		|| extension == ".PNG" || extension == ".JPG" || extension == ".DDS" || extension == EXTENSION_TEXTURES) {
+		return ResourceEnum::TEXTURE;
+	}
+
+	return ResourceEnum::UNKNOWN;
+
+}
+
+
+void ResourceManager::ImportAssetResourceByType(std::string path, std::string name, ResourceEnum type) {
+
+	char* buffer = nullptr;
+	uint size = App->externalManager->Load(path.c_str(), &buffer);;
+
+	switch (type) {
+
+	case ResourceEnum::EXTERNAL_MODEL:
+
+		Importer::LoadNewModel(App, path.c_str(), buffer, size);
+		//DataSaving::SaveModel(App, gameObject, gameObject->name);	// Why am I saving an imported model; or if not, why am I loading a model that should be imported?
+		// RecursiveChildCallToChangeID(App, newObject); if needed
+
+		break;
+
+	case ResourceEnum::TEXTURE:
+
+		size = App->externalManager->Load(path.c_str(), &buffer);
+		if (size > 0) { Importer::ImportTexture(App, path.c_str(), buffer, size); }
+
+		break;
+
+	case ResourceEnum::UNKNOWN:
+
+		LOG("Unknown resource type for file %s.\n", name.c_str());
+
+		break;
+
+	default:
+		break;
+	}
+
+	RELEASE_ARRAY(buffer);
+
+}
+
+
+void ResourceManager::CheckDeletedAssets() {
+
+	for (std::map<std::string, FileInfo>::iterator it = assetsMap.begin(); it != assetsMap.end(); it++) {
+
+		if (!assetsMap.at(it->first).checked) {
+
+			App->externalManager->Remove(it->first.c_str());
+			libraryMap.erase(it->first);
+
+		}
+
+	}
 
 }
 
@@ -92,39 +238,6 @@ void ResourceManager::LoadLibraryFiles() {
 }
 
 
-void ResourceManager::ImportAssetsFile(PathNode* child) {
-
-	std::string extension;
-	ResourceEnum type;
-	bool loaded = IsLoadedInLibrary(&child->path, &type);
-	if (loaded) {}
-	else { ImportAssetResourceByType(child->path, type); }
-	for (int i = 0; i < child->children.size(); i++) { ImportAssetsFile(&child->children[i]); }
-
-}
-
-
-void ResourceManager::CheckAssetsImported(PathNode loadingNode) {
-
-	for (int i = 0; i < loadingNode.children.size(); i++) {
-
-		if (loadingNode.children[i].isFile) { SearchFileInFileMap(&loadingNode.children[i].path); }
-
-		CheckAssetsImported(loadingNode.children[i]);
-
-	}
-
-}
-
-
-void ResourceManager::SearchFileInFileMap(std::string* filePath) {
-
-	if(libraryMap.count(*filePath) == 1){}
-	else{/*TODO: import from library*/}
-
-}
-
-
 bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
 	std::string filePath;
@@ -143,7 +256,7 @@ bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
 	case EVENT_ENUM::LOAD_SCENE:
 
-		LoadLibraryFiles();
+		// Yeah, well. I should just make this a FILE_LOADED thing
 
 		break;
 
@@ -162,7 +275,7 @@ bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 			case ResourceEnum::EXTERNAL_MODEL:
 			case ResourceEnum::OWN_MODEL:
 
-				ModelImporter::LoadNewModel(App, filePath.c_str(), buffer, size);
+				Importer::LoadNewModel(App, filePath.c_str(), buffer, size);
 				break;
 
 			case ResourceEnum::TEXTURE:
@@ -192,42 +305,15 @@ bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
 }
 
-ResourceEnum ResourceManager::CheckResourceType(std::string name, std::string* extension, std::string* fileName) {
-
-	App->externalManager->SplitFilePath(name.c_str(), nullptr, fileName, extension);
-	std::string dot = ".";
-
-	*extension = dot + *extension;
-
-	static_assert(static_cast<int>(ResourceEnum::UNKNOWN) == 8, "Code Needs Update");
-
-	if (*extension == EXTENSION_SCENES) { return ResourceEnum::SCENE; }
-	else if (*extension == EXTENSION_MODELS) { return ResourceEnum::OWN_MODEL; }
-	else if (*extension == EXTENSION_MESHES) { return ResourceEnum::MESH; }
-	else if (*extension == EXTENSION_MATERIALS) { return ResourceEnum::MATERIAL; }
-	else if (*extension == EXTENSION_CAMERA) { return ResourceEnum::CAMERA; }
-	else if (*extension == ".FBX" || *extension == ".fbx" || *extension == ".OBJ" || *extension == ".obj") { return ResourceEnum::EXTERNAL_MODEL; }
-	else if (*extension == ".tga" || *extension == ".png" || *extension == ".jpg" || *extension == ".dds" || *extension == ".TGA"
-		|| *extension == ".PNG" || *extension == ".JPG" || *extension == ".DDS" || *extension == EXTENSION_TEXTURES) {
-		return ResourceEnum::TEXTURE;
-	}
-
-	return ResourceEnum::UNKNOWN;
-
-}
-
 
 void ResourceManager::LoadResourceByType(std::string name, ResourceEnum type) {
 
-	ResourceEnum resourceType;
 	Mesh* mesh = nullptr;
 	Material* material = nullptr;
 	char* buffer = nullptr;
 	std::string fileName;
 
-	type == ResourceEnum::NONE ? resourceType = CheckResourceType(name, &std::string()) : resourceType = type;
-
-	switch (resourceType) {
+	switch (type) {
 
 	case ResourceEnum::SCENE:
 
@@ -273,47 +359,6 @@ void ResourceManager::LoadResourceByType(std::string name, ResourceEnum type) {
 	case ResourceEnum::TEXTURE:
 
 		DataLoading::LoadTexture(App, (TEXTURES_PATH + name).c_str());
-
-		break;
-
-	case ResourceEnum::UNKNOWN:
-
-		LOG("Unknown resource type for file %s.\n", name.c_str());
-
-		break;
-
-	default:
-		break;
-	}
-
-	RELEASE_ARRAY(buffer);
-
-}
-
-
-void ResourceManager::ImportAssetResourceByType(std::string name, ResourceEnum type) {
-
-	ResourceEnum resourceType;
-	char* buffer = nullptr;
-	std::string fileName;
-	GameObject* gameObject;
-
-	type == ResourceEnum::NONE ? resourceType = CheckResourceType(name, &std::string()) : resourceType = type;
-
-	switch (resourceType) {
-
-	case ResourceEnum::EXTERNAL_MODEL:
-
-		App->externalManager->Load((ASSETS_PATH + name).c_str(), &buffer);
-		gameObject = ModelImporter::LoadNewModel(App, (ASSETS_PATH + name).c_str());
-		DataSaving::SaveModel(App, gameObject, gameObject->name);
-		gameObject->SetDeleteGameObject();
-
-		break;
-
-	case ResourceEnum::TEXTURE:
-
-		DataLoading::LoadTexture(App, name.c_str());
 
 		break;
 
@@ -382,7 +427,7 @@ bool ResourceManager::IsLoadedInLibrary(std::string* filePath, ResourceEnum* typ
 	*filePath = App->externalManager->NormalizePath(filePath->c_str());
 	*filePath = App->externalManager->LocalizePath(*filePath);
 
-	*type = CheckResourceType(*filePath, &extension, &fileName);
+	//*type = CheckTypeByExtension(*filePath, &extension, &fileName); // OH BOI
 	path = GetPathFromType(*type);
 	extension = ConvertLoadExtension(*type, extension);
 

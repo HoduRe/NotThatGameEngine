@@ -3,7 +3,7 @@
 #include "ManagerEvent.h"
 #include "Camera3D.h"
 #include "Renderer3D.h"
-#include "ModelImporter.h"
+#include "Import.h"
 #include "Textures.h"
 #include "Input.h"
 #include "Primitives.h"
@@ -50,27 +50,16 @@ bool EditorScene::Init() {
 }
 
 
-bool EditorScene::Start()
-{
+bool EditorScene::Start() {
 
 	App->camera->Move(vec3(0.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
-	// TODO: Delete this. This only exists because there is a bug when loading a file that has been imported before we start the editor loop
-	bool loaded = false;
-	for (int i = 0; i < rootGameObjectsVec.size(); i++) {
-
-		if (rootGameObjectsVec[i]->name == "Street environment_V01") {
-
-			loaded = true;
-			rootGameObjectsVec[i]->SetDeleteGameObject(false);
-
-		}
-
-	}
-	if (loaded == false) { ModelImporter::LoadNewModel(App, "Meshes/Street environment_V01.FBX"); }
+	streetName = "Meshes/Street environment_V01.FBX";
+	App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADED, EVENT_ENUM::NULL_EVENT, (char*)streetName.c_str());
 
 	return true;
+
 }
 
 

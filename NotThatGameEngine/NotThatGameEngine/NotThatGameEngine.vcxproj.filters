@@ -126,9 +126,6 @@
     <ClCompile Include="parson\parson.c">
       <Filter>Utility</Filter>
     </ClCompile>
-    <ClCompile Include="ModelImporter.cpp">
-      <Filter>SceneManager\Data managing</Filter>
-    </ClCompile>
     <ClCompile Include="Load.cpp">
       <Filter>SceneManager\Data managing</Filter>
     </ClCompile>
@@ -264,6 +261,9 @@
     <ClCompile Include="ResourceMaps.cpp">
       <Filter>SceneManager\Data managing</Filter>
     </ClCompile>
+    <ClCompile Include="Import.cpp">
+      <Filter>SceneManager\Data managing</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h">
@@ -367,9 +367,6 @@
     </ClInclude>
     <ClInclude Include="parson\parson.h">
       <Filter>Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="ModelImporter.h">
-      <Filter>SceneManager\Data managing</Filter>
     </ClInclude>
     <ClInclude Include="Load.h">
       <Filter>SceneManager\Data managing</Filter>
@@ -586,6 +583,9 @@
     </ClInclude>
     <ClInclude Include="TextureData.h">
       <Filter>SceneManager\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Import.h">
+      <Filter>SceneManager\Data managing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

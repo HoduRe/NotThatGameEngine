@@ -1,12 +1,18 @@
 #include "ManagerResource.h"
 
-FileInfo::FileInfo() : fileName(), id(), lastTimeChanged(), type(), checked(false) {}
+FileInfo::FileInfo() : filePath(), id(), lastTimeChanged(), checked(false) {}
+
+
+FileInfo::FileInfo(std::string _filePath, int _id, int _lastChange) : filePath(_filePath), id(_id), lastTimeChanged(_lastChange), checked(true) {}
 
 
 FileInfo::~FileInfo() {}
 
 
-LibraryInfo::LibraryInfo() : fileName(), type() {}
+LibraryInfo::LibraryInfo() : filePath(), type() {}
+
+
+LibraryInfo::LibraryInfo(std::string _filePath, ResourceEnum _type) : filePath(_filePath), type(_type) {}
 
 
 LibraryInfo::~LibraryInfo() {}

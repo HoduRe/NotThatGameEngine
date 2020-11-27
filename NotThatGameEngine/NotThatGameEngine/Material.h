@@ -18,6 +18,7 @@ public:
 public:
 
 	uint diffuseId;
+	std::string textureName;
 
 };
 

@@ -264,3 +264,38 @@ uint DataLoading::LoadTexture(Application* App, std::string path, const char* bu
 }
 
 
+void DataLoading::LoadAssetsMap(Application* App, std::map<std::string, FileInfo>* assetsMap) {
+
+	char* buffer;
+	App->externalManager->Load((LIBRARY_PATH + (std::string)ASSETS_MAP + EXTENSION_MAP).c_str(), &buffer);
+
+	JsonManager::JsonValue root(json_parse_string(buffer));
+	JSON_Object* node(json_value_get_object(root.value));
+	JSON_Array* assetsMapArray(json_object_get_array(node, JSON_NODE_MAP_DATA));
+
+	int size = JsonManager::GetArraySize(assetsMapArray);
+
+	for (int i = 0; i < size; i++) { 
+		
+		JSON_Object* itNode = json_array_get_object(assetsMapArray, i);
+		std::string fileName = json_object_get_string(itNode, JSON_NODE_MAP_FILENAME);
+		std::string filePath = json_object_get_string(itNode, JSON_NODE_MAP_FILEPATH);
+		int ID = json_object_get_number(itNode, JSON_NODE_MAP_ID);
+		int lastTimeChanged = json_object_get_number(itNode, JSON_NODE_MAP_LAST_CHANGE);
+		assetsMap->insert(std::pair<std::string, FileInfo>(fileName, FileInfo(filePath, ID, lastTimeChanged)));
+	
+	}
+
+	RELEASE_ARRAY(buffer);
+
+}
+
+
+void DataLoading::LoadLibraryMap(Application* App, std::map<std::string, LibraryInfo>* libraryMap) {
+
+
+
+}
+
+
+

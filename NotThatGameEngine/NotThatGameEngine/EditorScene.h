@@ -52,6 +52,7 @@ private:
 	aiLogStream stream;
 	uint defaultTextureId;
 	GameObject* focus;
+	std::string streetName; // Yup, kill this after 2nd assignment
 
 };
 

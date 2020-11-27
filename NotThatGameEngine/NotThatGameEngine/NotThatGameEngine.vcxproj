@@ -212,7 +212,7 @@
     <ClCompile Include="ManagerExternal.cpp" />
     <ClCompile Include="ManagerImGui.cpp" />
     <ClCompile Include="Input.cpp" />
-    <ClCompile Include="ModelImporter.cpp" />
+    <ClCompile Include="Import.cpp" />
     <ClCompile Include="OpenGLFuncionality.cpp" />
     <ClCompile Include="Renderer3D.cpp" />
     <ClCompile Include="TextureData.cpp" />
@@ -320,7 +320,7 @@
     <ClInclude Include="ManagerExternal.h" />
     <ClInclude Include="ManagerImGui.h" />
     <ClInclude Include="Input.h" />
-    <ClInclude Include="ModelImporter.h" />
+    <ClInclude Include="Import.h" />
     <ClInclude Include="OpenGLFuncionality.h" />
     <ClInclude Include="Renderer3D.h" />
     <ClInclude Include="TextureData.h" />

@@ -3,6 +3,7 @@
 
 #include "Globals.h"
 #include "JsonManager.h"
+#include "ManagerResource.h"
 
 class Application;
 class Component;
@@ -20,6 +21,9 @@ namespace DataSaving {
 	void SaveMesh(Application* App, Mesh* mesh);
 	void SaveMaterial(Application* App, Material* material);
 	std::string SaveTexture(Application* App, std::string textureName);
+
+	void SaveAssetsMap(Application* App, std::map<std::string, FileInfo>* assetsMap);
+	void SaveLibraryMap(Application* App, std::map<std::string, LibraryInfo>* libraryMap);
 
 }
 

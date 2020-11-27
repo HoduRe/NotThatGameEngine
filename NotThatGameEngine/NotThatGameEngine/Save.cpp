@@ -84,7 +84,7 @@ void DataSaving::SaveGameObject(Application* App, JSON_Object* node, GameObject*
 	}
 
 	if (gameObject->material != nullptr) {
-	
+
 		json_array_append_value(gameComponentsArray, json_value_init_object());	// TODO: Make this into a function
 		JSON_Object* nodeComponent = json_array_get_object(gameComponentsArray, 1);
 		SaveComponent(App, gameObject->material);
@@ -94,7 +94,7 @@ void DataSaving::SaveGameObject(Application* App, JSON_Object* node, GameObject*
 	}
 
 	if (gameObject->camera != nullptr) {
-	
+
 		json_array_append_value(gameComponentsArray, json_value_init_object());	// TODO: Make this into a function
 		JSON_Object* nodeComponent = json_array_get_object(gameComponentsArray, 2);
 		SaveComponent(App, gameObject->camera);
@@ -200,50 +200,20 @@ void DataSaving::SaveMaterial(Application* App, Material* material) {
 	std::string path = (std::string)MATERIALS_PATH + std::to_string(material->id) + EXTENSION_MATERIALS;
 	char* buffer = nullptr;
 	uint bufferSize;
-	std::string textureName;
 	int nameSize;
 
-	if (material->diffuseId != 0) {
+	nameSize = material->textureName.size();
+	bufferSize = material->textureName.size() + sizeof(int);
 
-		textureName = App->texture->GetTextureData(material->diffuseId)->name;
-		nameSize = textureName.size();
-		bufferSize = textureName.size() + sizeof(int);
+	buffer = new char[bufferSize];
+	char* cursor = buffer;
 
-		buffer = new char[bufferSize];
-		char* cursor = buffer;
+	memcpy(cursor, &nameSize, sizeof(int));
+	cursor += sizeof(int);
 
-		memcpy(cursor, &nameSize, sizeof(int));
-		cursor += sizeof(int);
+	memcpy(cursor, material->textureName.c_str(), nameSize);
 
-		memcpy(cursor, textureName.c_str(), nameSize);
-
-		App->externalManager->Save(path.c_str(), buffer, bufferSize);
-
-	}
-
-	else {
-
-		TextureData* data = App->texture->GetTextureData(App->texture->defaultTextureId);
-
-		if (data != nullptr) {
-		
-			textureName = data->name;
-			nameSize = textureName.size();
-			bufferSize = textureName.size() + sizeof(int);
-
-			buffer = new char[bufferSize];
-			char* cursor = buffer;
-
-			memcpy(cursor, &nameSize, sizeof(int));
-			cursor += sizeof(int);
-
-			memcpy(cursor, textureName.c_str(), nameSize);
-
-			App->externalManager->Save(path.c_str(), buffer, bufferSize);
-		
-		}
-
-	}
+	App->externalManager->Save(path.c_str(), buffer, bufferSize);
 
 	RELEASE_ARRAY(buffer);
 
@@ -274,8 +244,78 @@ std::string DataSaving::SaveTexture(Application* App, std::string textureName) {
 }
 
 
+void DataSaving::SaveAssetsMap(Application* App, std::map<std::string, FileInfo>* assetsMap) {
+
+	char* buffer = nullptr;
+	uint bufferSize;
+	int index = 0;
+
+	JsonManager::JsonValue root(json_value_init_object());
+	JSON_Object* node(json_value_get_object(root.value));
+	JSON_Array* assetsMapArray = (JsonManager::OpenArray(node, JSON_NODE_MAP_DATA));
+
+	for (std::map<std::string, FileInfo>::iterator it = assetsMap->begin(); it != assetsMap->end(); it++) {
+
+		json_array_append_value(assetsMapArray, json_value_init_object());
+		JSON_Object* nodeComponent = json_array_get_object(assetsMapArray, index);
+
+		json_object_set_string(nodeComponent, JSON_NODE_MAP_FILENAME, it->first.c_str());
+		json_object_set_string(nodeComponent, JSON_NODE_MAP_FILEPATH, it->second.filePath.c_str());
+		json_object_set_number(nodeComponent, JSON_NODE_MAP_ID, it->second.id);
+		json_object_set_number(nodeComponent, JSON_NODE_MAP_LAST_CHANGE, it->second.lastTimeChanged);
+
+		index++;
+
+	}
+
+	buffer = new char[JsonManager::GetArraySize(assetsMapArray)];
+	uint size = JsonManager::Serialize(root.value, &buffer);
+
+	std::string mapName = LIBRARY_PATH + (std::string)ASSETS_MAP + EXTENSION_MAP;
+	App->externalManager->Save(mapName.c_str(), buffer, size);
+
+	RELEASE_ARRAY(buffer);
+
+}
+
+
+void DataSaving::SaveLibraryMap(Application* App, std::map<std::string, LibraryInfo>* libraryMap) {
+
+	char* buffer = nullptr;
+	uint bufferSize;
+	int index = 0;
+
+	JsonManager::JsonValue root(json_value_init_object());
+	JSON_Object* node(json_value_get_object(root.value));
+	JSON_Array* libraryMapArray(JsonManager::OpenArray(node, JSON_NODE_MAP_DATA));
+
+
+	for (std::map<std::string, LibraryInfo>::iterator it = libraryMap->begin(); it != libraryMap->end(); it++) {
+
+		json_array_append_value(libraryMapArray, json_value_init_object());
+		JSON_Object* nodeComponent = json_array_get_object(libraryMapArray, index);
+
+		json_object_set_string(nodeComponent, JSON_NODE_MAP_FILENAME, it->first.c_str());
+		json_object_set_string(nodeComponent, JSON_NODE_MAP_FILEPATH, it->second.filePath.c_str());
+		json_object_set_number(nodeComponent, JSON_NODE_MAP_TYPE, (int)it->second.type);
+
+		index++;
+
+	}
+
+	buffer = new char[JsonManager::GetArraySize(libraryMapArray)];
+	uint size = JsonManager::Serialize(root.value, &buffer);
+
+	std::string mapName = LIBRARY_PATH + (std::string)LIBRARY_MAP + EXTENSION_MAP;
+	App->externalManager->Save(mapName.c_str(), buffer, size);
+
+	RELEASE_ARRAY(buffer);
+
+}
+
+
 void DataSaving::SaveComponent(Application* App, Component* component) {
-	
+
 	switch (component->type) {
 
 	case COMPONENT_TYPE::MESH:
