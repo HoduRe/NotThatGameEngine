@@ -8,6 +8,10 @@
 #include "Import.h"
 #include "PathNode.h"
 #include "GameObject.h"
+#include "Material.h"
+#include "Mesh.h"
+#include "Transform.h"
+#include "Camera.h"
 
 ResourceManager::ResourceManager(Application* app, bool start_enabled) : Module(app, start_enabled), assetsMap(), libraryMap(), memoryMap() {}
 
@@ -27,9 +31,9 @@ bool ResourceManager::Init() {
 	CheckDeletedAssets();
 
 	App->eventManager->EventRegister(EVENT_ENUM::SAVE_SCENE, this);
-	App->eventManager->EventRegister(EVENT_ENUM::LOAD_SCENE, this);
 	App->eventManager->EventRegister(EVENT_ENUM::FILE_DROPPED, this);
-	App->eventManager->EventRegister(EVENT_ENUM::FILE_LOADED, this);
+	App->eventManager->EventRegister(EVENT_ENUM::FILE_LOADING, this);
+	App->eventManager->EventRegister(EVENT_ENUM::GAMEOBJECT_LOADED, this);
 
 	return true;
 
@@ -86,7 +90,7 @@ void ResourceManager::CheckLibraryFiles(PathNode* loadingNode) {
 			App->externalManager->SplitFilePath(loadingNode->children[i].path.c_str(), nullptr, &fileName, &extension);
 
 			if ("." + extension != EXTENSION_MAP && libraryMap.count(fileName) == 0) {
-				
+
 				libraryMap.insert(std::pair<std::string, LibraryInfo>(fileName, LibraryInfo(loadingNode->children[i].path, ResourceEnum(CheckTypeByExtension(extension)))));
 
 			}
@@ -120,12 +124,12 @@ void ResourceManager::SearchFileInFileMap(std::string filePath) {
 
 	if (assetsMap.count(fileName) == 1) {
 
-		assetsMap[filePath].checked = true;
-		if (assetsMap[filePath].lastTimeChanged) {/*Replace file on Library/ and update time*/ }
+		assetsMap[fileName].checked = true;
+		if (assetsMap[fileName].lastTimeChanged) {/*Replace file on Library/ and update time*/ }
 
 	}
 
-	else { assetsMap.insert(std::pair<std::string, FileInfo>(fileName, FileInfo(filePath, App->idGenerator.Int(), 0/*TODO: Generate dates*/))); }
+	else { assetsMap.insert(std::pair<std::string, FileInfo>(fileName, FileInfo(filePath, App->idGenerator.Int(), 0/*TODO: Generate dates*/, true))); }
 
 	if (libraryMap.count(fileName) == 0) { ImportToLibrary(filePath, fileName, extension); }
 
@@ -135,7 +139,8 @@ void ResourceManager::SearchFileInFileMap(std::string filePath) {
 void ResourceManager::ImportToLibrary(std::string filePath, std::string fileName, std::string extension) {
 
 	ResourceEnum type = CheckTypeByExtension(extension);
-	ImportAssetResourceByType(filePath, fileName, type);
+	std::string finalPath = ImportAssetResourceByType(filePath, fileName, type);
+	libraryMap.insert(std::pair<std::string, LibraryInfo>(fileName, LibraryInfo(finalPath, type)));
 
 }
 
@@ -162,25 +167,24 @@ ResourceEnum ResourceManager::CheckTypeByExtension(std::string extension) {
 }
 
 
-void ResourceManager::ImportAssetResourceByType(std::string path, std::string name, ResourceEnum type) {
+std::string ResourceManager::ImportAssetResourceByType(std::string path, std::string name, ResourceEnum type) {
 
 	char* buffer = nullptr;
 	uint size = App->externalManager->Load(path.c_str(), &buffer);;
+	std::string finalPath;
 
 	switch (type) {
 
 	case ResourceEnum::EXTERNAL_MODEL:
 
-		Importer::LoadNewModel(App, path.c_str(), buffer, size);
-		//DataSaving::SaveModel(App, gameObject, gameObject->name);	// Why am I saving an imported model; or if not, why am I loading a model that should be imported?
-		// RecursiveChildCallToChangeID(App, newObject); if needed
+		finalPath = Importer::ImportNewModel(App, path.c_str(), buffer, size);
 
 		break;
 
 	case ResourceEnum::TEXTURE:
 
 		size = App->externalManager->Load(path.c_str(), &buffer);
-		if (size > 0) { Importer::ImportTexture(App, path.c_str(), buffer, size); }
+		if (size > 0) { finalPath = Importer::ImportTexture(App, name.c_str(), buffer, size); }
 
 		break;
 
@@ -195,6 +199,7 @@ void ResourceManager::ImportAssetResourceByType(std::string path, std::string na
 	}
 
 	RELEASE_ARRAY(buffer);
+	return finalPath;
 
 }
 
@@ -205,8 +210,11 @@ void ResourceManager::CheckDeletedAssets() {
 
 		if (!assetsMap.at(it->first).checked) {
 
-			App->externalManager->Remove(it->first.c_str());
-			libraryMap.erase(it->first);
+			std::map<std::string, FileInfo>::iterator itAux = it;
+			it--;
+			App->externalManager->Remove(libraryMap.find(itAux->first)->second.filePath.c_str());
+			libraryMap.erase(libraryMap.find(itAux->first));
+			assetsMap.erase(assetsMap.find(itAux->first));
 
 		}
 
@@ -215,256 +223,131 @@ void ResourceManager::CheckDeletedAssets() {
 }
 
 
-void ResourceManager::LoadLibraryFiles() {
+void ResourceManager::LoadResourceByPath(std::string filePath) {
 
-	std::vector<std::string> sceneVec;
-	App->externalManager->GetAllFilesWithExtension(SCENES_PATH, EXTENSION_SCENES, sceneVec);
+	char* buffer;
+	uint size, id;
+	std::string fileName, extension;
+	ResourceEnum type = ResourceEnum::NONE;
 
-	std::vector<std::string> textureVec;
-	App->externalManager->GetAllFilesWithExtension(TEXTURES_PATH, EXTENSION_TEXTURES, textureVec);
+	filePath = IsLoadedInLibrary(&filePath);
+	App->externalManager->SplitFilePath(filePath.c_str(), nullptr, &fileName, &extension);
+	type = CheckTypeByExtension(extension);
 
-	for (int i = 0; i < textureVec.size(); i++) { LoadResourceByType(textureVec[i], ResourceEnum::TEXTURE); }
+	size = App->externalManager->Load(filePath.c_str(), &buffer);
 
-	if (sceneVec.size() != 0) { LoadResourceByType(sceneVec[0], ResourceEnum::SCENE); }	// We only want to load one scene
-	else {
+	if (size != 0) {
 
-		LOG("No scene to be loaded.\n");
-		return;
+		switch (type) {
+
+		case ResourceEnum::EXTERNAL_MODEL:
+
+			Importer::ImportNewModel(App, filePath.c_str(), buffer, size);
+			// Add to libraryMap
+			break;
+
+		case ResourceEnum::OWN_MODEL:
+
+			DataLoading::LoadModel(App, buffer);
+			break;
+
+		case ResourceEnum::TEXTURE:
+
+			id = DataLoading::LoadTexture(App, filePath.c_str(), buffer, size);
+			App->eventManager->GenerateEvent(EVENT_ENUM::PUT_TEXTURE_TO_FOCUSED_MODEL, EVENT_ENUM::NULL_EVENT, (void*)id);
+			// If not in library, add to libraryMap
+			break;
+
+		case ResourceEnum::SCENE:
+
+			DataLoading::LoadScene(App, buffer);
+			break;
+
+			// Components loaded from here are to add to an existing gameObject; at loading, it is the gameObject itself that does it for compatibility sake (LoadComponent())
+		case ResourceEnum::MESH:
+
+			DataLoading::LoadMesh(buffer, (Mesh*)App->editorScene->FindGameObjectByComponent(std::stoi(fileName))); // Those need work. I don't even know how to manage them
+			break;
+
+		case ResourceEnum::MATERIAL:
+
+			DataLoading::LoadMaterial(App, buffer, (Material*)App->editorScene->FindGameObjectByComponent(std::stoi(fileName)));
+			break;
+
+		case ResourceEnum::CAMERA:
+
+			DataLoading::LoadCamera(buffer, (Camera*)App->editorScene->FindGameObjectByComponent(std::stoi(fileName)));
+			break;
+
+		case ResourceEnum::UNKNOWN:
+			break;
+
+		default:
+			break;
+		}
 
 	}
 
-	sceneVec.clear();
-	textureVec.clear();
 
 }
 
 
 bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
-	std::string filePath;
-	char* buffer;
-	uint size;
-	uint id;
-	ResourceEnum type = ResourceEnum::NONE;
-
 	switch (eventId) {
 
 	case EVENT_ENUM::SAVE_SCENE:
 
 		DataSaving::SaveScene(App);
-
-		break;
-
-	case EVENT_ENUM::LOAD_SCENE:
-
-		// Yeah, well. I should just make this a FILE_LOADED thing
-
 		break;
 
 	case EVENT_ENUM::FILE_DROPPED:
-	case EVENT_ENUM::FILE_LOADED:
+	case EVENT_ENUM::FILE_LOADING:
 
-		filePath = (char*)var;
-		//IsLoadedInLibrary(&filePath, &type);
+		LoadResourceByPath((char*)var);
+		LOG("File with path %s loaded.", (char*)var);
 
-		size = App->externalManager->Load(filePath.c_str(), &buffer);
+		break;
 
-		if (size != 0) {
+	case EVENT_ENUM::GAMEOBJECT_LOADED:
 
-			switch (type) {
+		ManageGameObjectLoading((GameObject*)var);
+		break;
 
-			case ResourceEnum::EXTERNAL_MODEL:
-			case ResourceEnum::OWN_MODEL:
+	default:
+		break;
 
-				Importer::LoadNewModel(App, filePath.c_str(), buffer, size);
-				break;
-
-			case ResourceEnum::TEXTURE:
-
-				id = DataLoading::LoadTexture(App, filePath.c_str(), buffer, size);
-				App->eventManager->GenerateEvent(EVENT_ENUM::PUT_TEXTURE_TO_FOCUSED_MODEL, EVENT_ENUM::NULL_EVENT, (void*)id);
-				break;
-
-			case ResourceEnum::SCENE:
-
-				DataLoading::LoadScene(App, buffer);
-
-				break;
-
-			case ResourceEnum::UNKNOWN:
-
-				LOG("File with path %s, with readable format, has been dropped into the engine.", filePath.c_str());
-				break;
-
-			default:
-				break;
-			}
-
-			return true;
-		}
 	}
+
+	return true;
 
 }
 
 
-void ResourceManager::LoadResourceByType(std::string name, ResourceEnum type) {
+std::string ResourceManager::IsLoadedInLibrary(std::string* filePath) {
 
-	Mesh* mesh = nullptr;
-	Material* material = nullptr;
-	char* buffer = nullptr;
 	std::string fileName;
-
-	switch (type) {
-
-	case ResourceEnum::SCENE:
-
-		App->externalManager->Load((SCENES_PATH + name + EXTENSION_SCENES).c_str(), &buffer);
-		DataLoading::LoadScene(App, buffer);
-
-		break;
-
-	case ResourceEnum::OWN_MODEL:
-
-
-
-		break;
-
-	case ResourceEnum::MESH:
-
-		App->externalManager->SplitFilePath(name.c_str(), nullptr, &fileName);
-		mesh = (Mesh*)App->editorScene->FindGameObjectByComponent((long long int)std::stoi(fileName));
-
-		if (mesh != nullptr) {
-
-			App->externalManager->Load((MESHES_PATH + name + EXTENSION_MESHES).c_str(), &buffer);
-			DataLoading::LoadMesh(buffer, mesh);
-
-		}
-
-		break;
-
-	case ResourceEnum::MATERIAL:
-
-		App->externalManager->SplitFilePath(name.c_str(), nullptr, &fileName);
-		material = (Material*)App->editorScene->FindGameObjectByComponent((long long int)std::stoi(fileName));
-
-		if (material != nullptr) {
-
-			App->externalManager->Load((MATERIALS_PATH + name + EXTENSION_MATERIALS).c_str(), &buffer);
-			DataLoading::LoadMaterial(App, buffer, material);
-
-		}
-
-		break;
-
-	case ResourceEnum::TEXTURE:
-
-		DataLoading::LoadTexture(App, (TEXTURES_PATH + name).c_str());
-
-		break;
-
-	case ResourceEnum::UNKNOWN:
-
-		LOG("Unknown resource type for file %s.\n", name.c_str());
-
-		break;
-
-	default:
-		break;
-	}
-
-	RELEASE_ARRAY(buffer);
+	App->externalManager->SplitFilePath(filePath->c_str(), nullptr, &fileName);
+	if (libraryMap.count(fileName) == 1) { return libraryMap.find(fileName)->second.filePath; }
+	return *filePath;
 
 }
 
 
-std::string ResourceManager::GetPathFromType(ResourceEnum type) {
+void ResourceManager::ManageGameObjectLoading(GameObject* gameObject) {
 
-	switch (type) {
+	// When a gameObject / Model is loaded, do things here with the Library and or Assets and Memory maps. gameObject is the root GameObject
 
-	case ResourceEnum::SCENE: return SCENES_PATH;
+	long long int id = App->idGenerator.Int();
+	gameObject->id = id;
 
-	case ResourceEnum::EXTERNAL_MODEL:
-	case ResourceEnum::OWN_MODEL:
-		return MODELS_PATH;
+	if (gameObject->transform != nullptr) { gameObject->transform->id = App->idGenerator.Int(); }
+	if (gameObject->mesh != nullptr) { gameObject->mesh->id = App->idGenerator.Int(); }
+	if (gameObject->material != nullptr) { gameObject->material->id = App->idGenerator.Int(); }
+	if (gameObject->camera != nullptr) { gameObject->camera->id = App->idGenerator.Int(); }
 
-	case ResourceEnum::MESH: return MESHES_PATH;
+	for (int i = 0; i < gameObject->childs.size(); i++) { ManageGameObjectLoading(gameObject->childs[i]); }
 
-	case ResourceEnum::MATERIAL: return MATERIALS_PATH;
-
-	case ResourceEnum::TEXTURE: return TEXTURES_PATH;
-
-	case ResourceEnum::UNKNOWN:
-	default:
-		return "";
-	}
 
 }
-
-
-std::string ResourceManager::ConvertLoadExtension(ResourceEnum type, std::string extension) {
-
-	switch (type) {
-
-	case ResourceEnum::TEXTURE: return EXTENSION_TEXTURES;
-	case ResourceEnum::EXTERNAL_MODEL: return EXTENSION_MODELS;
-
-	default:
-		break;
-
-	}
-
-	return extension;
-
-}
-
-
-bool ResourceManager::IsLoadedInLibrary(std::string* filePath, ResourceEnum* type) {
-
-	std::string path;
-	std::string fileName;
-	std::string extension;
-
-	*filePath = App->externalManager->NormalizePath(filePath->c_str());
-	*filePath = App->externalManager->LocalizePath(*filePath);
-
-	//*type = CheckTypeByExtension(*filePath, &extension, &fileName); // OH BOI
-	path = GetPathFromType(*type);
-	extension = ConvertLoadExtension(*type, extension);
-
-	if (App->externalManager->Exists((path + fileName + extension).c_str())) {
-
-		if (*type == ResourceEnum::EXTERNAL_MODEL) { extension = EXTENSION_MODELS; }
-		*filePath = path + fileName + extension;
-		return true;
-
-	}
-
-	return false;
-
-}
-
-
-std::string ResourceManager::FindPathFromFileName(std::string fileName, PathNode* node) {
-
-	std::string returnName;
-
-	if (node == nullptr) { node; }
-
-	for (int i = 0; i < node->children.size(); i++) {
-
-		if (node->children[i].localPath == fileName) { return App->externalManager->NormalizePath(node->children[i].path.c_str()); }
-		else {
-
-			returnName = FindPathFromFileName(fileName, &node->children[i]);
-			if (returnName.empty() == false) { return returnName; }
-
-		}
-
-	}
-
-	return "";
-
-}
-
 

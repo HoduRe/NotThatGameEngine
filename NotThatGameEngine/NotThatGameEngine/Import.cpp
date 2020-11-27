@@ -12,22 +12,22 @@
 #include "Transform.h"
 #include "Camera.h"
 
-void Importer::LoadNewModel(Application* App, const char* path, const char* buffer, uint size) {
+std::string Importer::ImportNewModel(Application* App, const char* path, const char* buffer, uint size) {
 
-	std::string originalName;
+	std::string originalName, finalPath;
 
 	App->externalManager->SplitFilePath(path, nullptr, &originalName);
 	GameObject* newObject = new GameObject(App->idGenerator.Int(), originalName, nullptr, true);
 
-	if (Importer::LoadNewModelComponents(App, buffer, size, newObject, path)) { DataSaving::SaveModel(App, newObject, originalName); }
+	if (Importer::ImportNewModelComponents(App, buffer, size, newObject, path)) { finalPath = DataSaving::SaveModel(App, newObject, originalName); }
 	DeleteWithAllChilds(newObject);
 
-	RELEASE_ARRAY(buffer);
+	return finalPath;
 
 }
 
 
-bool Importer::LoadNewModelComponents(Application* App, const char* buffer, uint size, GameObject* newObject, const char* path) {
+bool Importer::ImportNewModelComponents(Application* App, const char* buffer, uint size, GameObject* newObject, const char* path) {
 
 	aiScene* scene = (aiScene*)aiImportFileFromMemory(buffer, size, aiProcessPreset_TargetRealtime_MaxQuality, nullptr);
 	aiMatrix4x4 trans;
@@ -37,10 +37,9 @@ bool Importer::LoadNewModelComponents(Application* App, const char* buffer, uint
 		return false;
 	}
 
-	App->editorScene->AddGameObject(newObject);
 	trans = scene->mRootNode->mTransformation;
 
-	if (scene->mRootNode->mNumChildren != 0) { for (int i = 0; i < scene->mRootNode->mNumChildren; i++) { Importer::LoadNewModelMesh(App, scene->mRootNode->mChildren[i], (aiScene*)scene, newObject, trans); } }
+	if (scene->mRootNode->mNumChildren != 0) { for (int i = 0; i < scene->mRootNode->mNumChildren; i++) { Importer::ImportNewModelMesh(App, scene->mRootNode->mChildren[i], (aiScene*)scene, newObject, trans); } }
 
 	aiReleaseImport(scene);
 
@@ -50,7 +49,7 @@ bool Importer::LoadNewModelComponents(Application* App, const char* buffer, uint
 }
 
 
-void Importer::LoadNewModelMesh(Application* App, aiNode* node, aiScene* scene, GameObject* parent, aiMatrix4x4 accTransform) {
+void Importer::ImportNewModelMesh(Application* App, aiNode* node, aiScene* scene, GameObject* parent, aiMatrix4x4 accTransform) {
 
 	aiMatrix4x4 transform = accTransform * node->mTransformation;
 	Mesh* mesh;
@@ -63,6 +62,7 @@ void Importer::LoadNewModelMesh(Application* App, aiNode* node, aiScene* scene, 
 			long long int id = App->idGenerator.Int();
 
 			GameObject* newObject = new GameObject(id, "NewGameObject", parent);
+			parent->childs.push_back(newObject);
 
 			mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
 
@@ -103,20 +103,18 @@ void Importer::LoadNewModelMesh(Application* App, aiNode* node, aiScene* scene, 
 			transformation = (Transform*)newObject->GetComponent(COMPONENT_TYPE::TRANSFORM);
 			Importer::aiTransformTofloat4x4Transform(transform, transformation);
 
-			Importer::LoadNewModelMaterial(App, scene, newObject, scene->mMeshes[node->mMeshes[i]]->mMaterialIndex);
-
-			App->editorScene->AddGameObject(newObject);
+			Importer::ImportNewModelMaterial(App, scene, newObject, scene->mMeshes[node->mMeshes[i]]->mMaterialIndex);
 
 		}
 
 	}
 
-	for (int i = 0; i < node->mNumChildren; i++) { LoadNewModelMesh(App, node->mChildren[i], scene, parent, transform); }
+	for (int i = 0; i < node->mNumChildren; i++) { ImportNewModelMesh(App, node->mChildren[i], scene, parent, transform); }
 
 }
 
 
-void Importer::LoadNewModelMaterial(Application* App, aiScene* scene, GameObject* newObject, int materialId) {
+void Importer::ImportNewModelMaterial(Application* App, aiScene* scene, GameObject* newObject, int materialId) {
 
 	Material* material = nullptr;
 
@@ -163,8 +161,9 @@ void Importer::aiTransformTofloat4x4Transform(aiMatrix4x4 matrix, Transform* tra
 }
 
 
-void Importer::ImportTexture(Application* App, std::string fileName, const char* buffer, uint size) {
+std::string Importer::ImportTexture(Application* App, std::string fileName, const char* buffer, uint size) {
 
+	std::string finalPath;
 	uint imageTest;
 	ilGenImages(1, &imageTest);
 	ilBindImage(imageTest);
@@ -173,7 +172,7 @@ void Importer::ImportTexture(Application* App, std::string fileName, const char*
 
 	if (ret == IL_TRUE) {
 
-		DataSaving::SaveTexture(App, fileName);
+		finalPath = DataSaving::SaveTexture(App, fileName);
 		LOG("Texture %s loaded.\n", fileName.c_str());
 
 	}
@@ -181,6 +180,8 @@ void Importer::ImportTexture(Application* App, std::string fileName, const char*
 	else { LOG("Texture with path %s failed to load.\n", fileName.c_str()); }
 
 	ilDeleteImages(1, &imageTest);
+
+	return finalPath;
 
 }
 

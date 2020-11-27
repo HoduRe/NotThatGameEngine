@@ -56,7 +56,7 @@ bool EditorScene::Start() {
 	App->camera->LookAt(vec3(0, 0, 0));
 
 	streetName = "Meshes/Street environment_V01.FBX";
-	App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADED, EVENT_ENUM::NULL_EVENT, (char*)streetName.c_str());
+	App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)streetName.c_str());
 
 	return true;
 

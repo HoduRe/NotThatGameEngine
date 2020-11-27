@@ -3,6 +3,7 @@
 #include "Save.h"
 #include "ManagerResource.h"
 #include "EditorScene.h"
+#include "ManagerEvent.h"
 #include "ManagerExternal.h"
 #include "Textures.h"
 #include "TextureData.h"
@@ -69,20 +70,42 @@ void DataLoading::LoadGameObject(Application* App, JSON_Array* gameObjectsArray,
 
 	for (int i = 0; i < JsonManager::GetArraySize(componentNode); i++) {
 
+		char* buffer;
+		uint size;
+
 		JSON_Object* nodeComponent = json_array_get_object(componentNode, i);
 		cReader.componentType = json_object_get_number(nodeComponent, JSON_NODE_COMPONENT_TYPE);
 		cReader.componentId = json_object_get_number(nodeComponent, JSON_NODE_COMPONENT_ID);
 
 		gameObject->AddComponent((COMPONENT_TYPE)cReader.componentType, cReader.componentId);
 
-		ResourceEnum type = ResourceEnum::UNKNOWN;
-		if (cReader.componentType == (int)COMPONENT_TYPE::MESH) { type = ResourceEnum::MESH; }
-		else if (cReader.componentType == (int)COMPONENT_TYPE::MATERIAL) { type = ResourceEnum::MATERIAL; }
-		else if (cReader.componentType == (int)COMPONENT_TYPE::CAMERA) { type = ResourceEnum::CAMERA; }
+		if (cReader.componentType == (int)COMPONENT_TYPE::MESH) {
+			size = App->externalManager->Load((MESHES_PATH + std::to_string(cReader.componentId) + EXTENSION_MESHES).c_str(), &buffer);
+			if (size > 0) {
+				LoadMesh(buffer, gameObject->mesh);
+				RELEASE_ARRAY(buffer);
+			}
+		}
 
-		App->resourceManager->LoadResourceByType(std::to_string(cReader.componentId), type);
+		else if (cReader.componentType == (int)COMPONENT_TYPE::MATERIAL) {
+			size = App->externalManager->Load((MATERIALS_PATH + std::to_string(cReader.componentId) + EXTENSION_MATERIALS).c_str(), &buffer);
+			if (size > 0) {
+				LoadMaterial(App, buffer, gameObject->material);
+				RELEASE_ARRAY(buffer);
+			}
+		}
+
+		else if (cReader.componentType == (int)COMPONENT_TYPE::CAMERA) {
+			size = App->externalManager->Load((CAMERAS_PATH + std::to_string(cReader.componentId) + EXTENSION_CAMERA).c_str(), &buffer);
+			if (size > 0) {
+				LoadCamera(buffer, gameObject->camera);
+				RELEASE_ARRAY(buffer);
+			}
+		}
 
 	}
+
+	if (gameObject->parent == nullptr) { App->eventManager->GenerateEvent(EVENT_ENUM::GAMEOBJECT_LOADED, EVENT_ENUM::NULL_EVENT, gameObject); }
 
 }
 
@@ -98,31 +121,7 @@ GameObject* DataLoading::LoadModel(Application* App, char* buffer) {
 
 	for (int i = 0; i < size; i++) { LoadGameObject(App, gameObjectsArray, i); }
 
-	if (size > 0) {
-
-		JSON_Object* itNode = json_array_get_object(gameObjectsArray, 0);
-		gameObject = App->editorScene->FindGameObject(json_object_get_number(itNode, JSON_NODE_ID));
-
-		NewGameObjectFromModel(App, gameObject);
-
-	}
-
 	return gameObject;
-
-}
-
-
-void DataLoading::NewGameObjectFromModel(Application* App, GameObject* gameObject) {
-
-	long long int id = App->idGenerator.Int();
-	gameObject->id = id;
-
-	if (gameObject->transform != nullptr) { gameObject->transform->id = App->idGenerator.Int(); }
-	if (gameObject->mesh != nullptr) { gameObject->mesh->id = App->idGenerator.Int(); }
-	if (gameObject->material != nullptr) { gameObject->material->id = App->idGenerator.Int(); }
-	if (gameObject->camera != nullptr) { gameObject->camera->id = App->idGenerator.Int(); }
-
-	for (int i = 0; i < gameObject->childs.size(); i++) { NewGameObjectFromModel(App, gameObject->childs[i]); }
 
 }
 
@@ -196,6 +195,7 @@ void DataLoading::LoadMesh(char* fileBuffer, Mesh* mesh) {
 
 }
 
+
 void DataLoading::LoadMaterial(Application* App, char* fileBuffer, Material* material) {
 
 	char* cursor = fileBuffer;
@@ -210,6 +210,14 @@ void DataLoading::LoadMaterial(Application* App, char* fileBuffer, Material* mat
 	material->diffuseId = App->texture->IsTextureRepeated(name.c_str());
 
 }
+
+
+void DataLoading::LoadCamera(char* fileBuffer, Camera* camera) {
+
+	// TODO: well, do it
+
+}
+
 
 uint DataLoading::LoadTexture(Application* App, std::string path, const char* buffer, uint size) {
 
@@ -271,7 +279,7 @@ void DataLoading::LoadAssetsMap(Application* App, std::map<std::string, FileInfo
 			std::string filePath = json_object_get_string(itNode, JSON_NODE_MAP_FILEPATH);
 			int ID = json_object_get_number(itNode, JSON_NODE_MAP_ID);
 			int lastTimeChanged = json_object_get_number(itNode, JSON_NODE_MAP_LAST_CHANGE);
-			assetsMap->insert(std::pair<std::string, FileInfo>(fileName, FileInfo(filePath, ID, lastTimeChanged)));
+			assetsMap->insert(std::pair<std::string, FileInfo>(fileName, FileInfo(filePath, ID, lastTimeChanged, false)));
 
 		}
 

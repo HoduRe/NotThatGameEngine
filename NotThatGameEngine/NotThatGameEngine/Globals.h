@@ -23,6 +23,7 @@
 #define FOLDERS_PATH "Library/Folders/"
 #define MESHES_PATH "Library/Meshes/"
 #define MATERIALS_PATH "Library/Materials/"
+#define CAMERAS_PATH "Library/Cameras/"
 #define TEXTURES_PATH "Library/Textures/"
 #define MODELS_PATH "Library/Models/"
 #define ANIMATIONS_PATH "Library/Animations/"
@@ -64,7 +65,8 @@ enum class EVENT_ENUM
 	SCREEN_BRIGHTNESS,
 
 	FILE_DROPPED,
-	FILE_LOADED,
+	FILE_LOADING,
+	GAMEOBJECT_LOADED,
 
 	DEFAULT_TEXTURE_LOADED,
 	PUT_TEXTURE_TO_FOCUSED_MODEL,
@@ -74,8 +76,7 @@ enum class EVENT_ENUM
 	CREATE_PYRAMID,
 	CREATE_CYLINDER,
 
-	SAVE_SCENE,
-	LOAD_SCENE
+	SAVE_SCENE
 
 };
 

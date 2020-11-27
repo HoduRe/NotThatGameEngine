@@ -794,7 +794,7 @@ void ManagerImGui::LoadFileMenu(const char* directory, const char* extension) {
 
 		if (ImGui::Button("Ok", ImVec2(50, 20))) {
 
-			App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADED, EVENT_ENUM::NULL_EVENT, &selectedFileName);
+			App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, &selectedFileName);
 			loadFileMenu = false;
 
 		}
@@ -848,7 +848,7 @@ void ManagerImGui::DrawDirectoryRecursively(const char* directory, const char* e
 
 				if (ImGui::IsMouseDoubleClicked(0)) {
 
-					App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADED, EVENT_ENUM::NULL_EVENT, &selectedFileName);
+					App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, &selectedFileName);
 					loadFileMenu = false;
 
 				}

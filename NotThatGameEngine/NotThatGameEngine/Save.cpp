@@ -80,7 +80,7 @@ void DataSaving::SaveGameObject(Application* App, JSON_Object* node, GameObject*
 }
 
 
-void DataSaving::SaveModel(Application* App, GameObject* gameObject, std::string modelName) {
+std::string DataSaving::SaveModel(Application* App, GameObject* gameObject, std::string modelName) {
 
 	JsonManager::JsonValue root(json_value_init_object());
 	JSON_Object* node(json_value_get_object(root.value));
@@ -100,6 +100,8 @@ void DataSaving::SaveModel(Application* App, GameObject* gameObject, std::string
 	App->externalManager->Save(sceneName.c_str(), buffer, size);
 
 	RELEASE_ARRAY(buffer);
+
+	return sceneName;
 
 }
 

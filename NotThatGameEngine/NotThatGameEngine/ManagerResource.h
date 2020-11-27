@@ -35,6 +35,8 @@
 #define ASSETS_MAP "AssetsMap"
 #define LIBRARY_MAP "LibraryMap"
 
+class GameObject;
+
 enum class ResourceEnum {
 
 	NONE,
@@ -54,7 +56,7 @@ enum class ResourceEnum {
 class FileInfo {
 public:
 	FileInfo();
-	FileInfo(std::string _filePath, int _id, int _lastChange);
+	FileInfo(std::string _filePath, int _id, int _lastChange, bool _checked);
 	~FileInfo();
 	std::string filePath;
 	int id;
@@ -95,25 +97,23 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
-	void LoadLibraryFiles();
-	bool IsLoadedInLibrary(std::string* filePath, ResourceEnum* type);
-	void LoadResourceByType(std::string name, ResourceEnum type = ResourceEnum::NONE);
-	void ImportAssetResourceByType(std::string path, std::string name, ResourceEnum type);
-	std::string FindPathFromFileName(std::string fileName, PathNode* node = nullptr);
-	ResourceEnum CheckTypeByExtension(std::string extension);
+	void ManageGameObjectLoading(GameObject* gameObject);
 
 private:
+
+	std::string IsLoadedInLibrary(std::string* filePath);
+	std::string ImportAssetResourceByType(std::string path, std::string name, ResourceEnum type);
+	void LoadResourceByPath(std::string filePath);
+	ResourceEnum CheckTypeByExtension(std::string extension);
 
 	void CheckLibraryFiles(PathNode* libraryFiles);
 	void CheckAssetsImported(PathNode* loadingNode);
 	void ImportToLibrary(std::string filePath, std::string fileName, std::string extension);
 	void CheckDeletedAssets();
 
-	std::string GetPathFromType(ResourceEnum type);
-	std::string ConvertLoadExtension(ResourceEnum type, std::string extension);
 	bool ExecuteEvent(EVENT_ENUM _event, void* var);
 	void SearchFileInFileMap(std::string filePath);
-
+	
 public:
 
 private:

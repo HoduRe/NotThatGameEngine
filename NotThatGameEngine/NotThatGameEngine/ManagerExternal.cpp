@@ -28,6 +28,7 @@ ExternalManager::ExternalManager(Application* app, bool start_enabled) : Module(
 	CreateDir(LIBRARY_PATH);
 	CreateDir(FOLDERS_PATH);
 	CreateDir(MESHES_PATH);
+	CreateDir(CAMERAS_PATH);
 	CreateDir(TEXTURES_PATH);
 	CreateDir(MATERIALS_PATH);
 	CreateDir(MODELS_PATH);
