@@ -75,9 +75,10 @@ void DataLoading::LoadGameObject(Application* App, JSON_Array* gameObjectsArray,
 
 		gameObject->AddComponent((COMPONENT_TYPE)cReader.componentType, cReader.componentId);
 
-		ResourceEnum type;
-		if (cReader.componentType == 2) { type = ResourceEnum::MESH; }
-		else if (cReader.componentType == 3) { type = ResourceEnum::MATERIAL; }
+		ResourceEnum type = ResourceEnum::UNKNOWN;
+		if (cReader.componentType == (int)COMPONENT_TYPE::MESH) { type = ResourceEnum::MESH; }
+		else if (cReader.componentType == (int)COMPONENT_TYPE::MATERIAL) { type = ResourceEnum::MATERIAL; }
+		else if (cReader.componentType == (int)COMPONENT_TYPE::CAMERA) { type = ResourceEnum::CAMERA; }
 
 		App->resourceManager->LoadResourceByType(std::to_string(cReader.componentId), type);
 
@@ -214,7 +215,7 @@ uint DataLoading::LoadTexture(Application* App, std::string path, const char* bu
 
 	std::string textureName, extension;
 	App->externalManager->SplitFilePath(path.c_str(), nullptr, &textureName, &extension);
-	uint imageTest = App->texture->IsTextureRepeated(textureName.c_str());
+	uint imageTest = App->texture->IsTextureRepeated(textureName.c_str());	// This should check in memoryMap
 
 	if (imageTest == 0) {
 
@@ -227,19 +228,7 @@ uint DataLoading::LoadTexture(Application* App, std::string path, const char* bu
 
 		RELEASE_ARRAY(buffer);
 
-		if (ret == IL_TRUE) {
-
-			if ("." + extension != EXTENSION_TEXTURES) {	// Always working with our .dds textures!!
-
-				std::string pathAux = DataSaving::SaveTexture(App, textureName);
-				ilDeleteImages(1, &imageTest);
-				return LoadTexture(App, pathAux.c_str());
-
-			}
-
-			LOG("Texture with path %s loaded.\n", path);
-
-		}
+		if (ret == IL_TRUE) { LOG("Texture with path %s loaded.\n", path); }
 
 		else {
 			LOG("Texture with path %s failed to load.\n", path);
@@ -249,9 +238,7 @@ uint DataLoading::LoadTexture(Application* App, std::string path, const char* bu
 		OpenGLFunctionality::LoadGLTexture(&imageTest, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_BPP), ilGetInteger(IL_IMAGE_FORMAT), ilGetData());
 
 		TextureData* texture = new TextureData(imageTest, App->idGenerator.Int(), textureName.c_str(), GL_DIFFUSE, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), size);
-
 		App->texture->AddTexture(texture);
-		DataSaving::SaveTexture(App, texture->name);
 
 		ilDeleteImages(1, &imageTest);
 
@@ -267,33 +254,60 @@ uint DataLoading::LoadTexture(Application* App, std::string path, const char* bu
 void DataLoading::LoadAssetsMap(Application* App, std::map<std::string, FileInfo>* assetsMap) {
 
 	char* buffer;
-	App->externalManager->Load((LIBRARY_PATH + (std::string)ASSETS_MAP + EXTENSION_MAP).c_str(), &buffer);
+	uint size = App->externalManager->Load((LIBRARY_PATH + (std::string)ASSETS_MAP + EXTENSION_MAP).c_str(), &buffer);
 
-	JsonManager::JsonValue root(json_parse_string(buffer));
-	JSON_Object* node(json_value_get_object(root.value));
-	JSON_Array* assetsMapArray(json_object_get_array(node, JSON_NODE_MAP_DATA));
+	if (size != 0) {
 
-	int size = JsonManager::GetArraySize(assetsMapArray);
+		JsonManager::JsonValue root(json_parse_string(buffer));
+		JSON_Object* node(json_value_get_object(root.value));
+		JSON_Array* assetsMapArray(json_object_get_array(node, JSON_NODE_MAP_DATA));
 
-	for (int i = 0; i < size; i++) { 
-		
-		JSON_Object* itNode = json_array_get_object(assetsMapArray, i);
-		std::string fileName = json_object_get_string(itNode, JSON_NODE_MAP_FILENAME);
-		std::string filePath = json_object_get_string(itNode, JSON_NODE_MAP_FILEPATH);
-		int ID = json_object_get_number(itNode, JSON_NODE_MAP_ID);
-		int lastTimeChanged = json_object_get_number(itNode, JSON_NODE_MAP_LAST_CHANGE);
-		assetsMap->insert(std::pair<std::string, FileInfo>(fileName, FileInfo(filePath, ID, lastTimeChanged)));
-	
+		int size = JsonManager::GetArraySize(assetsMapArray);
+
+		for (int i = 0; i < size; i++) {
+
+			JSON_Object* itNode = json_array_get_object(assetsMapArray, i);
+			std::string fileName = json_object_get_string(itNode, JSON_NODE_MAP_FILENAME);
+			std::string filePath = json_object_get_string(itNode, JSON_NODE_MAP_FILEPATH);
+			int ID = json_object_get_number(itNode, JSON_NODE_MAP_ID);
+			int lastTimeChanged = json_object_get_number(itNode, JSON_NODE_MAP_LAST_CHANGE);
+			assetsMap->insert(std::pair<std::string, FileInfo>(fileName, FileInfo(filePath, ID, lastTimeChanged)));
+
+		}
+
+		RELEASE_ARRAY(buffer);
+
 	}
-
-	RELEASE_ARRAY(buffer);
 
 }
 
 
 void DataLoading::LoadLibraryMap(Application* App, std::map<std::string, LibraryInfo>* libraryMap) {
 
+	char* buffer;
+	uint size = App->externalManager->Load((LIBRARY_PATH + (std::string)LIBRARY_MAP + EXTENSION_MAP).c_str(), &buffer);
 
+	if (size != 0) {
+
+		JsonManager::JsonValue root(json_parse_string(buffer));
+		JSON_Object* node(json_value_get_object(root.value));
+		JSON_Array* assetsMapArray(json_object_get_array(node, JSON_NODE_MAP_DATA));
+
+		int size = JsonManager::GetArraySize(assetsMapArray);
+
+		for (int i = 0; i < size; i++) {
+
+			JSON_Object* itNode = json_array_get_object(assetsMapArray, i);
+			std::string fileName = json_object_get_string(itNode, JSON_NODE_MAP_FILENAME);
+			std::string filePath = json_object_get_string(itNode, JSON_NODE_MAP_FILEPATH);
+			ResourceEnum type = (ResourceEnum)json_object_get_number(itNode, JSON_NODE_MAP_TYPE);
+			libraryMap->insert(std::pair<std::string, LibraryInfo>(fileName, LibraryInfo(filePath, type)));
+
+		}
+
+		RELEASE_ARRAY(buffer);
+
+	}
 
 }
 

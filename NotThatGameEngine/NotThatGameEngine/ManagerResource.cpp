@@ -18,7 +18,7 @@ ResourceManager::~ResourceManager() {}
 bool ResourceManager::Init() {
 
 	PathNode assetsFiles = App->externalManager->GetAllFiles(ASSETS_PATH);
-	PathNode libraryFiles = App->externalManager->GetAllFiles(ASSETS_PATH);
+	PathNode libraryFiles = App->externalManager->GetAllFiles(LIBRARY_PATH);
 
 	DataLoading::LoadAssetsMap(App, &assetsMap);
 	DataLoading::LoadLibraryMap(App, &libraryMap);
@@ -82,10 +82,11 @@ void ResourceManager::CheckLibraryFiles(PathNode* loadingNode) {
 
 		if (loadingNode->children[i].isFile) {
 
-			if (libraryMap.count(loadingNode->children[i].path) == 0) {
+			std::string fileName, extension;
+			App->externalManager->SplitFilePath(loadingNode->children[i].path.c_str(), nullptr, &fileName, &extension);
 
-				std::string fileName, extension;
-				App->externalManager->SplitFilePath(loadingNode->children[i].path.c_str(), nullptr, &fileName, &extension);
+			if ("." + extension != EXTENSION_MAP && libraryMap.count(fileName) == 0) {
+				
 				libraryMap.insert(std::pair<std::string, LibraryInfo>(fileName, LibraryInfo(loadingNode->children[i].path, ResourceEnum(CheckTypeByExtension(extension)))));
 
 			}
@@ -264,7 +265,7 @@ bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 	case EVENT_ENUM::FILE_LOADED:
 
 		filePath = (char*)var;
-		IsLoadedInLibrary(&filePath, &type);
+		//IsLoadedInLibrary(&filePath, &type);
 
 		size = App->externalManager->Load(filePath.c_str(), &buffer);
 

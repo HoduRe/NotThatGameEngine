@@ -27,7 +27,7 @@ void DataSaving::SaveScene(Application* App) {
 	char* buffer = new char[JsonManager::GetArraySize(gameObjectsArray)];
 	uint size = JsonManager::Serialize(root.value, &buffer);
 
-	std::string sceneName = SCENES_PATH + (std::string)"Scene1" + EXTENSION_SCENES;
+	std::string sceneName = SCENES_PATH + (std::string)"Scene" + EXTENSION_SCENES;
 	App->externalManager->Save(sceneName.c_str(), buffer, size);
 
 	RELEASE_ARRAY(buffer);
@@ -73,35 +73,9 @@ void DataSaving::SaveGameObject(Application* App, JSON_Object* node, GameObject*
 
 	JSON_Array* gameComponentsArray(JsonManager::OpenArray(node, JSON_NODE_COMPONENTS));
 
-	if (gameObject->mesh != nullptr) {
-
-		json_array_append_value(gameComponentsArray, json_value_init_object());	// TODO: Make this into a function
-		JSON_Object* nodeComponent = json_array_get_object(gameComponentsArray, 0);
-		SaveComponent(App, gameObject->mesh);
-		json_object_set_number(nodeComponent, JSON_NODE_COMPONENT_TYPE, (int)gameObject->mesh->type);
-		json_object_set_number(nodeComponent, JSON_NODE_COMPONENT_ID, gameObject->mesh->id);
-
-	}
-
-	if (gameObject->material != nullptr) {
-
-		json_array_append_value(gameComponentsArray, json_value_init_object());	// TODO: Make this into a function
-		JSON_Object* nodeComponent = json_array_get_object(gameComponentsArray, 1);
-		SaveComponent(App, gameObject->material);
-		json_object_set_number(nodeComponent, JSON_NODE_COMPONENT_TYPE, (int)gameObject->material->type);
-		json_object_set_number(nodeComponent, JSON_NODE_COMPONENT_ID, gameObject->material->id);
-
-	}
-
-	if (gameObject->camera != nullptr) {
-
-		json_array_append_value(gameComponentsArray, json_value_init_object());	// TODO: Make this into a function
-		JSON_Object* nodeComponent = json_array_get_object(gameComponentsArray, 2);
-		SaveComponent(App, gameObject->camera);
-		json_object_set_number(nodeComponent, JSON_NODE_COMPONENT_TYPE, (int)gameObject->camera->type);
-		json_object_set_number(nodeComponent, JSON_NODE_COMPONENT_ID, gameObject->camera->id);
-
-	}
+	if (gameObject->mesh != nullptr) { SaveComponentJSON(App, gameComponentsArray, gameObject->mesh, 0); }
+	if (gameObject->material != nullptr) { SaveComponentJSON(App, gameComponentsArray, gameObject->material, 1); }
+	if (gameObject->camera != nullptr) { SaveComponentJSON(App, gameComponentsArray, gameObject->camera, 2); }
 
 }
 
@@ -314,7 +288,12 @@ void DataSaving::SaveLibraryMap(Application* App, std::map<std::string, LibraryI
 }
 
 
-void DataSaving::SaveComponent(Application* App, Component* component) {
+void DataSaving::SaveComponentJSON(Application* App, JSON_Array* gameComponentsArray, Component* component, int arrayIndex) {
+
+	json_array_append_value(gameComponentsArray, json_value_init_object());
+	JSON_Object* nodeComponent = json_array_get_object(gameComponentsArray, arrayIndex);
+	json_object_set_number(nodeComponent, JSON_NODE_COMPONENT_TYPE, (int)component->type);
+	json_object_set_number(nodeComponent, JSON_NODE_COMPONENT_ID, component->id);
 
 	switch (component->type) {
 

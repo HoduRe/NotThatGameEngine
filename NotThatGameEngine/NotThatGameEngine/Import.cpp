@@ -20,7 +20,7 @@ void Importer::LoadNewModel(Application* App, const char* path, const char* buff
 	GameObject* newObject = new GameObject(App->idGenerator.Int(), originalName, nullptr, true);
 
 	if (Importer::LoadNewModelComponents(App, buffer, size, newObject, path)) { DataSaving::SaveModel(App, newObject, originalName); }
-	DeleteAllChilds(newObject);
+	DeleteWithAllChilds(newObject);
 
 	RELEASE_ARRAY(buffer);
 
@@ -185,9 +185,9 @@ void Importer::ImportTexture(Application* App, std::string fileName, const char*
 }
 
 
-void Importer::DeleteAllChilds(GameObject* gameObject) {
+void Importer::DeleteWithAllChilds(GameObject* gameObject) {
 
-	for (int i = 0; i < gameObject->childs.size(); i++) { DeleteAllChilds(gameObject->childs[i]); }
+	for (int i = 0; i < gameObject->childs.size(); i++) { DeleteWithAllChilds(gameObject->childs[i]); }
 	delete gameObject;
 
 }
