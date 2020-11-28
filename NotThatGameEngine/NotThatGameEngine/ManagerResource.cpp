@@ -272,8 +272,6 @@ void ResourceManager::LoadResourceByPath(std::string filePath) {
 
 			DataLoading::LoadScene(App, buffer);
 			break;
-
-			// Components loaded from here are to add to an existing gameObject; at loading, it is the gameObject itself that does it for compatibility sake (LoadComponent())
 		
 		case ResourceEnum::MESH:
 

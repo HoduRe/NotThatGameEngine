@@ -195,7 +195,7 @@ update_status ManagerImGui::SetMainMenuBar() {
 			if (ImGui::MenuItem("Save Scene")) { App->eventManager->GenerateEvent(EVENT_ENUM::SAVE_SCENE); }
 
 			if (ImGui::MenuItem("Load Asset")) {
-				
+
 				loadFileMenu = true;
 				selectedFileName.clear();
 
@@ -687,7 +687,7 @@ void ManagerImGui::InspectorWindow() {
 				else { ImGui::Text("This object has no mesh attached"); }
 
 				if (ImGui::Button("Select new mesh")) {
-					
+
 					loadMeshMenu = true;
 					selectedFileName.clear();
 
@@ -697,7 +697,7 @@ void ManagerImGui::InspectorWindow() {
 
 					ImGui::OpenPopup("Load mesh");
 
-					if (ImGui::BeginPopupModal("Load mesh", &loadMeshMenu, ImGuiWindowFlags_AlwaysAutoResize)) {
+					if (ImGui::BeginPopupModal("Load mesh", &loadMeshMenu)) {
 
 						ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 5.0f);
 						ImGui::BeginChild("Mesh Browser", ImVec2(0, 300), true);
@@ -851,7 +851,7 @@ void ManagerImGui::LoadFileMenu(const char* directory, const char* extension) {
 
 	ImGui::OpenPopup("Load File");
 
-	if (ImGui::BeginPopupModal("Load File", &loadFileMenu, ImGuiWindowFlags_AlwaysAutoResize)) {
+	if (ImGui::BeginPopupModal("Load File", &loadFileMenu)) {
 
 		ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 5.0f);
 		ImGui::BeginChild("File Browser", ImVec2(0, 300), true);
@@ -875,8 +875,15 @@ void ManagerImGui::LoadFileMenu(const char* directory, const char* extension) {
 		}
 
 		ImGui::SameLine();
-
 		if (ImGui::Button("Cancel", ImVec2(50, 20))) { selectedFileName[0] = '\0'; }
+
+		ImGui::SameLine();
+		if ((ImGui::Button("Delete", ImVec2(70, 20)) || App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) && selectedFileName.empty() == false) {
+			
+			App->externalManager->RemoveFileByName(selectedFileName.c_str());
+			selectedFileName.clear();
+		
+		}
 
 		ImGui::EndPopup();
 
@@ -919,7 +926,7 @@ void ManagerImGui::DrawDirectoryRecursively(const char* directory, const char* e
 		{
 			if (ImGui::IsItemClicked()) {
 
-				selectedFileName = str.c_str();
+				selectedFileName = dir + str.c_str();
 
 				if (ImGui::IsMouseDoubleClicked(0)) {
 

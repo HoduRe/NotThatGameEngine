@@ -86,7 +86,7 @@ update_status EditorScene::PostUpdate(float dt) {
 
 	App->renderer3D->SetFrameBuffer(App->renderer3D->frameBufferId);
 
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) { if (focus != nullptr) { focus->deleteGameObject = true; } }
+	if (App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) { if (focus != nullptr) { focus->deleteGameObject = true; } }
 
 	int size = rootGameObjectsVec.size();
 	for (int i = 0; i < size; i++) { rootGameObjectsVec[i]->PostUpdate(defaultTextureId); }
