@@ -250,6 +250,16 @@ uint DataLoading::LoadTexture(Application* App, std::string path, const char* bu
 		TextureData* texture = new TextureData(imageTest, App->idGenerator.Int(), textureName.c_str(), GL_DIFFUSE, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), size);
 		App->texture->AddTexture(texture);
 
+		if (textureName == "Alex") {
+			
+			App->texture->defaultTextureId = texture->textureId;
+			App->eventManager->GenerateEvent(EVENT_ENUM::DEFAULT_TEXTURE_LOADED);
+
+		}
+
+		else if (textureName == "Checker") { App->texture->checkersTextureId = texture->textureId; }
+		else if (textureName == "Degenerate") { App->texture->degenerateTextureId = texture->textureId; }
+
 		ilDeleteImages(1, &imageTest);
 
 	}

@@ -29,20 +29,7 @@ bool Texture::Init() {	// OpenGL has not been initialized yet
 }
 
 
-bool Texture::Start() {
-
-	for (int i = 0; i < textureVec.size(); i++) {
-
-		if (textureVec[i].name == "Alex") { defaultTextureId = textureVec[i].textureId; }
-		else if (textureVec[i].name == "Checker") { checkersTextureId = textureVec[i].textureId; }
-		else if (textureVec[i].name == "Degenerate") { degenerateTextureId = textureVec[i].textureId; }
-
-	}
-
-	App->eventManager->GenerateEvent(EVENT_ENUM::DEFAULT_TEXTURE_LOADED);
-
-	return true;
-}
+bool Texture::Start() { return true; }
 
 
 bool Texture::CleanUp() {
