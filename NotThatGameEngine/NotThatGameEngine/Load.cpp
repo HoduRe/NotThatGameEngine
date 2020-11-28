@@ -190,6 +190,11 @@ void DataLoading::LoadMesh(char* fileBuffer, Mesh* mesh) {
 
 	}
 
+	mesh->vertices.clear();
+	mesh->indices.clear();
+	mesh->normals.clear();
+	mesh->textureCoord.clear();
+
 	mesh->SetVertices(vertices);
 	mesh->SetNormals(normals);
 	mesh->SetTextureCoord(textureCoord);

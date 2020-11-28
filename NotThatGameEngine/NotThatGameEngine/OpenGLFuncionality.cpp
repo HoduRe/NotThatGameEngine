@@ -35,7 +35,7 @@ bool OpenGLFunctionality::SetOpenGL() {
 
 void OpenGLFunctionality::LoadDataBufferFloat(int bufferType, GLuint* id, int size, float* data) {
 
-	glGenBuffers(1, id);
+	if (*id == 0) { glGenBuffers(1, id); }
 	glBindBuffer(bufferType, *id);
 	glBufferData(bufferType, sizeof(float) * size, data, GL_STATIC_DRAW);
 	glBindBuffer(bufferType, 0);
@@ -45,7 +45,7 @@ void OpenGLFunctionality::LoadDataBufferFloat(int bufferType, GLuint* id, int si
 
 void OpenGLFunctionality::LoadDataBufferUint(int bufferType, GLuint* id, int size, GLuint* data) {
 
-	glGenBuffers(1, id);
+	if (*id == 0) { glGenBuffers(1, id); }
 	glBindBuffer(bufferType, *id);
 	glBufferData(bufferType, sizeof(GLuint) * size, data, GL_STATIC_DRAW);
 	glBindBuffer(bufferType, 0);

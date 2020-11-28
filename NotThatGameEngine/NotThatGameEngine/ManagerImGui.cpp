@@ -32,7 +32,7 @@ sliderBrightness(1.0f), sliderWidth(SCREEN_WIDTH* SCREEN_SIZE), sliderHeight(SCR
 fullscreen(WIN_FULLSCREEN), resizable(WIN_RESIZABLE), borderless(WIN_BORDERLESS), fullDesktop(WIN_FULLSCREEN_DESKTOP), refreshRate(0),
 AVX(false), AVX2(false), AltiVec(false), MMX(false), RDTSC(false), SSE(false), SSE2(false), SSE3(false), SSE41(false), SSE42(false),
 showDemoWindow(false), defaultButtonsMenu(false), aboutWindow(false), configMenu(false), appActive(false), consoleMenu(true), sceneWindow(true), hierarchyWindow(true), inspectorWindow(true),
-Devil(), Assimp(), PhysFS(), GLEW(), loadFileMenu(false), selectedFileName(), position(), rotationEuler(), scaling(), itemHovered(nullptr), itemFocusedLastFrame(nullptr)
+Devil(), Assimp(), PhysFS(), GLEW(), loadFileMenu(false), selectedFileName(), position(), rotationEuler(), scaling(), itemHovered(nullptr), itemFocusedLastFrame(nullptr), loadMeshMenu(false)
 {}
 
 
@@ -194,7 +194,12 @@ update_status ManagerImGui::SetMainMenuBar() {
 
 			if (ImGui::MenuItem("Save Scene")) { App->eventManager->GenerateEvent(EVENT_ENUM::SAVE_SCENE); }
 
-			if (ImGui::MenuItem("Load Asset")) { loadFileMenu = true; }
+			if (ImGui::MenuItem("Load Asset")) {
+				
+				loadFileMenu = true;
+				selectedFileName.clear();
+
+			}
 
 			if (ImGui::MenuItem("Close App")) { ret = update_status::UPDATE_STOP; }
 
@@ -510,7 +515,7 @@ void ManagerImGui::HierarchyWindow() {
 			if (App->editorScene->GetFocus() != nullptr) { App->editorScene->SetDeleteGameObject(App->editorScene->GetFocus()->id); }
 		}
 
-		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN && MouseIsInside(&windowPos, &windowSize)) {App->editorScene->SetFocus(nullptr); }
+		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN && MouseIsInside(&windowPos, &windowSize)) { App->editorScene->SetFocus(nullptr); }
 
 		for (int i = 0; i < size; i++) {
 
@@ -527,7 +532,7 @@ void ManagerImGui::HierarchyWindow() {
 				node_open = ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, App->editorScene->rootGameObjectsVec[i]->name.c_str(), i);
 				if (ImGui::IsItemClicked()) { App->editorScene->SetFocus(App->editorScene->rootGameObjectsVec[i]); }
 				if (ImGui::IsMouseHoveringRect(ImGui::GetItemRectMin(), ImGui::GetItemRectMax())) {
-					
+
 					itemHovered = App->editorScene->rootGameObjectsVec[i];
 					ImGui::BeginTooltip();
 					ImGui::Text("Hovering on %s.", (App->editorScene->rootGameObjectsVec[i]->name + std::to_string(App->editorScene->rootGameObjectsVec[i]->id)).c_str());
@@ -681,6 +686,76 @@ void ManagerImGui::InspectorWindow() {
 
 				else { ImGui::Text("This object has no mesh attached"); }
 
+				if (ImGui::Button("Select new mesh")) {
+					
+					loadMeshMenu = true;
+					selectedFileName.clear();
+
+				}
+
+				if (loadMeshMenu) {
+
+					ImGui::OpenPopup("Load mesh");
+
+					if (ImGui::BeginPopupModal("Load mesh", &loadMeshMenu, ImGuiWindowFlags_AlwaysAutoResize)) {
+
+						ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 5.0f);
+						ImGui::BeginChild("Mesh Browser", ImVec2(0, 300), true);
+
+						std::vector<std::string> files;
+
+						App->externalManager->DiscoverFiles(MESHES_PATH, files);
+						std::sort(files.begin(), files.end());
+
+						for (int i = 0; i < files.size(); i++) {
+
+							if (ImGui::TreeNodeEx(files[i].c_str(), ImGuiTreeNodeFlags_Leaf)) {
+
+								if (ImGui::IsItemClicked()) {
+
+									selectedFileName = (MESHES_PATH + files[i]).c_str();
+
+									if (ImGui::IsMouseDoubleClicked(0)) {
+
+										App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)selectedFileName.c_str());
+										loadMeshMenu = false;
+
+									}
+
+								}
+
+								ImGui::TreePop();
+
+							}
+
+						}
+
+						ImGui::EndChild();
+						ImGui::PopStyleVar();
+
+						ImGui::PushItemWidth(250.f);
+						ImGui::Text("%s", (char*)selectedFileName.c_str(), FILE_MAX_LENGTH, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll);
+
+						ImGui::PopItemWidth();
+						ImGui::SameLine();
+
+						if (ImGui::Button("Ok", ImVec2(50, 20))) {
+
+							App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)selectedFileName.c_str());
+							loadMeshMenu = false;
+
+						}
+
+						ImGui::SameLine();
+
+						if (ImGui::Button("Cancel", ImVec2(50, 20))) { selectedFileName[0] = '\0'; }
+
+						ImGui::EndPopup();
+
+					}
+
+				}
+
 			}
 
 			if (ImGui::CollapsingHeader("Textures")) {
@@ -755,11 +830,11 @@ void ManagerImGui::InspectorWindow() {
 
 				if (camera == nullptr) {
 
-					if(ImGui::Button("Create camera")){ camera = (Camera*)focus->AddComponent(COMPONENT_TYPE::CAMERA); }
+					if (ImGui::Button("Create camera")) { camera = (Camera*)focus->AddComponent(COMPONENT_TYPE::CAMERA); }
 
 				}
 
-				else{ if (ImGui::Button("Destroy camera")) { focus->SetDeleteComponent(COMPONENT_TYPE::CAMERA); } }
+				else { if (ImGui::Button("Destroy camera")) { focus->SetDeleteComponent(COMPONENT_TYPE::CAMERA); } }
 
 
 			}
@@ -787,14 +862,14 @@ void ManagerImGui::LoadFileMenu(const char* directory, const char* extension) {
 		ImGui::PopStyleVar();
 
 		ImGui::PushItemWidth(250.f);
-		ImGui::InputText("##file_selector", selectedFileName, FILE_MAX_LENGTH, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll);
+		ImGui::Text("%s", (char*)selectedFileName.c_str(), FILE_MAX_LENGTH, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll);
 
 		ImGui::PopItemWidth();
 		ImGui::SameLine();
 
 		if (ImGui::Button("Ok", ImVec2(50, 20))) {
 
-			App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, &selectedFileName);
+			App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)selectedFileName.c_str());
 			loadFileMenu = false;
 
 		}
@@ -844,11 +919,11 @@ void ManagerImGui::DrawDirectoryRecursively(const char* directory, const char* e
 		{
 			if (ImGui::IsItemClicked()) {
 
-				sprintf_s(selectedFileName, FILE_MAX_LENGTH, "%s%s", dir.c_str(), str.c_str());
+				selectedFileName = str.c_str();
 
 				if (ImGui::IsMouseDoubleClicked(0)) {
 
-					App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, &selectedFileName);
+					App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)selectedFileName.c_str());
 					loadFileMenu = false;
 
 				}

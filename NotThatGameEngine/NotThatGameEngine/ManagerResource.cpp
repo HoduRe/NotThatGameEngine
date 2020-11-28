@@ -206,11 +206,7 @@ void ResourceManager::CheckDeletedAssets() {
 			std::map<std::string, FileInfo>::iterator itAux = it;
 			itAux++;
 
-			if (libraryMap.find(it->first)->second.type == ResourceEnum::SCENE) { ManageSceneFiles(std::string(), nullptr, libraryMap.find(it->first)->second.filePath); }
-			App->externalManager->RemoveFileByName(libraryMap.find(it->first)->second.filePath.c_str());
-
-			libraryMap.erase(libraryMap.find(it->first));
-			assetsMap.erase(assetsMap.find(it->first));
+			DeleteLibraryFile(it->first);
 
 			it = itAux;
 
@@ -223,16 +219,30 @@ void ResourceManager::CheckDeletedAssets() {
 }
 
 
+void ResourceManager::DeleteLibraryFile(std::string fileName) {
+
+	if (libraryMap.find(fileName)->second.type == ResourceEnum::SCENE) { ManageSceneFiles(std::string(), nullptr, libraryMap.find(fileName)->second.filePath); }
+	App->externalManager->RemoveFileByName(libraryMap.find(fileName)->second.filePath.c_str());
+
+	libraryMap.erase(libraryMap.find(fileName));
+	assetsMap.erase(assetsMap.find(fileName));
+
+}
+
+
 void ResourceManager::LoadResourceByPath(std::string filePath) {
 
 	char* buffer;
 	uint size, id;
 	std::string fileName, extension;
+	Component* component = nullptr;
 	ResourceEnum type = ResourceEnum::NONE;
 
 	filePath = IsLoadedInLibrary(&filePath);
 	App->externalManager->SplitFilePath(filePath.c_str(), nullptr, &fileName, &extension);
 	type = GetTypeByExtension(extension);
+
+	GetComponentIfLoaded(&type, &component, fileName);
 
 	size = App->externalManager->Load(filePath.c_str(), &buffer);
 
@@ -264,19 +274,20 @@ void ResourceManager::LoadResourceByPath(std::string filePath) {
 			break;
 
 			// Components loaded from here are to add to an existing gameObject; at loading, it is the gameObject itself that does it for compatibility sake (LoadComponent())
+		
 		case ResourceEnum::MESH:
 
-			DataLoading::LoadMesh(buffer, (Mesh*)App->editorScene->FindGameObjectByComponent(std::stoi(fileName))); // Those need work. I don't even know how to manage them
+			DataLoading::LoadMesh(buffer, (Mesh*)component);
 			break;
 
 		case ResourceEnum::MATERIAL:
 
-			DataLoading::LoadMaterial(App, buffer, (Material*)App->editorScene->FindGameObjectByComponent(std::stoi(fileName)));
+			DataLoading::LoadMaterial(App, buffer, (Material*)component);
 			break;
 
 		case ResourceEnum::CAMERA:
 
-			DataLoading::LoadCamera(buffer, (Camera*)App->editorScene->FindGameObjectByComponent(std::stoi(fileName)));
+			DataLoading::LoadCamera(buffer, (Camera*)component);
 			break;
 
 		case ResourceEnum::UNKNOWN:
@@ -312,7 +323,7 @@ bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
 		if (libraryMap.count(fileName) == 1) { ManageSceneFiles(filePath, buffer, libraryMap.find(fileName)->second.filePath); }
 		else {
-		
+
 			pathAux = ManageSceneFiles(filePath, buffer, std::string());
 			libraryMap.insert(std::pair<std::string, LibraryInfo>(fileName, LibraryInfo(pathAux, ResourceEnum::SCENE)));
 
@@ -540,6 +551,48 @@ ResourceEnum ResourceManager::ConvertComponentTypeToResourceType(COMPONENT_TYPE*
 	}
 
 	return ResourceEnum::UNKNOWN;
+
+}
+
+
+void ResourceManager::GetComponentIfLoaded(const ResourceEnum* type, Component** component, std::string fileName) {
+
+	if (*type == ResourceEnum::MESH || *type == ResourceEnum::MATERIAL || *type == ResourceEnum::CAMERA) {	// Responsible to assign a loaded component to the selected material
+
+		*component = App->editorScene->FindGameObjectByComponent(std::stoi(fileName));
+
+		if (*component == nullptr) {
+
+			GameObject* focus = App->editorScene->GetFocus();
+
+			if (focus != nullptr) {
+
+				if (*type == ResourceEnum::MESH) {
+					
+					if(focus->mesh != nullptr) { *component = focus->mesh; }
+					else { *component = focus->AddComponent(COMPONENT_TYPE::MESH); }
+				
+				}
+
+				else if(*type == ResourceEnum::MATERIAL) {
+
+					if (focus->material != nullptr) { *component = focus->material; }
+					else { *component = focus->AddComponent(COMPONENT_TYPE::MATERIAL); }
+
+				}
+				
+				else if(*type == ResourceEnum::CAMERA) {
+
+					if (focus->camera != nullptr) { *component = focus->camera; }
+					else { *component = focus->AddComponent(COMPONENT_TYPE::CAMERA); }
+
+				}
+
+			}
+
+		}
+
+	}
 
 }
 

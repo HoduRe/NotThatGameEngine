@@ -36,6 +36,7 @@
 #define LIBRARY_MAP "LibraryMap"
 
 class GameObject;
+class Component;
 enum class COMPONENT_TYPE;
 
 enum class ResourceEnum {
@@ -114,11 +115,13 @@ private:
 	void CheckAssetsImported(PathNode* loadingNode);
 	void ImportToLibrary(std::string filePath, std::string fileName, std::string extension);
 	void CheckDeletedAssets();
+	void DeleteLibraryFile(std::string fileName);
 
 	bool ExecuteEvent(EVENT_ENUM _event, void* var);
 	void SearchFileInFileMap(std::string filePath);
 	std::string ManageSceneFiles(std::string assetsScenePath, char* bufferAssets, std::string libraryScenePath);
 	std::vector<int> GetSceneComponents(char* buffer);
+	void GetComponentIfLoaded(const ResourceEnum* type, Component** component, std::string fileName);
 
 public:
 

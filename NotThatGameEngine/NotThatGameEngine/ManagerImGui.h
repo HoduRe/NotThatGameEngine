@@ -85,12 +85,13 @@ private:
 	bool hierarchyWindow;
 	bool inspectorWindow;
 	bool loadFileMenu;
+	bool loadMeshMenu;
 
 	float3 position;
 	float3 rotationEuler;
 	float3 scaling;
 
-	char selectedFileName[FILE_MAX_LENGTH];
+	std::string selectedFileName;
 	GameObject* itemHovered;
 	GameObject* itemFocusedLastFrame;
 
