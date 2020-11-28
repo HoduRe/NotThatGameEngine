@@ -30,6 +30,7 @@
 #define BONES_PATH "Library/Bones/"
 #define PARTICLES_PATH "Library/ParticleSystems/"
 #define SHADERS_PATH "Library/Shaders/"
+#define LIBRARY_SCENES_PATH "Library/Scenes/"
 #define SCENES_PATH "Assets/Scenes/"
 
 // Deletes an array of buffers
@@ -76,7 +77,8 @@ enum class EVENT_ENUM
 	CREATE_PYRAMID,
 	CREATE_CYLINDER,
 
-	SAVE_SCENE
+	SAVE_SCENE,
+	SAVED_SCENE
 
 };
 

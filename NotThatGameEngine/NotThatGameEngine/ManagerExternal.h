@@ -53,7 +53,8 @@ public:
 	bool DuplicateFile(const char* srcFile, const char* dstFile);
 
 	unsigned int Save(const char* path, const void* buffer, unsigned int size, bool append = false) const;
-	bool Remove(const char* file);
+	bool RemoveDirectoryByName(const char* path);
+	bool RemoveFileByName(const char* path);
 
 	uint64 GetLastModTime(const char* filename);
 	std::string GetUniqueName(const char* path, const char* name) const;

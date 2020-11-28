@@ -12,7 +12,7 @@
 #include "Camera.h"
 #include "parson/parson.h"
 
-void DataSaving::SaveScene(Application* App) {
+std::string DataSaving::SaveScene(Application* App) {
 
 	JsonManager::JsonValue root(json_value_init_object());
 	JSON_Object* node(json_value_get_object(root.value));
@@ -31,6 +31,8 @@ void DataSaving::SaveScene(Application* App) {
 	App->externalManager->Save(sceneName.c_str(), buffer, size);
 
 	RELEASE_ARRAY(buffer);
+
+	return sceneName;
 
 }
 

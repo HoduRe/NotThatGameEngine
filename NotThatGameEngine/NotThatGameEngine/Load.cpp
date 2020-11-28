@@ -105,7 +105,9 @@ void DataLoading::LoadGameObject(Application* App, JSON_Array* gameObjectsArray,
 
 	}
 
-	if (gameObject->parent == nullptr) { App->eventManager->GenerateEvent(EVENT_ENUM::GAMEOBJECT_LOADED, EVENT_ENUM::NULL_EVENT, gameObject); }
+	if (gameObject->parent == nullptr) {
+		App->eventManager->GenerateEvent(EVENT_ENUM::GAMEOBJECT_LOADED, EVENT_ENUM::NULL_EVENT, gameObject);
+	}
 
 }
 

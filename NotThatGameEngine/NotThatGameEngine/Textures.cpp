@@ -78,12 +78,7 @@ uint Texture::IsTextureRepeated(const char* _name) {
 
 	for (int i = textureVec.size() - 1; i > -1; i--) {
 
-		if (textureVec[i].name == _name) {
-
-			LOG("Texture with name %s repeated.\n", _name);
-			return textureVec[i].textureId;
-
-		}
+		if (textureVec[i].name == _name) { return textureVec[i].textureId; }
 
 	}
 

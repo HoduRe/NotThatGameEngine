@@ -13,7 +13,7 @@ class GameObject;
 
 namespace DataSaving {
 
-	void SaveScene(Application* App);
+	std::string SaveScene(Application* App);
 	void RecursiveChildCall(Application* App, JSON_Array* gameObjectsArray, GameObject* gameObject);
 	void SaveGameObject(Application* App, JSON_Object* node, GameObject* gameObject);
 	void SaveComponentJSON(Application* App, JSON_Array* gameComponentsArray, Component* component, int arrayIndex);

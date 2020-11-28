@@ -36,6 +36,7 @@
 #define LIBRARY_MAP "LibraryMap"
 
 class GameObject;
+enum class COMPONENT_TYPE;
 
 enum class ResourceEnum {
 
@@ -98,13 +99,16 @@ public:
 	bool CleanUp();
 
 	void ManageGameObjectLoading(GameObject* gameObject);
+	ResourceEnum ConvertComponentTypeToResourceType(COMPONENT_TYPE* type);
 
 private:
 
 	std::string IsLoadedInLibrary(std::string* filePath);
 	std::string ImportAssetResourceByType(std::string path, std::string name, ResourceEnum type);
 	void LoadResourceByPath(std::string filePath);
-	ResourceEnum CheckTypeByExtension(std::string extension);
+	ResourceEnum GetTypeByExtension(std::string extension);
+	std::string GetExtensionByType(ResourceEnum type);
+	std::string GetPathByType(ResourceEnum type);
 
 	void CheckLibraryFiles(PathNode* libraryFiles);
 	void CheckAssetsImported(PathNode* loadingNode);
@@ -113,7 +117,9 @@ private:
 
 	bool ExecuteEvent(EVENT_ENUM _event, void* var);
 	void SearchFileInFileMap(std::string filePath);
-	
+	std::string ManageSceneFiles(std::string assetsScenePath, char* bufferAssets, std::string libraryScenePath);
+	std::vector<int> GetSceneComponents(char* buffer);
+
 public:
 
 private:

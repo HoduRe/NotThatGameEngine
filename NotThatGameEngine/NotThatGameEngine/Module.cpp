@@ -84,12 +84,11 @@ void Module::RemoveEvent(EVENT_ENUM eventId)
 
 bool Module::CheckListener(Module* mod)
 {
-	int numElem = listener.size();
 	int vectorBuffer = -1;
 	void* ptr = nullptr;
 
 	if (listener.size() == 0) { return false; }
-	for (int i = 0; i < numElem; i++) {
+	for (int i = 0; i < listener.size(); i++) {
 
 		for (int j = 0; j < App->eventManager->variablesVector.size(); j++) {
 			if (App->eventManager->variablesVector[j].id == listener[i]) {
@@ -98,6 +97,7 @@ bool Module::CheckListener(Module* mod)
 			}
 		}
 		if (mod->ExecuteEvent(listener[i], ptr) && vectorBuffer != -1) { App->eventManager->variablesVector.erase(App->eventManager->variablesVector.begin() + vectorBuffer); }
+
 	}
 
 	listener.clear();

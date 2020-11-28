@@ -35,6 +35,7 @@ ExternalManager::ExternalManager(Application* app, bool start_enabled) : Module(
 	CreateDir(ANIMATIONS_PATH);
 	CreateDir(PARTICLES_PATH);
 	CreateDir(SHADERS_PATH);
+	CreateDir(LIBRARY_SCENES_PATH);
 	CreateDir(SCENES_PATH);
 
 }
@@ -457,28 +458,48 @@ uint ExternalManager::Save(const char* path, const void* buffer, unsigned int si
 }
 
 
-bool ExternalManager::Remove(const char* file) {
+bool ExternalManager::RemoveDirectoryByName(const char* path) {
 
 	bool ret = false;
 
-	if (file != nullptr) {
+	if (path != nullptr) {
 
-		if (IsDirectory(file)) {
+		if (IsDirectory(path)) {
 
 			std::vector<std::string> containedFiles, containedDirs;
-			PathNode rootDirectory = GetAllFiles(file);
-			for (uint i = 0; i < rootDirectory.children.size(); ++i) { Remove(rootDirectory.children[i].path.c_str()); }
+			PathNode rootDirectory = GetAllFiles(path);
+			for (uint i = 0; i < rootDirectory.children.size(); ++i) { RemoveDirectoryByName(rootDirectory.children[i].path.c_str()); }
 
 		}
 
-		if (PHYSFS_delete(file) != 0) {
+		if (PHYSFS_delete(path) != 0) {
 
-			LOG("File deleted: [%s].\n", file);
+			LOG("File deleted: [%s].\n", path);
 			ret = true;
 
 		}
 
-		else { LOG("File System error while trying to delete [%s]: %s.\n", file, PHYSFS_getLastError()); }
+		else { LOG("File System error while trying to delete [%s]: %s.\n", path, PHYSFS_getLastError()); }
+	}
+
+	return ret;
+}
+
+
+bool ExternalManager::RemoveFileByName(const char* path) {
+
+	bool ret = false;
+
+	if (path != nullptr) {
+
+		if (PHYSFS_delete(path) != 0) {
+
+			LOG("File deleted: [%s].\n", path);
+			ret = true;
+
+		}
+
+		else { LOG("File System error while trying to delete [%s]: %s.\n", path, PHYSFS_getLastError()); }
 	}
 
 	return ret;

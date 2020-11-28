@@ -1,444 +1,439 @@
 {
     "MapData": [
         {
-            "FileName": "1012056312",
-            "FilePath": "Library\/\/Materials\/1012056312.NotThatMaterial",
+            "FileName": "105529695",
+            "FilePath": "Library\/\/Materials\/105529695.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "1083930363",
-            "FilePath": "Library\/\/Materials\/1083930363.NotThatMaterial",
+            "FileName": "1076355915",
+            "FilePath": "Library\/\/Materials\/1076355915.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "1114316907",
-            "FilePath": "Library\/\/Materials\/1114316907.NotThatMaterial",
+            "FileName": "1165494596",
+            "FilePath": "Library\/\/Meshes\/1165494596.NotThatMesh",
+            "Type": 3
+        },
+        {
+            "FileName": "1206577065",
+            "FilePath": "Library\/\/Materials\/1206577065.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "1179565225",
-            "FilePath": "Library\/\/Materials\/1179565225.NotThatMaterial",
+            "FileName": "1242392365",
+            "FilePath": "Library\/\/Meshes\/1242392365.NotThatMesh",
+            "Type": 3
+        },
+        {
+            "FileName": "125138829",
+            "FilePath": "Library\/\/Materials\/125138829.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "1180263179",
-            "FilePath": "Library\/\/Materials\/1180263179.NotThatMaterial",
+            "FileName": "1259946903",
+            "FilePath": "Library\/\/Meshes\/1259946903.NotThatMesh",
+            "Type": 3
+        },
+        {
+            "FileName": "1268771675",
+            "FilePath": "Library\/\/Meshes\/1268771675.NotThatMesh",
+            "Type": 3
+        },
+        {
+            "FileName": "1282172140",
+            "FilePath": "Library\/\/Meshes\/1282172140.NotThatMesh",
+            "Type": 3
+        },
+        {
+            "FileName": "1294479255",
+            "FilePath": "Library\/\/Meshes\/1294479255.NotThatMesh",
+            "Type": 3
+        },
+        {
+            "FileName": "131174762",
+            "FilePath": "Library\/\/Materials\/131174762.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "11972734",
-            "FilePath": "Library\/\/Materials\/11972734.NotThatMaterial",
+            "FileName": "1332616497",
+            "FilePath": "Library\/\/Meshes\/1332616497.NotThatMesh",
+            "Type": 3
+        },
+        {
+            "FileName": "1352419653",
+            "FilePath": "Library\/\/Materials\/1352419653.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "1220912547",
-            "FilePath": "Library\/\/Materials\/1220912547.NotThatMaterial",
+            "FileName": "1395535091",
+            "FilePath": "Library\/\/Meshes\/1395535091.NotThatMesh",
+            "Type": 3
+        },
+        {
+            "FileName": "1423861549",
+            "FilePath": "Library\/\/Meshes\/1423861549.NotThatMesh",
+            "Type": 3
+        },
+        {
+            "FileName": "1435934756",
+            "FilePath": "Library\/\/Meshes\/1435934756.NotThatMesh",
+            "Type": 3
+        },
+        {
+            "FileName": "1453451",
+            "FilePath": "Library\/\/Materials\/1453451.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "1244681593",
-            "FilePath": "Library\/\/Materials\/1244681593.NotThatMaterial",
+            "FileName": "1458532073",
+            "FilePath": "Library\/\/Meshes\/1458532073.NotThatMesh",
+            "Type": 3
+        },
+        {
+            "FileName": "1543533709",
+            "FilePath": "Library\/\/Meshes\/1543533709.NotThatMesh",
+            "Type": 3
+        },
+        {
+            "FileName": "1554912332",
+            "FilePath": "Library\/\/Materials\/1554912332.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "1298544318",
-            "FilePath": "Library\/\/Materials\/1298544318.NotThatMaterial",
+            "FileName": "1596155778",
+            "FilePath": "Library\/\/Meshes\/1596155778.NotThatMesh",
+            "Type": 3
+        },
+        {
+            "FileName": "1641482353",
+            "FilePath": "Library\/\/Materials\/1641482353.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "1304016160",
-            "FilePath": "Library\/\/Materials\/1304016160.NotThatMaterial",
+            "FileName": "1653804091",
+            "FilePath": "Library\/\/Materials\/1653804091.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "1344758313",
-            "FilePath": "Library\/\/Meshes\/1344758313.NotThatMesh",
-            "Type": 3
-        },
-        {
-            "FileName": "1384134079",
-            "FilePath": "Library\/\/Meshes\/1384134079.NotThatMesh",
-            "Type": 3
-        },
-        {
-            "FileName": "139102354",
-            "FilePath": "Library\/\/Meshes\/139102354.NotThatMesh",
-            "Type": 3
-        },
-        {
-            "FileName": "1431007410",
-            "FilePath": "Library\/\/Meshes\/1431007410.NotThatMesh",
-            "Type": 3
-        },
-        {
-            "FileName": "1441223511",
-            "FilePath": "Library\/\/Materials\/1441223511.NotThatMaterial",
+            "FileName": "1667659290",
+            "FilePath": "Library\/\/Materials\/1667659290.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "1465312177",
-            "FilePath": "Library\/\/Meshes\/1465312177.NotThatMesh",
+            "FileName": "1716583386",
+            "FilePath": "Library\/\/Meshes\/1716583386.NotThatMesh",
             "Type": 3
         },
         {
-            "FileName": "1530761959",
-            "FilePath": "Library\/\/Meshes\/1530761959.NotThatMesh",
+            "FileName": "1762841113",
+            "FilePath": "Library\/\/Meshes\/1762841113.NotThatMesh",
             "Type": 3
         },
         {
-            "FileName": "1567536873",
-            "FilePath": "Library\/\/Materials\/1567536873.NotThatMaterial",
+            "FileName": "1767760980",
+            "FilePath": "Library\/\/Meshes\/1767760980.NotThatMesh",
+            "Type": 3
+        },
+        {
+            "FileName": "1772631307",
+            "FilePath": "Library\/\/Meshes\/1772631307.NotThatMesh",
+            "Type": 3
+        },
+        {
+            "FileName": "1829636392",
+            "FilePath": "Library\/\/Meshes\/1829636392.NotThatMesh",
+            "Type": 3
+        },
+        {
+            "FileName": "1846125800",
+            "FilePath": "Library\/\/Meshes\/1846125800.NotThatMesh",
+            "Type": 3
+        },
+        {
+            "FileName": "1895619651",
+            "FilePath": "Library\/\/Materials\/1895619651.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "1571677968",
-            "FilePath": "Library\/\/Materials\/1571677968.NotThatMaterial",
+            "FileName": "1913754966",
+            "FilePath": "Library\/\/Meshes\/1913754966.NotThatMesh",
+            "Type": 3
+        },
+        {
+            "FileName": "1914306573",
+            "FilePath": "Library\/\/Materials\/1914306573.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "1624870406",
-            "FilePath": "Library\/\/Meshes\/1624870406.NotThatMesh",
-            "Type": 3
-        },
-        {
-            "FileName": "1637213358",
-            "FilePath": "Library\/\/Materials\/1637213358.NotThatMaterial",
+            "FileName": "1936245942",
+            "FilePath": "Library\/\/Materials\/1936245942.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "1639705417",
-            "FilePath": "Library\/\/Materials\/1639705417.NotThatMaterial",
+            "FileName": "1952170954",
+            "FilePath": "Library\/\/Meshes\/1952170954.NotThatMesh",
+            "Type": 3
+        },
+        {
+            "FileName": "1995382225",
+            "FilePath": "Library\/\/Meshes\/1995382225.NotThatMesh",
+            "Type": 3
+        },
+        {
+            "FileName": "2070702123",
+            "FilePath": "Library\/\/Materials\/2070702123.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "1731736801",
-            "FilePath": "Library\/\/Meshes\/1731736801.NotThatMesh",
-            "Type": 3
-        },
-        {
-            "FileName": "1770351110",
-            "FilePath": "Library\/\/Meshes\/1770351110.NotThatMesh",
-            "Type": 3
-        },
-        {
-            "FileName": "1791339764",
-            "FilePath": "Library\/\/Materials\/1791339764.NotThatMaterial",
+            "FileName": "2093412937",
+            "FilePath": "Library\/\/Materials\/2093412937.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "1812334152",
-            "FilePath": "Library\/\/Meshes\/1812334152.NotThatMesh",
+            "FileName": "213887688",
+            "FilePath": "Library\/\/Meshes\/213887688.NotThatMesh",
             "Type": 3
         },
         {
-            "FileName": "1816124454",
-            "FilePath": "Library\/\/Meshes\/1816124454.NotThatMesh",
+            "FileName": "2139915118",
+            "FilePath": "Library\/\/Meshes\/2139915118.NotThatMesh",
             "Type": 3
         },
         {
-            "FileName": "1816419818",
-            "FilePath": "Library\/\/Meshes\/1816419818.NotThatMesh",
+            "FileName": "221277601",
+            "FilePath": "Library\/\/Meshes\/221277601.NotThatMesh",
             "Type": 3
         },
         {
-            "FileName": "1842781152",
-            "FilePath": "Library\/\/Meshes\/1842781152.NotThatMesh",
-            "Type": 3
-        },
-        {
-            "FileName": "1861155624",
-            "FilePath": "Library\/\/Meshes\/1861155624.NotThatMesh",
-            "Type": 3
-        },
-        {
-            "FileName": "1930887403",
-            "FilePath": "Library\/\/Materials\/1930887403.NotThatMaterial",
+            "FileName": "229666221",
+            "FilePath": "Library\/\/Materials\/229666221.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "1984721258",
-            "FilePath": "Library\/\/Materials\/1984721258.NotThatMaterial",
+            "FileName": "252509799",
+            "FilePath": "Library\/\/Materials\/252509799.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "1987199128",
-            "FilePath": "Library\/\/Meshes\/1987199128.NotThatMesh",
+            "FileName": "267808430",
+            "FilePath": "Library\/\/Meshes\/267808430.NotThatMesh",
             "Type": 3
         },
         {
-            "FileName": "1991541755",
-            "FilePath": "Library\/\/Materials\/1991541755.NotThatMaterial",
+            "FileName": "357136296",
+            "FilePath": "Library\/\/Materials\/357136296.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "2034582397",
-            "FilePath": "Library\/\/Meshes\/2034582397.NotThatMesh",
-            "Type": 3
-        },
-        {
-            "FileName": "2094628089",
-            "FilePath": "Library\/\/Materials\/2094628089.NotThatMaterial",
+            "FileName": "423117950",
+            "FilePath": "Library\/\/Materials\/423117950.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "2105539986",
-            "FilePath": "Library\/\/Materials\/2105539986.NotThatMaterial",
+            "FileName": "484158740",
+            "FilePath": "Library\/\/Meshes\/484158740.NotThatMesh",
+            "Type": 3
+        },
+        {
+            "FileName": "498804754",
+            "FilePath": "Library\/\/Materials\/498804754.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "2106463107",
-            "FilePath": "Library\/\/Materials\/2106463107.NotThatMaterial",
+            "FileName": "530490883",
+            "FilePath": "Library\/\/Meshes\/530490883.NotThatMesh",
+            "Type": 3
+        },
+        {
+            "FileName": "601869799",
+            "FilePath": "Library\/\/Meshes\/601869799.NotThatMesh",
+            "Type": 3
+        },
+        {
+            "FileName": "637681776",
+            "FilePath": "Library\/\/Materials\/637681776.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "250072654",
-            "FilePath": "Library\/\/Meshes\/250072654.NotThatMesh",
-            "Type": 3
-        },
-        {
-            "FileName": "288424182",
-            "FilePath": "Library\/\/Materials\/288424182.NotThatMaterial",
+            "FileName": "639477509",
+            "FilePath": "Library\/\/Materials\/639477509.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "334874925",
-            "FilePath": "Library\/\/Meshes\/334874925.NotThatMesh",
-            "Type": 3
-        },
-        {
-            "FileName": "373254384",
-            "FilePath": "Library\/\/Meshes\/373254384.NotThatMesh",
-            "Type": 3
-        },
-        {
-            "FileName": "385333584",
-            "FilePath": "Library\/\/Materials\/385333584.NotThatMaterial",
+            "FileName": "669416161",
+            "FilePath": "Library\/\/Materials\/669416161.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "398568250",
-            "FilePath": "Library\/\/Meshes\/398568250.NotThatMesh",
+            "FileName": "67068124",
+            "FilePath": "Library\/\/Meshes\/67068124.NotThatMesh",
             "Type": 3
         },
         {
-            "FileName": "40115899",
-            "FilePath": "Library\/\/Meshes\/40115899.NotThatMesh",
-            "Type": 3
-        },
-        {
-            "FileName": "428361131",
-            "FilePath": "Library\/\/Meshes\/428361131.NotThatMesh",
-            "Type": 3
-        },
-        {
-            "FileName": "460898467",
-            "FilePath": "Library\/\/Meshes\/460898467.NotThatMesh",
-            "Type": 3
-        },
-        {
-            "FileName": "472020618",
-            "FilePath": "Library\/\/Materials\/472020618.NotThatMaterial",
+            "FileName": "672273762",
+            "FilePath": "Library\/\/Materials\/672273762.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "511517533",
-            "FilePath": "Library\/\/Materials\/511517533.NotThatMaterial",
+            "FileName": "697205938",
+            "FilePath": "Library\/\/Materials\/697205938.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "528995398",
-            "FilePath": "Library\/\/Meshes\/528995398.NotThatMesh",
-            "Type": 3
-        },
-        {
-            "FileName": "553926210",
-            "FilePath": "Library\/\/Meshes\/553926210.NotThatMesh",
-            "Type": 3
-        },
-        {
-            "FileName": "564584834",
-            "FilePath": "Library\/\/Meshes\/564584834.NotThatMesh",
-            "Type": 3
-        },
-        {
-            "FileName": "624677555",
-            "FilePath": "Library\/\/Meshes\/624677555.NotThatMesh",
-            "Type": 3
-        },
-        {
-            "FileName": "647405818",
-            "FilePath": "Library\/\/Materials\/647405818.NotThatMaterial",
+            "FileName": "707933124",
+            "FilePath": "Library\/\/Materials\/707933124.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "658317905",
-            "FilePath": "Library\/\/Materials\/658317905.NotThatMaterial",
+            "FileName": "712314228",
+            "FilePath": "Library\/\/Materials\/712314228.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "674039222",
-            "FilePath": "Library\/\/Meshes\/674039222.NotThatMesh",
-            "Type": 3
-        },
-        {
-            "FileName": "689786142",
-            "FilePath": "Library\/\/Meshes\/689786142.NotThatMesh",
-            "Type": 3
-        },
-        {
-            "FileName": "701169015",
-            "FilePath": "Library\/\/Meshes\/701169015.NotThatMesh",
-            "Type": 3
-        },
-        {
-            "FileName": "7397870",
-            "FilePath": "Library\/\/Materials\/7397870.NotThatMaterial",
+            "FileName": "720412426",
+            "FilePath": "Library\/\/Materials\/720412426.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "765022228",
-            "FilePath": "Library\/\/Materials\/765022228.NotThatMaterial",
-            "Type": 4
-        },
-        {
-            "FileName": "819048189",
-            "FilePath": "Library\/\/Meshes\/819048189.NotThatMesh",
+            "FileName": "769971075",
+            "FilePath": "Library\/\/Meshes\/769971075.NotThatMesh",
             "Type": 3
         },
         {
-            "FileName": "820687578",
-            "FilePath": "Library\/\/Materials\/820687578.NotThatMaterial",
-            "Type": 4
-        },
-        {
-            "FileName": "824895462",
-            "FilePath": "Library\/\/Materials\/824895462.NotThatMaterial",
-            "Type": 4
-        },
-        {
-            "FileName": "840686721",
-            "FilePath": "Library\/\/Meshes\/840686721.NotThatMesh",
+            "FileName": "770086357",
+            "FilePath": "Library\/\/Meshes\/770086357.NotThatMesh",
             "Type": 3
         },
         {
-            "FileName": "858443868",
-            "FilePath": "Library\/\/Materials\/858443868.NotThatMaterial",
+            "FileName": "773998851",
+            "FilePath": "Library\/\/Materials\/773998851.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "881745156",
-            "FilePath": "Library\/\/Meshes\/881745156.NotThatMesh",
+            "FileName": "778348044",
+            "FilePath": "Library\/\/Meshes\/778348044.NotThatMesh",
             "Type": 3
         },
         {
-            "FileName": "928058381",
-            "FilePath": "Library\/\/Meshes\/928058381.NotThatMesh",
-            "Type": 3
-        },
-        {
-            "FileName": "938193392",
-            "FilePath": "Library\/\/Materials\/938193392.NotThatMaterial",
+            "FileName": "80565203",
+            "FilePath": "Library\/\/Materials\/80565203.NotThatMaterial",
             "Type": 4
         },
         {
-            "FileName": "959954872",
-            "FilePath": "Library\/\/Meshes\/959954872.NotThatMesh",
+            "FileName": "87473776",
+            "FilePath": "Library\/\/Meshes\/87473776.NotThatMesh",
             "Type": 3
         },
         {
-            "FileName": "Alex",
-            "FilePath": "Library\/\/Textures\/Alex.dds",
-            "Type": 7
+            "FileName": "882004237",
+            "FilePath": "Library\/\/Materials\/882004237.NotThatMaterial",
+            "Type": 4
+        },
+        {
+            "FileName": "893078075",
+            "FilePath": "Library\/\/Meshes\/893078075.NotThatMesh",
+            "Type": 3
+        },
+        {
+            "FileName": "894627984",
+            "FilePath": "Library\/\/Materials\/894627984.NotThatMaterial",
+            "Type": 4
+        },
+        {
+            "FileName": "999379010",
+            "FilePath": "Library\/\/Materials\/999379010.NotThatMaterial",
+            "Type": 4
         },
         {
             "FileName": "Building_V01_C",
-            "FilePath": "Library\/\/Textures\/Building_V01_C.dds",
+            "FilePath": "Library\/Textures\/Building_V01_C.dds",
             "Type": 7
         },
         {
             "FileName": "Building_V02_C",
-            "FilePath": "Library\/\/Textures\/Building_V02_C.dds",
+            "FilePath": "Library\/Textures\/Building_V02_C.dds",
             "Type": 7
         },
         {
             "FileName": "Checker",
-            "FilePath": "Library\/\/Textures\/Checker.dds",
+            "FilePath": "Library\/Textures\/Checker.dds",
             "Type": 7
         },
         {
             "FileName": "Degenerate",
-            "FilePath": "Library\/\/Textures\/Degenerate.dds",
+            "FilePath": "Library\/Textures\/Degenerate.dds",
             "Type": 7
         },
         {
             "FileName": "GrayTexture",
-            "FilePath": "Library\/\/Textures\/GrayTexture.dds",
+            "FilePath": "Library\/Textures\/GrayTexture.dds",
             "Type": 7
         },
         {
             "FileName": "GreenTexture",
-            "FilePath": "Library\/\/Textures\/GreenTexture.dds",
+            "FilePath": "Library\/Textures\/GreenTexture.dds",
             "Type": 7
         },
         {
             "FileName": "Megalodon",
-            "FilePath": "Library\/\/Models\/Megalodon.NotThatModel",
-            "Type": 5
+            "FilePath": "Library\/Models\/Megalodon.NotThatModel",
+            "Type": 2
         },
         {
             "FileName": "Street environment_V01",
-            "FilePath": "Library\/\/Models\/Street environment_V01.NotThatModel",
-            "Type": 5
+            "FilePath": "Library\/Models\/Street environment_V01.NotThatModel",
+            "Type": 2
         },
         {
             "FileName": "building 01_c",
-            "FilePath": "Library\/\/Textures\/building 01_c.dds",
+            "FilePath": "Library\/Textures\/building 01_c.dds",
             "Type": 7
         },
         {
             "FileName": "building 06_ c",
-            "FilePath": "Library\/\/Textures\/building 06_ c.dds",
+            "FilePath": "Library\/Textures\/building 06_ c.dds",
             "Type": 7
         },
         {
             "FileName": "building 06_ c ",
-            "FilePath": "Library\/\/Textures\/building 06_ c .dds",
+            "FilePath": "Library\/Textures\/building 06_ c .dds",
             "Type": 7
         },
         {
             "FileName": "building03_c",
-            "FilePath": "Library\/\/Textures\/building03_c.dds",
+            "FilePath": "Library\/Textures\/building03_c.dds",
             "Type": 7
         },
         {
             "FileName": "building05 _c",
-            "FilePath": "Library\/\/Textures\/building05 _c.dds",
+            "FilePath": "Library\/Textures\/building05 _c.dds",
             "Type": 7
         },
         {
             "FileName": "building_016_c",
-            "FilePath": "Library\/\/Textures\/building_016_c.dds",
+            "FilePath": "Library\/Textures\/building_016_c.dds",
             "Type": 7
         },
         {
             "FileName": "building_025_c",
-            "FilePath": "Library\/\/Textures\/building_025_c.dds",
+            "FilePath": "Library\/Textures\/building_025_c.dds",
             "Type": 7
         },
         {
             "FileName": "megalodon",
-            "FilePath": "Library\/\/Textures\/megalodon.dds",
+            "FilePath": "Library\/Textures\/megalodon.dds",
             "Type": 7
         },
         {
             "FileName": "scene",
-            "FilePath": "Library\/\/Textures\/scene.dds",
+            "FilePath": "Library\/Textures\/scene.dds",
             "Type": 7
         },
         {
             "FileName": "warriorWalk",
-            "FilePath": "Library\/\/Models\/warriorWalk.NotThatModel",
-            "Type": 5
+            "FilePath": "Library\/Models\/warriorWalk.NotThatModel",
+            "Type": 2
         }
     ]
 } 
