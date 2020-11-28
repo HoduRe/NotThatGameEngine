@@ -199,21 +199,24 @@ std::string ResourceManager::ImportAssetResourceByType(std::string path, std::st
 
 void ResourceManager::CheckDeletedAssets() {
 
-	for (std::map<std::string, FileInfo>::iterator it = assetsMap.begin(); it != assetsMap.end(); it++) {
+	for (std::map<std::string, FileInfo>::iterator it = assetsMap.begin(); it != assetsMap.end(); it) {
 
 		if (!assetsMap.at(it->first).checked) {
 
 			std::map<std::string, FileInfo>::iterator itAux = it;
-			if (it != assetsMap.begin()) { it--; }
-			else { it++; }
+			itAux++;
 
-			if (libraryMap.find(itAux->first)->second.type == ResourceEnum::SCENE) { ManageSceneFiles(std::string(), nullptr, libraryMap.find(itAux->first)->second.filePath); }
-			App->externalManager->RemoveFileByName(libraryMap.find(itAux->first)->second.filePath.c_str());
+			if (libraryMap.find(it->first)->second.type == ResourceEnum::SCENE) { ManageSceneFiles(std::string(), nullptr, libraryMap.find(it->first)->second.filePath); }
+			App->externalManager->RemoveFileByName(libraryMap.find(it->first)->second.filePath.c_str());
 
-			libraryMap.erase(libraryMap.find(itAux->first));
-			assetsMap.erase(assetsMap.find(itAux->first));
+			libraryMap.erase(libraryMap.find(it->first));
+			assetsMap.erase(assetsMap.find(it->first));
+
+			it = itAux;
 
 		}
+
+		else { it++; }
 
 	}
 
@@ -291,7 +294,7 @@ void ResourceManager::LoadResourceByPath(std::string filePath) {
 
 bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
-	std::string filePath, secondaryPath;
+	std::string filePath, pathAux, fileName;
 	char* buffer = nullptr;
 
 	switch (eventId) {
@@ -300,15 +303,20 @@ bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
 		filePath = DataSaving::SaveScene(App);
 		App->externalManager->Load(filePath.c_str(), &buffer);
-		App->externalManager->SplitFilePath(filePath.c_str(), nullptr, &secondaryPath);
+		App->externalManager->SplitFilePath(filePath.c_str(), nullptr, &fileName);
 
-		if (assetsMap.count(secondaryPath) == 1) {
-			assetsMap.insert(std::pair<std::string, FileInfo>(secondaryPath, FileInfo(filePath, assetsMap.find(secondaryPath)->second.id, 0, true)));
+		if (assetsMap.count(fileName) == 1) {
+			assetsMap.insert(std::pair<std::string, FileInfo>(fileName, FileInfo(filePath, assetsMap.find(fileName)->second.id, 0, true)));
 		}	// Generate date :)
-		else { assetsMap.insert(std::pair<std::string, FileInfo>(secondaryPath, FileInfo(filePath, App->idGenerator.Int(), 0, true))); }	// Generate date :)
+		else { assetsMap.insert(std::pair<std::string, FileInfo>(fileName, FileInfo(filePath, App->idGenerator.Int(), 0, true))); }	// Generate date :)
 
-		if (libraryMap.count(secondaryPath) == 1) { ManageSceneFiles(filePath, buffer, libraryMap.find(secondaryPath)->second.filePath); }
-		else { ManageSceneFiles(filePath, buffer, std::string()); }
+		if (libraryMap.count(fileName) == 1) { ManageSceneFiles(filePath, buffer, libraryMap.find(fileName)->second.filePath); }
+		else {
+		
+			pathAux = ManageSceneFiles(filePath, buffer, std::string());
+			libraryMap.insert(std::pair<std::string, LibraryInfo>(fileName, LibraryInfo(pathAux, ResourceEnum::SCENE)));
+
+		}
 
 		break;
 
@@ -380,7 +388,7 @@ std::string ResourceManager::ManageSceneFiles(std::string assetsScenePath, char*
 		char* bufferLibrary;
 
 		App->externalManager->Load(libraryAuxPath.c_str(), &bufferLibrary);
-		assetsIDs = GetSceneComponents(bufferAssets);	// If there is no Scene, it 
+		if (bufferAssets != nullptr) { assetsIDs = GetSceneComponents(bufferAssets); }	// If there is no Scene in Assets/, buffer is nullptr
 		libraryIDs = GetSceneComponents(bufferLibrary);
 
 		for (int i = 0; i < assetsIDs.size(); i += 2) {	// Not as redundant to re-loop the previously looped info as it seems
@@ -404,6 +412,13 @@ std::string ResourceManager::ManageSceneFiles(std::string assetsScenePath, char*
 
 	}
 
+	for (int i = 0; i < assetsIDs.size(); i += 2) {
+
+		ResourceEnum type = ConvertComponentTypeToResourceType((COMPONENT_TYPE*)&assetsIDs[i + 1]);
+		libraryMap.insert(std::pair<std::string, LibraryInfo>(fileName, LibraryInfo(libraryAuxPath, type)));
+
+	}
+
 	for (int i = 0; i < libraryIDs.size(); i += 2) {
 
 		ResourceEnum type = ConvertComponentTypeToResourceType((COMPONENT_TYPE*)&libraryIDs[i + 1]);
@@ -424,26 +439,22 @@ std::vector<int> ResourceManager::GetSceneComponents(char* buffer) {
 
 	std::vector<int> componentIDs;
 
-	if (buffer != nullptr) {
+	JsonManager::JsonValue root(json_parse_string(buffer));
+	JSON_Object* node(json_value_get_object(root.value));
+	JSON_Array* objectsNode(json_object_get_array(node, JSON_NODE_GAMEOBJECTS));
+	int size = JsonManager::GetArraySize(objectsNode);
 
-		JsonManager::JsonValue root(json_parse_string(buffer));
-		JSON_Object* node(json_value_get_object(root.value));
-		JSON_Array* objectsNode(json_object_get_array(node, JSON_NODE_GAMEOBJECTS));
-		int size = JsonManager::GetArraySize(objectsNode);
+	for (int i = 0; i < size; i++) {
 
-		for (int i = 0; i < size; i++) {
+		JSON_Object* nodeObject = json_array_get_object(objectsNode, i);
+		JSON_Array* componentNode(json_object_get_array(nodeObject, JSON_NODE_COMPONENTS));
+		int sizeComponents = JsonManager::GetArraySize(componentNode);
 
-			JSON_Object* nodeObject = json_array_get_object(objectsNode, i);
-			JSON_Array* componentNode(json_object_get_array(nodeObject, JSON_NODE_COMPONENTS));
-			int sizeComponents = JsonManager::GetArraySize(componentNode);
+		for (int j = 0; j < sizeComponents; j++) {
 
-			for (int j = 0; j < sizeComponents; j++) {
-
-				JSON_Object* nodeComponent = json_array_get_object(componentNode, j);
-				componentIDs.push_back(json_object_get_number(nodeComponent, JSON_NODE_COMPONENT_ID));
-				componentIDs.push_back(json_object_get_number(nodeComponent, JSON_NODE_COMPONENT_TYPE));
-
-			}
+			JSON_Object* nodeComponent = json_array_get_object(componentNode, j);
+			componentIDs.push_back(json_object_get_number(nodeComponent, JSON_NODE_COMPONENT_ID));
+			componentIDs.push_back(json_object_get_number(nodeComponent, JSON_NODE_COMPONENT_TYPE));
 
 		}
 
