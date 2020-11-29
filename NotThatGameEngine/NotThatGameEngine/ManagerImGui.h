@@ -36,6 +36,7 @@ public:
 	bool borderless;
 	bool fullDesktop;
 	bool vsync;
+	bool hasHierarchyFocus;
 
 private:
 
@@ -88,7 +89,6 @@ private:
 	bool loadFileMenu;
 	bool loadMeshMenu;
 	bool loadTexturesMenu;
-	bool hasHierarchyFocus;
 	bool referenceMenu;
 
 	float3 position;

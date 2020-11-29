@@ -13,6 +13,7 @@
 #include "Mesh.h"
 #include "Transform.h"
 #include "Camera.h"
+#include "ManagerImGui.h"
 
 #pragma comment( lib, "Assimp/libx86/assimp.lib" )
 
@@ -84,7 +85,7 @@ update_status EditorScene::PostUpdate(float dt) {
 	int id = 0;
 
 	if (focus != nullptr) {
-		if (App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) { focus->deleteGameObject = true; }
+		if (App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN && App->imGui->hasHierarchyFocus) { focus->deleteGameObject = true; }
 		id = focus->id;
 	}
 

@@ -22,12 +22,7 @@ void Transform::RecalculateTransformFromParent(float4x4& parentTransform) {
 void Transform::RecalculateEulerAngles() { rotationEuler = rotation.ToEulerXYZ() * RADTODEG; }
 
 
-void Transform::RecalculateTransform() {
-
-	transform = float4x4::FromTRS(position, rotation, scale);
-	RecalculateEulerAngles();
-
-}
+void Transform::RecalculateTransform() { transform = float4x4::FromTRS(position, rotation, scale); }
 
 
 void Transform::SetPosition(float3 _position) {
@@ -48,10 +43,10 @@ void Transform::SetRotation(Quat _rotation) {
 
 void Transform::SetEulerAngles(float3 eulerAngles) {
 
-	float3 newEluerRotation = (eulerAngles - rotationEuler) * DEGTORAD;
-	Quat newRotation = Quat::FromEulerXYZ(newEluerRotation.x, newEluerRotation.y, newEluerRotation.z);
+	float3 deviation = (eulerAngles - rotationEuler) * DEGTORAD;
+	Quat newRotation = Quat::FromEulerXYZ(deviation.x, deviation.y, deviation.z);
 	rotation = rotation * newRotation;
-	rotationEuler = newEluerRotation;
+	rotationEuler = eulerAngles;
 	RecalculateTransform();
 
 }
