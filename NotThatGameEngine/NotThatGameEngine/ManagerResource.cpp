@@ -249,7 +249,6 @@ void ResourceManager::LoadResourceByPath(std::string filePath, std::string fileN
 		case ResourceEnum::EXTERNAL_MODEL:
 
 			Importer::ImportNewModel(App, filePath.c_str(), buffer, size);
-			// Add to libraryMap
 			break;
 
 		case ResourceEnum::OWN_MODEL:
@@ -261,7 +260,6 @@ void ResourceManager::LoadResourceByPath(std::string filePath, std::string fileN
 
 			id = DataLoading::LoadTexture(App, filePath.c_str(), buffer, size);
 			App->eventManager->GenerateEvent(EVENT_ENUM::PUT_TEXTURE_TO_FOCUSED_MODEL, EVENT_ENUM::NULL_EVENT, (void*)id);
-			// If not in library, add to libraryMap
 			break;
 
 		case ResourceEnum::SCENE:
@@ -397,7 +395,7 @@ std::string ResourceManager::IsLoadedInLibrary(std::string* filePath) {
 
 void ResourceManager::ManageGameObjectLoading(GameObject* gameObject) {
 
-	// When a gameObject / Model is loaded, do things here with the Library and or Assets and Memory maps. gameObject is the root GameObject
+	// When a gameObject / Model is loaded, do things here with the Memory maps. gameObject is the root GameObject
 
 	long long int id = App->idGenerator.Int();
 	gameObject->id = id;
