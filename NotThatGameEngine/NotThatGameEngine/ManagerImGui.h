@@ -4,11 +4,11 @@
 #include "Module.h"
 #include "Globals.h"
 #include "MathGeoLib/src/MathGeoLib.h"
+#include "imgui.h"
 
 #define FILE_MAX_LENGTH 250
 
 class GameObject;
-class ImVec2;
 
 class ManagerImGui : public Module{
 
@@ -52,7 +52,7 @@ private:
 
 	void AddChildNode(GameObject* nextObject, int index);
 
-	bool MouseIsInside(ImVec2* position, ImVec2* size);
+	bool MouseIsInside(ImVec2 position, ImVec2 size);
 
 private:
 
@@ -91,6 +91,9 @@ private:
 	float3 position;
 	float3 rotationEuler;
 	float3 scaling;
+
+	ImVec2 hierarchyWindowPos;
+	ImVec2 hierarchyWindowSize;
 
 	std::string selectedFilePath;
 	std::string deletedFileName;

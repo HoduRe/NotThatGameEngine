@@ -33,7 +33,7 @@ fullscreen(WIN_FULLSCREEN), resizable(WIN_RESIZABLE), borderless(WIN_BORDERLESS)
 AVX(false), AVX2(false), AltiVec(false), MMX(false), RDTSC(false), SSE(false), SSE2(false), SSE3(false), SSE41(false), SSE42(false),
 showDemoWindow(false), defaultButtonsMenu(false), aboutWindow(false), configMenu(false), appActive(false), consoleMenu(true), sceneWindow(true), hierarchyWindow(true), inspectorWindow(true),
 Devil(), Assimp(), PhysFS(), GLEW(), loadFileMenu(false), selectedFilePath(), position(), rotationEuler(), scaling(), itemHovered(nullptr), itemFocusedLastFrame(nullptr), loadMeshMenu(false),
-deletedFileName(), dragDropFile(), loadTexturesMenu(false)
+deletedFileName(), dragDropFile(), loadTexturesMenu(false), hierarchyWindowPos(), hierarchyWindowSize()
 {}
 
 
@@ -498,8 +498,8 @@ void ManagerImGui::HierarchyWindow() {
 		int size = App->editorScene->rootGameObjectsVec.size();
 
 		ImGui::Begin("Scene Objects", &hierarchyWindow);
-		ImVec2 windowPos = ImGui::GetWindowPos();
-		ImVec2 windowSize = ImGui::GetWindowSize();
+		hierarchyWindowPos = ImGui::GetWindowPos();
+		hierarchyWindowSize = ImGui::GetWindowSize();
 
 		ImGui::Button("CreateGO");
 		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN && ImGui::IsItemClicked()) {
@@ -516,7 +516,7 @@ void ManagerImGui::HierarchyWindow() {
 			if (App->editorScene->GetFocus() != nullptr) { App->editorScene->SetDeleteGameObject(App->editorScene->GetFocus()->id); }
 		}
 
-		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN && MouseIsInside(&windowPos, &windowSize)) { App->editorScene->SetFocus(nullptr); }
+		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN && MouseIsInside(hierarchyWindowPos, hierarchyWindowSize)) { App->editorScene->SetFocus(nullptr); }
 
 		for (int i = 0; i < size; i++) {
 
@@ -1049,7 +1049,7 @@ void ManagerImGui::DrawDirectoryRecursively(const char* directory, const char* e
 
 void ManagerImGui::HierarchyManagement() {
 
-	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP && App->editorScene->GetFocus() != nullptr && App->editorScene->GetFocus() != itemHovered) {
+	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP && App->editorScene->GetFocus() != nullptr && App->editorScene->GetFocus() != itemHovered && MouseIsInside(hierarchyWindowPos, hierarchyWindowSize)) {
 
 		if (App->editorScene->GetFocus()->parent != nullptr) {
 
@@ -1094,11 +1094,11 @@ void ManagerImGui::HierarchyManagement() {
 std::string ManagerImGui::AppName() { return appName; }
 
 
-bool ManagerImGui::MouseIsInside(ImVec2* position, ImVec2* size) {
+bool ManagerImGui::MouseIsInside(ImVec2 position, ImVec2 size) {
 
-	if (App->input->GetMouseX() > position->x && App->input->GetMouseX() < position->x + size->x) {
+	if (App->input->GetMouseX() > position.x && App->input->GetMouseX() < position.x + size.x) {
 
-		if (App->input->GetMouseY() > position->y && App->input->GetMouseY() < position->y + size->y) {
+		if (App->input->GetMouseY() > position.y && App->input->GetMouseY() < position.y + size.y) {
 
 			return true;
 
