@@ -910,6 +910,8 @@ void ManagerImGui::InspectorWindow() {
 
 			}
 
+			if (ImGui::Checkbox("Hide / Show object", &focus->enabled)) {}
+
 		}
 
 		ImGui::End();

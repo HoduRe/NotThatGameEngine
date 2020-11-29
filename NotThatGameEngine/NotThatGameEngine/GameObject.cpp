@@ -44,21 +44,25 @@ void GameObject::PostUpdate(Application* App, int focusId) {
 
 	// TODO: try implementing dirty flag ;)
 
-	if (parent != nullptr) { transform->RecalculateTransformFromParent(parent->worldTransform); }
-	else { worldTransform = transform->transform; }
-	if (camera != nullptr) { camera->UpdateTransform(); }
+	if (enabled) {
 
-	for (int i = childs.size() - 1; i > -1; i--) { childs[i]->PostUpdate(App, focusId); }
+		if (parent != nullptr) { transform->RecalculateTransformFromParent(parent->worldTransform); }
+		else { worldTransform = transform->transform; }
+		if (camera != nullptr) { camera->UpdateTransform(); }
 
-	if (mesh != nullptr) {
+		for (int i = childs.size() - 1; i > -1; i--) { childs[i]->PostUpdate(App, focusId); }
 
-		if(id == focusId){ ManageAABB(true); }
-		else { ManageAABB(); }
+		if (mesh != nullptr) {
 
-		if (material != nullptr) { OpenGLFunctionality::DrawMeshes(*mesh, worldTransform, App->texture->IsTextureRepeated(material->textureName)); }
-		else { OpenGLFunctionality::DrawMeshes(*mesh, worldTransform, 0); }
+			if (id == focusId) { ManageAABB(true); }
+			else { ManageAABB(); }
 
-		if (mesh->paintNormals) { OpenGLFunctionality::DrawLines(worldTransform, mesh->DebugNormals(), mesh->debugNormals); }
+			if (material != nullptr) { OpenGLFunctionality::DrawMeshes(*mesh, worldTransform, App->texture->IsTextureRepeated(material->textureName)); }
+			else { OpenGLFunctionality::DrawMeshes(*mesh, worldTransform, 0); }
+
+			if (mesh->paintNormals) { OpenGLFunctionality::DrawLines(worldTransform, mesh->DebugNormals(), mesh->debugNormals); }
+
+		}
 
 	}
 
