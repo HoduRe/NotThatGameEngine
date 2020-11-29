@@ -32,8 +32,8 @@ sliderBrightness(1.0f), sliderWidth(SCREEN_WIDTH* SCREEN_SIZE), sliderHeight(SCR
 fullscreen(WIN_FULLSCREEN), resizable(WIN_RESIZABLE), borderless(WIN_BORDERLESS), fullDesktop(WIN_FULLSCREEN_DESKTOP), refreshRate(0),
 AVX(false), AVX2(false), AltiVec(false), MMX(false), RDTSC(false), SSE(false), SSE2(false), SSE3(false), SSE41(false), SSE42(false),
 showDemoWindow(false), defaultButtonsMenu(false), aboutWindow(false), configMenu(false), appActive(false), consoleMenu(true), sceneWindow(true), hierarchyWindow(true), inspectorWindow(true),
-Devil(), Assimp(), PhysFS(), GLEW(), loadFileMenu(false), selectedFileName(), position(), rotationEuler(), scaling(), itemHovered(nullptr), itemFocusedLastFrame(nullptr), loadMeshMenu(false),
-deletedFileName()
+Devil(), Assimp(), PhysFS(), GLEW(), loadFileMenu(false), selectedFilePath(), position(), rotationEuler(), scaling(), itemHovered(nullptr), itemFocusedLastFrame(nullptr), loadMeshMenu(false),
+deletedFileName(), dragDropFile()
 {}
 
 
@@ -198,7 +198,7 @@ update_status ManagerImGui::SetMainMenuBar() {
 			if (ImGui::MenuItem("Load Asset")) {
 
 				loadFileMenu = true;
-				selectedFileName.clear();
+				selectedFilePath.clear();
 
 			}
 
@@ -690,7 +690,7 @@ void ManagerImGui::InspectorWindow() {
 				if (ImGui::Button("Select new mesh")) {
 
 					loadMeshMenu = true;
-					selectedFileName.clear();
+					selectedFilePath.clear();
 
 				}
 
@@ -714,11 +714,11 @@ void ManagerImGui::InspectorWindow() {
 
 								if (ImGui::IsItemClicked()) {
 
-									selectedFileName = (MESHES_PATH + files[i]).c_str();
+									selectedFilePath = (MESHES_PATH + files[i]).c_str();
 
 									if (ImGui::IsMouseDoubleClicked(0)) {
 
-										App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)selectedFileName.c_str());
+										App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)selectedFilePath.c_str());
 										loadMeshMenu = false;
 
 									}
@@ -735,21 +735,21 @@ void ManagerImGui::InspectorWindow() {
 						ImGui::PopStyleVar();
 
 						ImGui::PushItemWidth(250.f);
-						ImGui::Text("%s", (char*)selectedFileName.c_str(), FILE_MAX_LENGTH, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll);
+						ImGui::Text("%s", (char*)selectedFilePath.c_str(), FILE_MAX_LENGTH, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll);
 
 						ImGui::PopItemWidth();
 						ImGui::SameLine();
 
 						if (ImGui::Button("Ok", ImVec2(50, 20))) {
 
-							App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)selectedFileName.c_str());
+							App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)selectedFilePath.c_str());
 							loadMeshMenu = false;
 
 						}
 
 						ImGui::SameLine();
 
-						if (ImGui::Button("Cancel", ImVec2(50, 20))) { selectedFileName[0] = '\0'; }
+						if (ImGui::Button("Cancel", ImVec2(50, 20))) { selectedFilePath[0] = '\0'; }
 
 						ImGui::EndPopup();
 
@@ -863,29 +863,29 @@ void ManagerImGui::LoadFileMenu(const char* directory, const char* extension) {
 		ImGui::PopStyleVar();
 
 		ImGui::PushItemWidth(250.f);
-		ImGui::Text("%s", (char*)selectedFileName.c_str(), FILE_MAX_LENGTH, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll);
+		ImGui::Text("%s", (char*)selectedFilePath.c_str(), FILE_MAX_LENGTH, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll);
 
 		ImGui::PopItemWidth();
 		ImGui::SameLine();
 
 		if (ImGui::Button("Ok", ImVec2(50, 20))) {
 
-			App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)selectedFileName.c_str());
+			App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)selectedFilePath.c_str());
 			loadFileMenu = false;
 
 		}
 
 		ImGui::SameLine();
-		if (ImGui::Button("Cancel", ImVec2(50, 20))) { selectedFileName[0] = '\0'; }
+		if (ImGui::Button("Cancel", ImVec2(50, 20))) { selectedFilePath[0] = '\0'; }
 
 		ImGui::SameLine();
-		if ((ImGui::Button("Delete", ImVec2(70, 20)) || App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) && selectedFileName.empty() == false) {
-			
-			deletedFileName = selectedFileName;
-			App->externalManager->RemoveFileByName(selectedFileName.c_str());
+		if ((ImGui::Button("Delete", ImVec2(70, 20)) || App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) && selectedFilePath.empty() == false) {
+
+			deletedFileName = selectedFilePath;
+			App->externalManager->RemoveFileByName(selectedFilePath.c_str());
 			App->eventManager->GenerateEvent(EVENT_ENUM::FILE_DELETED, EVENT_ENUM::NULL_EVENT, (char*)deletedFileName.c_str());
-			selectedFileName.clear();
-		
+			selectedFilePath.clear();
+
 		}
 
 		ImGui::EndPopup();
@@ -899,19 +899,48 @@ void ManagerImGui::DrawDirectoryRecursively(const char* directory, const char* e
 
 	std::vector<std::string> files;
 	std::vector<std::string> dirs;
+	bool openNode;
 
 	std::string dir((directory) ? directory : "");
 	dir += "/";
 
 	App->externalManager->DiscoverFiles(dir.c_str(), files, dirs);
 
-	for (std::vector<std::string>::const_iterator it = dirs.begin(); it != dirs.end(); ++it)
-	{
-		if (ImGui::TreeNodeEx((dir + (*it)).c_str(), 0, "%s/", (*it).c_str()))
-		{
-			DrawDirectoryRecursively((dir + (*it)).c_str(), extension);
-			ImGui::TreePop();
+	for (std::vector<std::string>::const_iterator it = dirs.begin(); it != dirs.end(); ++it) {
+
+		openNode = ImGui::TreeNodeEx((dir + (*it)).c_str(), 0, "%s/", (*it).c_str());
+
+		if (ImGui::IsMouseHoveringRect(ImGui::GetItemRectMin(), ImGui::GetItemRectMax())) {
+
+			ImGui::BeginTooltip();
+			ImGui::Text("Hovering on %s.", (dir + (*it) + "/").c_str());
+			ImGui::EndTooltip();
+
+			if (ImGui::IsMouseReleased(0)) {
+
+				std::string fileName, extension;
+				App->externalManager->SplitFilePath(selectedFilePath.c_str(), nullptr, &fileName, &extension);
+				dragDropFile = dir + (*it) + "/" + fileName + "." + extension;
+
+				if (App->externalManager->IsDirectory(dragDropFile.c_str()) == false) {
+
+					App->eventManager->GenerateEvent(EVENT_ENUM::FILE_DRAGGED_IN_LOAD_WINDOW, EVENT_ENUM::NULL_EVENT, (char*)dragDropFile.c_str());
+					selectedFilePath.clear();
+
+				}
+
+			}
+
 		}
+
+		if (openNode) {
+
+			DrawDirectoryRecursively((dir + (*it)).c_str(), extension);
+
+			ImGui::TreePop();
+
+		}
+
 	}
 
 	std::sort(files.begin(), files.end());
@@ -922,18 +951,17 @@ void ManagerImGui::DrawDirectoryRecursively(const char* directory, const char* e
 
 		bool ok = true;
 
-		if (extension && str.substr(str.find_last_of(".") + 1) != extension)
-			ok = false;
+		if (extension && str.substr(str.find_last_of(".") + 1) != extension) { ok = false; }
 
-		if (ok && ImGui::TreeNodeEx(str.c_str(), ImGuiTreeNodeFlags_Leaf))
-		{
+		if (ok && ImGui::TreeNodeEx(str.c_str(), ImGuiTreeNodeFlags_Leaf)) {
+
 			if (ImGui::IsItemClicked()) {
 
-				selectedFileName = dir + str.c_str();
+				selectedFilePath = dir + str.c_str();
 
 				if (ImGui::IsMouseDoubleClicked(0)) {
 
-					App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)selectedFileName.c_str());
+					App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)selectedFilePath.c_str());
 					loadFileMenu = false;
 
 				}

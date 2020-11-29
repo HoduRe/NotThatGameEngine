@@ -91,8 +91,9 @@ private:
 	float3 rotationEuler;
 	float3 scaling;
 
-	std::string selectedFileName;
+	std::string selectedFilePath;
 	std::string deletedFileName;
+	std::string dragDropFile;
 	GameObject* itemHovered;
 	GameObject* itemFocusedLastFrame;
 

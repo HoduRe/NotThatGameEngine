@@ -36,6 +36,7 @@ bool ResourceManager::Init() {
 	App->eventManager->EventRegister(EVENT_ENUM::SAVE_SCENE, this);
 	App->eventManager->EventRegister(EVENT_ENUM::FILE_DROPPED, this);
 	App->eventManager->EventRegister(EVENT_ENUM::FILE_LOADING, this);
+	App->eventManager->EventRegister(EVENT_ENUM::FILE_DRAGGED_IN_LOAD_WINDOW, this);
 	App->eventManager->EventRegister(EVENT_ENUM::FILE_DELETED, this);
 	App->eventManager->EventRegister(EVENT_ENUM::GAMEOBJECT_LOADED, this);
 
@@ -223,7 +224,7 @@ void ResourceManager::CheckDeletedAssets() {
 void ResourceManager::DeleteLibraryFile(std::string fileName) {
 
 	if (libraryMap.count(fileName) == 1) {
-	
+
 		if (libraryMap.find(fileName)->second.type == ResourceEnum::SCENE) { ManageSceneFiles(std::string(), nullptr, libraryMap.find(fileName)->second.filePath); }
 		App->externalManager->RemoveFileByName(libraryMap.find(fileName)->second.filePath.c_str());
 
@@ -347,6 +348,23 @@ bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
 		App->externalManager->SplitFilePath((const char*)var, nullptr, &fileName);
 		DeleteLibraryFile(fileName);
+		break;
+
+	case EVENT_ENUM::FILE_DRAGGED_IN_LOAD_WINDOW:
+
+		App->externalManager->SplitFilePath((const char*)var, nullptr, &fileName);
+		if (assetsMap.count(fileName) == 1) {
+
+			if (assetsMap.find(fileName)->second.filePath != (const char*)var) {
+
+				App->externalManager->DuplicateFile(assetsMap.find(fileName)->second.filePath.c_str(), (const char*)var);
+				App->externalManager->RemoveFileByName(assetsMap.find(fileName)->second.filePath.c_str());
+				assetsMap.find(fileName)->second.filePath = (const char*)var;
+
+			}
+
+		}
+
 		break;
 
 	case EVENT_ENUM::GAMEOBJECT_LOADED:
