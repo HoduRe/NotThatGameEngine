@@ -244,9 +244,7 @@ uint DataLoading::LoadTexture(Application* App, std::string path, const char* bu
 
 		RELEASE_ARRAY(buffer);
 
-		if (ret == IL_TRUE) { LOG("Texture with path %s loaded.\n", path); }
-
-		else {
+		if (ret != IL_TRUE) {
 			LOG("Texture with path %s failed to load.\n", path);
 			return 0;
 		}

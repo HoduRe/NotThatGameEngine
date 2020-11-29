@@ -87,6 +87,7 @@ private:
 	bool loadFileMenu;
 	bool loadMeshMenu;
 	bool loadTexturesMenu;
+	bool hasHierarchyFocus;
 
 	float3 position;
 	float3 rotationEuler;
