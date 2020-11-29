@@ -258,13 +258,10 @@ void EditorScene::DeleteAllGameObjects() {
 
 void EditorScene::DeleteLoop(GameObject* gameObject) {
 
-	for (int i = 0; i < gameObject->childs.size(); i++) {
+	for (int i = 0; i < gameObject->childs.size(); i++) { DeleteLoop(gameObject->childs[i]); }
 
-		DeleteLoop(gameObject->childs[i]);
-		delete gameObject->childs[i];
-
-	}
-
+	if (focus == gameObject) { focus = nullptr; }
+	delete gameObject;
 
 }
 
@@ -274,7 +271,7 @@ void EditorScene::DeleteFromRootGameObjects(GameObject* gameobject, int index) {
 
 	for (int i = gameobject->childs.size() - 1; i > -1; i--) {
 
-		if (gameobject->deleteGameObject) { DeleteGameObject(gameobject->childs[i], i); }
+		if (gameobject->deleteGameObject) { DeleteLoop(gameobject->childs[i]); }
 		else { DeleteFromRootGameObjects(gameobject->childs[i], i); }
 
 	}
@@ -286,21 +283,6 @@ void EditorScene::DeleteFromRootGameObjects(GameObject* gameobject, int index) {
 		if (focus == gameobject) { focus = nullptr; }
 
 		delete gameobject;
-
-	}
-
-}
-
-
-void EditorScene::DeleteGameObject(GameObject* gameObject, int index) {
-
-	if (gameObject->parent != nullptr) { gameObject->parent->childs.erase(gameObject->parent->childs.begin() + index); }
-
-	for (int i = gameObject->childs.size() - 1; i > -1; i--) {
-
-		DeleteFromRootGameObjects(gameObject->childs[i], i);
-		if (focus == gameObject) { focus = nullptr; }
-		delete gameObject;
 
 	}
 

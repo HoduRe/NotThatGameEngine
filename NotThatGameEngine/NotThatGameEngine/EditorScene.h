@@ -39,7 +39,6 @@ public:
 private:
 
 	bool ExecuteEvent(EVENT_ENUM _event, void* var);
-	void DeleteGameObject(GameObject* gameObject, int index);
 	void DeleteLoop(GameObject* gameObject);
 
 public:
