@@ -10,6 +10,11 @@
 
 #pragma comment( lib, "PhysFS/libx86/physfs.lib" )
 
+#ifdef _DEBUG
+#define _PATH_BOOL true
+#else
+#define _PATH_BOOL false
+#endif
 
 ExternalManager::ExternalManager(Application* app, bool start_enabled) : Module(app, start_enabled) {
 
@@ -276,7 +281,7 @@ std::string ExternalManager::LocalizePath(std::string path) const {
 	dirPath = NormalizePath(dirPath.c_str());
 	std::string obliguedPath;
 
-	if (_DEBUG) { obliguedPath = ASSETS_PATH + (std::string)"/"; }
+	if (_PATH_BOOL) { obliguedPath = ASSETS_PATH + (std::string)"/"; }
 
 	int size = path.size(), i = 0, j = 0;
 	bool directorySkipped = false;

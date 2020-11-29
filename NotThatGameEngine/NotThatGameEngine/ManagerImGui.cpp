@@ -795,7 +795,6 @@ void ManagerImGui::InspectorWindow() {
 
 						material = (Material*)focus->AddComponent(COMPONENT_TYPE::MATERIAL);
 						material->textureName = App->texture->defaultTexture;
-						DataSaving::SaveMaterial(App, material);
 
 					}
 
@@ -803,7 +802,6 @@ void ManagerImGui::InspectorWindow() {
 
 						material = (Material*)focus->AddComponent(COMPONENT_TYPE::MATERIAL);
 						material->textureName = App->texture->checkersTexture;
-						DataSaving::SaveMaterial(App, material);
 
 					}
 
@@ -811,7 +809,6 @@ void ManagerImGui::InspectorWindow() {
 
 						material = (Material*)focus->AddComponent(COMPONENT_TYPE::MATERIAL);
 						material->textureName = App->texture->degenerateTexture;
-						DataSaving::SaveMaterial(App, material);
 
 					}
 
