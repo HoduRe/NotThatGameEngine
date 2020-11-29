@@ -36,6 +36,7 @@ bool ResourceManager::Init() {
 	App->eventManager->EventRegister(EVENT_ENUM::SAVE_SCENE, this);
 	App->eventManager->EventRegister(EVENT_ENUM::FILE_DROPPED, this);
 	App->eventManager->EventRegister(EVENT_ENUM::FILE_LOADING, this);
+	App->eventManager->EventRegister(EVENT_ENUM::FILE_DELETED, this);
 	App->eventManager->EventRegister(EVENT_ENUM::GAMEOBJECT_LOADED, this);
 
 	return true;
@@ -221,11 +222,15 @@ void ResourceManager::CheckDeletedAssets() {
 
 void ResourceManager::DeleteLibraryFile(std::string fileName) {
 
-	if (libraryMap.find(fileName)->second.type == ResourceEnum::SCENE) { ManageSceneFiles(std::string(), nullptr, libraryMap.find(fileName)->second.filePath); }
-	App->externalManager->RemoveFileByName(libraryMap.find(fileName)->second.filePath.c_str());
+	if (libraryMap.count(fileName) == 1) {
+	
+		if (libraryMap.find(fileName)->second.type == ResourceEnum::SCENE) { ManageSceneFiles(std::string(), nullptr, libraryMap.find(fileName)->second.filePath); }
+		App->externalManager->RemoveFileByName(libraryMap.find(fileName)->second.filePath.c_str());
 
-	libraryMap.erase(libraryMap.find(fileName));
-	assetsMap.erase(assetsMap.find(fileName));
+		libraryMap.erase(libraryMap.find(fileName));
+		assetsMap.erase(assetsMap.find(fileName));
+
+	}
 
 }
 
@@ -272,7 +277,7 @@ void ResourceManager::LoadResourceByPath(std::string filePath) {
 
 			DataLoading::LoadScene(App, buffer);
 			break;
-		
+
 		case ResourceEnum::MESH:
 
 			DataLoading::LoadMesh(buffer, (Mesh*)component);
@@ -335,6 +340,13 @@ bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 		LoadResourceByPath((char*)var);
 		LOG("File with path %s loaded.", (char*)var);
 
+		break;
+
+
+	case EVENT_ENUM::FILE_DELETED:
+
+		App->externalManager->SplitFilePath((const char*)var, nullptr, &fileName);
+		DeleteLibraryFile(fileName);
 		break;
 
 	case EVENT_ENUM::GAMEOBJECT_LOADED:
@@ -566,20 +578,20 @@ void ResourceManager::GetComponentIfLoaded(const ResourceEnum* type, Component**
 			if (focus != nullptr) {
 
 				if (*type == ResourceEnum::MESH) {
-					
-					if(focus->mesh != nullptr) { *component = focus->mesh; }
+
+					if (focus->mesh != nullptr) { *component = focus->mesh; }
 					else { *component = focus->AddComponent(COMPONENT_TYPE::MESH); }
-				
+
 				}
 
-				else if(*type == ResourceEnum::MATERIAL) {
+				else if (*type == ResourceEnum::MATERIAL) {
 
 					if (focus->material != nullptr) { *component = focus->material; }
 					else { *component = focus->AddComponent(COMPONENT_TYPE::MATERIAL); }
 
 				}
-				
-				else if(*type == ResourceEnum::CAMERA) {
+
+				else if (*type == ResourceEnum::CAMERA) {
 
 					if (focus->camera != nullptr) { *component = focus->camera; }
 					else { *component = focus->AddComponent(COMPONENT_TYPE::CAMERA); }

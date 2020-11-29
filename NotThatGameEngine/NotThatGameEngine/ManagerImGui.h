@@ -92,6 +92,7 @@ private:
 	float3 scaling;
 
 	std::string selectedFileName;
+	std::string deletedFileName;
 	GameObject* itemHovered;
 	GameObject* itemFocusedLastFrame;
 

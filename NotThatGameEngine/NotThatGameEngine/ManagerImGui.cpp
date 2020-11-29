@@ -32,7 +32,8 @@ sliderBrightness(1.0f), sliderWidth(SCREEN_WIDTH* SCREEN_SIZE), sliderHeight(SCR
 fullscreen(WIN_FULLSCREEN), resizable(WIN_RESIZABLE), borderless(WIN_BORDERLESS), fullDesktop(WIN_FULLSCREEN_DESKTOP), refreshRate(0),
 AVX(false), AVX2(false), AltiVec(false), MMX(false), RDTSC(false), SSE(false), SSE2(false), SSE3(false), SSE41(false), SSE42(false),
 showDemoWindow(false), defaultButtonsMenu(false), aboutWindow(false), configMenu(false), appActive(false), consoleMenu(true), sceneWindow(true), hierarchyWindow(true), inspectorWindow(true),
-Devil(), Assimp(), PhysFS(), GLEW(), loadFileMenu(false), selectedFileName(), position(), rotationEuler(), scaling(), itemHovered(nullptr), itemFocusedLastFrame(nullptr), loadMeshMenu(false)
+Devil(), Assimp(), PhysFS(), GLEW(), loadFileMenu(false), selectedFileName(), position(), rotationEuler(), scaling(), itemHovered(nullptr), itemFocusedLastFrame(nullptr), loadMeshMenu(false),
+deletedFileName()
 {}
 
 
@@ -880,7 +881,9 @@ void ManagerImGui::LoadFileMenu(const char* directory, const char* extension) {
 		ImGui::SameLine();
 		if ((ImGui::Button("Delete", ImVec2(70, 20)) || App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) && selectedFileName.empty() == false) {
 			
+			deletedFileName = selectedFileName;
 			App->externalManager->RemoveFileByName(selectedFileName.c_str());
+			App->eventManager->GenerateEvent(EVENT_ENUM::FILE_DELETED, EVENT_ENUM::NULL_EVENT, (char*)deletedFileName.c_str());
 			selectedFileName.clear();
 		
 		}
