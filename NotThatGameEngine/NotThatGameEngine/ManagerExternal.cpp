@@ -23,12 +23,28 @@ ExternalManager::ExternalManager(Application* app, bool start_enabled) : Module(
 	SDL_free(base_path);
 
 	LOG("PhysFS initialized.\n");
-	if (PHYSFS_setWriteDir(".") == 0) { LOG("File System error while creating write dir: %s\n", PHYSFS_getLastError()); }
-
-	AddPath(".");	// Those must NOT be joined
-	AddPath("Assets");
-
+	
 	std::string name = PHYSFS_getBaseDir();
+	LOG("Base directory: %s.\n", name.c_str());
+
+	if (_PATH_BOOL == false) {
+		
+		if (PHYSFS_setWriteDir(".") == 0) { LOG("File System error while creating write dir: %s\n", PHYSFS_getLastError()); }
+		AddPath(".");
+
+	}
+
+	else {
+
+		if (PHYSFS_setWriteDir(".") == 0) { LOG("File System error while creating write dir: %s\n", PHYSFS_getLastError()); }
+
+		AddPath(".");	// Those must NOT be joined
+		AddPath("Assets");
+
+	}
+
+	name = PHYSFS_getWriteDir();
+	LOG("Write directory: %s.\n", name.c_str());
 
 	CreateDir(LIBRARY_PATH);
 	CreateDir(FOLDERS_PATH);

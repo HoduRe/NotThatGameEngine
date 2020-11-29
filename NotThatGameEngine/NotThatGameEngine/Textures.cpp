@@ -112,8 +112,18 @@ TextureData* Texture::GetTextureData(std::string name) {
 std::vector<TextureData> Texture::GetTextureVector() { return textureVec; }
 
 
-void Texture::IncreaseTextureCount(std::string textureName) { GetTextureData(textureName)->reference++; }
+void Texture::IncreaseTextureCount(std::string textureName) {
+	
+	TextureData* textureData = GetTextureData(textureName);
+	if (textureData != nullptr) { textureData->reference++; }
+
+}
 
 
-void Texture::DecreaseTextureCount(std::string textureName) { GetTextureData(textureName)->reference--; }
+void Texture::DecreaseTextureCount(std::string textureName) {
+	
+	TextureData* textureData = GetTextureData(textureName);
+	if (textureData != nullptr) { textureData->reference--; }
+
+}
 
