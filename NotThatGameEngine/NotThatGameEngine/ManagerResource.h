@@ -106,7 +106,7 @@ private:
 
 	std::string IsLoadedInLibrary(std::string* filePath);
 	std::string ImportAssetResourceByType(std::string path, std::string name, ResourceEnum type);
-	void LoadResourceByPath(std::string filePath);
+	void LoadResourceByPath(std::string filePath, std::string fileName, std::string extension);
 	ResourceEnum GetTypeByExtension(std::string extension);
 	std::string GetExtensionByType(ResourceEnum type);
 	std::string GetPathByType(ResourceEnum type);

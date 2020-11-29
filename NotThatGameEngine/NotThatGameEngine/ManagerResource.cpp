@@ -45,26 +45,13 @@ bool ResourceManager::Init() {
 }
 
 
-bool ResourceManager::Start() {
+bool ResourceManager::Start() { return true; }
 
 
-	return true;
-}
+update_status ResourceManager::PreUpdate(float dt) { return update_status::UPDATE_CONTINUE; }
 
 
-update_status ResourceManager::PreUpdate(float dt) {
-
-	return update_status::UPDATE_CONTINUE;
-
-}
-
-
-update_status ResourceManager::Update(float dt)
-{
-
-	return update_status::UPDATE_CONTINUE;
-
-}
+update_status ResourceManager::Update(float dt) { return update_status::UPDATE_CONTINUE; }
 
 
 update_status ResourceManager::PostUpdate(float dt) {
@@ -236,11 +223,10 @@ void ResourceManager::DeleteLibraryFile(std::string fileName) {
 }
 
 
-void ResourceManager::LoadResourceByPath(std::string filePath) {
+void ResourceManager::LoadResourceByPath(std::string filePath, std::string fileName, std::string extension) {
 
 	char* buffer;
 	uint size, id;
-	std::string fileName, extension;
 	Component* component = nullptr;
 	ResourceEnum type = ResourceEnum::NONE;
 
@@ -301,16 +287,18 @@ void ResourceManager::LoadResourceByPath(std::string filePath) {
 			break;
 		}
 
-	}
+		LOG("File with path %s loaded.", filePath.c_str());
 
+	}
 
 }
 
 
 bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
-	std::string filePath, pathAux, fileName;
+	std::string filePath, pathAux, fileName, extension;
 	char* buffer = nullptr;
+	App->externalManager->SplitFilePath((const char*)var, &filePath, &fileName, &extension);
 
 	switch (eventId) {
 
@@ -336,11 +324,17 @@ bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 		break;
 
 	case EVENT_ENUM::FILE_DROPPED:
+
+		if (assetsMap.count(fileName) == 0) {
+			filePath = ASSETS_PATH;
+			App->externalManager->DuplicateFile((const char*)var, (filePath + fileName + "." + extension).c_str());
+			assetsMap.insert(std::pair<std::string, FileInfo>(fileName, FileInfo(filePath + fileName + "." + extension, App->idGenerator.Int(), 0/*TODO: Generate dates*/, true)));
+			ImportToLibrary(filePath + fileName + "." + extension, fileName, extension);
+		}
+
 	case EVENT_ENUM::FILE_LOADING:
 
-		LoadResourceByPath((char*)var);
-		LOG("File with path %s loaded.", (char*)var);
-
+		LoadResourceByPath(filePath + fileName + "." + extension, fileName, extension);
 		break;
 
 
