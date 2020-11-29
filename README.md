@@ -28,11 +28,10 @@ An engine for CITM's Engine project which focuses on skeletical animation
 - Trees can be moved through with keyboard input (but focus is only on click)<br/>
 
 ## Additional comments:
-- For user use: "Assets/", for program use: "Library/" <br/>
+- For user use: "Assets/", the program uses: "Library/" <br/>
 - Do not move the .exe of the Engine from outside its local folder <br/>
-- Do not move Checkers, Alex or Degenerate textures. They are internally loaded for the user to have by default, thus the path is hardcoded :) <br/>
+- You can't have files with duplicated names, or it will only read. Capital and lowercase letters are considered different<br/>
 - Primitives do not have normals nor texture coordinates, thus they can't recieve a texture <br/>
-- Give the dragon time to load :')<br/>
 - Thanks to [Ricard Pillosu](https://github.com/d0n3val/Edu-Game-Engine) and [Marc Garrigó](https://github.com/markitus18/Thor-Engine) for their code samples, which helped guide myself <br/>
 - Thanks to my friends:<br/>
 	- [Aarón Guerrero](https://github.com/AaronGCProg)<br/>

@@ -56,7 +56,7 @@ public:
 	bool RemoveDirectoryByName(const char* path);
 	bool RemoveFileByName(const char* path);
 
-	uint64 GetLastModTime(const char* filename);
+	uint64 GetLastModTime(const char* filePath);
 	std::string GetUniqueName(const char* path, const char* name) const;
 
 public:

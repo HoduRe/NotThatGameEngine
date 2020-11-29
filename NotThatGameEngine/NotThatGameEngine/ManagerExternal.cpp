@@ -506,7 +506,7 @@ bool ExternalManager::RemoveFileByName(const char* path) {
 }
 
 
-uint64 ExternalManager::GetLastModTime(const char* filename) { return PHYSFS_getLastModTime(filename); }
+uint64 ExternalManager::GetLastModTime(const char* filePath) { return PHYSFS_getLastModTime(filePath); }
 
 
 std::string ExternalManager::GetUniqueName(const char* path, const char* name) const {
