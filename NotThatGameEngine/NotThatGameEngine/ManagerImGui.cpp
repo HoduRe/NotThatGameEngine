@@ -934,6 +934,8 @@ void ManagerImGui::ReferenceWindow() {
 		std::vector<TextureData> textureData = App->texture->GetTextureVector();
 		for (int i = 0; i < textureData.size(); i++) { ImGui::Text("%s = %i", textureData[i].name.c_str(), textureData[i].reference); }
 
+		ImGui::End();
+
 	}
 
 }
