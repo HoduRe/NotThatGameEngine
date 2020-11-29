@@ -21,7 +21,7 @@ public:
 	~GameObject();
 
 	void Update();
-	void PostUpdate(Application* App);
+	void PostUpdate(Application* App, int focusId);
 	Component* AddComponent(COMPONENT_TYPE _type, long long int id = -1);
 	bool AddGameObjectByParent(GameObject* newObject);
 	bool CheckChildDeletionById(long long int _id);
@@ -31,6 +31,7 @@ public:
 	Component* FindGameObjectChildByComponent(long long int componentId);
 	GameObject* FindGameObjectChild(long long int id);
 	void CheckComponentDeletion();
+	void ManageAABB(bool focus = false);
 
 public:
 
@@ -49,8 +50,6 @@ public:
 	bool deleteGameObject;
 
 private:
-
-	void ManageAABB(Mesh* mesh);
 
 private:
 

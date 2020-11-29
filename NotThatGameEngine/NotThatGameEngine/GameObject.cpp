@@ -40,7 +40,7 @@ void GameObject::Update() {
 }
 
 
-void GameObject::PostUpdate(Application* App) {
+void GameObject::PostUpdate(Application* App, int focusId) {
 
 	// TODO: try implementing dirty flag ;)
 
@@ -48,11 +48,12 @@ void GameObject::PostUpdate(Application* App) {
 	else { worldTransform = transform->transform; }
 	if (camera != nullptr) { camera->UpdateTransform(); }
 
-	for (int i = childs.size() - 1; i > -1; i--) { childs[i]->PostUpdate(App); }
+	for (int i = childs.size() - 1; i > -1; i--) { childs[i]->PostUpdate(App, focusId); }
 
 	if (mesh != nullptr) {
 
-		ManageAABB(mesh);
+		if(id == focusId){ ManageAABB(true); }
+		else { ManageAABB(); }
 
 		if (material != nullptr) { OpenGLFunctionality::DrawMeshes(*mesh, worldTransform, App->texture->IsTextureRepeated(material->textureName)); }
 		else { OpenGLFunctionality::DrawMeshes(*mesh, worldTransform, 0); }
@@ -209,25 +210,30 @@ GameObject* GameObject::FindGameObjectChild(long long int id) {
 }
 
 
-void GameObject::ManageAABB(Mesh* mesh) {
+void GameObject::ManageAABB(bool focus) {
 
-	OBB obb = mesh->boundingBox;
-	obb.Transform(worldTransform);
+	if (mesh != nullptr) {
 
-	AABB newBoundingBox;
-	newBoundingBox.SetNegativeInfinity();
-	newBoundingBox.Enclose(obb);
-	std::vector<float> cornerVec;
+		OBB obb = mesh->boundingBox;
+		obb.Transform(worldTransform);
 
-	for (int i = 0; i < 8; i++) {
+		AABB newBoundingBox;
+		newBoundingBox.SetNegativeInfinity();
+		newBoundingBox.Enclose(obb);
+		std::vector<float> cornerVec;
 
-		float3 corner = newBoundingBox.CornerPoint(i);
-		cornerVec.push_back(corner.x);
-		cornerVec.push_back(corner.y);
-		cornerVec.push_back(corner.z);
+		for (int i = 0; i < 8; i++) {
+
+			float3 corner = newBoundingBox.CornerPoint(i);
+			cornerVec.push_back(corner.x);
+			cornerVec.push_back(corner.y);
+			cornerVec.push_back(corner.z);
+
+		}
+
+		if(focus){ OpenGLFunctionality::DrawBox(cornerVec, 80.0f, 0.0f, 0.0f); }
+		else { OpenGLFunctionality::DrawBox(cornerVec); }
 
 	}
-
-	OpenGLFunctionality::DrawBox(cornerVec);
 
 }

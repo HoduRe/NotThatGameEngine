@@ -268,7 +268,7 @@ void ResourceManager::LoadResourceByPath(std::string filePath, std::string fileN
 		case ResourceEnum::TEXTURE:
 
 			DataLoading::LoadTexture(App, filePath.c_str(), buffer, size);
-			App->eventManager->GenerateEvent(EVENT_ENUM::PUT_TEXTURE_TO_FOCUSED_MODEL, EVENT_ENUM::NULL_EVENT, (void*)fileName.c_str());
+			if (assetsMap.count(fileName) == 1) { App->eventManager->GenerateEvent(EVENT_ENUM::PUT_TEXTURE_TO_FOCUSED_MODEL, EVENT_ENUM::NULL_EVENT, (void*)assetsMap.find(fileName)->first.c_str()); }
 			break;
 
 		case ResourceEnum::SCENE:
@@ -307,9 +307,8 @@ void ResourceManager::LoadResourceByPath(std::string filePath, std::string fileN
 
 bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {	// TODO: if var is corrupted, this will explode. It shouldn't. But
 
-	std::string filePath = (char*)var, pathAux, fileName, extension;
+	std::string filePath, pathAux, fileName, extension;
 	char* buffer = nullptr;
-	App->externalManager->SplitFilePath((const char*)var, nullptr, &fileName, &extension);
 
 	switch (eventId) {
 
@@ -336,6 +335,9 @@ bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {	// TODO: if 
 
 	case EVENT_ENUM::FILE_DROPPED:
 
+		filePath = (char*)var;
+		App->externalManager->SplitFilePath((const char*)var, nullptr, &fileName, &extension);
+
 		if (assetsMap.count(fileName) == 0) {
 
 			filePath = ASSETS_PATH + fileName + "." + extension;
@@ -346,6 +348,9 @@ bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {	// TODO: if 
 		else { filePath = assetsMap.find(fileName)->second.filePath; }	// The path we recieve when dropping is from C:\, not from Assets/ 
 
 	case EVENT_ENUM::FILE_LOADING:
+
+		filePath = (char*)var;
+		App->externalManager->SplitFilePath((const char*)var, nullptr, &fileName, &extension);
 
 		SearchFileInFileMap(filePath);
 		LoadResourceByPath(filePath, fileName, extension);

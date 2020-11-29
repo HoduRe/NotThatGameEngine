@@ -27,7 +27,7 @@ namespace OpenGLFunctionality {
 
 	void DrawMeshes(Mesh& mesh, float4x4 worldTransform, GLuint textureId);
 	void DrawLines(float4x4 worldTransform, GLuint debugId, std::vector<float> debugVec);
-	void DrawBox(std::vector<float> vertices);
+	void DrawBox(std::vector<float> vertices, GLfloat red = 0.0f, GLfloat green = 80.0f, GLfloat blue = 0.0f);
 
 }
 

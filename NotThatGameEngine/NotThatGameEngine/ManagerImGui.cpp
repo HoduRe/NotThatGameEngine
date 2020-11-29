@@ -33,7 +33,7 @@ fullscreen(WIN_FULLSCREEN), resizable(WIN_RESIZABLE), borderless(WIN_BORDERLESS)
 AVX(false), AVX2(false), AltiVec(false), MMX(false), RDTSC(false), SSE(false), SSE2(false), SSE3(false), SSE41(false), SSE42(false),
 showDemoWindow(false), defaultButtonsMenu(false), aboutWindow(false), configMenu(false), appActive(false), consoleMenu(true), sceneWindow(true), hierarchyWindow(true), inspectorWindow(true),
 Devil(), Assimp(), PhysFS(), GLEW(), loadFileMenu(false), selectedFilePath(), position(), rotationEuler(), scaling(), itemHovered(nullptr), itemFocusedLastFrame(nullptr), loadMeshMenu(false),
-deletedFileName(), dragDropFile()
+deletedFileName(), dragDropFile(), loadTexturesMenu(false)
 {}
 
 
@@ -817,7 +817,77 @@ void ManagerImGui::InspectorWindow() {
 
 				}
 
-				if (material != nullptr) { if (ImGui::Button("Load texture")) { loadFileMenu = true; } }
+				if (material != nullptr) {
+					if (ImGui::Button("Load texture")) {
+
+						loadTexturesMenu = true;
+						selectedFilePath.clear();
+
+					}
+				}
+
+				if (loadTexturesMenu) {
+
+					ImGui::OpenPopup("Load texture");
+
+					if (ImGui::BeginPopupModal("Load texture", &loadTexturesMenu)) {
+
+						ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 5.0f);
+						ImGui::BeginChild("Texture Browser", ImVec2(0, 300), true);
+
+						std::vector<std::string> files;
+
+						App->externalManager->DiscoverFiles(TEXTURES_PATH, files);
+						std::sort(files.begin(), files.end());
+
+						for (int i = 0; i < files.size(); i++) {
+
+							if (ImGui::TreeNodeEx(files[i].c_str(), ImGuiTreeNodeFlags_Leaf)) {
+
+								if (ImGui::IsItemClicked()) {
+
+									selectedFilePath = (TEXTURES_PATH + files[i]).c_str();
+
+									if (ImGui::IsMouseDoubleClicked(0)) {
+
+										App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)selectedFilePath.c_str());
+										loadTexturesMenu = false;
+
+									}
+
+								}
+
+								ImGui::TreePop();
+
+							}
+
+						}
+
+						ImGui::EndChild();
+						ImGui::PopStyleVar();
+
+						ImGui::PushItemWidth(250.f);
+						ImGui::Text("%s", (char*)selectedFilePath.c_str(), FILE_MAX_LENGTH, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll);
+
+						ImGui::PopItemWidth();
+						ImGui::SameLine();
+
+						if (ImGui::Button("Ok", ImVec2(50, 20))) {
+
+							App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)selectedFilePath.c_str());
+							loadTexturesMenu = false;
+
+						}
+
+						ImGui::SameLine();
+
+						if (ImGui::Button("Cancel", ImVec2(50, 20))) { selectedFilePath[0] = '\0'; }
+
+						ImGui::EndPopup();
+
+					}
+
+				}
 
 				if (mesh == nullptr) {
 
@@ -833,7 +903,7 @@ void ManagerImGui::InspectorWindow() {
 
 				if (camera == nullptr) {
 
-					if (ImGui::Button("Create camera")) { camera = (Camera*)focus->AddComponent(COMPONENT_TYPE::CAMERA); }
+					if (ImGui::Button("Create camera")) { /*camera = (Camera*)focus->AddComponent(COMPONENT_TYPE::CAMERA);*/ } // TODO: RIP camera
 
 				}
 

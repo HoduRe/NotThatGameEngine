@@ -81,11 +81,15 @@ update_status EditorScene::Update(float dt)
 update_status EditorScene::PostUpdate(float dt) {
 
 	App->renderer3D->SetFrameBuffer(App->renderer3D->frameBufferId);
+	int id = 0;
 
-	if (App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) { if (focus != nullptr) { focus->deleteGameObject = true; } }
+	if (focus != nullptr) {
+		if (App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) { focus->deleteGameObject = true; }
+		id = focus->id;
+	}
 
 	int size = rootGameObjectsVec.size();
-	for (int i = 0; i < size; i++) { rootGameObjectsVec[i]->PostUpdate(App); }
+	for (int i = 0; i < size; i++) { rootGameObjectsVec[i]->PostUpdate(App, id); }
 
 	for (int i = size - 1; i > -1; i--) { DeleteFromRootGameObjects(rootGameObjectsVec[i], i); }
 
@@ -325,8 +329,6 @@ Component* EditorScene::FindGameObjectByComponent(long long int componentId) {
 
 bool EditorScene::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
-	Material* material;
-
 	switch (eventId) {
 
 	case EVENT_ENUM::CREATE_CUBE:
@@ -357,9 +359,7 @@ bool EditorScene::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
 		if (focus != nullptr) {
 
-			material = (Material*)focus->GetComponent(COMPONENT_TYPE::MATERIAL);
-
-			if (material != nullptr) { material->textureName = (char*)var; }
+			if (focus->material != nullptr) { focus->material->textureName = (char*)var; }
 			else { LOG("This object has no material. Assign it a material through the inspector.\n"); }
 
 		}

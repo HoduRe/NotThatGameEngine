@@ -86,6 +86,7 @@ private:
 	bool inspectorWindow;
 	bool loadFileMenu;
 	bool loadMeshMenu;
+	bool loadTexturesMenu;
 
 	float3 position;
 	float3 rotationEuler;

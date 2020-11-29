@@ -135,10 +135,10 @@ void OpenGLFunctionality::DrawLines(float4x4 worldTransform, GLuint debugId, std
 }
 
 
-void OpenGLFunctionality::DrawBox(std::vector<float> vertices) {
+void OpenGLFunctionality::DrawBox(std::vector<float> vertices, GLfloat red, GLfloat green, GLfloat blue) {
 
 	glBegin(GL_LINES);
-	glColor3f(0.0f, 80.0f, 0.0f);
+	glColor3f(red, green, blue);
 
 	glVertex3f(vertices[0], vertices[1], vertices[2]);
 	glVertex3f(vertices[12], vertices[13], vertices[14]);

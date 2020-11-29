@@ -213,7 +213,9 @@ void DataLoading::LoadMaterial(Application* App, char* fileBuffer, Material* mat
 
 	std::string name;
 	memcpy((void*)name.c_str(), cursor, nameSize + 1);	// I was about to write something very disturbing. Happy thoughts, happy thoughts
-	material->textureName = name;
+	material->textureName = name.c_str();
+
+	if (App->texture->IsTextureRepeated(material->textureName) == 0) { App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)material->textureName.c_str()); }
 
 }
 
