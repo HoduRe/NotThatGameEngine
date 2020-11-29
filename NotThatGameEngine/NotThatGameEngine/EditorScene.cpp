@@ -89,7 +89,7 @@ update_status EditorScene::PostUpdate(float dt) {
 	}
 
 	int size = rootGameObjectsVec.size();
-	for (int i = 0; i < size; i++) { rootGameObjectsVec[i]->PostUpdate(App, id); }
+	for (int i = 0; i < size; i++) { rootGameObjectsVec[i]->PostUpdate(id); }
 
 	for (int i = size - 1; i > -1; i--) { DeleteFromRootGameObjects(rootGameObjectsVec[i], i); }
 
@@ -169,7 +169,7 @@ bool EditorScene::AddPrimitive(PrimitiveEnum _type) {
 
 	case PrimitiveEnum::PRIMITIVE_CUBE:
 
-		newObject = new GameObject(id, "Cube");
+		newObject = new GameObject(App, id, "Cube");
 		mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
 		PrimitivesF::SetCubeVertices(3.0f, &mesh->vertices, &mesh->indices);
 
@@ -177,7 +177,7 @@ bool EditorScene::AddPrimitive(PrimitiveEnum _type) {
 
 	case PrimitiveEnum::PRIMITIVE_SPHERE:
 
-		newObject = new GameObject(id, "Sphere");
+		newObject = new GameObject(App, id, "Sphere");
 		mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
 		PrimitivesF::SetSphereVertices(2.0f, 36, 18, &mesh->vertices, &mesh->indices);
 
@@ -185,7 +185,7 @@ bool EditorScene::AddPrimitive(PrimitiveEnum _type) {
 
 	case PrimitiveEnum::PRIMITIVE_PYRAMID:
 
-		newObject = new GameObject(id, "Pyramid");
+		newObject = new GameObject(App, id, "Pyramid");
 		mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
 		PrimitivesF::SetPyramidVertices(5.0f, 2.0f, &mesh->vertices, &mesh->indices);
 
@@ -193,7 +193,7 @@ bool EditorScene::AddPrimitive(PrimitiveEnum _type) {
 
 	case PrimitiveEnum::PRIMITIVE_CYLINDER:
 
-		newObject = new GameObject(id, "Cylinder");
+		newObject = new GameObject(App, id, "Cylinder");
 		mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
 		PrimitivesF::SetCylinderVertices(8.0f, 3.0f, 30, &mesh->vertices, &mesh->indices);
 
@@ -359,7 +359,7 @@ bool EditorScene::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
 		if (focus != nullptr) {
 
-			if (focus->material != nullptr) { focus->material->textureName = (char*)var; }
+			if (focus->material != nullptr) { focus->material->SetTextureName(App, (char*)var); }
 			else { LOG("This object has no material. Assign it a material through the inspector.\n"); }
 
 		}

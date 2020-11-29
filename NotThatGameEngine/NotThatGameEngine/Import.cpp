@@ -17,10 +17,10 @@ std::string Importer::ImportNewModel(Application* App, const char* path, const c
 	std::string originalName, finalPath;
 
 	App->externalManager->SplitFilePath(path, nullptr, &originalName);
-	GameObject* newObject = new GameObject(App->idGenerator.Int(), originalName, nullptr, true);
+	GameObject* newObject = new GameObject(App, App->idGenerator.Int(), originalName, nullptr, true);
 
 	if (Importer::ImportNewModelComponents(App, buffer, size, newObject, path)) { finalPath = DataSaving::SaveModel(App, newObject, originalName); }
-	DeleteWithAllChilds(newObject);
+	DeleteWithAllChilds(App, newObject);
 
 	return finalPath;
 
@@ -61,7 +61,7 @@ void Importer::ImportNewModelMesh(Application* App, aiNode* node, aiScene* scene
 
 			long long int id = App->idGenerator.Int();
 
-			GameObject* newObject = new GameObject(id, "NewGameObject", parent);
+			GameObject* newObject = new GameObject(App, id, "NewGameObject", parent);
 			parent->childs.push_back(newObject);
 
 			mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
@@ -130,8 +130,8 @@ void Importer::ImportNewModelMaterial(Application* App, aiScene* scene, GameObje
 				std::string name;
 				App->externalManager->SplitFilePath(Path.C_Str(), nullptr, &name);
 				material = (Material*)newObject->AddComponent(COMPONENT_TYPE::MATERIAL);
-				material->textureName = name;
-				LOG("Material with texture = %s loaded.\n", material->textureName.c_str());
+				material->SetTextureName(App, name);
+				LOG("Material with texture = %s loaded.\n", material->GetTextureName().c_str());
 
 			}
 
@@ -186,9 +186,10 @@ std::string Importer::ImportTexture(Application* App, std::string fileName, cons
 }
 
 
-void Importer::DeleteWithAllChilds(GameObject* gameObject) {
+void Importer::DeleteWithAllChilds(Application* App, GameObject* gameObject) {
 
-	for (int i = 0; i < gameObject->childs.size(); i++) { DeleteWithAllChilds(gameObject->childs[i]); }
+	if (gameObject->material != nullptr) { gameObject->material->SetTextureName(App, std::string()); }
+	for (int i = 0; i < gameObject->childs.size(); i++) { DeleteWithAllChilds(App, gameObject->childs[i]); }
 	delete gameObject;
 
 }

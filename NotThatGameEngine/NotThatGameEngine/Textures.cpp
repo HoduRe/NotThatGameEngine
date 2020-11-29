@@ -40,6 +40,25 @@ bool Texture::CleanUp() {
 }
 
 
+update_status Texture::PreUpdate(float dt) {
+
+	for (int i = 0; i < textureVec.size(); i++) {
+
+		if (textureVec[i].reference <= 0 && textureVec[i].name != defaultTexture && textureVec[i].name != checkersTexture && textureVec[i].name != degenerateTexture) {
+
+			glDeleteTextures(1, (const GLuint*)&textureVec[i].id);
+			textureVec.erase(textureVec.begin() + i);
+			i--;
+
+		}
+
+	}
+
+	return update_status::UPDATE_CONTINUE;
+
+}
+
+
 update_status Texture::Update(float dt) { return update_status::UPDATE_CONTINUE; }
 
 
@@ -91,4 +110,10 @@ TextureData* Texture::GetTextureData(std::string name) {
 
 
 std::vector<TextureData> Texture::GetTextureVector() { return textureVec; }
+
+
+void Texture::IncreaseTextureCount(std::string textureName) { GetTextureData(textureName)->reference++; }
+
+
+void Texture::DecreaseTextureCount(std::string textureName) { GetTextureData(textureName)->reference--; }
 

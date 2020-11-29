@@ -48,6 +48,7 @@ private:
 	void HierarchyWindow();
 	void HierarchyManagement();
 	void InspectorWindow();
+	void ReferenceWindow();
 	void DrawDirectoryRecursively(const char* directory, const char* extension);
 
 	void AddChildNode(GameObject* nextObject, int index);
@@ -88,6 +89,7 @@ private:
 	bool loadMeshMenu;
 	bool loadTexturesMenu;
 	bool hasHierarchyFocus;
+	bool referenceMenu;
 
 	float3 position;
 	float3 rotationEuler;

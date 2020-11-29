@@ -56,7 +56,7 @@ void DataLoading::LoadGameObject(Application* App, JSON_Array* gameObjectsArray,
 
 	bool enabled = json_object_get_boolean(itNode, JSON_NODE_ENABLED);
 
-	GameObject* gameObject = new GameObject(ID, name, App->editorScene->FindGameObject(parentID), enabled);
+	GameObject* gameObject = new GameObject(App, ID, name, App->editorScene->FindGameObject(parentID), enabled);
 
 	Transform* transform = (Transform*)gameObject->GetComponent(COMPONENT_TYPE::TRANSFORM);
 	transform->SetPosition(float3(translationX, translationY, translationZ));
@@ -213,9 +213,7 @@ void DataLoading::LoadMaterial(Application* App, char* fileBuffer, Material* mat
 
 	std::string name;
 	memcpy((void*)name.c_str(), cursor, nameSize + 1);	// I was about to write something very disturbing. Happy thoughts, happy thoughts
-	material->textureName = name.c_str();
-
-	if (App->texture->IsTextureRepeated(material->textureName) == 0) { App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)material->textureName.c_str()); }
+	material->SetTextureName(App, name.c_str());
 
 }
 
@@ -252,13 +250,19 @@ uint DataLoading::LoadTexture(Application* App, std::string path, const char* bu
 		OpenGLFunctionality::LoadGLTexture(&imageTest, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_BPP), ilGetInteger(IL_IMAGE_FORMAT), ilGetData());
 
 		TextureData* texture = new TextureData(imageTest, App->idGenerator.Int(), textureName.c_str(), GL_DIFFUSE, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), size);
+		texture->reference++;
 		App->texture->AddTexture(texture);
 
 		ilDeleteImages(1, &imageTest);
 
 	}
 
-	else { LOG("Repeated texture %s.\n", textureName.c_str()); }
+	else {
+	
+		App->texture->GetTextureData(imageTest)->reference++;
+		LOG("Repeated texture %s.\n", textureName.c_str());
+	
+	}
 
 	return imageTest;
 

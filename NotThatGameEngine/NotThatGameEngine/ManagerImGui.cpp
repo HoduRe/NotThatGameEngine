@@ -33,7 +33,7 @@ fullscreen(WIN_FULLSCREEN), resizable(WIN_RESIZABLE), borderless(WIN_BORDERLESS)
 AVX(false), AVX2(false), AltiVec(false), MMX(false), RDTSC(false), SSE(false), SSE2(false), SSE3(false), SSE41(false), SSE42(false),
 showDemoWindow(false), defaultButtonsMenu(false), aboutWindow(false), configMenu(false), appActive(false), consoleMenu(true), sceneWindow(true), hierarchyWindow(true), inspectorWindow(true),
 Devil(), Assimp(), PhysFS(), GLEW(), loadFileMenu(false), selectedFilePath(), position(), rotationEuler(), scaling(), itemHovered(nullptr), itemFocusedLastFrame(nullptr), loadMeshMenu(false),
-deletedFileName(), dragDropFile(), loadTexturesMenu(false), hierarchyWindowPos(), hierarchyWindowSize(), hasHierarchyFocus(false)
+deletedFileName(), dragDropFile(), loadTexturesMenu(false), hierarchyWindowPos(), hierarchyWindowSize(), hasHierarchyFocus(false), referenceMenu(true)
 {}
 
 
@@ -147,6 +147,7 @@ update_status ManagerImGui::Update(float dt) {
 	SceneWindow();
 	HierarchyWindow();
 	InspectorWindow();
+	ReferenceWindow();
 	if (loadFileMenu) { LoadFileMenu(ASSETS_PATH, nullptr); }
 
 	ImGui::EndFrame();
@@ -246,6 +247,8 @@ update_status ManagerImGui::SetMainMenuBar() {
 			if (ImGui::MenuItem("Hierarchy Window")) { hierarchyWindow = !hierarchyWindow; }
 
 			if (ImGui::MenuItem("Inspector Window")) { inspectorWindow = !inspectorWindow; }
+
+			if (ImGui::MenuItem("Referencing Window")) { referenceMenu = !referenceMenu; }
 
 			if (ImGui::MenuItem("Console output")) { consoleMenu = !consoleMenu; }
 
@@ -505,8 +508,8 @@ void ManagerImGui::HierarchyWindow() {
 		ImGui::Button("CreateGO");
 		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN && ImGui::IsItemClicked()) {
 
-			if (App->editorScene->GetFocus() == nullptr) { App->editorScene->AddGameObject(new GameObject(App->idGenerator.Int())); }
-			else { App->editorScene->AddGameObject(new GameObject(App->idGenerator.Int(), "NewGameObject", App->editorScene->GetFocus())); }
+			if (App->editorScene->GetFocus() == nullptr) { App->editorScene->AddGameObject(new GameObject(App, App->idGenerator.Int())); }
+			else { App->editorScene->AddGameObject(new GameObject(App, App->idGenerator.Int(), "NewGameObject", App->editorScene->GetFocus())); }
 
 		}
 
@@ -643,7 +646,7 @@ void ManagerImGui::InspectorWindow() {
 			Mesh* mesh = (Mesh*)focus->GetComponent(COMPONENT_TYPE::MESH);
 			Camera* camera = (Camera*)focus->GetComponent(COMPONENT_TYPE::CAMERA);
 			TextureData* textureData = nullptr;
-			if (material != nullptr && App->texture->IsTextureRepeated(material->textureName) != 0) { textureData = App->texture->GetTextureData(material->textureName); }
+			if (material != nullptr && App->texture->IsTextureRepeated(material->GetTextureName()) != 0) { textureData = App->texture->GetTextureData(material->GetTextureName()); }
 
 
 			position = transform->GetPosition();
@@ -762,7 +765,7 @@ void ManagerImGui::InspectorWindow() {
 
 			if (ImGui::CollapsingHeader("Textures")) {
 
-				if (material != nullptr && App->texture->IsTextureRepeated(material->textureName) != 0) {
+				if (material != nullptr && App->texture->IsTextureRepeated(material->GetTextureName()) != 0) {
 
 					std::string name = textureData->name + ".dds";
 
@@ -770,7 +773,7 @@ void ManagerImGui::InspectorWindow() {
 					ImGui::Text("OpenGL ID: %i", textureData->textureId);
 					ImGui::Text("Width: %d", textureData->width);
 					ImGui::Text("Height: %d", textureData->height);
-					if (material->textureName != App->texture->checkersTexture) { if (ImGui::Button("Switch to Checkers Texture")) { material->textureName = App->texture->checkersTexture; } }
+					if (material->GetTextureName() != App->texture->checkersTexture) { if (ImGui::Button("Switch to Checkers Texture")) { material->SetTextureName(App, App->texture->checkersTexture); } }
 
 				}
 
@@ -780,9 +783,9 @@ void ManagerImGui::InspectorWindow() {
 					ImGui::Text("No texture. Add a texture:");
 					ImGui::NewLine();
 
-					if (ImGui::Button("Default texture")) { material->textureName = App->texture->defaultTexture; }
-					if (ImGui::Button("Checkers texture")) { material->textureName = App->texture->checkersTexture; }
-					if (ImGui::Button("Ahegao texture. How could this get in here")) { material->textureName = App->texture->degenerateTexture; }
+					if (ImGui::Button("Default texture")) { material->SetTextureName(App, App->texture->defaultTexture); }
+					if (ImGui::Button("Checkers texture")) { material->SetTextureName(App, App->texture->checkersTexture); }
+					if (ImGui::Button("Ahegao texture. How could this get in here")) { material->SetTextureName(App, App->texture->degenerateTexture); }
 
 				}
 
@@ -795,21 +798,21 @@ void ManagerImGui::InspectorWindow() {
 					if (ImGui::Button("Add material with default texture")) {
 
 						material = (Material*)focus->AddComponent(COMPONENT_TYPE::MATERIAL);
-						material->textureName = App->texture->defaultTexture;
+						material->SetTextureName(App, App->texture->defaultTexture);
 
 					}
 
 					if (ImGui::Button("Add material with checkers texture")) {
 
 						material = (Material*)focus->AddComponent(COMPONENT_TYPE::MATERIAL);
-						material->textureName = App->texture->checkersTexture;
+						material->SetTextureName(App, App->texture->checkersTexture);
 
 					}
 
 					if (ImGui::Button("Add material with an ahegao texture. This is no joke. It's a meme of culture")) {
 
 						material = (Material*)focus->AddComponent(COMPONENT_TYPE::MATERIAL);
-						material->textureName = App->texture->degenerateTexture;
+						material->SetTextureName(App, App->texture->degenerateTexture);
 
 					}
 
@@ -919,6 +922,21 @@ void ManagerImGui::InspectorWindow() {
 
 }
 
+
+void ManagerImGui::ReferenceWindow() {
+
+	if (referenceMenu) {
+
+		ImGui::Begin("References", &referenceMenu);
+
+		ImGui::Text("Textures:");
+
+		std::vector<TextureData> textureData = App->texture->GetTextureVector();
+		for (int i = 0; i < textureData.size(); i++) { ImGui::Text("%s = %i", textureData[i].name.c_str(), textureData[i].reference); }
+
+	}
+
+}
 
 void ManagerImGui::LoadFileMenu(const char* directory, const char* extension) {
 

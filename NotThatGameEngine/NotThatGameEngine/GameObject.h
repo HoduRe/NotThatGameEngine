@@ -17,11 +17,11 @@ class GameObject {
 
 public:
 
-	GameObject(long long int _id, std::string _name = "NewGameObject", GameObject* parent = nullptr, bool enabled = true, std::vector<GameObject*> children = std::vector<GameObject*>());
+	GameObject(Application* _App, long long int _id, std::string _name = "NewGameObject", GameObject* parent = nullptr, bool enabled = true, std::vector<GameObject*> children = std::vector<GameObject*>());
 	~GameObject();
 
 	void Update();
-	void PostUpdate(Application* App, int focusId);
+	void PostUpdate(int focusId);
 	Component* AddComponent(COMPONENT_TYPE _type, long long int id = -1);
 	bool AddGameObjectByParent(GameObject* newObject);
 	bool CheckChildDeletionById(long long int _id);
@@ -48,6 +48,7 @@ public:
 	Transform* transform;
 
 	bool deleteGameObject;
+	Application* App; // Hurts me more than you think
 
 private:
 

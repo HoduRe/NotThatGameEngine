@@ -14,6 +14,7 @@ public:
 
 	bool Init();
 	bool Start();
+	update_status PreUpdate(float dt);
 	update_status Update(float dt);
 	bool CleanUp();
 
@@ -23,6 +24,8 @@ public:
 	TextureData* GetTextureData(GLuint id);
 	TextureData* GetTextureData(std::string _name);
 	std::vector<TextureData> GetTextureVector();
+	void IncreaseTextureCount(std::string textureName);
+	void DecreaseTextureCount(std::string textureName);
 
 public:
 

@@ -8,9 +8,9 @@
 #include "Application.h"
 #include "Textures.h"
 
-GameObject::GameObject(long long int _id, std::string _name, GameObject* _parent, bool _enabled, std::vector<GameObject*> children) :
+GameObject::GameObject(Application* _App, long long int _id, std::string _name, GameObject* _parent, bool _enabled, std::vector<GameObject*> children) :
 	name(_name), id(_id), worldTransform(), parent(_parent), childs(children), enabled(_enabled), deleteGameObject(false), idGenerator(),
-	mesh(nullptr), material(nullptr), transform(nullptr), camera(nullptr) {
+	mesh(nullptr), material(nullptr), transform(nullptr), camera(nullptr), App(_App) {
 
 	AddComponent(COMPONENT_TYPE::TRANSFORM, idGenerator.Int());
 }
@@ -40,7 +40,7 @@ void GameObject::Update() {
 }
 
 
-void GameObject::PostUpdate(Application* App, int focusId) {
+void GameObject::PostUpdate(int focusId) {
 
 	// TODO: try implementing dirty flag ;)
 
@@ -50,14 +50,14 @@ void GameObject::PostUpdate(Application* App, int focusId) {
 		else { worldTransform = transform->transform; }
 		if (camera != nullptr) { camera->UpdateTransform(); }
 
-		for (int i = childs.size() - 1; i > -1; i--) { childs[i]->PostUpdate(App, focusId); }
+		for (int i = childs.size() - 1; i > -1; i--) { childs[i]->PostUpdate(focusId); }
 
 		if (mesh != nullptr) {
 
 			if (id == focusId) { ManageAABB(true); }
 			else { ManageAABB(); }
 
-			if (material != nullptr) { OpenGLFunctionality::DrawMeshes(*mesh, worldTransform, App->texture->IsTextureRepeated(material->textureName)); }
+			if (material != nullptr) { OpenGLFunctionality::DrawMeshes(*mesh, worldTransform, App->texture->IsTextureRepeated(material->GetTextureName())); }
 			else { OpenGLFunctionality::DrawMeshes(*mesh, worldTransform, 0); }
 
 			if (mesh->paintNormals) { OpenGLFunctionality::DrawLines(worldTransform, mesh->DebugNormals(), mesh->debugNormals); }

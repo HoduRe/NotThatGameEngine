@@ -22,7 +22,7 @@ namespace Importer {
 	std::string ImportTexture(Application* App, std::string fileName, const char* buffer, uint size);
 
 	void aiTransformTofloat4x4Transform(aiMatrix4x4 matrix, Transform* transform);
-	void DeleteWithAllChilds(GameObject* gameObject);
+	void DeleteWithAllChilds(Application* App, GameObject* gameObject);
 
 }
 
