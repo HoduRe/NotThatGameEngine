@@ -122,22 +122,36 @@ void ResourceManager::SearchFileInFileMap(std::string filePath) {
 
 	std::string fileName, extension;
 	App->externalManager->SplitFilePath(filePath.c_str(), nullptr, &fileName, &extension);
+	ResourceEnum type = GetTypeByExtension(extension);
 
-	if (assetsMap.count(fileName) == 1) {
+	switch (type) {
 
-		assetsMap[fileName].checked = true;
-		if (assetsMap[fileName].lastTimeChanged != App->externalManager->GetLastModTime(assetsMap.find(fileName)->second.filePath.c_str())) {
+	case ResourceEnum::EXTERNAL_MODEL:
+	case ResourceEnum::TEXTURE:
+	case ResourceEnum::SCENE:
 
-			ImportToLibrary(filePath, fileName, extension);
-			assetsMap[fileName].lastTimeChanged = App->externalManager->GetLastModTime(assetsMap.find(fileName)->second.filePath.c_str());
+		if (assetsMap.count(fileName) == 1) {
+
+			assetsMap[fileName].checked = true;
+			if (assetsMap[fileName].lastTimeChanged != App->externalManager->GetLastModTime(assetsMap.find(fileName)->second.filePath.c_str())) {
+
+				ImportToLibrary(filePath, fileName, extension);
+				assetsMap[fileName].lastTimeChanged = App->externalManager->GetLastModTime(assetsMap.find(fileName)->second.filePath.c_str());
+
+			}
 
 		}
 
+		else { assetsMap.insert(std::pair<std::string, FileInfo>(fileName, FileInfo(filePath, App->idGenerator.Int(), App->externalManager->GetLastModTime(filePath.c_str()), true))); }
+
+		if (libraryMap.count(fileName) == 0) { ImportToLibrary(filePath, fileName, extension); }
+
+		break;
+
+	default:
+		break;
+
 	}
-
-	else { assetsMap.insert(std::pair<std::string, FileInfo>(fileName, FileInfo(filePath, App->idGenerator.Int(), App->externalManager->GetLastModTime(filePath.c_str()), true))); }
-
-	if (libraryMap.count(fileName) == 0) { ImportToLibrary(filePath, fileName, extension); }
 
 }
 
@@ -439,9 +453,9 @@ std::string ResourceManager::ManageSceneFiles(std::string assetsScenePath, char*
 
 		char* bufferLibrary;
 
-		App->externalManager->Load(libraryAuxPath.c_str(), &bufferLibrary);
+		int size = App->externalManager->Load(libraryAuxPath.c_str(), &bufferLibrary);
 		if (bufferAssets != nullptr) { assetsIDs = GetSceneComponents(bufferAssets); }	// If there is no Scene in Assets/, buffer is nullptr
-		libraryIDs = GetSceneComponents(bufferLibrary);
+		if (size != 0) { libraryIDs = GetSceneComponents(bufferLibrary); }
 
 		for (int i = 0; i < assetsIDs.size(); i += 2) {	// Not as redundant to re-loop the previously looped info as it seems
 

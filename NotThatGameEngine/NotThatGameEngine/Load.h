@@ -16,7 +16,7 @@ namespace DataLoading {
 
 	void LoadScene(Application* App, char* buffer);
 	void LoadGameObject(Application* App, JSON_Array* gameObjectsArray, int index);
-	GameObject* LoadModel(Application* App, char* buffer);
+	void LoadModel(Application* App, char* buffer);
 	void LoadMesh(char* fileBuffer, Mesh* mesh);
 	void LoadMaterial(Application* App, char* fileBuffer, Material* material);
 	uint LoadTexture(Application* app, std::string path, const char* buffer = nullptr, uint size = 0);

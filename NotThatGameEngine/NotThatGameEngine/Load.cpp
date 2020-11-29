@@ -85,6 +85,9 @@ void DataLoading::LoadGameObject(Application* App, JSON_Array* gameObjectsArray,
 				LoadMesh(buffer, gameObject->mesh);
 				RELEASE_ARRAY(buffer);
 			}
+			else {
+				int a = 1;
+			}
 		}
 
 		else if (cReader.componentType == (int)COMPONENT_TYPE::MATERIAL) {
@@ -112,18 +115,15 @@ void DataLoading::LoadGameObject(Application* App, JSON_Array* gameObjectsArray,
 }
 
 
-GameObject* DataLoading::LoadModel(Application* App, char* buffer) {
+void DataLoading::LoadModel(Application* App, char* buffer) {
 
 	JsonManager::JsonValue root(json_parse_string(buffer));
 	JSON_Object* node(json_value_get_object(root.value));
 	JSON_Array* gameObjectsArray(json_object_get_array(node, JSON_NODE_GAMEOBJECTS));
-	GameObject* gameObject = nullptr;
 
 	int size = JsonManager::GetArraySize(gameObjectsArray);
 
 	for (int i = 0; i < size; i++) { LoadGameObject(App, gameObjectsArray, i); }
-
-	return gameObject;
 
 }
 
