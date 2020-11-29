@@ -17,14 +17,13 @@ An engine for CITM's Engine project which focuses on skeletical animation
 - All menus can be re-opened via Upper Menu tabs<br/>
 - Drag a model on the application to load it on screen<br/>
 - Drag a texture on the application to load it. If there is an object selected, it will apply that texture to the model<br/>
-- Create GO creates a game object child to whatever is focused<br/>
+- Create GO creates a game object, child to whatever is focused<br/>
 - Delete GO deletes the focused game object and its childs<br/>
+- Game objects that have focus can be deleted with Supr / Delete key<br/>
 
 ## Additional functionality:
 - Windows have docking options enabled<br/>
-- Textures are not loaded more than once<br/>
 - Transforms input don't take other values but numbers and operators<br/>
-- Transform input alters object transforms (word of warning: input of +90 on Y rotation makes object go party hard)<br/>
 - Trees can be moved through with keyboard input (but focus is only on click)<br/>
 
 ## Additional comments:
