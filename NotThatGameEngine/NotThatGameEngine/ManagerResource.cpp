@@ -24,6 +24,13 @@ ResourceManager::~ResourceManager() {}
 
 bool ResourceManager::Init() {
 
+	App->eventManager->EventRegister(EVENT_ENUM::SAVE_SCENE, this);
+	App->eventManager->EventRegister(EVENT_ENUM::FILE_DROPPED, this);
+	App->eventManager->EventRegister(EVENT_ENUM::FILE_LOADING, this);
+	App->eventManager->EventRegister(EVENT_ENUM::FILE_DRAGGED_IN_LOAD_WINDOW, this);
+	App->eventManager->EventRegister(EVENT_ENUM::FILE_DELETED, this);
+	App->eventManager->EventRegister(EVENT_ENUM::GAMEOBJECT_LOADED, this);
+
 	PathNode assetsFiles = App->externalManager->GetAllFiles(ASSETS_PATH);
 	PathNode libraryFiles = App->externalManager->GetAllFiles(LIBRARY_PATH);
 
@@ -33,12 +40,14 @@ bool ResourceManager::Init() {
 	CheckAssetsImported(&assetsFiles);
 	CheckDeletedAssets();
 
-	App->eventManager->EventRegister(EVENT_ENUM::SAVE_SCENE, this);
-	App->eventManager->EventRegister(EVENT_ENUM::FILE_DROPPED, this);
-	App->eventManager->EventRegister(EVENT_ENUM::FILE_LOADING, this);
-	App->eventManager->EventRegister(EVENT_ENUM::FILE_DRAGGED_IN_LOAD_WINDOW, this);
-	App->eventManager->EventRegister(EVENT_ENUM::FILE_DELETED, this);
-	App->eventManager->EventRegister(EVENT_ENUM::GAMEOBJECT_LOADED, this);
+	std::string name = "Alex";	// TODO: Delete PreLoaded files
+	if (assetsMap.count(name) == 1) { App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)assetsMap.find(name)->second.filePath.c_str()); }
+	name = "Checker";
+	if (assetsMap.count(name) == 1) { App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)assetsMap.find(name)->second.filePath.c_str()); }
+	name = "Degenerate";
+	if (assetsMap.count(name) == 1) { App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)assetsMap.find(name)->second.filePath.c_str()); }
+	name = "Street environment_V01";
+	if (assetsMap.count(name) == 1) { App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)assetsMap.find(name)->second.filePath.c_str()); }
 
 	return true;
 
@@ -230,7 +239,7 @@ void ResourceManager::DeleteLibraryFile(std::string fileName) {
 void ResourceManager::LoadResourceByPath(std::string filePath, std::string fileName, std::string extension) {
 
 	char* buffer;
-	uint size, id;
+	uint size;
 	Component* component = nullptr;
 	ResourceEnum type = ResourceEnum::NONE;
 
@@ -258,8 +267,8 @@ void ResourceManager::LoadResourceByPath(std::string filePath, std::string fileN
 
 		case ResourceEnum::TEXTURE:
 
-			id = DataLoading::LoadTexture(App, filePath.c_str(), buffer, size);
-			App->eventManager->GenerateEvent(EVENT_ENUM::PUT_TEXTURE_TO_FOCUSED_MODEL, EVENT_ENUM::NULL_EVENT, (void*)id);
+			DataLoading::LoadTexture(App, filePath.c_str(), buffer, size);
+			App->eventManager->GenerateEvent(EVENT_ENUM::PUT_TEXTURE_TO_FOCUSED_MODEL, EVENT_ENUM::NULL_EVENT, (void*)fileName.c_str());
 			break;
 
 		case ResourceEnum::SCENE:
@@ -296,7 +305,7 @@ void ResourceManager::LoadResourceByPath(std::string filePath, std::string fileN
 }
 
 
-bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
+bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {	// TODO: if var is corrupted, this will explode. It shouldn't. But
 
 	std::string filePath = (char*)var, pathAux, fileName, extension;
 	char* buffer = nullptr;
@@ -328,7 +337,7 @@ bool ResourceManager::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 	case EVENT_ENUM::FILE_DROPPED:
 
 		if (assetsMap.count(fileName) == 0) {
-			
+
 			filePath = ASSETS_PATH + fileName + "." + extension;
 			App->externalManager->DuplicateFile((const char*)var, (filePath).c_str());
 

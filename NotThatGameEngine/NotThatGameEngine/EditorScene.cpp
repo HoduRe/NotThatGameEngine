@@ -18,7 +18,7 @@
 
 
 EditorScene::EditorScene(Application* app, bool start_enabled) : Module(app, start_enabled),
-rootGameObjectsVec(), stream(), defaultTextureId(0), focus(nullptr), sceneWindowFocus(false) {}
+rootGameObjectsVec(), stream(), focus(nullptr), sceneWindowFocus(false) {}
 
 
 EditorScene::~EditorScene() {
@@ -42,7 +42,6 @@ bool EditorScene::Init() {
 	App->eventManager->EventRegister(EVENT_ENUM::CREATE_SPHERE, this);
 	App->eventManager->EventRegister(EVENT_ENUM::CREATE_PYRAMID, this);
 	App->eventManager->EventRegister(EVENT_ENUM::CREATE_CYLINDER, this);
-	App->eventManager->EventRegister(EVENT_ENUM::DEFAULT_TEXTURE_LOADED, this);
 	App->eventManager->EventRegister(EVENT_ENUM::PUT_TEXTURE_TO_FOCUSED_MODEL, this);
 
 	return true;
@@ -54,9 +53,6 @@ bool EditorScene::Start() {
 
 	App->camera->Move(vec3(0.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
-
-	streetName = "Meshes/Street environment_V01.FBX";
-	App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)streetName.c_str());
 
 	return true;
 
@@ -89,7 +85,7 @@ update_status EditorScene::PostUpdate(float dt) {
 	if (App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN) { if (focus != nullptr) { focus->deleteGameObject = true; } }
 
 	int size = rootGameObjectsVec.size();
-	for (int i = 0; i < size; i++) { rootGameObjectsVec[i]->PostUpdate(defaultTextureId); }
+	for (int i = 0; i < size; i++) { rootGameObjectsVec[i]->PostUpdate(App); }
 
 	for (int i = size - 1; i > -1; i--) { DeleteFromRootGameObjects(rootGameObjectsVec[i], i); }
 
@@ -333,11 +329,6 @@ bool EditorScene::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
 	switch (eventId) {
 
-	case EVENT_ENUM::DEFAULT_TEXTURE_LOADED:
-
-		defaultTextureId = App->texture->defaultTextureId;
-		break;
-
 	case EVENT_ENUM::CREATE_CUBE:
 
 		AddPrimitive(PrimitiveEnum::PRIMITIVE_CUBE);
@@ -368,7 +359,7 @@ bool EditorScene::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 
 			material = (Material*)focus->GetComponent(COMPONENT_TYPE::MATERIAL);
 
-			if (material != nullptr) { material->diffuseId = (uint)var; }
+			if (material != nullptr) { material->textureName = (char*)var; }
 			else { LOG("This object has no material. Assign it a material through the inspector.\n"); }
 
 		}

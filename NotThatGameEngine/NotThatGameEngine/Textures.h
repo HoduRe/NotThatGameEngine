@@ -19,15 +19,16 @@ public:
 
 	void AddTexture(TextureData* texture);
 	uint IsTextureRepeated(GLuint id);
-	uint IsTextureRepeated(const char* _name);
+	uint IsTextureRepeated(std::string _name);
 	TextureData* GetTextureData(GLuint id);
+	TextureData* GetTextureData(std::string _name);
 	std::vector<TextureData> GetTextureVector();
 
 public:
 
-	uint defaultTextureId;
-	uint checkersTextureId;
-	uint degenerateTextureId;
+	std::string defaultTexture;
+	std::string checkersTexture;
+	std::string degenerateTexture;
 
 private:
 

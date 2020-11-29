@@ -13,11 +13,8 @@ public:
 	Material(long long int _id, GameObject* _gameObject);
 	~Material();
 
-	void SetDiffuse(uint id);
-
 public:
 
-	uint diffuseId;
 	std::string textureName;
 
 };

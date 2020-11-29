@@ -131,7 +131,7 @@ void Importer::ImportNewModelMaterial(Application* App, aiScene* scene, GameObje
 				App->externalManager->SplitFilePath(Path.C_Str(), nullptr, &name);
 				material = (Material*)newObject->AddComponent(COMPONENT_TYPE::MATERIAL);
 				material->textureName = name;
-				LOG("Material with id = %u loaded.\n", material->diffuseId);
+				LOG("Material with texture = %s loaded.\n", material->textureName.c_str());
 
 			}
 

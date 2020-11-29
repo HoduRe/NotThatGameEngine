@@ -6,7 +6,7 @@
 #include "Devil/include/ilut.h"
 #include "ManagerEvent.h"
 
-Texture::Texture(Application* app, bool start_enabled) : Module(app, start_enabled), textureVec(), defaultTextureId(0), checkersTextureId(0), degenerateTextureId(0) {}
+Texture::Texture(Application* app, bool start_enabled) : Module(app, start_enabled), textureVec(), defaultTexture("Alex"), checkersTexture("Checker"), degenerateTexture("Degenerate") {}
 
 
 Texture::~Texture() { textureVec.clear(); }
@@ -40,10 +40,7 @@ bool Texture::CleanUp() {
 }
 
 
-update_status Texture::Update(float dt) {
-
-	return update_status::UPDATE_CONTINUE;
-}
+update_status Texture::Update(float dt) { return update_status::UPDATE_CONTINUE; }
 
 
 void Texture::AddTexture(TextureData* texture) { textureVec.push_back(*texture); }
@@ -61,7 +58,7 @@ uint Texture::IsTextureRepeated(GLuint id) {
 }
 
 
-uint Texture::IsTextureRepeated(const char* _name) {
+uint Texture::IsTextureRepeated(std::string _name) {
 
 	for (int i = textureVec.size() - 1; i > -1; i--) {
 
@@ -77,6 +74,16 @@ TextureData* Texture::GetTextureData(GLuint id) {
 
 	int size = textureVec.size();
 	for (int i = 0; i < size; i++) { if (textureVec[i].textureId == id) { return &textureVec[i]; } }
+
+	return nullptr;
+
+}
+
+
+TextureData* Texture::GetTextureData(std::string name) {
+
+	int size = textureVec.size();
+	for (int i = 0; i < size; i++) { if (textureVec[i].name == name) { return &textureVec[i]; } }
 
 	return nullptr;
 

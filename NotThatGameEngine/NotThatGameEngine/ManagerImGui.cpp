@@ -642,7 +642,7 @@ void ManagerImGui::InspectorWindow() {
 			Mesh* mesh = (Mesh*)focus->GetComponent(COMPONENT_TYPE::MESH);
 			Camera* camera = (Camera*)focus->GetComponent(COMPONENT_TYPE::CAMERA);
 			TextureData* textureData = nullptr;
-			if (material != nullptr && material->diffuseId != 0) { textureData = App->texture->GetTextureData(material->diffuseId); }
+			if (material != nullptr && App->texture->IsTextureRepeated(material->textureName) != 0) { textureData = App->texture->GetTextureData(material->textureName); }
 
 
 			position = transform->GetPosition();
@@ -761,7 +761,7 @@ void ManagerImGui::InspectorWindow() {
 
 			if (ImGui::CollapsingHeader("Textures")) {
 
-				if (material != nullptr && material->diffuseId != 0) {
+				if (material != nullptr && App->texture->IsTextureRepeated(material->textureName) != 0) {
 
 					std::string name = textureData->name + ".dds";
 
@@ -769,7 +769,7 @@ void ManagerImGui::InspectorWindow() {
 					ImGui::Text("OpenGL ID: %i", textureData->textureId);
 					ImGui::Text("Width: %d", textureData->width);
 					ImGui::Text("Height: %d", textureData->height);
-					if (material->diffuseId != App->texture->checkersTextureId) { if (ImGui::Button("Switch to Checkers Texture")) { material->SetDiffuse(App->texture->checkersTextureId); } }
+					if (material->textureName != App->texture->checkersTexture) { if (ImGui::Button("Switch to Checkers Texture")) { material->textureName = App->texture->checkersTexture; } }
 
 				}
 
@@ -779,9 +779,9 @@ void ManagerImGui::InspectorWindow() {
 					ImGui::Text("No texture. Add a texture:");
 					ImGui::NewLine();
 
-					if (ImGui::Button("Default texture")) { material->SetDiffuse(App->texture->defaultTextureId); }
-					if (ImGui::Button("Checkers texture")) { material->SetDiffuse(App->texture->checkersTextureId); }
-					if (ImGui::Button("Ahegao texture. How could this get in here")) { material->SetDiffuse(App->texture->degenerateTextureId); }
+					if (ImGui::Button("Default texture")) { material->textureName = App->texture->defaultTexture; }
+					if (ImGui::Button("Checkers texture")) { material->textureName = App->texture->checkersTexture; }
+					if (ImGui::Button("Ahegao texture. How could this get in here")) { material->textureName = App->texture->degenerateTexture; }
 
 				}
 
@@ -794,7 +794,7 @@ void ManagerImGui::InspectorWindow() {
 					if (ImGui::Button("Add material with default texture")) {
 
 						material = (Material*)focus->AddComponent(COMPONENT_TYPE::MATERIAL);
-						material->SetDiffuse(App->texture->defaultTextureId);
+						material->textureName = App->texture->defaultTexture;
 						DataSaving::SaveMaterial(App, material);
 
 					}
@@ -802,7 +802,7 @@ void ManagerImGui::InspectorWindow() {
 					if (ImGui::Button("Add material with checkers texture")) {
 
 						material = (Material*)focus->AddComponent(COMPONENT_TYPE::MATERIAL);
-						material->SetDiffuse(App->texture->checkersTextureId);
+						material->textureName = App->texture->checkersTexture;
 						DataSaving::SaveMaterial(App, material);
 
 					}
@@ -810,12 +810,14 @@ void ManagerImGui::InspectorWindow() {
 					if (ImGui::Button("Add material with an ahegao texture. This is no joke. It's a meme of culture")) {
 
 						material = (Material*)focus->AddComponent(COMPONENT_TYPE::MATERIAL);
-						material->SetDiffuse(App->texture->degenerateTextureId);
+						material->textureName = App->texture->degenerateTexture;
 						DataSaving::SaveMaterial(App, material);
 
 					}
 
 				}
+
+				if (material != nullptr) { if (ImGui::Button("Load texture")) { loadFileMenu = true; } }
 
 				if (mesh == nullptr) {
 

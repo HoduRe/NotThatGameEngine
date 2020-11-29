@@ -10,6 +10,7 @@ class Transform;
 class Mesh;
 class Material;
 class Camera;
+class Application;
 enum class COMPONENT_TYPE;
 
 class GameObject {
@@ -20,7 +21,7 @@ public:
 	~GameObject();
 
 	void Update();
-	void PostUpdate(uint& defaultTextureId);
+	void PostUpdate(Application* App);
 	Component* AddComponent(COMPONENT_TYPE _type, long long int id = -1);
 	bool AddGameObjectByParent(GameObject* newObject);
 	bool CheckChildDeletionById(long long int _id);
