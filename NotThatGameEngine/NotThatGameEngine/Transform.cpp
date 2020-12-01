@@ -22,7 +22,7 @@ void Transform::RecalculateTransformFromParent(float4x4& parentTransform) {
 void Transform::RecalculateEulerAngles() { rotationEuler = rotation.ToEulerXYZ() * RADTODEG; }
 
 
-void Transform::RecalculateTransform() { transform = float4x4::FromTRS(position, rotation, scale); RecalculateEulerAngles(); }
+void Transform::RecalculateTransform() { transform = float4x4::FromTRS(position, rotation, scale); }
 
 
 void Transform::SetPosition(float3 _position) {

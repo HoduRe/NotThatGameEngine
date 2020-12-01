@@ -52,6 +52,7 @@ void DataSaving::SaveGameObject(Application* App, JSON_Object* node, GameObject*
 	json_object_set_number(node, JSON_NODE_PARENT_ID, gameObject->parent ? gameObject->parent->id : 0);
 
 	Transform* transform = (Transform*)gameObject->GetComponent(COMPONENT_TYPE::TRANSFORM);
+	transform->RecalculateEulerAngles();
 
 	JSON_Array* jsonObject(JsonManager::OpenArray(node, JSON_NODE_TRANSLATION));
 	json_array_append_number(jsonObject, transform->GetPosition().x);

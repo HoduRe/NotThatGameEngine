@@ -25,13 +25,14 @@ public:
 	float3 GetEulerAngles();
 	float3 GetScale();
 
+	void RecalculateEulerAngles();
+
 public:
 
 	float4x4 transform;
 
 private:
 
-	void RecalculateEulerAngles();
 	void RecalculateTransform();
 
 private:
