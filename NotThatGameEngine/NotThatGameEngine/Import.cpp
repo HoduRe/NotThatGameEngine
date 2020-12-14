@@ -39,7 +39,13 @@ bool Importer::ImportNewModelComponents(Application* App, const char* buffer, ui
 
 	trans = scene->mRootNode->mTransformation;
 
-	if (scene->mRootNode->mNumChildren != 0) { for (int i = 0; i < scene->mRootNode->mNumChildren; i++) { Importer::ImportNewModelMesh(App, scene->mRootNode->mChildren[i], (aiScene*)scene, newObject, trans); } }
+	if (scene->mRootNode->mNumChildren != 0) {
+		
+		for (int i = 0; i < scene->mRootNode->mNumChildren; i++) { Importer::ImportNewModelMesh(App, scene->mRootNode->mChildren[i], (aiScene*)scene, newObject, trans); }
+		ImportAnimation(App, scene, newObject);
+
+	}
+
 
 	aiReleaseImport(scene);
 
@@ -142,6 +148,48 @@ void Importer::ImportNewModelMaterial(Application* App, aiScene* scene, GameObje
 	}
 
 	else { LOG("This model has no materials attached.\n"); }
+
+}
+
+
+void Importer::ImportAnimation(Application* App, aiScene* scene, GameObject* newObject) {
+
+	// ----------------------------------------------------------------
+	struct Channels {
+
+		std::string name;
+		int positionKeysAmount;
+		int rotationKeysAmount;
+		int scaleKeysAmount;
+		std::map<float, float3> positionKeys;
+		std::map<float, Quat> rotationKeys;
+		std::map<float, float3> scaleKeys;
+
+	};
+
+	struct Animation {
+
+		std::string name;
+		float duration;
+		float ticksPerSecond;
+		int channelsAmount;
+		std::vector<Channels> channels;
+
+	};
+
+	Animation modelAnimation;
+
+	// ----------------------------------------------------------------
+
+	if (scene->HasAnimations()) {
+
+		for (int i = 0; i < scene->mNumAnimations; i++) {
+
+
+
+		}
+
+	}
 
 }
 

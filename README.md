@@ -1,5 +1,5 @@
 # NotThatGameEngine
-An engine for CITM's Engine project which focuses on skeletical animation
+An engine for CITM's Engine project, which focuses on providing a functional system to manage skeletical animations. The specificity comes from the need of using such results for the Project III subject.
 
 ## Creators:
 - [Me (Hodu)](https://github.com/ferba93)<br/>

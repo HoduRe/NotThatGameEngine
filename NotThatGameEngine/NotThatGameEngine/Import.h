@@ -18,6 +18,7 @@ namespace Importer {
 	bool ImportNewModelComponents(Application* App, const char* buffer, uint size, GameObject* newObject, const char* path);
 	void ImportNewModelMesh(Application* App, aiNode* node, aiScene* scene, GameObject* parent, aiMatrix4x4 accTransform);
 	void ImportNewModelMaterial(Application* App, aiScene* scene, GameObject* newObject, int materialId);
+	void ImportAnimation(Application* App, aiScene* scene, GameObject* newObject);
 
 	std::string ImportTexture(Application* App, std::string fileName, const char* buffer, uint size);
 
