@@ -5,6 +5,7 @@
 #include "Mesh.h"
 #include "Material.h"
 #include "Camera.h"
+#include "Animation.h"
 #include "Application.h"
 #include "Textures.h"
 
@@ -81,6 +82,7 @@ Component* GameObject::AddComponent(COMPONENT_TYPE _type, long long int id) {
 	case COMPONENT_TYPE::MESH: if (mesh == nullptr) { return mesh = new Mesh(id, this); }
 	case COMPONENT_TYPE::MATERIAL: if (material == nullptr) { return material = new Material(id, this); }
 	case COMPONENT_TYPE::CAMERA: if (camera == nullptr) { return camera = new Camera(id, this); }
+	case COMPONENT_TYPE::ANIMATION: if (animation == nullptr) { return animation = new Animation(id, this); }
 	default:
 		assert(true == false);
 		break;
@@ -165,6 +167,7 @@ Component* GameObject::GetComponent(COMPONENT_TYPE _type) {
 	case COMPONENT_TYPE::MESH: return mesh;
 	case COMPONENT_TYPE::MATERIAL: return material;
 	case COMPONENT_TYPE::CAMERA: return camera;
+	case COMPONENT_TYPE::ANIMATION: return animation;
 	default:
 		assert(true == false);
 		break;

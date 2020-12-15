@@ -7,7 +7,7 @@
 
 #define MAX_LIGHTS 8
 
-struct Mesh;
+class Mesh;
 
 class Renderer3D : public Module
 {

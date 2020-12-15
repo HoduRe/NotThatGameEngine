@@ -83,7 +83,7 @@ bool ResourceManager::CleanUp() {
 
 void ResourceManager::CheckLibraryFiles(PathNode* loadingNode) {
 
-	for (int i = 0; i < loadingNode->children.size(); i++) {
+	for (uint i = 0; i < loadingNode->children.size(); i++) {
 
 		if (loadingNode->children[i].isFile) {
 
@@ -107,7 +107,7 @@ void ResourceManager::CheckLibraryFiles(PathNode* loadingNode) {
 
 void ResourceManager::CheckAssetsImported(PathNode* loadingNode) {
 
-	for (int i = 0; i < loadingNode->children.size(); i++) {
+	for (uint i = 0; i < loadingNode->children.size(); i++) {
 
 		if (loadingNode->children[i].isFile) { SearchFileInFileMap(loadingNode->children[i].path); }
 
@@ -433,7 +433,7 @@ void ResourceManager::ManageGameObjectLoading(GameObject* gameObject) {
 	if (gameObject->material != nullptr) { gameObject->material->id = App->idGenerator.Int(); }
 	if (gameObject->camera != nullptr) { gameObject->camera->id = App->idGenerator.Int(); }
 
-	for (int i = 0; i < gameObject->childs.size(); i++) { ManageGameObjectLoading(gameObject->childs[i]); }
+	for (uint i = 0; i < gameObject->childs.size(); i++) { ManageGameObjectLoading(gameObject->childs[i]); }
 
 
 }
@@ -457,7 +457,7 @@ std::string ResourceManager::ManageSceneFiles(std::string assetsScenePath, char*
 		if (bufferAssets != nullptr) { assetsIDs = GetSceneComponents(bufferAssets); }	// If there is no Scene in Assets/, buffer is nullptr
 		if (size != 0) { libraryIDs = GetSceneComponents(bufferLibrary); }
 
-		for (int i = 0; i < assetsIDs.size(); i += 2) {	// Not as redundant to re-loop the previously looped info as it seems
+		for (uint i = 0; i < assetsIDs.size(); i += 2) {	// Not as redundant to re-loop the previously looped info as it seems
 
 			for (int j = 0; j < libraryIDs.size(); j += 2) {
 
@@ -478,14 +478,14 @@ std::string ResourceManager::ManageSceneFiles(std::string assetsScenePath, char*
 
 	}
 
-	for (int i = 0; i < assetsIDs.size(); i += 2) {
+	for (uint i = 0; i < assetsIDs.size(); i += 2) {
 
 		ResourceEnum type = ConvertComponentTypeToResourceType((COMPONENT_TYPE*)&assetsIDs[i + 1]);
 		libraryMap.insert(std::pair<std::string, LibraryInfo>(fileName, LibraryInfo(libraryAuxPath, type)));
 
 	}
 
-	for (int i = 0; i < libraryIDs.size(); i += 2) {
+	for (uint i = 0; i < libraryIDs.size(); i += 2) {
 
 		ResourceEnum type = ConvertComponentTypeToResourceType((COMPONENT_TYPE*)&libraryIDs[i + 1]);
 		componentPath = GetPathByType(type) + std::to_string(libraryIDs[i]) + GetExtensionByType(type);
@@ -510,7 +510,7 @@ std::vector<int> ResourceManager::GetSceneComponents(char* buffer) {
 	JSON_Array* objectsNode(json_object_get_array(node, JSON_NODE_GAMEOBJECTS));
 	int size = JsonManager::GetArraySize(objectsNode);
 
-	for (int i = 0; i < size; i++) {
+	for (uint i = 0; i < size; i++) {
 
 		JSON_Object* nodeObject = json_array_get_object(objectsNode, i);
 		JSON_Array* componentNode(json_object_get_array(nodeObject, JSON_NODE_COMPONENTS));

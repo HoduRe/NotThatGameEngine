@@ -10,6 +10,7 @@ class Transform;
 class Mesh;
 class Material;
 class Camera;
+class Animation;
 class Application;
 enum class COMPONENT_TYPE;
 
@@ -46,6 +47,7 @@ public:
 	Material* material;
 	Camera* camera;
 	Transform* transform;
+	Animation* animation;
 
 	bool deleteGameObject;
 	Application* App; // Hurts me more than you think

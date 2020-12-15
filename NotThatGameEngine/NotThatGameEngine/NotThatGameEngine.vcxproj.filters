@@ -264,6 +264,9 @@
     <ClCompile Include="Import.cpp">
       <Filter>SceneManager\Data managing</Filter>
     </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>SceneManager\Resources\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h">
@@ -586,6 +589,9 @@
     </ClInclude>
     <ClInclude Include="Import.h">
       <Filter>SceneManager\Data managing</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>SceneManager\Resources\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

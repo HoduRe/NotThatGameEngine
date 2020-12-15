@@ -71,8 +71,10 @@ void OpenGLFunctionality::LoadGLTexture(GLuint* _id, int width, int height, int 
 
 void OpenGLFunctionality::DrawMeshes(Mesh& mesh, float4x4 worldTransform, GLuint textureId) {
 
+	float4x4 matrixT = worldTransform.Transposed();	// For some reason if I directly pass to the glMultMatrixf the Transposed() value, and exceptions comes out saying the variable must be a value. Thank you, Visual Studio update
+
 	glPushMatrix();
-	glMultMatrixf((float*)&worldTransform.Transposed());
+	glMultMatrixf((float*)&matrixT);
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, mesh.vertexId);
@@ -112,10 +114,12 @@ void OpenGLFunctionality::DrawMeshes(Mesh& mesh, float4x4 worldTransform, GLuint
 
 void OpenGLFunctionality::DrawLines(float4x4 worldTransform, GLuint debugId, std::vector<float> debugVec) {
 
+	float4x4 matrixT = worldTransform.Transposed();
+
 	if (debugId != 0) {
 
 		glPushMatrix();
-		glMultMatrixf((float*)&worldTransform.Transposed());
+		glMultMatrixf((float*)&matrixT);
 
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, debugId);

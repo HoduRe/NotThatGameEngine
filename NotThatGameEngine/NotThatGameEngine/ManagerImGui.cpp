@@ -14,6 +14,7 @@
 #include "Mesh.h"
 #include "Material.h"
 #include "Camera.h"
+#include "Animation.h"
 #include "Input.h"
 
 #include "Save.h"
@@ -641,13 +642,14 @@ void ManagerImGui::InspectorWindow() {
 
 			ImGui::Text((focus->name + std::to_string(focus->id)).c_str());
 
-			Transform* transform = (Transform*)focus->GetComponent(COMPONENT_TYPE::TRANSFORM);
-			Material* material = (Material*)focus->GetComponent(COMPONENT_TYPE::MATERIAL);
-			Mesh* mesh = (Mesh*)focus->GetComponent(COMPONENT_TYPE::MESH);
-			Camera* camera = (Camera*)focus->GetComponent(COMPONENT_TYPE::CAMERA);
+			Transform* transform = focus->transform;
+			Material* material = focus->material;
+			Mesh* mesh = focus->mesh;
+			Animation* animation = focus->animation;
+			Camera* camera = focus->camera;
 			TextureData* textureData = nullptr;
-			if (material != nullptr && App->texture->IsTextureRepeated(material->GetTextureName()) != 0) { textureData = App->texture->GetTextureData(material->GetTextureName()); }
 
+			if (material != nullptr) { if (App->texture->IsTextureRepeated(material->GetTextureName()) != 0) { textureData = App->texture->GetTextureData(material->GetTextureName()); } }
 
 			position = transform->GetPosition();
 			rotationEuler = transform->GetEulerAngles();
@@ -900,6 +902,23 @@ void ManagerImGui::InspectorWindow() {
 
 			}
 
+			if (ImGui::CollapsingHeader("Animation")) {
+
+				if (animation == nullptr) { ImGui::Text("Funny you, there's no animation."); }
+				else {
+					
+					for (uint i = 0; animation->animationVec.size(); i++) {
+
+						ImGui::Text("Animation %u: %s", i, animation->animationVec[i].name.c_str());
+						ImGui::Text("Duration: %f", animation->animationVec[i].duration);
+						ImGui::NewLine();
+
+					}
+
+				}
+
+			}
+
 			if (ImGui::CollapsingHeader("Camera")) {
 
 				if (camera == nullptr) {
@@ -909,7 +928,6 @@ void ManagerImGui::InspectorWindow() {
 				}
 
 				else { if (ImGui::Button("Destroy camera")) { focus->SetDeleteComponent(COMPONENT_TYPE::CAMERA); } }
-
 
 			}
 

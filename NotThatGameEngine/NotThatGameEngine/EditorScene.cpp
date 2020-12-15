@@ -24,7 +24,7 @@ rootGameObjectsVec(), stream(), focus(nullptr), sceneWindowFocus(false) {}
 
 EditorScene::~EditorScene() {
 
-	for (int i = rootGameObjectsVec.size() - 1; i > -1; i--) {
+	for (uint i = rootGameObjectsVec.size() - 1; i > -1; i--) {
 		delete rootGameObjectsVec[i];
 		rootGameObjectsVec[i] = nullptr;
 	}
@@ -72,7 +72,7 @@ update_status EditorScene::Update(float dt)
 {
 
 	int size = rootGameObjectsVec.size();
-	for (int i = 0; i < size; i++) { rootGameObjectsVec[i]->Update(); }
+	for (uint i = 0; i < size; i++) { rootGameObjectsVec[i]->Update(); }
 
 	return update_status::UPDATE_CONTINUE;
 
@@ -82,7 +82,7 @@ update_status EditorScene::Update(float dt)
 update_status EditorScene::PostUpdate(float dt) {
 
 	App->renderer3D->SetFrameBuffer(App->renderer3D->frameBufferId);
-	int id = 0;
+	long long int id = 0;
 
 	if (focus != nullptr) {
 		if (App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN && App->imGui->hasHierarchyFocus) { focus->deleteGameObject = true; }
@@ -90,9 +90,9 @@ update_status EditorScene::PostUpdate(float dt) {
 	}
 
 	int size = rootGameObjectsVec.size();
-	for (int i = 0; i < size; i++) { rootGameObjectsVec[i]->PostUpdate(id); }
+	for (uint i = 0; i < size; i++) { rootGameObjectsVec[i]->PostUpdate(id); }
 
-	for (int i = size - 1; i > -1; i--) { DeleteFromRootGameObjects(rootGameObjectsVec[i], i); }
+	for (uint i = size - 1; i > -1; i--) { DeleteFromRootGameObjects(rootGameObjectsVec[i], i); }
 
 	App->renderer3D->SetFrameBuffer(0);
 
@@ -127,7 +127,7 @@ bool EditorScene::AddGameObject(GameObject* newObject) {	// This function doesn'
 
 			int size = rootGameObjectsVec.size();
 
-			for (int i = 0; i < size; i++) {
+			for (uint i = 0; i < size; i++) {
 
 				if (rootGameObjectsVec[i]->id == newObject->parent->id) {
 
@@ -220,7 +220,7 @@ GameObject* EditorScene::FindGameObject(long long int id) {
 
 	GameObject* ret = nullptr;
 
-	for (int i = 0; i < rootGameObjectsVec.size(); i++) {
+	for (uint i = 0; i < rootGameObjectsVec.size(); i++) {
 
 		if (rootGameObjectsVec[i]->id == id) { return rootGameObjectsVec[i]; }
 		else {
@@ -238,7 +238,7 @@ void EditorScene::SetDeleteGameObject(long long int id) {
 
 	bool ret = false;
 
-	for (int i = rootGameObjectsVec.size() - 1; i > -1; i--) {
+	for (uint i = rootGameObjectsVec.size() - 1; i > -1; i--) {
 		if (rootGameObjectsVec[i]->id == id) { rootGameObjectsVec[i]->SetDeleteGameObject(); }
 		else {
 			ret = rootGameObjectsVec[i]->CheckChildDeletionById(id);
@@ -251,7 +251,7 @@ void EditorScene::SetDeleteGameObject(long long int id) {
 
 void EditorScene::DeleteAllGameObjects() {
 
-	for (int i = rootGameObjectsVec.size() - 1; i > -1; i--) { DeleteLoop(rootGameObjectsVec[i]); }
+	for (uint i = rootGameObjectsVec.size() - 1; i > -1; i--) { DeleteLoop(rootGameObjectsVec[i]); }
 	rootGameObjectsVec.clear();
 
 }
@@ -259,7 +259,7 @@ void EditorScene::DeleteAllGameObjects() {
 
 void EditorScene::DeleteLoop(GameObject* gameObject) {
 
-	for (int i = 0; i < gameObject->childs.size(); i++) { DeleteLoop(gameObject->childs[i]); }
+	for (uint i = 0; i < gameObject->childs.size(); i++) { DeleteLoop(gameObject->childs[i]); }
 
 	if (focus == gameObject) { focus = nullptr; }
 	delete gameObject;
@@ -270,7 +270,7 @@ void EditorScene::DeleteLoop(GameObject* gameObject) {
 void EditorScene::DeleteFromRootGameObjects(GameObject* gameobject, int index) {
 
 
-	for (int i = gameobject->childs.size() - 1; i > -1; i--) {
+	for (uint i = gameobject->childs.size() - 1; i > -1; i--) {
 
 		if (gameobject->deleteGameObject) { DeleteLoop(gameobject->childs[i]); }
 		else { DeleteFromRootGameObjects(gameobject->childs[i], i); }
@@ -294,7 +294,7 @@ Component* EditorScene::FindGameObjectByComponent(long long int componentId) {
 
 	Component* ret = nullptr;
 
-	for (int i = 0; i < rootGameObjectsVec.size(); i++) {
+	for (uint i = 0; i < rootGameObjectsVec.size(); i++) {
 
 		if (rootGameObjectsVec[i]->transform != nullptr) { if (rootGameObjectsVec[i]->transform->id == componentId) { return rootGameObjectsVec[i]->transform; } }
 		if (rootGameObjectsVec[i]->mesh != nullptr) { if (rootGameObjectsVec[i]->mesh->id == componentId) { return rootGameObjectsVec[i]->mesh; } }

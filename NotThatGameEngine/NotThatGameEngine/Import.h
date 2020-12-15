@@ -9,8 +9,8 @@ class GameObject;
 class Component;
 class Mesh;
 class Transform;
-class aiNode;
-class aiScene;
+struct aiNode;
+struct aiScene;
 
 namespace Importer {
 
