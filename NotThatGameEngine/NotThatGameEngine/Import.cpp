@@ -40,7 +40,7 @@ bool Importer::ImportNewModelComponents(Application* App, const char* buffer, ui
 	trans = scene->mRootNode->mTransformation;
 
 	if (scene->mRootNode->mNumChildren != 0) {
-		
+
 		for (int i = 0; i < scene->mRootNode->mNumChildren; i++) { Importer::ImportNewModelMesh(App, scene->mRootNode->mChildren[i], (aiScene*)scene, newObject, trans); }
 		ImportAnimation(App, scene, newObject);
 
@@ -155,19 +155,30 @@ void Importer::ImportNewModelMaterial(Application* App, aiScene* scene, GameObje
 void Importer::ImportAnimation(Application* App, aiScene* scene, GameObject* newObject) {
 
 	// ----------------------------------------------------------------
-	struct Channels {
+	class Channels {
+
+	public:
+
+		Channels(std::string _name) : name(_name) {}
+		~Channels() {}
+
+	public:
 
 		std::string name;
-		int positionKeysAmount;
-		int rotationKeysAmount;
-		int scaleKeysAmount;
 		std::map<float, float3> positionKeys;
 		std::map<float, Quat> rotationKeys;
 		std::map<float, float3> scaleKeys;
 
 	};
 
-	struct Animation {
+	class Animation {
+
+	public:
+
+		Animation(std::string _name, float _duration, float _ticks, int _channels) : name(_name), duration(_duration), ticksPerSecond(_ticks), channelsAmount(_channels) {}
+		~Animation() {}
+
+	public:
 
 		std::string name;
 		float duration;
@@ -177,7 +188,7 @@ void Importer::ImportAnimation(Application* App, aiScene* scene, GameObject* new
 
 	};
 
-	Animation modelAnimation;
+	std::vector<Animation> modelAnimation;
 
 	// ----------------------------------------------------------------
 
@@ -185,7 +196,34 @@ void Importer::ImportAnimation(Application* App, aiScene* scene, GameObject* new
 
 		for (int i = 0; i < scene->mNumAnimations; i++) {
 
+			aiAnimation* a = scene->mAnimations[i];
+			modelAnimation.push_back(Animation(a->mName.C_Str(), a->mDuration, a->mTicksPerSecond, a->mNumChannels));
 
+			for (int j = 0; j < a->mNumChannels; j++) {
+
+				aiNodeAnim* n = a->mChannels[j];
+				modelAnimation[i].channels.push_back(Channels(n->mNodeName.C_Str()));
+
+				for (int p = 0; p < n->mNumPositionKeys; p++) {
+					
+					aiVectorKey pk = n->mPositionKeys[p];
+					modelAnimation[i].channels[j].positionKeys.insert(std::pair<float, float3>(pk.mTime, float3(pk.mValue.x, pk.mValue.y, pk.mValue.z))); }
+
+				for (int r = 0; r < n->mNumRotationKeys; r++) {
+
+					aiQuatKey rk = n->mRotationKeys[r];
+					modelAnimation[i].channels[j].rotationKeys.insert(std::pair<float, Quat>(rk.mTime, Quat(rk.mValue.x, rk.mValue.y, rk.mValue.z, rk.mValue.w)));
+				
+				}
+
+				for (int s = 0; s < n->mNumScalingKeys; s++) {
+					
+					aiVectorKey sk = n->mScalingKeys[s];
+					modelAnimation[i].channels[j].scaleKeys.insert(std::pair<float, float3>(sk.mTime, float3(sk.mValue.x, sk.mValue.y, sk.mValue.z)));
+				
+				}
+
+			}
 
 		}
 
