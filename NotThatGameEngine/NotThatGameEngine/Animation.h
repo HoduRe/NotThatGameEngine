@@ -37,6 +37,7 @@ public:
 	float ticksPerSecond;
 	int channelsAmount;
 	std::vector<Channels> channels;
+	bool playing;
 
 };
 
@@ -46,6 +47,7 @@ public:
 
 	Animation(long long int _id, GameObject* _gameObject);
 	~Animation();
+	void PlayAnimation();
 
 public:
 

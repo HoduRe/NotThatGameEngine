@@ -36,6 +36,7 @@ GameObject::~GameObject() {
 void GameObject::Update() {
 
 	int size = childs.size();
+	if (animation != nullptr) { animation->PlayAnimation(); }	// TODO: maybe this should be elsewhere in the gameObject loop :v
 	for (int i = 0; i < size; i++) { if (childs[i]->enabled) { childs[i]->Update(); } }
 
 }

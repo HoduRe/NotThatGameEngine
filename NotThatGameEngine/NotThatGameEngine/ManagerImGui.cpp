@@ -911,6 +911,7 @@ void ManagerImGui::InspectorWindow() {
 
 						ImGui::Text("Animation %u: %s", i, animation->animationVec[i].name.c_str());
 						ImGui::Text("Duration: %f", animation->animationVec[i].duration);
+						ImGui::Checkbox("Animation playing", &animation->animationVec[i].playing);
 						ImGui::NewLine();
 
 					}
