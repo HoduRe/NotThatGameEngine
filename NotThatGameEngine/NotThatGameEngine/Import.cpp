@@ -103,6 +103,57 @@ void Importer::ImportNewModelMesh(Application* App, aiNode* node, aiScene* scene
 				mesh->indices.push_back(Face.mIndices[2]);
 			}
 
+			class BoneData {
+
+			public:
+
+				BoneData(std::string _name, float4x4 _matrix, int _amount) {}
+				~BoneData() {}
+
+			public:
+
+				std::string name;
+				float4x4 matrix;
+				int weightAmount;
+				std::map<uint, float> weights;
+
+			};
+
+			class Bone {
+
+			public:
+
+				Bone(int _amount) : bonesAmount(_amount) {}
+				~Bone() {}
+
+			public:
+
+				int bonesAmount;
+				std::vector<BoneData> bones;
+
+			};
+
+			Bone* boneVec;
+
+			if (paiMesh->HasBones()) {
+
+				boneVec = new Bone(paiMesh->mNumBones);
+
+				for (int j = 0; j < paiMesh->mNumBones; j++) {
+
+					Transform transform(0, nullptr);
+					boneVec->bones.push_back(BoneData(paiMesh->mBones[j]->mName.C_Str(), aiTransformTofloat4x4Transform(paiMesh->mBones[j]->mOffsetMatrix, &transform), paiMesh->mBones[j]->mNumWeights));
+
+					for (uint bonesIt = 0; bonesIt < paiMesh->mBones[j]->mNumWeights; bonesIt++) {
+
+						boneVec->bones[j].weights.insert(std::pair<uint, float>(paiMesh->mBones[j]->mWeights[bonesIt].mVertexId, paiMesh->mBones[j]->mWeights[bonesIt].mWeight));
+
+					}
+
+				}
+
+			}
+
 			OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->vertexId, mesh->vertices.size(), mesh->vertices.data());	// TODO: there is already a function in Mesh to do this... If we use it maybe we can kill OpenGLFunctionality header? :3
 			OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->normalsId, mesh->normals.size(), mesh->normals.data());
 			OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->textureCoordId, mesh->textureCoord.size(), mesh->textureCoord.data());
@@ -172,22 +223,23 @@ void Importer::ImportAnimation(Application* App, aiScene* scene, GameObject* new
 				modelAnimation->at(i).channels.push_back(Channels(n->mNodeName.C_Str()));
 
 				for (uint p = 0; p < n->mNumPositionKeys; p++) {
-					
+
 					aiVectorKey pk = n->mPositionKeys[p];
-					modelAnimation->at(i).channels[j].positionKeys.insert(std::pair<float, float3>(pk.mTime, float3(pk.mValue.x, pk.mValue.y, pk.mValue.z))); }
+					modelAnimation->at(i).channels[j].positionKeys.insert(std::pair<float, float3>(pk.mTime, float3(pk.mValue.x, pk.mValue.y, pk.mValue.z)));
+				}
 
 				for (uint r = 0; r < n->mNumRotationKeys; r++) {
 
 					aiQuatKey rk = n->mRotationKeys[r];
 					modelAnimation->at(i).channels[j].rotationKeys.insert(std::pair<float, Quat>(rk.mTime, Quat(rk.mValue.x, rk.mValue.y, rk.mValue.z, rk.mValue.w)));
-				
+
 				}
 
 				for (uint s = 0; s < n->mNumScalingKeys; s++) {
-					
+
 					aiVectorKey sk = n->mScalingKeys[s];
 					modelAnimation->at(i).channels[j].scaleKeys.insert(std::pair<float, float3>(sk.mTime, float3(sk.mValue.x, sk.mValue.y, sk.mValue.z)));
-				
+
 				}
 
 			}
@@ -199,7 +251,7 @@ void Importer::ImportAnimation(Application* App, aiScene* scene, GameObject* new
 }
 
 
-void Importer::aiTransformTofloat4x4Transform(aiMatrix4x4 matrix, Transform* transform) {
+float4x4 Importer::aiTransformTofloat4x4Transform(aiMatrix4x4 matrix, Transform* transform) {
 
 	aiVector3D position;
 	aiQuaternion rotation;
@@ -210,6 +262,8 @@ void Importer::aiTransformTofloat4x4Transform(aiMatrix4x4 matrix, Transform* tra
 	transform->SetPosition(float3(position.x, position.y, position.z));
 	transform->SetRotation(Quat(rotation.x, rotation.y, rotation.z, rotation.w));
 	transform->SetScale(float3(scale.x, scale.y, scale.z));	// TODO: I can optimize this by calling directly the recalculation matrix, but with a function that takes position, rotation and scale as values to recalculate it with
+
+	return transform->transform;
 
 }
 

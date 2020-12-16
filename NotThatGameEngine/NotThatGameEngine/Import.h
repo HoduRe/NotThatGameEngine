@@ -3,6 +3,7 @@
 
 #include "Globals.h"
 #include "Assimp/include/matrix4x4.h"
+#include "MathGeoLib/src/Math/float4x4.h"
 
 class Application;
 class GameObject;
@@ -22,7 +23,7 @@ namespace Importer {
 
 	std::string ImportTexture(Application* App, std::string fileName, const char* buffer, uint size);
 
-	void aiTransformTofloat4x4Transform(aiMatrix4x4 matrix, Transform* transform);
+	float4x4 aiTransformTofloat4x4Transform(aiMatrix4x4 matrix, Transform* transform);
 	void DeleteWithAllChilds(Application* App, GameObject* gameObject);
 
 }
