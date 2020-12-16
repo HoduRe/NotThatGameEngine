@@ -907,7 +907,7 @@ void ManagerImGui::InspectorWindow() {
 				if (animation == nullptr) { ImGui::Text("Funny you, there's no animation."); }
 				else {
 					
-					for (uint i = 0; animation->animationVec.size(); i++) {
+					for (uint i = 0; i < animation->animationVec.size(); i++) {
 
 						ImGui::Text("Animation %u: %s", i, animation->animationVec[i].name.c_str());
 						ImGui::Text("Duration: %f", animation->animationVec[i].duration);

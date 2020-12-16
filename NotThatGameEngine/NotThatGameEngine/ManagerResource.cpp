@@ -34,11 +34,11 @@ bool ResourceManager::Init() {
 	PathNode assetsFiles = App->externalManager->GetAllFiles(ASSETS_PATH);
 	PathNode libraryFiles = App->externalManager->GetAllFiles(LIBRARY_PATH);
 
-	DataLoading::LoadAssetsMap(App, &assetsMap);
-	DataLoading::LoadLibraryMap(App, &libraryMap);
-	CheckLibraryFiles(&libraryFiles);
+//	DataLoading::LoadAssetsMap(App, &assetsMap);
+//	DataLoading::LoadLibraryMap(App, &libraryMap);
+//	CheckLibraryFiles(&libraryFiles);
 	CheckAssetsImported(&assetsFiles);
-	CheckDeletedAssets();
+//	CheckDeletedAssets();
 
 	std::string name = "Alex";	// TODO: Delete PreLoaded files
 	if (assetsMap.count(name) == 1) { App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)assetsMap.find(name)->second.filePath.c_str()); }

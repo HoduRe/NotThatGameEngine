@@ -21,7 +21,8 @@ std::string Importer::ImportNewModel(Application* App, const char* path, const c
 	GameObject* newObject = new GameObject(App, App->idGenerator.Int(), originalName, nullptr, true);
 
 	if (Importer::ImportNewModelComponents(App, buffer, size, newObject, path)) { finalPath = DataSaving::SaveModel(App, newObject, originalName); }
-	DeleteWithAllChilds(App, newObject);
+	App->editorScene->AddGameObject(newObject); // TODO: DELETE THIS
+	//DeleteWithAllChilds(App, newObject);	// TODO: UNCOMMENT THIS
 
 	return finalPath;
 
@@ -162,7 +163,7 @@ void Importer::ImportAnimation(Application* App, aiScene* scene, GameObject* new
 
 		for (uint i = 0; i < scene->mNumAnimations; i++) {
 
-			aiAnimation* a = scene->mAnimations[i];	// DATA MUST BE NEW
+			aiAnimation* a = scene->mAnimations[i];
 			modelAnimation->push_back(AnimationData(a->mName.C_Str(), a->mDuration, a->mTicksPerSecond, a->mNumChannels));
 
 			for (uint j = 0; j < a->mNumChannels; j++) {
