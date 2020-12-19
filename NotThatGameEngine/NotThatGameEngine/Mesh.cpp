@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-Bone::Bone(std::string _name, float4x4 _matrix) : name(_name), offsetMatrix(_matrix), vertexWeights() {}
+Bone::Bone(std::string _name, float4x4 _matrix) : name(_name), offsetMatrix(_matrix), vertexWeights(), showBone(false) {}
 
 
 Bone::~Bone() {}
@@ -10,7 +10,7 @@ void Bone::AddWeight(std::pair<uint, float>(_weight)) { vertexWeights.insert(_we
 
 
 Mesh::Mesh(long long int _id, GameObject* _gameObject) : Component(_id, _gameObject, COMPONENT_TYPE::MESH), vertexId(0), indexId(0), normalsId(0), textureCoordId(0),
-vertices(), normals(), textureCoord(), indices(), paintNormals(false), debugNormalsId(0), debugNormals(), boneVec()
+vertices(), normals(), textureCoord(), indices(), paintNormals(false), debugNormalsId(0), debugNormals(), boneVec(), showAllBones(false)
 {
 	boundingBox.SetNegativeInfinity();
 }

@@ -686,8 +686,20 @@ void ManagerImGui::InspectorWindow() {
 					ImGui::Text("Texture coordinates ID: %u", mesh->textureCoordId);
 					ImGui::Text("Indices ID: %u", mesh->indexId);
 					ImGui::NewLine();
-
-					if (ImGui::Checkbox("Activate normals display", &mesh->paintNormals)) {}
+					ImGui::Checkbox(" Show all mesh bones", &mesh->showAllBones);
+					
+					for (int boneIt = 0; boneIt < mesh->boneVec.size(); boneIt++) {
+						
+						ImGui::Text("	%s", mesh->boneVec[boneIt].name.c_str());
+						ImGui::SameLine();
+						std::string auxName("##Checkbox" + std::to_string(boneIt));
+						ImGui::Checkbox(auxName.c_str(), &mesh->boneVec[boneIt].showBone);
+					
+					}
+					
+					ImGui::NewLine();
+					ImGui::Checkbox("Activate normals display", &mesh->paintNormals);
+					ImGui::NewLine();
 
 				}
 
@@ -906,7 +918,7 @@ void ManagerImGui::InspectorWindow() {
 
 				if (animation == nullptr) { ImGui::Text("Funny you, there's no animation."); }
 				else {
-					
+
 					for (uint i = 0; i < animation->animationVec.size(); i++) {
 
 						ImGui::Text("Animation %u: %s", i, animation->animationVec[i].name.c_str());

@@ -19,6 +19,7 @@ public:
 	std::string name;
 	float4x4 offsetMatrix;
 	std::map<uint, float> vertexWeights;
+	bool showBone;
 
 	void AddWeight(std::pair<uint, float>(_weight));
 
@@ -57,6 +58,7 @@ public:
 
 	std::vector<float> debugNormals;
 	bool paintNormals;
+	bool showAllBones;
 
 	AABB boundingBox;
 
