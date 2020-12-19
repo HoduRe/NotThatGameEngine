@@ -103,56 +103,27 @@ void Importer::ImportNewModelMesh(Application* App, aiNode* node, aiScene* scene
 				mesh->indices.push_back(Face.mIndices[2]);
 			}
 
-			class BoneData {
-
-			public:
-
-				BoneData(std::string _name, float4x4 _matrix, int _amount) {}
-				~BoneData() {}
-
-			public:
-
-				std::string name;
-				float4x4 matrix;
-				int weightAmount;
-				std::map<uint, float> weights;
-
-			};
-
-			class Bone {
-
-			public:
-
-				Bone(int _amount) : bonesAmount(_amount) {}
-				~Bone() {}
-
-			public:
-
-				int bonesAmount;
-				std::vector<BoneData> bones;
-
-			};
-
-			Bone* boneVec;
+			std::vector<Bone> boneVec;
 
 			if (paiMesh->HasBones()) {
 
-				boneVec = new Bone(paiMesh->mNumBones);
-
 				for (int j = 0; j < paiMesh->mNumBones; j++) {
 
-					Transform transform(0, nullptr);
-					boneVec->bones.push_back(BoneData(paiMesh->mBones[j]->mName.C_Str(), aiTransformTofloat4x4Transform(paiMesh->mBones[j]->mOffsetMatrix, &transform), paiMesh->mBones[j]->mNumWeights));
+					std::string a = paiMesh->mBones[j]->mName.C_Str();
+					Transform auxTransform(0, nullptr);
+					boneVec.push_back(Bone(paiMesh->mBones[j]->mName.C_Str(), aiTransformTofloat4x4Transform(paiMesh->mBones[j]->mOffsetMatrix, &auxTransform)));
 
 					for (uint bonesIt = 0; bonesIt < paiMesh->mBones[j]->mNumWeights; bonesIt++) {
 
-						boneVec->bones[j].weights.insert(std::pair<uint, float>(paiMesh->mBones[j]->mWeights[bonesIt].mVertexId, paiMesh->mBones[j]->mWeights[bonesIt].mWeight));
+						boneVec[j].AddWeight(std::pair<uint, float>(paiMesh->mBones[j]->mWeights[bonesIt].mVertexId, paiMesh->mBones[j]->mWeights[bonesIt].mWeight));
 
 					}
 
 				}
 
 			}
+
+			mesh->boneVec = boneVec;
 
 			OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->vertexId, mesh->vertices.size(), mesh->vertices.data());	// TODO: there is already a function in Mesh to do this... If we use it maybe we can kill OpenGLFunctionality header? :3
 			OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->normalsId, mesh->normals.size(), mesh->normals.data());

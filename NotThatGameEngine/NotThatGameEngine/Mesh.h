@@ -7,6 +7,24 @@
 
 class GameObject;
 
+class Bone {
+
+public:
+
+	Bone(std::string _name, float4x4 _matrix);
+	~Bone();
+
+public:
+
+	std::string name;
+	float4x4 offsetMatrix;
+	std::map<uint, float> vertexWeights;
+
+	void AddWeight(std::pair<uint, float>(_weight));
+
+};
+
+
 class Mesh : public Component {
 
 public:
@@ -35,9 +53,9 @@ public:
 	std::vector<float> normals;
 	std::vector<float> textureCoord;
 	std::vector<GLuint> indices;
+	std::vector<Bone> boneVec;
 
 	std::vector<float> debugNormals;
-
 	bool paintNormals;
 
 	AABB boundingBox;
