@@ -24,7 +24,7 @@ rootGameObjectsVec(), stream(), focus(nullptr), sceneWindowFocus(false) {}
 
 EditorScene::~EditorScene() {
 
-	for (uint i = rootGameObjectsVec.size() - 1; i > -1; i--) {
+	for (int i = rootGameObjectsVec.size() - 1; i > -1; i--) {
 		delete rootGameObjectsVec[i];
 		rootGameObjectsVec[i] = nullptr;
 	}
@@ -92,7 +92,7 @@ update_status EditorScene::PostUpdate(float dt) {
 	int size = rootGameObjectsVec.size();
 	for (uint i = 0; i < size; i++) { rootGameObjectsVec[i]->PostUpdate(id); }
 
-	for (uint i = size - 1; i > -1; i--) { DeleteFromRootGameObjects(rootGameObjectsVec[i], i); }
+	for (int i = size - 1; i > -1; i--) { DeleteFromRootGameObjects(rootGameObjectsVec[i], i); }
 
 	App->renderer3D->SetFrameBuffer(0);
 
@@ -238,7 +238,7 @@ void EditorScene::SetDeleteGameObject(long long int id) {
 
 	bool ret = false;
 
-	for (uint i = rootGameObjectsVec.size() - 1; i > -1; i--) {
+	for (int i = rootGameObjectsVec.size() - 1; i > -1; i--) {
 		if (rootGameObjectsVec[i]->id == id) { rootGameObjectsVec[i]->SetDeleteGameObject(); }
 		else {
 			ret = rootGameObjectsVec[i]->CheckChildDeletionById(id);
@@ -251,7 +251,7 @@ void EditorScene::SetDeleteGameObject(long long int id) {
 
 void EditorScene::DeleteAllGameObjects() {
 
-	for (uint i = rootGameObjectsVec.size() - 1; i > -1; i--) { DeleteLoop(rootGameObjectsVec[i]); }
+	for (int i = rootGameObjectsVec.size() - 1; i > -1; i--) { DeleteLoop(rootGameObjectsVec[i]); }
 	rootGameObjectsVec.clear();
 
 }
@@ -269,8 +269,7 @@ void EditorScene::DeleteLoop(GameObject* gameObject) {
 
 void EditorScene::DeleteFromRootGameObjects(GameObject* gameobject, int index) {
 
-
-	for (uint i = gameobject->childs.size() - 1; i > -1; i--) {
+	for (int i = gameobject->childs.size() - 1; i > -1; i--) {
 
 		if (gameobject->deleteGameObject) { DeleteLoop(gameobject->childs[i]); }
 		else { DeleteFromRootGameObjects(gameobject->childs[i], i); }

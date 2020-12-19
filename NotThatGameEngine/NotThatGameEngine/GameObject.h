@@ -32,7 +32,8 @@ public:
 	Component* FindGameObjectChildByComponent(long long int componentId);
 	GameObject* FindGameObjectChild(long long int id);
 	void CheckComponentDeletion();
-	void ManageAABB(bool focus = false);
+	void ManageAABB(AABB aabb, bool focus = false);
+	void DebugBones();
 
 public:
 

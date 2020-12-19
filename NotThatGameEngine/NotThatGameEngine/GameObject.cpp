@@ -52,15 +52,19 @@ void GameObject::PostUpdate(int focusId) {
 		else { worldTransform = transform->transform; }
 		if (camera != nullptr) { camera->UpdateTransform(); }
 
+		// Bone logic
+
 		for (int i = childs.size() - 1; i > -1; i--) { childs[i]->PostUpdate(focusId); }
 
 		if (mesh != nullptr) {
 
-			if (id == focusId) { ManageAABB(true); }
-			else { ManageAABB(); }
-
 			if (material != nullptr) { OpenGLFunctionality::DrawMeshes(*mesh, worldTransform, App->texture->IsTextureRepeated(material->GetTextureName())); }
 			else { OpenGLFunctionality::DrawMeshes(*mesh, worldTransform, 0); }
+
+			DebugBones();
+
+			if (id == focusId) { ManageAABB(mesh->boundingBox, true); }
+			else { ManageAABB(mesh->boundingBox); }
 
 			if (mesh->paintNormals) { OpenGLFunctionality::DrawLines(worldTransform, mesh->DebugNormals(), mesh->debugNormals); }
 
@@ -218,11 +222,11 @@ GameObject* GameObject::FindGameObjectChild(long long int id) {
 }
 
 
-void GameObject::ManageAABB(bool focus) {
+void GameObject::ManageAABB(AABB aabb, bool focus) {
 
 	if (mesh != nullptr) {
 
-		OBB obb = mesh->boundingBox;
+		OBB obb = aabb;
 		obb.Transform(worldTransform);
 
 		AABB newBoundingBox;
@@ -239,9 +243,77 @@ void GameObject::ManageAABB(bool focus) {
 
 		}
 
-		if(focus){ OpenGLFunctionality::DrawBox(cornerVec, 80.0f, 0.0f, 0.0f); }
+		if (focus) { OpenGLFunctionality::DrawBox(cornerVec, 80.0f, 0.0f, 0.0f); }
 		else { OpenGLFunctionality::DrawBox(cornerVec); }
 
 	}
 
 }
+
+
+void GameObject::DebugBones() {
+
+	AABB boneAABB;
+
+	if (mesh->showAllBones) {
+
+		for (uint i = 0; i < mesh->boneDictionary.size(); i++) {
+
+			boneAABB.SetNegativeInfinity();
+
+			int size = mesh->vertices.size() / 3;
+			for (int it = 0; it < size; it++) {
+
+				for (int itAux = 0; itAux < 4; itAux++) {
+
+					if (mesh->boneIdsByVertexIndex[(it * 4) + itAux] == (int)i) {
+
+						boneAABB.Enclose(vec(mesh->vertices[it * 3], mesh->vertices[(it * 3) + 1], mesh->vertices[(it * 3) + 2]));
+
+					}
+
+				}
+
+			}
+
+			ManageAABB(boneAABB);
+
+		}
+
+	}
+
+	else {
+
+		for (uint i = 0; i < mesh->boneDictionary.size(); i++) {
+
+			if (mesh->boneDisplayVec[i]) {
+
+				boneAABB.SetNegativeInfinity();
+
+				int size = mesh->vertices.size() / 3;
+				for (int it = 0; it < size; it++) {
+
+					for (int itAux = 0; itAux < 4; itAux++) {
+
+						if (mesh->boneIdsByVertexIndex[(it * 4) + itAux] == (int)i) {
+
+							boneAABB.Enclose(vec(mesh->vertices[it * 3], mesh->vertices[(it * 3) + 1], mesh->vertices[(it * 3) + 2]));
+
+						}
+
+					}
+
+				}
+
+				ManageAABB(boneAABB);
+
+			}
+
+		}
+
+	}
+
+}
+
+
+

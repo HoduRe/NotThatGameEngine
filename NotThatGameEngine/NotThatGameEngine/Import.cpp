@@ -103,27 +103,45 @@ void Importer::ImportNewModelMesh(Application* App, aiNode* node, aiScene* scene
 				mesh->indices.push_back(Face.mIndices[2]);
 			}
 
-			std::vector<Bone> boneVec;
-
 			if (paiMesh->HasBones()) {
+
+				mesh->boneIdsByVertexIndex = new int[paiMesh->mNumVertices * 4];
+				mesh->weightsByVertexIndex = new float[paiMesh->mNumVertices * 4];
+				mesh->boneDisplayVec = new bool[paiMesh->mNumBones];
+
+				for (int j = 0; j < paiMesh->mNumVertices * 4; j++) { mesh->boneIdsByVertexIndex[j] = -1; }
+				for (int j = 0; j < paiMesh->mNumVertices * 4; j++) { mesh->weightsByVertexIndex[j] = 0.0f; }
 
 				for (int j = 0; j < paiMesh->mNumBones; j++) {
 
 					std::string a = paiMesh->mBones[j]->mName.C_Str();
 					Transform auxTransform(0, nullptr);
-					boneVec.push_back(Bone(paiMesh->mBones[j]->mName.C_Str(), aiTransformTofloat4x4Transform(paiMesh->mBones[j]->mOffsetMatrix, &auxTransform)));
 
-					for (uint bonesIt = 0; bonesIt < paiMesh->mBones[j]->mNumWeights; bonesIt++) {
+					mesh->boneDictionary[paiMesh->mBones[j]->mName.C_Str()] = j;
+					mesh->boneOffsetMatrixVec.push_back(aiTransformTofloat4x4Transform(paiMesh->mBones[j]->mOffsetMatrix, &auxTransform));
+					mesh->boneDisplayVec[j] = false;
 
-						boneVec[j].AddWeight(std::pair<uint, float>(paiMesh->mBones[j]->mWeights[bonesIt].mVertexId, paiMesh->mBones[j]->mWeights[bonesIt].mWeight));
+					for (int weights = 0; weights < paiMesh->mBones[j]->mNumWeights; weights++) {
+
+						int vertexId = paiMesh->mBones[j]->mWeights[weights].mVertexId;
+
+						for (int it = 0; it < 4; it++) {
+
+							if (mesh->boneIdsByVertexIndex[vertexId + it] == -1) { mesh->boneIdsByVertexIndex[vertexId + it] = j; }
+
+						}
+
+						for (int it = 0; it < 4; it++) {
+
+							if (mesh->weightsByVertexIndex[vertexId + it] == 0.0f) { mesh->weightsByVertexIndex[vertexId + it] = paiMesh->mBones[j]->mWeights[weights].mWeight; }
+
+						}
 
 					}
 
 				}
 
 			}
-
-			mesh->boneVec = boneVec;
 
 			OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->vertexId, mesh->vertices.size(), mesh->vertices.data());	// TODO: there is already a function in Mesh to do this... If we use it maybe we can kill OpenGLFunctionality header? :3
 			OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->normalsId, mesh->normals.size(), mesh->normals.data());

@@ -688,12 +688,12 @@ void ManagerImGui::InspectorWindow() {
 					ImGui::NewLine();
 					ImGui::Checkbox(" Show all mesh bones", &mesh->showAllBones);
 					
-					for (int boneIt = 0; boneIt < mesh->boneVec.size(); boneIt++) {
+					for (std::map<std::string, uint>::iterator it = mesh->boneDictionary.begin(); it != mesh->boneDictionary.end(); it++) {
 						
-						ImGui::Text("	%s", mesh->boneVec[boneIt].name.c_str());
+						ImGui::Text("	%s", it->first.c_str());
 						ImGui::SameLine();
-						std::string auxName("##Checkbox" + std::to_string(boneIt));
-						ImGui::Checkbox(auxName.c_str(), &mesh->boneVec[boneIt].showBone);
+						std::string auxName("##Checkbox" + std::to_string(it->second));
+						ImGui::Checkbox(auxName.c_str(), &mesh->boneDisplayVec[it->second]);
 					
 					}
 					
@@ -726,7 +726,7 @@ void ManagerImGui::InspectorWindow() {
 						App->externalManager->DiscoverFiles(MESHES_PATH, files);
 						std::sort(files.begin(), files.end());
 
-						for (int i = 0; i < files.size(); i++) {
+						for (uint i = 0; i < files.size(); i++) {
 
 							if (ImGui::TreeNodeEx(files[i].c_str(), ImGuiTreeNodeFlags_Leaf)) {
 
@@ -855,7 +855,7 @@ void ManagerImGui::InspectorWindow() {
 						App->externalManager->DiscoverFiles(TEXTURES_PATH, files);
 						std::sort(files.begin(), files.end());
 
-						for (int i = 0; i < files.size(); i++) {
+						for (uint i = 0; i < files.size(); i++) {
 
 							if (ImGui::TreeNodeEx(files[i].c_str(), ImGuiTreeNodeFlags_Leaf)) {
 
@@ -963,7 +963,7 @@ void ManagerImGui::ReferenceWindow() {
 		ImGui::Text("Textures:");
 
 		std::vector<TextureData> textureData = App->texture->GetTextureVector();
-		for (int i = 0; i < textureData.size(); i++) { ImGui::Text("%s = %i", textureData[i].name.c_str(), textureData[i].reference); }
+		for (uint i = 0; i < textureData.size(); i++) { ImGui::Text("%s = %i", textureData[i].name.c_str(), textureData[i].reference); }
 
 		ImGui::End();
 
@@ -1104,7 +1104,7 @@ void ManagerImGui::HierarchyManagement() {
 
 		if (App->editorScene->GetFocus()->parent != nullptr) {
 
-			for (int i = 0; i < App->editorScene->GetFocus()->parent->childs.size(); i++) {
+			for (uint i = 0; i < App->editorScene->GetFocus()->parent->childs.size(); i++) {
 
 				if (App->editorScene->GetFocus()->parent->childs[i]->id == App->editorScene->GetFocus()->id) {
 
@@ -1119,7 +1119,7 @@ void ManagerImGui::HierarchyManagement() {
 
 		else {
 
-			for (int i = 0; i < App->editorScene->rootGameObjectsVec.size(); i++) {
+			for (uint i = 0; i < App->editorScene->rootGameObjectsVec.size(); i++) {
 
 				if (App->editorScene->rootGameObjectsVec[i]->id == App->editorScene->GetFocus()->id) {
 
