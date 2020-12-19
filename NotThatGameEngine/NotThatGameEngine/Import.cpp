@@ -114,26 +114,25 @@ void Importer::ImportNewModelMesh(Application* App, aiNode* node, aiScene* scene
 
 				for (int j = 0; j < paiMesh->mNumBones; j++) {
 
-					std::string a = paiMesh->mBones[j]->mName.C_Str();
 					Transform auxTransform(0, nullptr);
-
-					mesh->boneDictionary[paiMesh->mBones[j]->mName.C_Str()] = j;
+					mesh->boneIDsVec.push_back(j);
+					mesh->boneNamesVec.push_back(paiMesh->mBones[j]->mName.C_Str());
 					mesh->boneOffsetMatrixVec.push_back(aiTransformTofloat4x4Transform(paiMesh->mBones[j]->mOffsetMatrix, &auxTransform));
 					mesh->boneDisplayVec[j] = false;
 
 					for (int weights = 0; weights < paiMesh->mBones[j]->mNumWeights; weights++) {
 
-						int vertexId = paiMesh->mBones[j]->mWeights[weights].mVertexId;
+						int vertexId = paiMesh->mBones[j]->mWeights[weights].mVertexId * 4;
 
 						for (int it = 0; it < 4; it++) {
 
-							if (mesh->boneIdsByVertexIndex[vertexId + it] == -1) { mesh->boneIdsByVertexIndex[vertexId + it] = j; }
+							if (mesh->boneIdsByVertexIndex[vertexId + it] == -1) {
+								
+								mesh->boneIdsByVertexIndex[vertexId + it] = j;
+								mesh->weightsByVertexIndex[vertexId + it] = paiMesh->mBones[j]->mWeights[weights].mWeight;
+								it = 4;
 
-						}
-
-						for (int it = 0; it < 4; it++) {
-
-							if (mesh->weightsByVertexIndex[vertexId + it] == 0.0f) { mesh->weightsByVertexIndex[vertexId + it] = paiMesh->mBones[j]->mWeights[weights].mWeight; }
+							}
 
 						}
 

@@ -257,7 +257,7 @@ void GameObject::DebugBones() {
 
 	if (mesh->showAllBones) {
 
-		for (uint i = 0; i < mesh->boneDictionary.size(); i++) {
+		for (uint i = 0; i < mesh->boneIDsVec.size(); i++) {
 
 			boneAABB.SetNegativeInfinity();
 
@@ -284,7 +284,7 @@ void GameObject::DebugBones() {
 
 	else {
 
-		for (uint i = 0; i < mesh->boneDictionary.size(); i++) {
+		for (uint i = 0; i < mesh->boneIDsVec.size(); i++) {
 
 			if (mesh->boneDisplayVec[i]) {
 

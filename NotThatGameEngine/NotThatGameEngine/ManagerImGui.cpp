@@ -688,12 +688,12 @@ void ManagerImGui::InspectorWindow() {
 					ImGui::NewLine();
 					ImGui::Checkbox(" Show all mesh bones", &mesh->showAllBones);
 					
-					for (std::map<std::string, uint>::iterator it = mesh->boneDictionary.begin(); it != mesh->boneDictionary.end(); it++) {
+					for (uint i = 0; i < mesh->boneNamesVec.size(); i++) {
 						
-						ImGui::Text("	%s", it->first.c_str());
+						ImGui::Text("	%s", mesh->boneNamesVec[i].c_str());
 						ImGui::SameLine();
-						std::string auxName("##Checkbox" + std::to_string(it->second));
-						ImGui::Checkbox(auxName.c_str(), &mesh->boneDisplayVec[it->second]);
+						std::string auxName("##Checkbox" + std::to_string(i));
+						ImGui::Checkbox(auxName.c_str(), &mesh->boneDisplayVec[i]);
 					
 					}
 					

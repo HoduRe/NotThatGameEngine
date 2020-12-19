@@ -47,7 +47,8 @@ public:
 	float* weightsByVertexIndex;
 	bool* boneDisplayVec;
 
-	std::map<std::string, uint> boneDictionary;
+	std::vector<std::string> boneNamesVec;
+	std::vector<uint> boneIDsVec;
 	std::vector<float4x4> boneOffsetMatrixVec;
 
 };
