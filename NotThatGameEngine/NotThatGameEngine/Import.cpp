@@ -21,8 +21,7 @@ std::string Importer::ImportNewModel(Application* App, const char* path, const c
 	GameObject* newObject = new GameObject(App, App->idGenerator.Int(), originalName, nullptr, true);
 
 	if (Importer::ImportNewModelComponents(App, buffer, size, newObject, path)) { finalPath = DataSaving::SaveModel(App, newObject, originalName); }
-	App->editorScene->AddGameObject(newObject); // TODO: DELETE THIS
-	//DeleteWithAllChilds(App, newObject);	// TODO: UNCOMMENT THIS
+	DeleteWithAllChilds(App, newObject);
 
 	return finalPath;
 

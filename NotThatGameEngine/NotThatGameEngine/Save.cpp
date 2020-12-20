@@ -194,22 +194,27 @@ void DataSaving::SaveMesh(Application* App, Mesh* mesh) {
 
 	if (boneIdsArraySize > 0) {
 
-		memcpy(cursor, &mesh->boneIdsbyVertexIndexSize, boneIdsArraySize);
+		memcpy(cursor, mesh->boneIdsByVertexIndex, boneIdsArraySize);
 		cursor += boneIdsArraySize;
 
 	}
 
 	if (weightsSize > 0) {
 
-		memcpy(cursor, &mesh->weightsByVertexIndexSize, weightsSize);
+		memcpy(cursor, mesh->weightsByVertexIndex, weightsSize);
 		cursor += weightsSize;
 
 	}
 
-	if (boneDisplaySize > 0) {
+	for (int i = 0; i < mesh->boneNamesVec.size(); i++) {
 
-		memcpy(cursor, &mesh->boneDisplayVecSize, boneDisplaySize);
-		cursor += boneDisplaySize;
+		int charsize = mesh->boneNamesVec[i].size();
+		memcpy(cursor, &charsize, intSize);
+		cursor += intSize;
+
+		charsize = sizeof(char) * mesh->boneNamesVec[i].size();
+		memcpy(cursor, &mesh->boneDisplayVec[i], charsize);
+		cursor += charsize;
 
 	}
 

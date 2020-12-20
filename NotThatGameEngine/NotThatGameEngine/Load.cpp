@@ -209,31 +209,38 @@ void DataLoading::LoadMesh(char* fileBuffer, Mesh* mesh) {
 
 	if (mesh->boneIdsbyVertexIndexSize > 0) {
 
-		memcpy(&mesh->boneIdsByVertexIndex, cursor, mesh->boneIdsbyVertexIndexSize);
+		mesh->boneIdsByVertexIndex = new int[mesh->boneIdsbyVertexIndexSize];
+		memcpy(mesh->boneIdsByVertexIndex, cursor, sizeof(int) * mesh->boneIdsbyVertexIndexSize);
 		cursor += mesh->boneIdsbyVertexIndexSize;
 
 	}
 
 	if (mesh->weightsByVertexIndexSize > 0) {
 
-		memcpy(&mesh->weightsByVertexIndex, cursor, mesh->weightsByVertexIndexSize);
+		mesh->weightsByVertexIndex = new float[mesh->weightsByVertexIndexSize];
+		memcpy(mesh->weightsByVertexIndex, cursor, sizeof(float) * mesh->weightsByVertexIndexSize);
 		cursor += mesh->weightsByVertexIndexSize;
 
 	}
 
 	if (mesh->boneDisplayVecSize > 0) {
 
-		memcpy(&mesh->boneDisplayVec, cursor, mesh->boneDisplayVecSize);
+		mesh->boneDisplayVec = new bool[mesh->boneDisplayVecSize];
+		memcpy(mesh->boneDisplayVec, cursor, sizeof(bool) * mesh->boneDisplayVecSize);
 		cursor += mesh->boneDisplayVecSize;
 
 	}
 
 	for (int i = 0; i < boneNamesSize; i++) {
 
-		std::string data;
-		memcpy(&data, cursor, sizeof(std::string));
+		int nameSize;
+		memcpy(&nameSize, cursor, sizeof(int));
+		cursor += sizeof(int);
+
+		char* data = new char[nameSize];
+		memcpy(data, cursor, nameSize);
 		mesh->boneNamesVec.push_back(data);
-		cursor += sizeof(std::string);
+		cursor += nameSize;
 
 	}
 
