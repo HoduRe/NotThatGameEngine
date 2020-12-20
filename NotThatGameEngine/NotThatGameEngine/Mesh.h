@@ -43,12 +43,12 @@ public:
 
 	AABB boundingBox;
 
-	int* boneIdsByVertexIndex;
-	float* weightsByVertexIndex;
+	int* boneIDs;
+	float* boneWeights;
 	bool* boneDisplayVec;
 
-	int boneIdsbyVertexIndexSize;
-	int weightsByVertexIndexSize;
+	int boneIDsSize;
+	int boneWeightsSize;
 	int boneDisplayVecSize;
 
 	std::vector<std::string> boneNamesVec;

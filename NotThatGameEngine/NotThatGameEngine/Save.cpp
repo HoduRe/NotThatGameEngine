@@ -116,8 +116,8 @@ void DataSaving::SaveMesh(Application* App, Mesh* mesh) {
 	int indexSize = sizeof(uint) * mesh->indices.size();
 	int normalSize = sizeof(float) * mesh->normals.size();
 	int textureCoordSize = sizeof(float) * mesh->textureCoord.size();
-	int boneIdsArraySize = sizeof(int) * mesh->boneIdsbyVertexIndexSize;
-	int weightsSize = sizeof(float) * mesh->weightsByVertexIndexSize;
+	int boneIdsArraySize = sizeof(int) * mesh->boneIDsSize;
+	int weightsSize = sizeof(float) * mesh->boneWeightsSize;
 	int boneDisplaySize = sizeof(bool) * mesh->boneDisplayVecSize;
 	int boneNamesSize = 0;
 	std::vector<int> boneNamesVec;
@@ -126,7 +126,7 @@ void DataSaving::SaveMesh(Application* App, Mesh* mesh) {
 	for (int i = 0; i < mesh->boneNamesVec.size(); i++) {
 
 		int nameSize = sizeof(char) * mesh->boneNamesVec[i].size();
-		boneNamesSize += nameSize;
+		boneNamesSize += nameSize + sizeof(int);
 		boneNamesVec.push_back(nameSize);
 
 	}
@@ -153,11 +153,11 @@ void DataSaving::SaveMesh(Application* App, Mesh* mesh) {
 	memcpy(cursor, &vecSize, intSize);
 	cursor += intSize;
 
-	vecSize = mesh->boneIdsbyVertexIndexSize;
+	vecSize = mesh->boneIDsSize;
 	memcpy(cursor, &vecSize, intSize);
 	cursor += intSize;
 
-	vecSize = mesh->weightsByVertexIndexSize;
+	vecSize = mesh->boneWeightsSize;
 	memcpy(cursor, &vecSize, intSize);
 	cursor += intSize;
 
@@ -203,14 +203,14 @@ void DataSaving::SaveMesh(Application* App, Mesh* mesh) {
 
 	if (boneIdsArraySize > 0) {
 
-		memcpy(cursor, mesh->boneIdsByVertexIndex, boneIdsArraySize);
+		memcpy(cursor, mesh->boneIDs, boneIdsArraySize);
 		cursor += boneIdsArraySize;
 
 	}
 
 	if (weightsSize > 0) {
 
-		memcpy(cursor, mesh->weightsByVertexIndex, weightsSize);
+		memcpy(cursor, mesh->boneWeights, weightsSize);
 		cursor += weightsSize;
 
 	}

@@ -104,14 +104,14 @@ void Importer::ImportNewModelMesh(Application* App, aiNode* node, aiScene* scene
 
 			if (paiMesh->HasBones()) {
 
-				mesh->boneIdsByVertexIndex = new int[paiMesh->mNumVertices * 4];
-				mesh->weightsByVertexIndex = new float[paiMesh->mNumVertices * 4];
+				mesh->boneIDs = new int[paiMesh->mNumVertices * 4];
+				mesh->boneWeights = new float[paiMesh->mNumVertices * 4];
 				mesh->boneDisplayVec = new bool[paiMesh->mNumBones];
-				mesh->weightsByVertexIndexSize = mesh->boneIdsbyVertexIndexSize = paiMesh->mNumVertices * 4;
+				mesh->boneWeightsSize = mesh->boneIDsSize = paiMesh->mNumVertices * 4;
 				mesh->boneDisplayVecSize = paiMesh->mNumBones;
 
-				for (int j = 0; j < paiMesh->mNumVertices * 4; j++) { mesh->boneIdsByVertexIndex[j] = -1; }
-				for (int j = 0; j < paiMesh->mNumVertices * 4; j++) { mesh->weightsByVertexIndex[j] = 0.0f; }
+				for (int j = 0; j < paiMesh->mNumVertices * 4; j++) { mesh->boneIDs[j] = -1; }
+				for (int j = 0; j < paiMesh->mNumVertices * 4; j++) { mesh->boneWeights[j] = 0.0f; }
 
 				for (int j = 0; j < paiMesh->mNumBones; j++) {
 
@@ -126,10 +126,10 @@ void Importer::ImportNewModelMesh(Application* App, aiNode* node, aiScene* scene
 
 						for (int it = 0; it < 4; it++) {
 
-							if (mesh->boneIdsByVertexIndex[vertexId + it] == -1) {
+							if (mesh->boneIDs[vertexId + it] == -1) {
 								
-								mesh->boneIdsByVertexIndex[vertexId + it] = j;
-								mesh->weightsByVertexIndex[vertexId + it] = paiMesh->mBones[j]->mWeights[weights].mWeight;
+								mesh->boneIDs[vertexId + it] = j;
+								mesh->boneWeights[vertexId + it] = paiMesh->mBones[j]->mWeights[weights].mWeight;
 								it = 4;
 
 							}

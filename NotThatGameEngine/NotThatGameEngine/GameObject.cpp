@@ -266,7 +266,7 @@ void GameObject::DebugBones() {
 
 				for (int itAux = 0; itAux < 4; itAux++) {
 
-					if (mesh->boneIdsByVertexIndex[(it * 4) + itAux] == (int)i) {
+					if (mesh->boneIDs[(it * 4) + itAux] == (int)i) {
 
 						boneAABB.Enclose(vec(mesh->vertices[it * 3], mesh->vertices[(it * 3) + 1], mesh->vertices[(it * 3) + 2]));
 
@@ -295,7 +295,7 @@ void GameObject::DebugBones() {
 
 					for (int itAux = 0; itAux < 4; itAux++) {
 
-						if (mesh->boneIdsByVertexIndex[(it * 4) + itAux] == (int)i) {
+						if (mesh->boneIDs[(it * 4) + itAux] == (int)i) {
 
 							boneAABB.Enclose(vec(mesh->vertices[it * 3], mesh->vertices[(it * 3) + 1], mesh->vertices[(it * 3) + 2]));
 
