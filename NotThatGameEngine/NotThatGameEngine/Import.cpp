@@ -108,6 +108,8 @@ void Importer::ImportNewModelMesh(Application* App, aiNode* node, aiScene* scene
 				mesh->boneIdsByVertexIndex = new int[paiMesh->mNumVertices * 4];
 				mesh->weightsByVertexIndex = new float[paiMesh->mNumVertices * 4];
 				mesh->boneDisplayVec = new bool[paiMesh->mNumBones];
+				mesh->weightsByVertexIndexSize = mesh->boneIdsbyVertexIndexSize = paiMesh->mNumVertices * 4;
+				mesh->boneDisplayVecSize = paiMesh->mNumBones;
 
 				for (int j = 0; j < paiMesh->mNumVertices * 4; j++) { mesh->boneIdsByVertexIndex[j] = -1; }
 				for (int j = 0; j < paiMesh->mNumVertices * 4; j++) { mesh->weightsByVertexIndex[j] = 0.0f; }

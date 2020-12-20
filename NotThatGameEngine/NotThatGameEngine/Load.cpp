@@ -136,6 +136,9 @@ void DataLoading::LoadMesh(char* fileBuffer, Mesh* mesh) {
 	int indexVecSize;
 	int normalVecSize;
 	int textureCoordVecSize;
+	int boneIDsSize;
+	int boneNamesSize;
+	int boneOffsetMatrixSize;
 
 	std::vector<float> vertices;
 	std::vector<float> normals;
@@ -152,6 +155,24 @@ void DataLoading::LoadMesh(char* fileBuffer, Mesh* mesh) {
 	cursor += sizeof(int);
 
 	memcpy(&textureCoordVecSize, cursor, sizeof(int));
+	cursor += sizeof(int);
+
+	memcpy(&mesh->boneIdsbyVertexIndexSize, cursor, sizeof(int));
+	cursor += sizeof(int);
+
+	memcpy(&mesh->weightsByVertexIndexSize, cursor, sizeof(int));
+	cursor += sizeof(int);
+
+	memcpy(&mesh->boneDisplayVecSize, cursor, sizeof(int));
+	cursor += sizeof(int);
+
+	memcpy(&boneIDsSize, cursor, sizeof(int));
+	cursor += sizeof(int);
+
+	memcpy(&boneNamesSize, cursor, sizeof(int));
+	cursor += sizeof(int);
+
+	memcpy(&boneOffsetMatrixSize, cursor, sizeof(int));
 	cursor += sizeof(int);
 
 	for (int i = 0; i < vertexVecSize; i++) {
@@ -189,6 +210,8 @@ void DataLoading::LoadMesh(char* fileBuffer, Mesh* mesh) {
 		cursor += sizeof(float);
 
 	}
+
+
 
 	mesh->vertices.clear();
 	mesh->indices.clear();

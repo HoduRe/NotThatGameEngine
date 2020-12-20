@@ -116,8 +116,15 @@ void DataSaving::SaveMesh(Application* App, Mesh* mesh) {
 	int indexSize = sizeof(uint) * mesh->indices.size();
 	int normalSize = sizeof(float) * mesh->normals.size();
 	int textureCoordSize = sizeof(float) * mesh->textureCoord.size();
+	int boneIdsArraySize = sizeof(int) * mesh->boneIdsbyVertexIndexSize;
+	int weightsSize = sizeof(float) * mesh->weightsByVertexIndexSize;
+	int boneDisplaySize = sizeof(bool) * mesh->boneDisplayVecSize;
+	int boneIDsVecSize = sizeof(uint) * mesh->boneIDsVec.size();
+	int boneNamesSize = sizeof(std::string) * mesh->boneNamesVec.size();
+	int boneOffsetSize = sizeof(float4x4) * mesh->boneOffsetMatrixVec.size();
 
-	uint size = intSize + intSize + intSize + intSize + vertexSize + indexSize + normalSize + textureCoordSize;
+	uint size = (intSize * 10) + vertexSize + indexSize + normalSize + textureCoordSize +
+		boneIdsArraySize + weightsSize + boneDisplaySize + boneIDsVecSize + boneNamesSize + boneOffsetSize;
 
 	char* buffer = new char[size];
 	char* cursor = buffer;
@@ -135,6 +142,30 @@ void DataSaving::SaveMesh(Application* App, Mesh* mesh) {
 	cursor += intSize;
 
 	vecSize = mesh->textureCoord.size();
+	memcpy(cursor, &vecSize, intSize);
+	cursor += intSize;
+
+	vecSize = mesh->boneIdsbyVertexIndexSize;
+	memcpy(cursor, &vecSize, intSize);
+	cursor += intSize;
+
+	vecSize = mesh->weightsByVertexIndexSize;
+	memcpy(cursor, &vecSize, intSize);
+	cursor += intSize;
+
+	vecSize = mesh->boneDisplayVecSize;
+	memcpy(cursor, &vecSize, intSize);
+	cursor += intSize;
+
+	vecSize = mesh->boneIDsVec.size();
+	memcpy(cursor, &vecSize, intSize);
+	cursor += intSize;
+
+	vecSize = mesh->boneNamesVec.size();
+	memcpy(cursor, &vecSize, intSize);
+	cursor += intSize;
+
+	vecSize = mesh->boneOffsetMatrixVec.size();
 	memcpy(cursor, &vecSize, intSize);
 	cursor += intSize;
 
@@ -163,6 +194,48 @@ void DataSaving::SaveMesh(Application* App, Mesh* mesh) {
 
 		memcpy(cursor, &mesh->textureCoord.at(0), textureCoordSize);
 		cursor += textureCoordSize;
+
+	}
+
+	if (boneIdsArraySize > 0) {
+
+		memcpy(cursor, &mesh->boneIdsbyVertexIndexSize, boneIdsArraySize);
+		cursor += boneIdsArraySize;
+
+	}
+
+	if (weightsSize > 0) {
+
+		memcpy(cursor, &mesh->weightsByVertexIndexSize, weightsSize);
+		cursor += weightsSize;
+
+	}
+
+	if (boneDisplaySize > 0) {
+
+		memcpy(cursor, &mesh->boneDisplayVecSize, boneDisplaySize);
+		cursor += boneDisplaySize;
+
+	}
+
+	if (boneIDsVecSize > 0) {
+
+		memcpy(cursor, &mesh->boneIDsVec.at(0), boneIDsVecSize);
+		cursor += boneIDsVecSize;
+
+	}
+
+	if (boneNamesSize > 0) {
+
+		memcpy(cursor, &mesh->boneNamesVec.at(0), boneNamesSize);
+		cursor += boneNamesSize;
+
+	}
+
+	if (boneOffsetSize > 0) {
+
+		memcpy(cursor, &mesh->boneOffsetMatrixVec.at(0), boneOffsetSize);
+		cursor += boneOffsetSize;
 
 	}
 
