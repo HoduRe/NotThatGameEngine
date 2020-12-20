@@ -211,7 +211,53 @@ void DataLoading::LoadMesh(char* fileBuffer, Mesh* mesh) {
 
 	}
 
+	if (mesh->boneIdsbyVertexIndexSize > 0) {
 
+		memcpy(&mesh->boneIdsByVertexIndex, cursor, mesh->boneIdsbyVertexIndexSize);
+		cursor += mesh->boneIdsbyVertexIndexSize;
+
+	}
+
+	if (mesh->weightsByVertexIndexSize > 0) {
+
+		memcpy(&mesh->weightsByVertexIndex, cursor, mesh->weightsByVertexIndexSize);
+		cursor += mesh->weightsByVertexIndexSize;
+
+	}
+
+	if (mesh->boneDisplayVecSize > 0) {
+
+		memcpy(&mesh->boneDisplayVec, cursor, mesh->boneDisplayVecSize);
+		cursor += mesh->boneDisplayVecSize;
+
+	}
+
+	for (int i = 0; i < boneIDsSize; i++) {
+
+		uint data;
+		memcpy(&data, cursor, sizeof(uint));
+		mesh->boneIDsVec.push_back(data);
+		cursor += sizeof(uint);
+
+	}
+
+	for (int i = 0; i < boneNamesSize; i++) {
+
+		std::string data;
+		memcpy(&data, cursor, sizeof(std::string));
+		mesh->boneNamesVec.push_back(data);
+		cursor += sizeof(std::string);
+
+	}
+
+	for (int i = 0; i < boneOffsetMatrixSize; i++) {
+
+		float4x4 data;
+		memcpy(&data, cursor, sizeof(float4x4));
+		mesh->boneOffsetMatrixVec.push_back(data);
+		cursor += sizeof(float4x4);
+
+	}
 
 	mesh->vertices.clear();
 	mesh->indices.clear();
