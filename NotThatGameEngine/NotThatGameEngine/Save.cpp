@@ -119,8 +119,17 @@ void DataSaving::SaveMesh(Application* App, Mesh* mesh) {
 	int boneIdsArraySize = sizeof(int) * mesh->boneIdsbyVertexIndexSize;
 	int weightsSize = sizeof(float) * mesh->weightsByVertexIndexSize;
 	int boneDisplaySize = sizeof(bool) * mesh->boneDisplayVecSize;
-	int boneNamesSize = sizeof(std::string) * mesh->boneNamesVec.size();
-	int boneOffsetSize = sizeof(float4x4) * mesh->boneOffsetMatrixVec.size();
+	int boneNamesSize = 0;
+	std::vector<int> boneNamesVec;
+	int boneOffsetSize = sizeof(float) * 16 * mesh->boneOffsetMatrixVec.size();
+
+	for (int i = 0; i < mesh->boneNamesVec.size(); i++) {
+
+		int nameSize = sizeof(char) * mesh->boneNamesVec[i].size();
+		boneNamesSize += nameSize;
+		boneNamesVec.push_back(nameSize);
+
+	}
 
 	uint size = (intSize * 9) + vertexSize + indexSize + normalSize + textureCoordSize +
 		boneIdsArraySize + weightsSize + boneDisplaySize + boneNamesSize + boneOffsetSize;
@@ -206,29 +215,28 @@ void DataSaving::SaveMesh(Application* App, Mesh* mesh) {
 
 	}
 
+	if (boneDisplaySize > 0) {
+
+		memcpy(cursor, mesh->boneDisplayVec, boneDisplaySize);
+		cursor += boneDisplaySize;
+
+	}
+
 	for (int i = 0; i < mesh->boneNamesVec.size(); i++) {
 
-		int charsize = mesh->boneNamesVec[i].size();
+		int charsize = boneNamesVec[i];
 		memcpy(cursor, &charsize, intSize);
 		cursor += intSize;
 
-		charsize = sizeof(char) * mesh->boneNamesVec[i].size();
-		memcpy(cursor, &mesh->boneDisplayVec[i], charsize);
+		memcpy(cursor, mesh->boneNamesVec[i].c_str(), charsize);
 		cursor += charsize;
 
 	}
 
-	if (boneNamesSize > 0) {
-
-		memcpy(cursor, &mesh->boneNamesVec.at(0), boneNamesSize);
-		cursor += boneNamesSize;
-
-	}
-
-	if (boneOffsetSize > 0) {
-
-		memcpy(cursor, &mesh->boneOffsetMatrixVec.at(0), boneOffsetSize);
-		cursor += boneOffsetSize;
+	for (int i = 0; i < mesh->boneOffsetMatrixVec.size(); i++) {
+		
+		memcpy(cursor, mesh->boneOffsetMatrixVec[i].ptr(), sizeof(float) * 16);
+		cursor += sizeof(float) * 16;
 
 	}
 

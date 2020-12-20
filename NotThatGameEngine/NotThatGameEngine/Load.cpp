@@ -237,8 +237,8 @@ void DataLoading::LoadMesh(char* fileBuffer, Mesh* mesh) {
 		memcpy(&nameSize, cursor, sizeof(int));
 		cursor += sizeof(int);
 
-		char* data = new char[nameSize];
-		memcpy(data, cursor, nameSize);
+		char* data = new char[nameSize + 1];
+		memcpy(data, cursor, nameSize + 1);
 		mesh->boneNamesVec.push_back(data);
 		cursor += nameSize;
 
@@ -321,10 +321,10 @@ uint DataLoading::LoadTexture(Application* App, std::string path, const char* bu
 	}
 
 	else {
-	
+
 		App->texture->GetTextureData(imageTest)->reference++;
 		LOG("Repeated texture %s.\n", textureName.c_str());
-	
+
 	}
 
 	return imageTest;
