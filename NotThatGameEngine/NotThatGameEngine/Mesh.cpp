@@ -2,7 +2,7 @@
 
 Mesh::Mesh(long long int _id, GameObject* _gameObject) : Component(_id, _gameObject, COMPONENT_TYPE::MESH), vertexId(0), indexId(0), normalsId(0), textureCoordId(0),
 vertices(), normals(), textureCoord(), indices(), paintNormals(false), debugNormalsId(0), debugNormals(), boneIdsByVertexIndex(nullptr), weightsByVertexIndex(nullptr),
-boneIDsVec(), boneNamesVec(), boneOffsetMatrixVec(), boneDisplayVec(nullptr), showAllBones(false), boneIdsbyVertexIndexSize(0), weightsByVertexIndexSize(0), boneDisplayVecSize(0)
+boneNamesVec(), boneOffsetMatrixVec(), boneDisplayVec(nullptr), showAllBones(false), boneIdsbyVertexIndexSize(0), weightsByVertexIndexSize(0), boneDisplayVecSize(0)
 {
 	boundingBox.SetNegativeInfinity();
 }
@@ -19,7 +19,6 @@ Mesh::~Mesh() {
 	RELEASE_ARRAY(boneIdsByVertexIndex);
 	RELEASE_ARRAY(weightsByVertexIndex);
 	RELEASE_ARRAY(boneDisplayVec);
-	boneIDsVec.clear();
 	boneNamesVec.clear();
 	boneOffsetMatrixVec.clear();
 

@@ -117,7 +117,6 @@ void Importer::ImportNewModelMesh(Application* App, aiNode* node, aiScene* scene
 				for (int j = 0; j < paiMesh->mNumBones; j++) {
 
 					Transform auxTransform(0, nullptr);
-					mesh->boneIDsVec.push_back(j);
 					mesh->boneNamesVec.push_back(paiMesh->mBones[j]->mName.C_Str());
 					mesh->boneOffsetMatrixVec.push_back(aiTransformTofloat4x4Transform(paiMesh->mBones[j]->mOffsetMatrix, &auxTransform));
 					mesh->boneDisplayVec[j] = false;

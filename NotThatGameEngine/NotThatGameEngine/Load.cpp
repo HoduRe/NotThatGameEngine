@@ -136,7 +136,6 @@ void DataLoading::LoadMesh(char* fileBuffer, Mesh* mesh) {
 	int indexVecSize;
 	int normalVecSize;
 	int textureCoordVecSize;
-	int boneIDsSize;
 	int boneNamesSize;
 	int boneOffsetMatrixSize;
 
@@ -164,9 +163,6 @@ void DataLoading::LoadMesh(char* fileBuffer, Mesh* mesh) {
 	cursor += sizeof(int);
 
 	memcpy(&mesh->boneDisplayVecSize, cursor, sizeof(int));
-	cursor += sizeof(int);
-
-	memcpy(&boneIDsSize, cursor, sizeof(int));
 	cursor += sizeof(int);
 
 	memcpy(&boneNamesSize, cursor, sizeof(int));
@@ -229,15 +225,6 @@ void DataLoading::LoadMesh(char* fileBuffer, Mesh* mesh) {
 
 		memcpy(&mesh->boneDisplayVec, cursor, mesh->boneDisplayVecSize);
 		cursor += mesh->boneDisplayVecSize;
-
-	}
-
-	for (int i = 0; i < boneIDsSize; i++) {
-
-		uint data;
-		memcpy(&data, cursor, sizeof(uint));
-		mesh->boneIDsVec.push_back(data);
-		cursor += sizeof(uint);
 
 	}
 

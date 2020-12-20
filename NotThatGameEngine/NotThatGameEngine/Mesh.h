@@ -52,7 +52,6 @@ public:
 	int boneDisplayVecSize;
 
 	std::vector<std::string> boneNamesVec;
-	std::vector<uint> boneIDsVec;
 	std::vector<float4x4> boneOffsetMatrixVec;
 
 };
