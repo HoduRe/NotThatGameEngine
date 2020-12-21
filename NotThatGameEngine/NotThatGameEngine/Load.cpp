@@ -12,6 +12,7 @@
 #include "Mesh.h"
 #include "Material.h"
 #include "Camera.h"
+#include "Animation.h"
 #include "parson/parson.h"
 
 void DataLoading::LoadScene(Application* App, char* buffer) {
@@ -85,15 +86,20 @@ void DataLoading::LoadGameObject(Application* App, JSON_Array* gameObjectsArray,
 				LoadMesh(buffer, gameObject->mesh);
 				RELEASE_ARRAY(buffer);
 			}
-			else {
-				int a = 1;
-			}
 		}
 
 		else if (cReader.componentType == (int)COMPONENT_TYPE::MATERIAL) {
 			size = App->externalManager->Load((MATERIALS_PATH + std::to_string(cReader.componentId) + EXTENSION_MATERIALS).c_str(), &buffer);
 			if (size > 0) {
 				LoadMaterial(App, buffer, gameObject->material);
+				RELEASE_ARRAY(buffer);
+			}
+		}
+
+		else if (cReader.componentType == (int)COMPONENT_TYPE::ANIMATION) {
+			size = App->externalManager->Load((ANIMATIONS_PATH + std::to_string(cReader.componentId) + EXTENSION_ANIMATIONS).c_str(), &buffer);
+			if (size > 0) {
+				LoadAnimation(buffer, gameObject->animation);
 				RELEASE_ARRAY(buffer);
 			}
 		}
@@ -278,6 +284,133 @@ void DataLoading::LoadMaterial(Application* App, char* fileBuffer, Material* mat
 	std::string name;
 	memcpy((void*)name.c_str(), cursor, nameSize + 1);	// I was about to write something very disturbing. Happy thoughts, happy thoughts
 	material->SetTextureName(App, name.c_str());
+
+}
+
+
+void DataLoading::LoadAnimation(char* fileBuffer, Animation* animation) {
+
+	char* cursor = fileBuffer;
+	int intSize = sizeof(int);
+	int floatSize = sizeof(float);
+	int boolSize = sizeof(bool);
+
+	int animationVecSize, nameSize, mapSize;
+
+	char* name;
+	float duration;
+	float ticksPerSecond;
+	int channelsAmount;
+	bool playing;
+
+	float time, x, y, z, w;
+
+	memcpy(&animationVecSize, cursor, intSize);
+	cursor += intSize;
+
+	for (int i = 0; i < animationVecSize; i++) {
+
+		memcpy(&nameSize, cursor, intSize);
+		cursor += intSize;
+		
+		name = new char[nameSize];
+		memcpy(name, cursor, nameSize);
+		cursor += nameSize;
+
+		memcpy(&duration, cursor, floatSize);
+		cursor += floatSize;
+
+		memcpy(&ticksPerSecond, cursor, floatSize);
+		cursor += floatSize;
+
+		memcpy(&channelsAmount, cursor, intSize);
+		cursor += intSize;
+
+		memcpy(&playing, cursor, boolSize);
+		cursor += boolSize;
+
+		animation->animationVec.push_back(AnimationData(name, duration, ticksPerSecond, channelsAmount, playing));
+
+		for (int j = 0; j < channelsAmount; j++) {
+
+			memcpy(&nameSize, cursor, intSize);
+			cursor += intSize;
+
+			name = new char[nameSize];
+			memcpy(name, cursor, nameSize);
+			cursor += nameSize;
+
+			animation->animationVec[i].channels.push_back(Channels(name));
+
+			memcpy(&mapSize, cursor, intSize);
+			cursor += intSize;
+
+			for (int p = 0; p < mapSize; p++) {
+
+				memcpy(&time, cursor, floatSize);
+				cursor += floatSize;
+
+				memcpy(&x, cursor, floatSize);
+				cursor += floatSize;
+
+				memcpy(&y, cursor, floatSize);
+				cursor += floatSize;
+
+				memcpy(&z, cursor, floatSize);
+				cursor += floatSize;
+
+				animation->animationVec[i].channels[j].positionKeys.insert(std::pair<float, float3>(time, float3(x, y, z)));
+
+			}
+
+			memcpy(&mapSize, cursor, intSize);
+			cursor += intSize;
+
+			for (int r = 0; r < mapSize; r++) {
+
+				memcpy(&time, cursor, floatSize);
+				cursor += floatSize;
+
+				memcpy(&x, cursor, floatSize);
+				cursor += floatSize;
+
+				memcpy(&y, cursor, floatSize);
+				cursor += floatSize;
+
+				memcpy(&z, cursor, floatSize);
+				cursor += floatSize;
+
+				memcpy(&w, cursor, floatSize);
+				cursor += floatSize;
+
+				animation->animationVec[i].channels[j].rotationKeys.insert(std::pair<float, Quat>(time, Quat(x, y, z, w)));
+
+			}
+
+			memcpy(&mapSize, cursor, intSize);
+			cursor += intSize;
+
+			for (int s = 0; s < mapSize; s++) {
+
+				memcpy(&time, cursor, floatSize);
+				cursor += floatSize;
+
+				memcpy(&x, cursor, floatSize);
+				cursor += floatSize;
+
+				memcpy(&y, cursor, floatSize);
+				cursor += floatSize;
+
+				memcpy(&z, cursor, floatSize);
+				cursor += floatSize;
+
+				animation->animationVec[i].channels[j].scaleKeys.insert(std::pair<float, float3>(time, float3(x, y, z)));
+
+			}
+
+		}
+
+	}
 
 }
 

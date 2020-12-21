@@ -6,8 +6,8 @@ Channels::Channels(std::string _name) : name(_name), positionKeys(), rotationKey
 Channels::~Channels() {}
 
 
-AnimationData::AnimationData(std::string _name, float _duration, float _ticks, int _channels) :
-	name(_name), duration(_duration), ticksPerSecond(_ticks), channelsAmount(_channels), channels(), playing(false) {}
+AnimationData::AnimationData(std::string _name, float _duration, float _ticks, int _channels, bool _playing) :
+	name(_name), duration(_duration), ticksPerSecond(_ticks), channelsAmount(_channels), channels(), playing(_playing) {}
 
 
 AnimationData::~AnimationData() {}

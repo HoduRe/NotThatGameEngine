@@ -27,7 +27,7 @@ class AnimationData {
 
 public:
 
-	AnimationData(std::string _name, float _duration, float _ticks, int _channels);
+	AnimationData(std::string _name, float _duration, float _ticks, int _channels, bool _playing = false);
 	~AnimationData();
 
 public:

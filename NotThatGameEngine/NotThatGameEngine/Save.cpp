@@ -77,9 +77,12 @@ void DataSaving::SaveGameObject(Application* App, JSON_Object* node, GameObject*
 
 	JSON_Array* gameComponentsArray(JsonManager::OpenArray(node, JSON_NODE_COMPONENTS));
 
-	if (gameObject->mesh != nullptr) { SaveComponentJSON(App, gameComponentsArray, gameObject->mesh, 0); }
-	if (gameObject->material != nullptr) { SaveComponentJSON(App, gameComponentsArray, gameObject->material, 1); }
-	if (gameObject->camera != nullptr) { SaveComponentJSON(App, gameComponentsArray, gameObject->camera, 2); }
+	int i = 0;
+
+	if (gameObject->mesh != nullptr) { SaveComponentJSON(App, gameComponentsArray, gameObject->mesh, i); i++; }
+	if (gameObject->material != nullptr) { SaveComponentJSON(App, gameComponentsArray, gameObject->material, i); i++; }
+	if (gameObject->animation != nullptr) { SaveComponentJSON(App, gameComponentsArray, gameObject->animation, i); i++; }
+	if (gameObject->camera != nullptr) { SaveComponentJSON(App, gameComponentsArray, gameObject->camera, i); i++; }
 
 }
 
@@ -308,6 +311,8 @@ void DataSaving::SaveAnimation(Application* App, Animation* animation) {
 	int sizeBool = sizeof(bool);
 	int varSize;
 
+	bufferSize += sizeInt;
+
 	for (int i = 0; i < animation->animationVec.size(); i++) {
 
 		bufferSize += sizeInt;
@@ -330,6 +335,10 @@ void DataSaving::SaveAnimation(Application* App, Animation* animation) {
 
 	buffer = new char[bufferSize];
 	char* cursor = buffer;
+
+	varSize = animation->animationVec.size();
+	memcpy(cursor, &varSize, sizeInt);
+	cursor += sizeInt;
 
 	for (int i = 0; i < animation->animationVec.size(); i++) {
 
@@ -365,11 +374,11 @@ void DataSaving::SaveAnimation(Application* App, Animation* animation) {
 			memcpy(cursor, &varSize, sizeInt);
 			cursor += sizeInt;
 
-			for (std::map<float, float3>::iterator it = animation->animationVec[i].channels[j].positionKeys.begin(); it != animation->animationVec[i].channels[j].positionKeys.end(); it) {
+			for (std::map<float, float3>::iterator it = animation->animationVec[i].channels[j].positionKeys.begin(); it != animation->animationVec[i].channels[j].positionKeys.end(); it++) {
 
 				memcpy(cursor, &it->first, sizeFloat);
 				cursor += sizeFloat;
-				
+
 				memcpy(cursor, &it->second.x, sizeFloat);
 				cursor += sizeFloat;
 
@@ -385,7 +394,7 @@ void DataSaving::SaveAnimation(Application* App, Animation* animation) {
 			memcpy(cursor, &varSize, sizeInt);
 			cursor += sizeInt;
 
-			for (std::map<float, Quat>::iterator it = animation->animationVec[i].channels[j].rotationKeys.begin(); it != animation->animationVec[i].channels[j].rotationKeys.end(); it) {
+			for (std::map<float, Quat>::iterator it = animation->animationVec[i].channels[j].rotationKeys.begin(); it != animation->animationVec[i].channels[j].rotationKeys.end(); it++) {
 
 				memcpy(cursor, &it->first, sizeFloat);
 				cursor += sizeFloat;
@@ -403,12 +412,12 @@ void DataSaving::SaveAnimation(Application* App, Animation* animation) {
 				cursor += sizeFloat;
 
 			}
-			
+
 			varSize = animation->animationVec[i].channels[j].scaleKeys.size();
 			memcpy(cursor, &varSize, sizeInt);
 			cursor += sizeInt;
 
-			for (std::map<float, float3>::iterator it = animation->animationVec[i].channels[j].scaleKeys.begin(); it != animation->animationVec[i].channels[j].scaleKeys.end(); it) {
+			for (std::map<float, float3>::iterator it = animation->animationVec[i].channels[j].scaleKeys.begin(); it != animation->animationVec[i].channels[j].scaleKeys.end(); it++) {
 
 				memcpy(cursor, &it->first, sizeFloat);
 				cursor += sizeFloat;
@@ -423,7 +432,7 @@ void DataSaving::SaveAnimation(Application* App, Animation* animation) {
 				cursor += sizeFloat;
 
 			}
-			
+
 		}
 
 	}
@@ -522,6 +531,12 @@ void DataSaving::SaveComponentJSON(Application* App, JSON_Array* gameComponentsA
 	case COMPONENT_TYPE::MATERIAL:
 
 		SaveMaterial(App, (Material*)component);
+
+		break;
+
+	case COMPONENT_TYPE::ANIMATION:
+
+		SaveAnimation(App, (Animation*)component);
 
 		break;
 

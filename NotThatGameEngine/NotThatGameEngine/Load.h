@@ -10,6 +10,7 @@ class Application;
 class Mesh;
 class Material;
 class Camera;
+class Animation;
 class GameObject;
 
 namespace DataLoading {
@@ -20,6 +21,7 @@ namespace DataLoading {
 	void LoadMesh(char* fileBuffer, Mesh* mesh);
 	void LoadMaterial(Application* App, char* fileBuffer, Material* material);
 	uint LoadTexture(Application* app, std::string path, const char* buffer = nullptr, uint size = 0);
+	void LoadAnimation(char* fileBuffer, Animation* animation);
 	void LoadCamera(char* fileBuffer, Camera* camera);
 
 	void LoadAssetsMap(Application* App, std::map<std::string, FileInfo>* assetsMap);
