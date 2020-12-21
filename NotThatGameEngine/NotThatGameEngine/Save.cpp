@@ -129,7 +129,7 @@ void DataSaving::SaveMesh(Application* App, Mesh* mesh) {
 
 	for (int i = 0; i < mesh->boneNamesVec.size(); i++) {
 
-		int nameSize = sizeof(char) * mesh->boneNamesVec[i].size();
+		int nameSize = sizeof(char) * mesh->boneNamesVec[i].size() + 2;
 		boneNamesSize += nameSize + sizeof(int);
 		boneNamesVec.push_back(nameSize);
 
@@ -232,7 +232,7 @@ void DataSaving::SaveMesh(Application* App, Mesh* mesh) {
 		memcpy(cursor, &charsize, intSize);
 		cursor += intSize;
 
-		memcpy(cursor, mesh->boneNamesVec[i].c_str(), charsize);
+		memcpy(cursor, (mesh->boneNamesVec[i] + "\0").c_str(), charsize);
 		cursor += charsize;
 
 	}
@@ -315,8 +315,9 @@ void DataSaving::SaveAnimation(Application* App, Animation* animation) {
 
 	for (int i = 0; i < animation->animationVec.size(); i++) {
 
+		char* name;
 		bufferSize += sizeInt;
-		bufferSize += sizeof(char) * animation->animationVec[i].name.size();
+		bufferSize += sizeof(char) * animation->animationVec[i].name.size() + 2;
 		bufferSize += (sizeFloat * 2);
 		bufferSize += sizeInt;
 		bufferSize += sizeBool;
@@ -324,7 +325,7 @@ void DataSaving::SaveAnimation(Application* App, Animation* animation) {
 		for (int j = 0; j < animation->animationVec[i].channels.size(); j++) {
 
 			bufferSize += sizeInt * 4;
-			bufferSize += sizeof(char) * animation->animationVec[i].channels[j].name.size();
+			bufferSize += sizeof(char) * animation->animationVec[i].channels[j].name.size() + 2;
 			bufferSize += (sizeFloat * 4 * animation->animationVec[i].channels[j].positionKeys.size());
 			bufferSize += (sizeFloat * 5 * animation->animationVec[i].channels[j].rotationKeys.size());
 			bufferSize += (sizeFloat * 4 * animation->animationVec[i].channels[j].scaleKeys.size());
@@ -342,11 +343,11 @@ void DataSaving::SaveAnimation(Application* App, Animation* animation) {
 
 	for (int i = 0; i < animation->animationVec.size(); i++) {
 
-		varSize = sizeof(char) * animation->animationVec[i].name.size();
+		varSize = sizeof(char) * animation->animationVec[i].name.size() + 2;
 		memcpy(cursor, &varSize, sizeInt);
 		cursor += sizeInt;
 
-		memcpy(cursor, animation->animationVec[i].name.c_str(), varSize);
+		memcpy(cursor, (animation->animationVec[i].name + "\0").c_str(), varSize);
 		cursor += varSize;
 
 		memcpy(cursor, &animation->animationVec[i].duration, sizeFloat);
@@ -363,11 +364,11 @@ void DataSaving::SaveAnimation(Application* App, Animation* animation) {
 
 		for (int j = 0; j < animation->animationVec[i].channels.size(); j++) {
 
-			varSize = sizeof(char) * animation->animationVec[i].channels[j].name.size();
+			varSize = sizeof(char) * animation->animationVec[i].channels[j].name.size() + 2;
 			memcpy(cursor, &varSize, sizeInt);
 			cursor += sizeInt;
 
-			memcpy(cursor, animation->animationVec[i].channels[j].name.c_str(), varSize);
+			memcpy(cursor, (animation->animationVec[i].channels[j].name + "\0").c_str(), varSize);
 			cursor += varSize;
 
 			varSize = animation->animationVec[i].channels[j].positionKeys.size();
