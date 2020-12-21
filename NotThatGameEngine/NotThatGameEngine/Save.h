@@ -9,6 +9,7 @@ class Application;
 class Component;
 class Mesh;
 class Material;
+class Animation;
 class GameObject;
 
 namespace DataSaving {

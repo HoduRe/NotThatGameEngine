@@ -306,17 +306,11 @@ void DataSaving::SaveAnimation(Application* App, Animation* animation) {
 	int sizeFloat = sizeof(float);
 	int sizeInt = sizeof(int);
 	int sizeBool = sizeof(bool);
-
-	/* Considerations
-
-	animation has an animation vector
-		each animation has a name, a duration float, a tickspersecond float, a channelsAmount int, a playing bool and a channels vector
-			each channel has a name, a position key float float3 map, a rotation key quat float map and a scaleKeys float float3 map
-
-	*/
+	int varSize;
 
 	for (int i = 0; i < animation->animationVec.size(); i++) {
 
+		bufferSize += sizeInt;
 		bufferSize += sizeof(char) * animation->animationVec[i].name.size();
 		bufferSize += (sizeFloat * 2);
 		bufferSize += sizeInt;
@@ -324,11 +318,112 @@ void DataSaving::SaveAnimation(Application* App, Animation* animation) {
 
 		for (int j = 0; j < animation->animationVec[i].channels.size(); j++) {
 
+			bufferSize += sizeInt * 4;
 			bufferSize += sizeof(char) * animation->animationVec[i].channels[j].name.size();
 			bufferSize += (sizeFloat * 4 * animation->animationVec[i].channels[j].positionKeys.size());
 			bufferSize += (sizeFloat * 5 * animation->animationVec[i].channels[j].rotationKeys.size());
 			bufferSize += (sizeFloat * 4 * animation->animationVec[i].channels[j].scaleKeys.size());
 
+		}
+
+	}
+
+	buffer = new char[bufferSize];
+	char* cursor = buffer;
+
+	for (int i = 0; i < animation->animationVec.size(); i++) {
+
+		varSize = sizeof(char) * animation->animationVec[i].name.size();
+		memcpy(cursor, &varSize, sizeInt);
+		cursor += sizeInt;
+
+		memcpy(cursor, animation->animationVec[i].name.c_str(), varSize);
+		cursor += varSize;
+
+		memcpy(cursor, &animation->animationVec[i].duration, sizeFloat);
+		cursor += sizeFloat;
+
+		memcpy(cursor, &animation->animationVec[i].ticksPerSecond, sizeFloat);
+		cursor += sizeFloat;
+
+		memcpy(cursor, &animation->animationVec[i].channelsAmount, sizeInt);
+		cursor += sizeInt;
+
+		memcpy(cursor, &animation->animationVec[i].playing, sizeBool);
+		cursor += sizeBool;
+
+		for (int j = 0; j < animation->animationVec[i].channels.size(); j++) {
+
+			varSize = sizeof(char) * animation->animationVec[i].channels[j].name.size();
+			memcpy(cursor, &varSize, sizeInt);
+			cursor += sizeInt;
+
+			memcpy(cursor, animation->animationVec[i].channels[j].name.c_str(), varSize);
+			cursor += varSize;
+
+			varSize = animation->animationVec[i].channels[j].positionKeys.size();
+			memcpy(cursor, &varSize, sizeInt);
+			cursor += sizeInt;
+
+			for (std::map<float, float3>::iterator it = animation->animationVec[i].channels[j].positionKeys.begin(); it != animation->animationVec[i].channels[j].positionKeys.end(); it) {
+
+				memcpy(cursor, &it->first, sizeFloat);
+				cursor += sizeFloat;
+				
+				memcpy(cursor, &it->second.x, sizeFloat);
+				cursor += sizeFloat;
+
+				memcpy(cursor, &it->second.y, sizeFloat);
+				cursor += sizeFloat;
+
+				memcpy(cursor, &it->second.z, sizeFloat);
+				cursor += sizeFloat;
+
+			}
+
+			varSize = animation->animationVec[i].channels[j].rotationKeys.size();
+			memcpy(cursor, &varSize, sizeInt);
+			cursor += sizeInt;
+
+			for (std::map<float, Quat>::iterator it = animation->animationVec[i].channels[j].rotationKeys.begin(); it != animation->animationVec[i].channels[j].rotationKeys.end(); it) {
+
+				memcpy(cursor, &it->first, sizeFloat);
+				cursor += sizeFloat;
+
+				memcpy(cursor, &it->second.x, sizeFloat);
+				cursor += sizeFloat;
+
+				memcpy(cursor, &it->second.y, sizeFloat);
+				cursor += sizeFloat;
+
+				memcpy(cursor, &it->second.z, sizeFloat);
+				cursor += sizeFloat;
+
+				memcpy(cursor, &it->second.w, sizeFloat);
+				cursor += sizeFloat;
+
+			}
+			
+			varSize = animation->animationVec[i].channels[j].scaleKeys.size();
+			memcpy(cursor, &varSize, sizeInt);
+			cursor += sizeInt;
+
+			for (std::map<float, float3>::iterator it = animation->animationVec[i].channels[j].scaleKeys.begin(); it != animation->animationVec[i].channels[j].scaleKeys.end(); it) {
+
+				memcpy(cursor, &it->first, sizeFloat);
+				cursor += sizeFloat;
+
+				memcpy(cursor, &it->second.x, sizeFloat);
+				cursor += sizeFloat;
+
+				memcpy(cursor, &it->second.y, sizeFloat);
+				cursor += sizeFloat;
+
+				memcpy(cursor, &it->second.z, sizeFloat);
+				cursor += sizeFloat;
+
+			}
+			
 		}
 
 	}
