@@ -29,6 +29,7 @@
 #define EXTENSION_CAMERA ".NotThatCamera"
 #define EXTENSION_MESHES ".NotThatMesh"
 #define EXTENSION_MATERIALS ".NotThatMaterial"
+#define EXTENSION_ANIMATIONS ".NotThatAnimation"
 #define EXTENSION_TEXTURES ".dds"
 #define EXTENSION_MAP ".NotThatMap"
 

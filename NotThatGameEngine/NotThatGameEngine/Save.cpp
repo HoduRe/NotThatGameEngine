@@ -10,6 +10,7 @@
 #include "Mesh.h"
 #include "Material.h"
 #include "Camera.h"
+#include "Animation.h"
 #include "parson/parson.h"
 
 std::string DataSaving::SaveScene(Application* App) {
@@ -234,7 +235,7 @@ void DataSaving::SaveMesh(Application* App, Mesh* mesh) {
 	}
 
 	for (int i = 0; i < mesh->boneOffsetMatrixVec.size(); i++) {
-		
+
 		memcpy(cursor, mesh->boneOffsetMatrixVec[i].ptr(), sizeof(float) * 16);
 		cursor += sizeof(float) * 16;
 
@@ -296,6 +297,47 @@ std::string DataSaving::SaveTexture(Application* App, std::string textureName) {
 
 }
 
+
+void DataSaving::SaveAnimation(Application* App, Animation* animation) {
+
+	std::string path = (std::string)ANIMATIONS_PATH + std::to_string(animation->id) + EXTENSION_ANIMATIONS;
+	char* buffer = nullptr;
+	uint bufferSize = 0;
+	int sizeFloat = sizeof(float);
+	int sizeInt = sizeof(int);
+	int sizeBool = sizeof(bool);
+
+	/* Considerations
+
+	animation has an animation vector
+		each animation has a name, a duration float, a tickspersecond float, a channelsAmount int, a playing bool and a channels vector
+			each channel has a name, a position key float float3 map, a rotation key quat float map and a scaleKeys float float3 map
+
+	*/
+
+	for (int i = 0; i < animation->animationVec.size(); i++) {
+
+		bufferSize += sizeof(char) * animation->animationVec[i].name.size();
+		bufferSize += (sizeFloat * 2);
+		bufferSize += sizeInt;
+		bufferSize += sizeBool;
+
+		for (int j = 0; j < animation->animationVec[i].channels.size(); j++) {
+
+			bufferSize += sizeof(char) * animation->animationVec[i].channels[j].name.size();
+			bufferSize += (sizeFloat * 4 * animation->animationVec[i].channels[j].positionKeys.size());
+			bufferSize += (sizeFloat * 5 * animation->animationVec[i].channels[j].rotationKeys.size());
+			bufferSize += (sizeFloat * 4 * animation->animationVec[i].channels[j].scaleKeys.size());
+
+		}
+
+	}
+
+	App->externalManager->Save(path.c_str(), buffer, bufferSize);
+
+	RELEASE_ARRAY(buffer);
+
+}
 
 void DataSaving::SaveAssetsMap(Application* App, std::map<std::string, FileInfo>* assetsMap) {
 
