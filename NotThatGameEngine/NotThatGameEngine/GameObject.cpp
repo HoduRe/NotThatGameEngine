@@ -36,7 +36,6 @@ GameObject::~GameObject() {
 void GameObject::Update() {
 
 	int size = childs.size();
-	if (animation != nullptr) { animation->PlayAnimation(); }	// TODO: maybe this should be elsewhere in the gameObject loop :v
 	for (int i = 0; i < size; i++) { if (childs[i]->enabled) { childs[i]->Update(); } }
 
 }
@@ -51,8 +50,7 @@ void GameObject::PostUpdate(int focusId) {
 		if (parent != nullptr) { transform->RecalculateTransformFromParent(parent->worldTransform); }
 		else { worldTransform = transform->transform; }
 		if (camera != nullptr) { camera->UpdateTransform(); }
-
-		// Bone logic
+		if (animation != nullptr) { animation->PlayAnimation(); }
 
 		for (int i = childs.size() - 1; i > -1; i--) { childs[i]->PostUpdate(focusId); }
 

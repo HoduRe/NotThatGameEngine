@@ -23,7 +23,7 @@ public:
 
 };
 
-class AnimationData {
+class AnimationData {	// This is the resources, the "animations"
 
 public:
 
@@ -41,7 +41,7 @@ public:
 
 };
 
-class Animation : public Component {
+class Animation : public Component {	// This is the component, the "animator"
 
 public:
 
@@ -49,9 +49,18 @@ public:
 	~Animation();
 	void PlayAnimation();
 
+private:
+
+	void UpdateBones(const AnimationData* data);
+	void UpdateBonesRecursively(GameObject* gameObject, const AnimationData* data, int currentFrame);
+
 public:
 
 	std::vector<AnimationData> animationVec;
+
+private:
+
+	float time;
 
 };
 

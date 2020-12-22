@@ -1,4 +1,6 @@
 #include "Animation.h"
+#include "GameObject.h"
+#include "Mesh.h"
 
 Channels::Channels(std::string _name) : name(_name), positionKeys(), rotationKeys(), scaleKeys() {}
 
@@ -13,7 +15,8 @@ AnimationData::AnimationData(std::string _name, float _duration, float _ticks, i
 AnimationData::~AnimationData() {}
 
 
-Animation::Animation(long long int _id, GameObject* _gameObject) : Component(_id, _gameObject, COMPONENT_TYPE::ANIMATION), animationVec() {}
+Animation::Animation(long long int _id, GameObject* _gameObject) : Component(_id, _gameObject, COMPONENT_TYPE::ANIMATION), animationVec(),
+time(0.0f) {}
 
 
 Animation::~Animation() {}
@@ -25,14 +28,50 @@ void Animation::PlayAnimation() {
 
 		if (animationVec[i].playing) {
 
-			for (uint j = 0; j < animationVec[i].channelsAmount; j++) {
+			UpdateBones(&animationVec[i]);
 
-				// Call function that edits the mesh's TRS
+		}
+
+	}
+
+}
+
+
+void Animation::UpdateBones(const AnimationData* data) {
+
+	int currentFrame = time * data->ticksPerSecond;
+
+	for (int i = 0; i < owner->childs.size(); i++) { UpdateBonesRecursively(owner->childs[i], data, currentFrame); }
+
+}
+
+
+void Animation::UpdateBonesRecursively(GameObject* gameObject, const AnimationData* data, int currentFrame) {
+
+	// Get position, rotation and scale from channels to update each bone
+		// All channels are in the root
+		// Bones are each on each mesh
+
+	// Set the bone's new position, rotation and scale
+
+	for (int i = 0; i < gameObject->childs.size(); i++) {
+	
+		if (gameObject->childs[i]->mesh != nullptr) {
+
+			Mesh* mesh = gameObject->childs[i]->mesh;
+
+			for (int j = 0; j < mesh->boneNamesVec.size(); j++) {
+
+				bool match;
+
+				//for(data->channels
 
 			}
 
 		}
 
+		UpdateBonesRecursively(gameObject->childs[i], data, currentFrame);
+	
 	}
 
 }
