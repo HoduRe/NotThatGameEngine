@@ -312,7 +312,7 @@ void DataLoading::LoadAnimation(char* fileBuffer, Animation* animation) {
 
 		memcpy(&nameSize, cursor, intSize);
 		cursor += intSize;
-		
+
 		name = new char[nameSize];
 		memcpy(name, cursor, nameSize);
 		cursor += nameSize;
@@ -340,7 +340,8 @@ void DataLoading::LoadAnimation(char* fileBuffer, Animation* animation) {
 			memcpy(name, cursor, nameSize);
 			cursor += nameSize;
 
-			animation->animationVec[i].channels.push_back(Channels(name));
+			animation->animationVec[i].channels.insert(std::pair <std::string, Channels>(name, Channels()));
+			std::map<std::string, Channels>::iterator channelIt = prev(animation->animationVec[i].channels.end());
 
 			memcpy(&mapSize, cursor, intSize);
 			cursor += intSize;
@@ -359,7 +360,7 @@ void DataLoading::LoadAnimation(char* fileBuffer, Animation* animation) {
 				memcpy(&z, cursor, floatSize);
 				cursor += floatSize;
 
-				animation->animationVec[i].channels[j].positionKeys.insert(std::pair<float, float3>(time, float3(x, y, z)));
+				channelIt->second.positionKeys.insert(std::pair<float, float3>(time, float3(x, y, z)));
 
 			}
 
@@ -383,7 +384,7 @@ void DataLoading::LoadAnimation(char* fileBuffer, Animation* animation) {
 				memcpy(&w, cursor, floatSize);
 				cursor += floatSize;
 
-				animation->animationVec[i].channels[j].rotationKeys.insert(std::pair<float, Quat>(time, Quat(x, y, z, w)));
+				channelIt->second.rotationKeys.insert(std::pair<float, Quat>(time, Quat(x, y, z, w)));
 
 			}
 
@@ -404,7 +405,7 @@ void DataLoading::LoadAnimation(char* fileBuffer, Animation* animation) {
 				memcpy(&z, cursor, floatSize);
 				cursor += floatSize;
 
-				animation->animationVec[i].channels[j].scaleKeys.insert(std::pair<float, float3>(time, float3(x, y, z)));
+				channelIt->second.scaleKeys.insert(std::pair<float, float3>(time, float3(x, y, z)));
 
 			}
 

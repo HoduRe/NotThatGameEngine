@@ -208,25 +208,25 @@ void Importer::ImportAnimation(Application* App, aiScene* scene, GameObject* new
 			for (uint j = 0; j < a->mNumChannels; j++) {
 
 				aiNodeAnim* n = a->mChannels[j];
-				modelAnimation->at(i).channels.push_back(Channels(n->mNodeName.C_Str()));
+				modelAnimation->at(i).channels.insert(std::pair<std::string, Channels>(n->mNodeName.C_Str(), Channels()));
 
 				for (uint p = 0; p < n->mNumPositionKeys; p++) {
 
 					aiVectorKey pk = n->mPositionKeys[p];
-					modelAnimation->at(i).channels[j].positionKeys.insert(std::pair<float, float3>(pk.mTime, float3(pk.mValue.x, pk.mValue.y, pk.mValue.z)));
+					modelAnimation->at(i).channels.find(n->mNodeName.C_Str())->second.positionKeys.insert(std::pair<float, float3>(pk.mTime, float3(pk.mValue.x, pk.mValue.y, pk.mValue.z)));
 				}
 
 				for (uint r = 0; r < n->mNumRotationKeys; r++) {
 
 					aiQuatKey rk = n->mRotationKeys[r];
-					modelAnimation->at(i).channels[j].rotationKeys.insert(std::pair<float, Quat>(rk.mTime, Quat(rk.mValue.x, rk.mValue.y, rk.mValue.z, rk.mValue.w)));
+					modelAnimation->at(i).channels.find(n->mNodeName.C_Str())->second.rotationKeys.insert(std::pair<float, Quat>(rk.mTime, Quat(rk.mValue.x, rk.mValue.y, rk.mValue.z, rk.mValue.w)));
 
 				}
 
 				for (uint s = 0; s < n->mNumScalingKeys; s++) {
 
 					aiVectorKey sk = n->mScalingKeys[s];
-					modelAnimation->at(i).channels[j].scaleKeys.insert(std::pair<float, float3>(sk.mTime, float3(sk.mValue.x, sk.mValue.y, sk.mValue.z)));
+					modelAnimation->at(i).channels.find(n->mNodeName.C_Str())->second.scaleKeys.insert(std::pair<float, float3>(sk.mTime, float3(sk.mValue.x, sk.mValue.y, sk.mValue.z)));
 
 				}
 

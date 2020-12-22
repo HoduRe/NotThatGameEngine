@@ -2,10 +2,13 @@
 #include "GameObject.h"
 #include "Mesh.h"
 
-Channels::Channels(std::string _name) : name(_name), positionKeys(), rotationKeys(), scaleKeys() {}
+Channels::~Channels() {
 
+	positionKeys.clear();
+	rotationKeys.clear();
+	scaleKeys.clear();
 
-Channels::~Channels() {}
+}
 
 
 AnimationData::AnimationData(std::string _name, float _duration, float _ticks, int _channels, bool _playing) :

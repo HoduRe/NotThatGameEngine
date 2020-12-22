@@ -322,13 +322,13 @@ void DataSaving::SaveAnimation(Application* App, Animation* animation) {
 		bufferSize += sizeInt;
 		bufferSize += sizeBool;
 
-		for (int j = 0; j < animation->animationVec[i].channels.size(); j++) {
+		for (std::map<std::string, Channels>::iterator it = animation->animationVec[i].channels.begin(); it != animation->animationVec[i].channels.end(); it++) {
 
 			bufferSize += sizeInt * 4;
-			bufferSize += sizeof(char) * animation->animationVec[i].channels[j].name.size() + 2;
-			bufferSize += (sizeFloat * 4 * animation->animationVec[i].channels[j].positionKeys.size());
-			bufferSize += (sizeFloat * 5 * animation->animationVec[i].channels[j].rotationKeys.size());
-			bufferSize += (sizeFloat * 4 * animation->animationVec[i].channels[j].scaleKeys.size());
+			bufferSize += sizeof(char) * it->first.size() + 2;
+			bufferSize += (sizeFloat * 4 * it->second.positionKeys.size());
+			bufferSize += (sizeFloat * 5 * it->second.rotationKeys.size());
+			bufferSize += (sizeFloat * 4 * it->second.scaleKeys.size());
 
 		}
 
@@ -362,20 +362,20 @@ void DataSaving::SaveAnimation(Application* App, Animation* animation) {
 		memcpy(cursor, &animation->animationVec[i].playing, sizeBool);
 		cursor += sizeBool;
 
-		for (int j = 0; j < animation->animationVec[i].channels.size(); j++) {
+		for (std::map<std::string, Channels>::iterator channelIt = animation->animationVec[i].channels.begin(); channelIt != animation->animationVec[i].channels.end(); channelIt++) {
 
-			varSize = sizeof(char) * animation->animationVec[i].channels[j].name.size() + 2;
+			varSize = sizeof(char) * channelIt->first.size() + 2;
 			memcpy(cursor, &varSize, sizeInt);
 			cursor += sizeInt;
 
-			memcpy(cursor, (animation->animationVec[i].channels[j].name + "\0").c_str(), varSize);
+			memcpy(cursor, (channelIt->first + "\0").c_str(), varSize);
 			cursor += varSize;
 
-			varSize = animation->animationVec[i].channels[j].positionKeys.size();
+			varSize = channelIt->second.positionKeys.size();
 			memcpy(cursor, &varSize, sizeInt);
 			cursor += sizeInt;
 
-			for (std::map<float, float3>::iterator it = animation->animationVec[i].channels[j].positionKeys.begin(); it != animation->animationVec[i].channels[j].positionKeys.end(); it++) {
+			for (std::map<float, float3>::iterator it = channelIt->second.positionKeys.begin(); it != channelIt->second.positionKeys.end(); it++) {
 
 				memcpy(cursor, &it->first, sizeFloat);
 				cursor += sizeFloat;
@@ -391,11 +391,11 @@ void DataSaving::SaveAnimation(Application* App, Animation* animation) {
 
 			}
 
-			varSize = animation->animationVec[i].channels[j].rotationKeys.size();
+			varSize = channelIt->second.rotationKeys.size();
 			memcpy(cursor, &varSize, sizeInt);
 			cursor += sizeInt;
 
-			for (std::map<float, Quat>::iterator it = animation->animationVec[i].channels[j].rotationKeys.begin(); it != animation->animationVec[i].channels[j].rotationKeys.end(); it++) {
+			for (std::map<float, Quat>::iterator it = channelIt->second.rotationKeys.begin(); it != channelIt->second.rotationKeys.end(); it++) {
 
 				memcpy(cursor, &it->first, sizeFloat);
 				cursor += sizeFloat;
@@ -414,11 +414,11 @@ void DataSaving::SaveAnimation(Application* App, Animation* animation) {
 
 			}
 
-			varSize = animation->animationVec[i].channels[j].scaleKeys.size();
+			varSize = channelIt->second.scaleKeys.size();
 			memcpy(cursor, &varSize, sizeInt);
 			cursor += sizeInt;
 
-			for (std::map<float, float3>::iterator it = animation->animationVec[i].channels[j].scaleKeys.begin(); it != animation->animationVec[i].channels[j].scaleKeys.end(); it++) {
+			for (std::map<float, float3>::iterator it = channelIt->second.scaleKeys.begin(); it != channelIt->second.scaleKeys.end(); it++) {
 
 				memcpy(cursor, &it->first, sizeFloat);
 				cursor += sizeFloat;
