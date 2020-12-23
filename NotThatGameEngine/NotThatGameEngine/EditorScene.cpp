@@ -44,6 +44,8 @@ bool EditorScene::Init() {
 	App->eventManager->EventRegister(EVENT_ENUM::CREATE_PYRAMID, this);
 	App->eventManager->EventRegister(EVENT_ENUM::CREATE_CYLINDER, this);
 	App->eventManager->EventRegister(EVENT_ENUM::PUT_TEXTURE_TO_FOCUSED_MODEL, this);
+	App->eventManager->EventRegister(EVENT_ENUM::ENTERING_GAME_MODE, this);
+	App->eventManager->EventRegister(EVENT_ENUM::LEAVING_GAME_MODE, this);
 
 	return true;
 
@@ -347,6 +349,18 @@ bool EditorScene::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 		}
 
 		else { LOG("There is no object selected to drop the texture to.\n"); }
+
+		break;
+
+	case EVENT_ENUM::ENTERING_GAME_MODE:
+
+		App->eventManager->GenerateEvent(EVENT_ENUM::SAVE_SCENE);
+
+		break;
+
+	case EVENT_ENUM::LEAVING_GAME_MODE:
+
+		App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)App->resourceManager->assetsMap.find("Scene")->second.filePath.c_str());
 
 		break;
 

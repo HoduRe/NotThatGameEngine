@@ -16,7 +16,7 @@
 #include "Camera.h"
 #include "Component.h"
 
-ResourceManager::ResourceManager(Application* app, bool start_enabled) : Module(app, start_enabled), assetsMap(), libraryMap(), memoryMap() {}
+ResourceManager::ResourceManager(Application* app, bool start_enabled) : Module(app, start_enabled), assetsMap(), libraryMap() {}
 
 
 ResourceManager::~ResourceManager() {}

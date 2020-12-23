@@ -519,7 +519,7 @@ void ManagerImGui::SceneWindow() {
 		ImGui::SetWindowPos("Play Window", ImVec2((SCREEN_WIDTH * 0.5) - size.x * 0.5, SCREEN_HEIGHT * 0.05));
 		ImGui::SetWindowSize("Play Window", size);
 		
-		ImGui::SetNextWindowFocus();
+		if (gameMode) { ImGui::SetNextWindowFocus(); }
 
 		ImGui::Begin("Play Window", &playWindow, flag2);
 
@@ -543,14 +543,14 @@ void ManagerImGui::SceneWindow() {
 
 			}
 
+			ImGui::SameLine();
+
+			ImGui::Button("Pause", ImVec2(40, 20));
+			ImGui::SameLine();
+
+			ImGui::Button("Tick", ImVec2(40, 20));
+
 		}
-
-		ImGui::SameLine();
-
-		ImGui::Button("Pause", ImVec2(40, 20));
-		ImGui::SameLine();
-
-		ImGui::Button("Tick", ImVec2(40, 20));
 
 		ImGui::End();
 

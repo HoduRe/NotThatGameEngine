@@ -78,14 +78,6 @@ public:
 };
 
 
-class MemoryInfo {
-public:
-	MemoryInfo();
-	~MemoryInfo();
-	std::string libraryPath;
-};
-
-
 class ResourceManager : public Module {
 
 public:
@@ -126,11 +118,12 @@ private:
 
 public:
 
-private:
-
 	std::map<std::string, FileInfo> assetsMap;	// Key is fileName
 	std::map<std::string, LibraryInfo> libraryMap;	// Key is fileName
-	std::map<int, MemoryInfo> memoryMap;	// Key is id
+
+private:
+
+
 
 };
 

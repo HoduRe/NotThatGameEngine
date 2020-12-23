@@ -44,18 +44,6 @@ bool Module::CleanUp()
 }
 
 
-bool Module::Load()
-{
-	return true;
-}
-
-
-bool Module::Save()
-{
-	return true;
-}
-
-
 void Module::AddEvent(EVENT_ENUM eventId)
 {
 

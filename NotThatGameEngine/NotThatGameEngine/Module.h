@@ -26,10 +26,6 @@ public:
 
 	virtual bool CleanUp();
 
-	virtual bool Load();
-
-	virtual bool Save();
-
 	void AddEvent(EVENT_ENUM eventId);
 
 	void RemoveEvent(EVENT_ENUM eventId);

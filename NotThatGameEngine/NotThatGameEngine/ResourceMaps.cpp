@@ -18,10 +18,5 @@ LibraryInfo::LibraryInfo(std::string _filePath, ResourceEnum _type) : filePath(_
 LibraryInfo::~LibraryInfo() {}
 
 
-MemoryInfo::MemoryInfo() : libraryPath() {}
-
-
-MemoryInfo::~MemoryInfo() {}
-
 
 
