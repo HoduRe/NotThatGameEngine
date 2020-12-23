@@ -478,8 +478,11 @@ void ManagerImGui::SceneWindow() {
 
 	if (sceneWindow) {
 
+		int x, y;
 		ImGuiWindowFlags flag = ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse;
 		ImGuiWindowFlags flag2 = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse;
+		SDL_GetWindowSize(App->window->window, &x, &y);
+		ImVec2 vec2(x, y);
 
 		if (!gameMode) {
 
@@ -487,7 +490,6 @@ void ManagerImGui::SceneWindow() {
 
 			ret = ImGui::IsWindowFocused();
 
-			ImVec2 vec2(ImGui::GetWindowWidth(), ImGui::GetWindowHeight());
 			ImVec2 uvMin = ImVec2(0.0f, 1.0f);
 			ImVec2 uvMax = ImVec2(1.0f, 0.0f);
 
@@ -500,11 +502,10 @@ void ManagerImGui::SceneWindow() {
 		else {
 
 			ImGui::SetWindowPos("Game Scene", ImVec2(0, 0));
-			ImGui::Begin("Game Scene", &sceneWindow, flag2);
+			ImGui::Begin("Game Scene", &sceneWindow, flag | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
 
 			ret = ImGui::IsWindowFocused();
 
-			ImVec2 vec2(SCREEN_WIDTH, SCREEN_HEIGHT);
 			ImVec2 uvMin = ImVec2(0.0f, 1.0f);
 			ImVec2 uvMax = ImVec2(1.0f, 0.0f);
 
@@ -516,7 +517,7 @@ void ManagerImGui::SceneWindow() {
 
 		ImVec2 size(160, 40);
 
-		ImGui::SetWindowPos("Play Window", ImVec2((SCREEN_WIDTH * 0.5) - size.x * 0.5, SCREEN_HEIGHT * 0.05));
+		ImGui::SetWindowPos("Play Window", ImVec2((vec2.x * 0.5) - size.x * 0.5, vec2.y * 0.05));
 		ImGui::SetWindowSize("Play Window", size);
 		
 		if (gameMode) { ImGui::SetNextWindowFocus(); }

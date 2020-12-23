@@ -465,7 +465,7 @@ std::string ResourceManager::ManageSceneFiles(std::string assetsScenePath, char*
 
 					assetsIDs.erase(assetsIDs.begin() + (i + 1));
 					assetsIDs.erase(assetsIDs.begin() + i);
-					if (i != 0) { i -= 2; }
+					i -= 2;
 					libraryIDs.erase(libraryIDs.begin() + (j + 1));
 					libraryIDs.erase(libraryIDs.begin() + j);
 					j = libraryIDs.size();
