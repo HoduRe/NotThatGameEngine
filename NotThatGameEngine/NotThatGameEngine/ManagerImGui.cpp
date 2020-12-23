@@ -519,6 +519,8 @@ void ManagerImGui::SceneWindow() {
 		ImGui::SetWindowPos("Play Window", ImVec2((SCREEN_WIDTH * 0.5) - size.x * 0.5, SCREEN_HEIGHT * 0.05));
 		ImGui::SetWindowSize("Play Window", size);
 		
+		ImGui::SetNextWindowFocus();
+
 		ImGui::Begin("Play Window", &playWindow, flag2);
 
 		if (!gameMode) {
