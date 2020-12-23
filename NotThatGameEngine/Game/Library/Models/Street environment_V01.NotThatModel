@@ -1,0 +1,1050 @@
+{
+    "GameObjects": [
+        {
+            "Name": "Street environment_V01",
+            "ID": 1863634184,
+            "ParentID": 0,
+            "Translation": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 5,
+                    "ComponentID": 344569312
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 1408539818,
+            "ParentID": 1863634184,
+            "Translation": [
+                -41.475891,
+                -0.000001,
+                -21.014099
+            ],
+            "Rotation": [
+                -90,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1538589937
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1685691517
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 1257412370,
+            "ParentID": 1863634184,
+            "Translation": [
+                17.707165,
+                -0.000001,
+                -20.053276
+            ],
+            "Rotation": [
+                -90,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 136717525
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 763284521
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 135741815,
+            "ParentID": 1863634184,
+            "Translation": [
+                16.010492,
+                -0.000003,
+                -37.493286
+            ],
+            "Rotation": [
+                -90,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 876952102
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1322209132
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 1552855315,
+            "ParentID": 1863634184,
+            "Translation": [
+                40.979996,
+                -0.000003,
+                -18.270824
+            ],
+            "Rotation": [
+                -90,
+                0,
+                90
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 296073096
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1356972710
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 570644694,
+            "ParentID": 1863634184,
+            "Translation": [
+                -2.159772,
+                -0.000000,
+                -1.853838
+            ],
+            "Rotation": [
+                -90,
+                0,
+                -90
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1012792437
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1144190779
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 406771474,
+            "ParentID": 1863634184,
+            "Translation": [
+                -0.028603,
+                -0.000000,
+                -0.026032
+            ],
+            "Rotation": [
+                -90,
+                0,
+                0
+            ],
+            "Scale": [
+                0.996635,
+                0.970616,
+                0.996635
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 2085180794
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 330038227
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 969938365,
+            "ParentID": 1863634184,
+            "Translation": [
+                25.154011,
+                0.000003,
+                39.153721
+            ],
+            "Rotation": [
+                -90,
+                0,
+                90
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1838935595
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 2002476296
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 455629750,
+            "ParentID": 1863634184,
+            "Translation": [
+                25.154011,
+                0.000003,
+                39.153721
+            ],
+            "Rotation": [
+                -90,
+                0,
+                90
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 432491827
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 645272980
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 917874913,
+            "ParentID": 1863634184,
+            "Translation": [
+                30.134541,
+                -0.000003,
+                -37.493286
+            ],
+            "Rotation": [
+                -90,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 395191765
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 85385701
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 698434194,
+            "ParentID": 1863634184,
+            "Translation": [
+                -42.288055,
+                -0.000001,
+                -33.201576
+            ],
+            "Rotation": [
+                -90,
+                0,
+                90
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1392503924
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1513932636
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 214801453,
+            "ParentID": 1863634184,
+            "Translation": [
+                -19.439707,
+                -0.000001,
+                -32.061729
+            ],
+            "Rotation": [
+                -90,
+                0.000000,
+                -180
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 196370387
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 621816525
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 1763325252,
+            "ParentID": 1863634184,
+            "Translation": [
+                34.270424,
+                0.000003,
+                41.972748
+            ],
+            "Rotation": [
+                -90,
+                0.000000,
+                -180
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 446788942
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1739787834
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 1417205090,
+            "ParentID": 1863634184,
+            "Translation": [
+                34.270424,
+                0.000003,
+                41.972748
+            ],
+            "Rotation": [
+                -90,
+                0.000000,
+                -180
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1439089886
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 27402421
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 1099409475,
+            "ParentID": 1863634184,
+            "Translation": [
+                44.260082,
+                0.000003,
+                39.153721
+            ],
+            "Rotation": [
+                -90,
+                0,
+                90
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 453678533
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 363665917
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 1374912601,
+            "ParentID": 1863634184,
+            "Translation": [
+                44.260082,
+                0.000003,
+                39.153721
+            ],
+            "Rotation": [
+                -90,
+                0,
+                90
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 2006586717
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 320135966
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 854112843,
+            "ParentID": 1863634184,
+            "Translation": [
+                -20.831324,
+                0.000001,
+                27.426489
+            ],
+            "Rotation": [
+                -90,
+                -0.000000,
+                179.999985
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1804095963
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 941494287
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 368057073,
+            "ParentID": 1863634184,
+            "Translation": [
+                42.130642,
+                -0.000003,
+                -37.493286
+            ],
+            "Rotation": [
+                -90,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 961465697
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1138013847
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 726603329,
+            "ParentID": 1863634184,
+            "Translation": [
+                -20.572771,
+                -0.069196,
+                -43.060829
+            ],
+            "Rotation": [
+                -90,
+                -0.000000,
+                180
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 921509863
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 364217798
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 725579577,
+            "ParentID": 1863634184,
+            "Translation": [
+                31.511889,
+                0.000001,
+                16.446016
+            ],
+            "Rotation": [
+                -90,
+                -0.000000,
+                180
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1118919637
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 334752652
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 317901936,
+            "ParentID": 1863634184,
+            "Translation": [
+                13.387990,
+                0.000001,
+                33.755039
+            ],
+            "Rotation": [
+                -90,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 314695064
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 756884050
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 684220274,
+            "ParentID": 1863634184,
+            "Translation": [
+                -2.503353,
+                -0.000001,
+                -15.800846
+            ],
+            "Rotation": [
+                -90,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1824667065
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 617438400,
+            "ParentID": 1863634184,
+            "Translation": [
+                -42.807240,
+                0.000001,
+                41.835564
+            ],
+            "Rotation": [
+                -90,
+                0,
+                -90
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1282175148
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1863224059
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 498684401,
+            "ParentID": 1863634184,
+            "Translation": [
+                -34.679482,
+                0.000001,
+                41.835564
+            ],
+            "Rotation": [
+                -90,
+                0,
+                -90
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1363321682
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1336592416
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 538560972,
+            "ParentID": 1863634184,
+            "Translation": [
+                -29.478403,
+                -0.000001,
+                -21.014099
+            ],
+            "Rotation": [
+                -90,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 149377802
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1716134268
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 88954992,
+            "ParentID": 1863634184,
+            "Translation": [
+                -32.361496,
+                -0.000001,
+                -42.370422
+            ],
+            "Rotation": [
+                -90,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 770901669
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1033791625
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 1940143731,
+            "ParentID": 1863634184,
+            "Translation": [
+                16.049517,
+                0.000001,
+                16.696884
+            ],
+            "Rotation": [
+                -90,
+                0,
+                -90.000015
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1928878681
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1867752050
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 172783298,
+            "ParentID": 1863634184,
+            "Translation": [
+                13.387990,
+                0.000001,
+                40.802517
+            ],
+            "Rotation": [
+                -90,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 885372916
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1324664995
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 1290083211,
+            "ParentID": 1863634184,
+            "Translation": [
+                -31.216331,
+                -0.000001,
+                -33.201576
+            ],
+            "Rotation": [
+                -90,
+                0,
+                -90
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1164882365
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 555204710
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 527180903,
+            "ParentID": 1863634184,
+            "Translation": [
+                -20.317694,
+                0.000001,
+                16.163609
+            ],
+            "Rotation": [
+                -90,
+                -0.000000,
+                179.999985
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 411631056
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 2143964208
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 218636886,
+            "ParentID": 1863634184,
+            "Translation": [
+                -41.649002,
+                0.000001,
+                16.495394
+            ],
+            "Rotation": [
+                -90,
+                0,
+                -90.000015
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1268998296
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1453128236
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 354550270,
+            "ParentID": 1863634184,
+            "Translation": [
+                -42.807240,
+                0.000000,
+                30.643888
+            ],
+            "Rotation": [
+                -90,
+                0,
+                -90
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 921759710
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 578946609
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 967309052,
+            "ParentID": 1863634184,
+            "Translation": [
+                -34.679482,
+                0.000000,
+                30.643888
+            ],
+            "Rotation": [
+                -90,
+                0,
+                -90
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1099392396
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 185855542
+                }
+            ]
+        },
+        {
+            "Name": "NewGameObject",
+            "ID": 2083823019,
+            "ParentID": 1863634184,
+            "Translation": [
+                30.695278,
+                -0.000001,
+                -21.612646
+            ],
+            "Rotation": [
+                -90,
+                0,
+                90
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 911717683
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1522653764
+                }
+            ]
+        }
+    ]
+} 

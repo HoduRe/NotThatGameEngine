@@ -142,7 +142,7 @@ update_status ManagerImGui::Update(float dt) {
 	SceneWindow();
 
 	if (gameMode == false) {
-	
+
 		if (showDemoWindow) { ImGui::ShowDemoWindow(&showDemoWindow); }	// DEMO WINDOW
 		DefaultButtons();
 		ret = SetMainMenuBar();
@@ -153,7 +153,7 @@ update_status ManagerImGui::Update(float dt) {
 		InspectorWindow();
 		ReferenceWindow();
 		if (loadFileMenu) { LoadFileMenu(ASSETS_PATH, nullptr); }
-	
+
 	}
 
 	ImGui::EndFrame();
@@ -479,24 +479,46 @@ void ManagerImGui::SceneWindow() {
 	if (sceneWindow) {
 
 		ImGuiWindowFlags flag = ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse;
-
-		ImGui::Begin("Scene", &sceneWindow, flag);
-
-		ret = ImGui::IsWindowFocused();
-
-		ImVec2 vec2(ImGui::GetWindowWidth(), ImGui::GetWindowHeight());
-		ImVec2 uvMin = ImVec2(0.0f, 1.0f);
-		ImVec2 uvMax = ImVec2(1.0f, 0.0f);
-
-		ImGui::Image((ImTextureID*)App->renderer3D->sceneTextureId, vec2, uvMin, uvMax);
-
-		ImGui::End();
-
 		ImGuiWindowFlags flag2 = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse;
-		ImVec2 position(160, 40);
 
-		ImGui::SetWindowPos("Play Window", ImVec2((SCREEN_WIDTH / 2) - 80, SCREEN_HEIGHT / 20));
-		ImGui::SetWindowSize("Play Window", position);
+		if (!gameMode) {
+
+			ImGui::Begin("Scene", &sceneWindow, flag);
+
+			ret = ImGui::IsWindowFocused();
+
+			ImVec2 vec2(ImGui::GetWindowWidth(), ImGui::GetWindowHeight());
+			ImVec2 uvMin = ImVec2(0.0f, 1.0f);
+			ImVec2 uvMax = ImVec2(1.0f, 0.0f);
+
+			ImGui::Image((ImTextureID*)App->renderer3D->sceneTextureId, vec2, uvMin, uvMax);
+
+			ImGui::End();
+
+		}
+
+		else {
+
+			ImGui::SetWindowPos("Game Scene", ImVec2(0, 0));
+			ImGui::Begin("Game Scene", &sceneWindow, flag2);
+
+			ret = ImGui::IsWindowFocused();
+
+			ImVec2 vec2(SCREEN_WIDTH, SCREEN_HEIGHT);
+			ImVec2 uvMin = ImVec2(0.0f, 1.0f);
+			ImVec2 uvMax = ImVec2(1.0f, 0.0f);
+
+			ImGui::Image((ImTextureID*)App->renderer3D->sceneTextureId, vec2, uvMin, uvMax);
+
+			ImGui::End();
+
+		}
+
+		ImVec2 size(160, 40);
+
+		ImGui::SetWindowPos("Play Window", ImVec2((SCREEN_WIDTH * 0.5) - size.x * 0.5, SCREEN_HEIGHT * 0.05));
+		ImGui::SetWindowSize("Play Window", size);
+		
 		ImGui::Begin("Play Window", &playWindow, flag2);
 
 		if (!gameMode) {
