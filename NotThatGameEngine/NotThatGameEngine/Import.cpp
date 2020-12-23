@@ -62,13 +62,36 @@ void Importer::ImportNewModelMesh(Application* App, aiNode* node, aiScene* scene
 	Mesh* mesh;
 	Transform* transformation;
 
+	bool isNameChannelNeededJustShootMeInTheFaceAndLetLadyLuckDecideWhereTheHoleIsBlown = false;
+	std::string name = node->mName.C_Str();
+	if (scene->HasAnimations()) {
+
+		for (uint i = 0; i < scene->mNumAnimations; i++) {
+
+			for (int j = 0; j < scene->mAnimations[i]->mNumChannels; j++) {
+
+				if (scene->mAnimations[i]->mChannels[j]->mNodeName.C_Str() == name) {
+
+					isNameChannelNeededJustShootMeInTheFaceAndLetLadyLuckDecideWhereTheHoleIsBlown = true;
+					j = scene->mAnimations[i]->mNumChannels;
+
+				}
+
+			}
+
+		}
+
+	}
+
 	if (node->mNumMeshes > 0) {
 
 		for (uint i = 0; i < node->mNumMeshes; i++) {
 
 			long long int id = App->idGenerator.Int();
 
-			GameObject* newObject = new GameObject(App, id, "NewGameObject", parent);
+			if (isNameChannelNeededJustShootMeInTheFaceAndLetLadyLuckDecideWhereTheHoleIsBlown == false) { name = "NewGameObject"; }
+
+			GameObject* newObject = new GameObject(App, id, name, parent);
 			parent->childs.push_back(newObject);
 
 			mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
@@ -127,7 +150,7 @@ void Importer::ImportNewModelMesh(Application* App, aiNode* node, aiScene* scene
 						for (int it = 0; it < 4; it++) {
 
 							if (mesh->boneIDs[vertexId + it] == -1) {
-								
+
 								mesh->boneIDs[vertexId + it] = j;
 								mesh->boneWeights[vertexId + it] = paiMesh->mBones[j]->mWeights[weights].mWeight;
 								it = 4;
@@ -208,25 +231,28 @@ void Importer::ImportAnimation(Application* App, aiScene* scene, GameObject* new
 			for (uint j = 0; j < a->mNumChannels; j++) {
 
 				aiNodeAnim* n = a->mChannels[j];
-				modelAnimation->at(i).channels.insert(std::pair<std::string, Channels>(n->mNodeName.C_Str(), Channels()));
+
+				std::string channelName = n->mNodeName.C_Str();
+				if (channelName.find("_$AssimpFbx$_") != std::string::npos) { channelName = channelName.substr(0, channelName.find("_$AssimpFbx$_")); }
+				modelAnimation->at(i).channels.insert(std::pair<std::string, Channels>(channelName, Channels()));
 
 				for (uint p = 0; p < n->mNumPositionKeys; p++) {
 
 					aiVectorKey pk = n->mPositionKeys[p];
-					modelAnimation->at(i).channels.find(n->mNodeName.C_Str())->second.positionKeys.insert(std::pair<float, float3>(pk.mTime, float3(pk.mValue.x, pk.mValue.y, pk.mValue.z)));
+					modelAnimation->at(i).channels.find(channelName.c_str())->second.positionKeys.insert(std::pair<float, float3>(pk.mTime, float3(pk.mValue.x, pk.mValue.y, pk.mValue.z)));
 				}
 
 				for (uint r = 0; r < n->mNumRotationKeys; r++) {
 
 					aiQuatKey rk = n->mRotationKeys[r];
-					modelAnimation->at(i).channels.find(n->mNodeName.C_Str())->second.rotationKeys.insert(std::pair<float, Quat>(rk.mTime, Quat(rk.mValue.x, rk.mValue.y, rk.mValue.z, rk.mValue.w)));
+					modelAnimation->at(i).channels.find(channelName.c_str())->second.rotationKeys.insert(std::pair<float, Quat>(rk.mTime, Quat(rk.mValue.x, rk.mValue.y, rk.mValue.z, rk.mValue.w)));
 
 				}
 
 				for (uint s = 0; s < n->mNumScalingKeys; s++) {
 
 					aiVectorKey sk = n->mScalingKeys[s];
-					modelAnimation->at(i).channels.find(n->mNodeName.C_Str())->second.scaleKeys.insert(std::pair<float, float3>(sk.mTime, float3(sk.mValue.x, sk.mValue.y, sk.mValue.z)));
+					modelAnimation->at(i).channels.find(channelName.c_str())->second.scaleKeys.insert(std::pair<float, float3>(sk.mTime, float3(sk.mValue.x, sk.mValue.y, sk.mValue.z)));
 
 				}
 

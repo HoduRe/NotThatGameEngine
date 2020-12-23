@@ -20,7 +20,7 @@ AnimationData::~AnimationData() {}
 
 
 Animation::Animation(long long int _id, GameObject* _gameObject) : Component(_id, _gameObject, COMPONENT_TYPE::ANIMATION), animationVec(),
-time(0.0f) {}
+time(0.0f), currentAnimationIndex(-1) {}
 
 
 Animation::~Animation() {}
@@ -32,6 +32,8 @@ void Animation::PlayAnimation() {
 
 		if (animationVec[i].playing) {
 
+			currentAnimationIndex = i;
+			time += 0.01;
 			UpdateBones(&animationVec[i]);
 
 		}
@@ -44,8 +46,7 @@ void Animation::PlayAnimation() {
 void Animation::UpdateBones(const AnimationData* data) {
 
 	int currentFrame = time * data->ticksPerSecond;
-
-	for (int i = 0; i < owner->childs.size(); i++) { UpdateBonesRecursively(owner->childs[i], data, currentFrame); }
+	UpdateBonesRecursively(owner, data, currentFrame);
 
 }
 
@@ -53,25 +54,29 @@ void Animation::UpdateBones(const AnimationData* data) {
 void Animation::UpdateBonesRecursively(GameObject* gameObject, const AnimationData* data, int currentFrame) {
 
 	for (int i = 0; i < gameObject->childs.size(); i++) {
-	
+
 		if (gameObject->childs[i]->mesh != nullptr) {
 
 			Mesh* mesh = gameObject->childs[i]->mesh;
 
 			for (int j = 0; j < mesh->boneNamesVec.size(); j++) {
 
-				Channels* channel = (Channels*)&data->channels.find(mesh->boneNamesVec[i])->second;
+				if (data->channels.count(mesh->boneNamesVec[j]) == 1) {
 
-				gameObject->childs[i]->transform->SetPosition(GetUpdatedChannelPosition(channel, currentFrame));
-				gameObject->childs[i]->transform->SetRotation(GetUpdatedChannelRotation(channel, currentFrame));
-				gameObject->childs[i]->transform->SetScale(GetUpdatedChannelScale(channel, currentFrame));
+					Channels* channel = (Channels*)&data->channels.find(mesh->boneNamesVec[j])->second;
+
+					gameObject->childs[i]->transform->SetPosition(GetUpdatedChannelPosition(channel, currentFrame));
+					gameObject->childs[i]->transform->SetRotation(GetUpdatedChannelRotation(channel, currentFrame));
+					gameObject->childs[i]->transform->SetScale(GetUpdatedChannelScale(channel, currentFrame));
+
+				}
 
 			}
 
 		}
 
 		UpdateBonesRecursively(gameObject->childs[i], data, currentFrame);
-	
+
 	}
 
 }
@@ -83,7 +88,9 @@ float3 Animation::GetUpdatedChannelPosition(const Channels* channel, const int c
 
 	if (channel->positionKeys.size() > 0) {
 
-		newPosition = channel->positionKeys.lower_bound(currentFrame)->second;
+		std::map<float, float3>::const_iterator it = channel->positionKeys.lower_bound(currentFrame);
+		if (it != channel->positionKeys.begin()) { it--; }
+		newPosition = it->second;
 
 	}
 
@@ -98,7 +105,9 @@ Quat Animation::GetUpdatedChannelRotation(const Channels* channel, const int cur
 
 	if (channel->rotationKeys.size() > 0) {
 
-		newRotation = channel->rotationKeys.lower_bound(currentFrame)->second;
+		std::map<float, Quat>::const_iterator it = channel->rotationKeys.lower_bound(currentFrame);
+		if (it != channel->rotationKeys.begin()) { it--; }
+		newRotation = it->second;
 
 	}
 
@@ -113,7 +122,9 @@ float3 Animation::GetUpdatedChannelScale(const Channels* channel, const int curr
 
 	if (channel->scaleKeys.size() > 0) {
 
-		newScale = channel->scaleKeys.lower_bound(currentFrame)->second;
+		std::map<float, float3>::const_iterator it = channel->scaleKeys.lower_bound(currentFrame);
+		if (it != channel->scaleKeys.begin()) { it--; }
+		newScale = it->second;
 
 	}
 

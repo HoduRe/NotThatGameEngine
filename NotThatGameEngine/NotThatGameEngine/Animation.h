@@ -57,6 +57,7 @@ public:
 
 private:
 
+	int currentAnimationIndex;
 	float time;
 
 };
