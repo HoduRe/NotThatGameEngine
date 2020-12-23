@@ -65,9 +65,7 @@ void Animation::UpdateBonesRecursively(GameObject* gameObject, const AnimationDa
 
 			for (int j = 0; j < mesh->boneNamesVec.size(); j++) {
 
-				bool match;
-
-				//for(data->channels
+				Channels* channel = (Channels*)&data->channels.find(mesh->boneNamesVec[i])->second;
 
 			}
 

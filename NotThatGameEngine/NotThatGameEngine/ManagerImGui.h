@@ -37,6 +37,7 @@ public:
 	bool fullDesktop;
 	bool vsync;
 	bool hasHierarchyFocus;
+	bool gameMode;
 
 private:
 
@@ -90,6 +91,7 @@ private:
 	bool loadMeshMenu;
 	bool loadTexturesMenu;
 	bool referenceMenu;
+	bool playWindow;
 
 	float3 position;
 	float3 rotationEuler;

@@ -34,7 +34,7 @@ fullscreen(WIN_FULLSCREEN), resizable(WIN_RESIZABLE), borderless(WIN_BORDERLESS)
 AVX(false), AVX2(false), AltiVec(false), MMX(false), RDTSC(false), SSE(false), SSE2(false), SSE3(false), SSE41(false), SSE42(false),
 showDemoWindow(false), defaultButtonsMenu(false), aboutWindow(false), configMenu(false), appActive(false), consoleMenu(true), sceneWindow(true), hierarchyWindow(true), inspectorWindow(true),
 Devil(), Assimp(), PhysFS(), GLEW(), loadFileMenu(false), selectedFilePath(), position(), rotationEuler(), scaling(), itemHovered(nullptr), itemFocusedLastFrame(nullptr), loadMeshMenu(false),
-deletedFileName(), dragDropFile(), loadTexturesMenu(false), hierarchyWindowPos(), hierarchyWindowSize(), hasHierarchyFocus(false), referenceMenu(true)
+deletedFileName(), dragDropFile(), loadTexturesMenu(false), hierarchyWindowPos(), hierarchyWindowSize(), hasHierarchyFocus(false), referenceMenu(true), gameMode(false), playWindow(true)
 {}
 
 
@@ -139,17 +139,22 @@ update_status ManagerImGui::Update(float dt) {
 	ImGuiDockNodeFlags flag = ImGuiDockNodeFlags_NoDockingInCentralNode;
 	ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), flag);
 
-	if (showDemoWindow) { ImGui::ShowDemoWindow(&showDemoWindow); }	// DEMO WINDOW
-	DefaultButtons();
-	ret = SetMainMenuBar();
-	ret2 = DefaultWindow();
-	AboutMenu();
-	ConsoleWindow();
 	SceneWindow();
-	HierarchyWindow();
-	InspectorWindow();
-	ReferenceWindow();
-	if (loadFileMenu) { LoadFileMenu(ASSETS_PATH, nullptr); }
+
+	if (gameMode == false) {
+	
+		if (showDemoWindow) { ImGui::ShowDemoWindow(&showDemoWindow); }	// DEMO WINDOW
+		DefaultButtons();
+		ret = SetMainMenuBar();
+		ret2 = DefaultWindow();
+		AboutMenu();
+		ConsoleWindow();
+		HierarchyWindow();
+		InspectorWindow();
+		ReferenceWindow();
+		if (loadFileMenu) { LoadFileMenu(ASSETS_PATH, nullptr); }
+	
+	}
 
 	ImGui::EndFrame();
 
@@ -486,6 +491,45 @@ void ManagerImGui::SceneWindow() {
 		ImGui::Image((ImTextureID*)App->renderer3D->sceneTextureId, vec2, uvMin, uvMax);
 
 		ImGui::End();
+
+		ImGuiWindowFlags flag2 = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse;
+		ImVec2 position(160, 40);
+
+		ImGui::SetWindowPos("Play Window", ImVec2((SCREEN_WIDTH / 2) - 80, SCREEN_HEIGHT / 20));
+		ImGui::SetWindowSize("Play Window", position);
+		ImGui::Begin("Play Window", &playWindow, flag2);
+
+		if (!gameMode) {
+
+			if (ImGui::Button("Play", ImVec2(40, 20))) {
+
+				gameMode = true;
+				App->eventManager->GenerateEvent(EVENT_ENUM::ENTERING_GAME_MODE);
+
+			}
+
+		}
+
+		else {
+
+			if (ImGui::Button("Stop", ImVec2(40, 20))) {
+
+				gameMode = false;
+				App->eventManager->GenerateEvent(EVENT_ENUM::LEAVING_GAME_MODE);
+
+			}
+
+		}
+
+		ImGui::SameLine();
+
+		ImGui::Button("Pause", ImVec2(40, 20));
+		ImGui::SameLine();
+
+		ImGui::Button("Tick", ImVec2(40, 20));
+
+		ImGui::End();
+
 	}
 
 	App->editorScene->sceneWindowFocus = ret;
@@ -687,16 +731,16 @@ void ManagerImGui::InspectorWindow() {
 					ImGui::Text("Indices ID: %u", mesh->indexId);
 					ImGui::NewLine();
 					ImGui::Checkbox(" Show all mesh bones", &mesh->showAllBones);
-					
+
 					for (uint i = 0; i < mesh->boneNamesVec.size(); i++) {
-						
+
 						ImGui::Text("	%s", mesh->boneNamesVec[i].c_str());
 						ImGui::SameLine();
 						std::string auxName("##Checkbox" + std::to_string(i));
 						ImGui::Checkbox(auxName.c_str(), &mesh->boneDisplayVec[i]);
-					
+
 					}
-					
+
 					ImGui::NewLine();
 					ImGui::Checkbox("Activate normals display", &mesh->paintNormals);
 					ImGui::NewLine();
