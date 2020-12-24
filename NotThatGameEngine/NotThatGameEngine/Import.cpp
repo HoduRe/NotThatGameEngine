@@ -39,10 +39,12 @@ bool Importer::ImportNewModelComponents(Application* App, const char* buffer, ui
 	}
 
 	trans = scene->mRootNode->mTransformation;
+	std::map< GameObject*, std::vector<int>> meshMap;
 
 	if (scene->mRootNode->mNumChildren != 0) {
 
-		for (uint i = 0; i < scene->mRootNode->mNumChildren; i++) { Importer::ImportNewModelMesh(App, scene->mRootNode->mChildren[i], (aiScene*)scene, newObject, trans); }
+		for (uint i = 0; i < scene->mRootNode->mNumChildren; i++) { ImportNodes(App, scene->mRootNode->mChildren[i], newObject, &meshMap, trans); }
+		for (uint i = 0; i < scene->mRootNode->mNumChildren; i++) { Importer::ImportNewModelMesh(App, scene, &meshMap); }
 		ImportAnimation(App, scene, newObject);
 
 	}
@@ -56,47 +58,52 @@ bool Importer::ImportNewModelComponents(Application* App, const char* buffer, ui
 }
 
 
-void Importer::ImportNewModelMesh(Application* App, aiNode* node, aiScene* scene, GameObject* parent, aiMatrix4x4 accTransform) {
+void Importer::ImportNodes(Application* App, aiNode* node, GameObject* parent, std::map<GameObject*, std::vector<int>>* meshMap, aiMatrix4x4 accTransform) {
 
 	aiMatrix4x4 transform = accTransform * node->mTransformation;
-	Mesh* mesh;
-	Transform* transformation;
 
-	bool isNameChannelNeededJustShootMeInTheFaceAndLetLadyLuckDecideWhereTheHoleIsBlown = false;
-	std::string name = node->mName.C_Str();
-	if (scene->HasAnimations()) {
+	std::string nodeName = node->mName.C_Str();
+	bool dummyFound = true;
+	while (dummyFound) {
 
-		for (uint i = 0; i < scene->mNumAnimations; i++) {
+		dummyFound = false;
 
-			for (int j = 0; j < scene->mAnimations[i]->mNumChannels; j++) {
+		if (nodeName.find("_$AssimpFbx$_") != std::string::npos && node->mNumChildren == 1) {
 
-				if (scene->mAnimations[i]->mChannels[j]->mNodeName.C_Str() == name) {
-
-					isNameChannelNeededJustShootMeInTheFaceAndLetLadyLuckDecideWhereTheHoleIsBlown = true;
-					j = scene->mAnimations[i]->mNumChannels;
-
-				}
-
-			}
+			node = node->mChildren[0];
+			nodeName = node->mName.C_Str();
+			dummyFound = true;
 
 		}
-
 	}
 
-	if (node->mNumMeshes > 0) {
+	long long int id = App->idGenerator.Int();
+	GameObject* newObject = new GameObject(App, id, nodeName, parent);
+	parent->childs.push_back(newObject);
+	Importer::aiTransformTofloat4x4Transform(transform, newObject->transform);
 
-		for (uint i = 0; i < node->mNumMeshes; i++) {
+	std::vector<int> meshVec;
 
-			long long int id = App->idGenerator.Int();
+	for (uint i = 0; i < node->mNumMeshes; i++) { meshVec.push_back(node->mMeshes[i]); }
 
-			if (isNameChannelNeededJustShootMeInTheFaceAndLetLadyLuckDecideWhereTheHoleIsBlown == false) { name = "NewGameObject"; }
+	meshMap->insert(std::pair<GameObject*, std::vector<int>>(newObject, meshVec));
 
-			GameObject* newObject = new GameObject(App, id, name, parent);
-			parent->childs.push_back(newObject);
+	for (int i = 0; i < node->mNumChildren; i++) { ImportNodes(App, node->mChildren[i], newObject, meshMap, transform); }
 
-			mesh = (Mesh*)newObject->AddComponent(COMPONENT_TYPE::MESH);
+}
 
-			const aiMesh* paiMesh = (aiMesh*)scene->mMeshes[node->mMeshes[i]];
+
+void Importer::ImportNewModelMesh(Application* App, aiScene* scene, std::map<GameObject*, std::vector<int>>* meshMap) {
+
+	Mesh* mesh = nullptr;
+
+	for (std::map<GameObject*, std::vector<int>>::iterator mapIt = meshMap->begin(); mapIt != meshMap->end(); mapIt++) {
+
+		mesh = (Mesh*)mapIt->first->AddComponent(COMPONENT_TYPE::MESH);
+
+		for (int i = 0; i < mapIt->second.size(); i++) {
+
+			const aiMesh* paiMesh = (aiMesh*)scene->mMeshes[mapIt->second[i]];
 			const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
 
 			for (unsigned int j = 0; j < paiMesh->mNumVertices; j++) {		// Vertices
@@ -119,7 +126,7 @@ void Importer::ImportNewModelMesh(Application* App, aiNode* node, aiScene* scene
 
 			for (unsigned int j = 0; j < paiMesh->mNumFaces; j++) {		// Indices
 				const aiFace& Face = paiMesh->mFaces[j];
-				if (Face.mNumIndices != 3) { LOG("Not all faces of %s are triangles.\n", scene->mMeshes[node->mMeshes[i]]->mName.C_Str()); }
+				if (Face.mNumIndices != 3) { LOG("Not all faces of %s are triangles.\n", scene->mMeshes[mapIt->second[i]]->mName.C_Str()); }
 				mesh->indices.push_back(Face.mIndices[0]);
 				mesh->indices.push_back(Face.mIndices[1]);
 				mesh->indices.push_back(Face.mIndices[2]);
@@ -170,16 +177,11 @@ void Importer::ImportNewModelMesh(Application* App, aiNode* node, aiScene* scene
 			OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->textureCoordId, mesh->textureCoord.size(), mesh->textureCoord.data());
 			OpenGLFunctionality::LoadDataBufferUint(GL_ELEMENT_ARRAY_BUFFER, &mesh->indexId, mesh->indices.size(), mesh->indices.data());
 
-			transformation = (Transform*)newObject->GetComponent(COMPONENT_TYPE::TRANSFORM);
-			Importer::aiTransformTofloat4x4Transform(transform, transformation);
-
-			Importer::ImportNewModelMaterial(App, scene, newObject, scene->mMeshes[node->mMeshes[i]]->mMaterialIndex);
+			Importer::ImportNewModelMaterial(App, scene, mapIt->first, scene->mMeshes[mapIt->second[i]]->mMaterialIndex);
 
 		}
 
 	}
-
-	for (uint i = 0; i < node->mNumChildren; i++) { ImportNewModelMesh(App, node->mChildren[i], scene, parent, transform); }
 
 }
 
