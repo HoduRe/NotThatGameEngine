@@ -20,7 +20,6 @@ public:
 	void SetNormals(std::vector<float> _normals);
 	void SetTextureCoord(std::vector<float> _textureCoord);
 	void CalculateBoundingBoxes();
-	void AnimateMesh();
 
 	GLuint DebugNormals();
 
@@ -54,6 +53,14 @@ public:
 
 	std::vector<std::string> boneNamesVec;
 	std::vector<float4x4> boneOffsetMatrixVec;
+
+	// This would be a pointer to mesh Resource... if I had of that ;)
+
+	GLuint vertexIdANIMATION;
+	GLuint normalsIdANIMATION;
+
+	std::vector<float> verticesANIMATION;
+	std::vector<float> normalsANIMATION;
 
 };
 

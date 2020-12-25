@@ -73,7 +73,7 @@ void Animation::UpdateMesh(GameObject* gameObject) {
 
 	for (uint i = 0; i < gameObject->childs.size(); i++) {
 
-		if (gameObject->childs[i]->mesh != nullptr) { gameObject->childs[i]->mesh->AnimateMesh(); }
+		if (gameObject->childs[i]->mesh != nullptr) { AnimateMesh(gameObject->childs[i]->mesh); }
 
 		UpdateMesh(gameObject->childs[i]);
 
@@ -131,4 +131,73 @@ float3 Animation::GetUpdatedChannelScale(const Channels* channel, const int curr
 	return newScale;
 
 }
+
+
+void Animation::AnimateMesh(Mesh* mesh) {
+
+	mesh->verticesANIMATION.clear();
+	mesh->normalsANIMATION.clear();
+
+	AnimateMeshRecursively(mesh);
+
+}
+
+
+void GetGameObjects(GameObject* gameObject, std::map<std::string, GameObject*>* map) {
+
+	map->insert(std::pair<std::string, GameObject*>(gameObject->name, gameObject));
+
+	for (int i = 0; i < gameObject->childs.size(); i++) { GetGameObjects(gameObject->childs[i], map); }
+
+}
+
+void Animation::AnimateMeshRecursively(Mesh* mesh) {
+
+	std::map<int, float4x4> skinningMatrixMap;
+	std::map<std::string, GameObject*> gameObjectMap;
+
+	GetGameObjects(owner, &gameObjectMap);
+
+	for (int i = 0; i < mesh->boneNamesVec.size(); i++) {
+
+		GameObject* bone = gameObjectMap.find(mesh->boneNamesVec[i])->second;
+		skinningMatrixMap[i] = mesh->owner->worldTransform.Inverted() * bone->worldTransform * mesh->boneOffsetMatrixVec[i];
+
+	}
+
+	for (uint vertexIndex = 0; vertexIndex < mesh->vertices.size(); vertexIndex++) {
+
+		for (uint vertexBones = 0; vertexBones < 4; vertexBones++) {
+
+			int boneID = mesh->boneIDs[vertexIndex * 4 + vertexBones];
+			float boneWeight = mesh->boneWeights[vertexIndex * 4 + vertexBones];
+
+			if (boneID != -1) {
+
+				float3 newDeviation = skinningMatrixMap[boneID].TransformPos(float3(mesh->vertices[vertexIndex * 3]));
+
+				mesh->verticesANIMATION.push_back(mesh->vertices[vertexIndex * 3] += newDeviation.x * boneWeight);
+				mesh->verticesANIMATION.push_back(mesh->vertices[vertexIndex * 3 + 1] += newDeviation.y * boneWeight);
+				mesh->verticesANIMATION.push_back(mesh->vertices[vertexIndex * 3 + 2] += newDeviation.z * boneWeight);
+
+				if (mesh->normals.size() > 0) {
+
+					float3 newDeviation = skinningMatrixMap[boneID].TransformPos(float3(mesh->normals[vertexIndex * 3]));
+
+					mesh->normalsANIMATION.push_back(mesh->normals[vertexIndex * 3] += newDeviation.x * boneWeight);
+					mesh->normalsANIMATION.push_back(mesh->normals[vertexIndex * 3 + 1] += newDeviation.y * boneWeight);
+					mesh->normalsANIMATION.push_back(mesh->normals[vertexIndex * 3 + 2] += newDeviation.z * boneWeight);
+
+				}
+
+			}
+
+		}
+
+	}
+
+	// Set vertices to upload them to OpenGL
+
+}
+
 

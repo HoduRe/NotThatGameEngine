@@ -6,6 +6,7 @@
 #include "MathGeoLib/src/MathGeoLib.h"
 
 class GameObject;
+class Mesh;
 
 struct Channels {
 
@@ -51,6 +52,8 @@ private:
 	float3 GetUpdatedChannelPosition(const Channels* channel, const int currentFrame) const;
 	Quat GetUpdatedChannelRotation(const Channels* channel, const int currentFrame) const;
 	float3 GetUpdatedChannelScale(const Channels* channel, const int currentFrame) const;
+	void AnimateMesh(Mesh* mesh);
+	void AnimateMeshRecursively(Mesh* mesh);
 
 public:
 
