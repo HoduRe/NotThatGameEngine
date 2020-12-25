@@ -35,6 +35,7 @@ void Animation::PlayAnimation() {
 			currentAnimationIndex = i;
 			time += 0.01;
 			UpdateGameObjectsTransform(&animationVec[i]);
+			UpdateMesh(owner);
 
 		}
 
@@ -65,19 +66,6 @@ void Animation::UpdateGameObjectsTransformRecursively(GameObject* gameObject, co
 	}
 
 	for (int i = 0; i < gameObject->childs.size(); i++) { UpdateGameObjectsTransformRecursively(gameObject->childs[i], data, currentFrame); }
-
-}
-
-
-void Animation::UpdateMesh(GameObject* gameObject) {
-
-	for (uint i = 0; i < gameObject->childs.size(); i++) {
-
-		if (gameObject->childs[i]->mesh != nullptr) { AnimateMesh(gameObject->childs[i]->mesh); }
-
-		UpdateMesh(gameObject->childs[i]);
-
-	}
 
 }
 
@@ -118,7 +106,7 @@ Quat Animation::GetUpdatedChannelRotation(const Channels* channel, const int cur
 
 float3 Animation::GetUpdatedChannelScale(const Channels* channel, const int currentFrame) const {
 
-	float3 newScale(2, 2, 2);
+	float3 newScale(0, 0, 0);
 
 	if (channel->scaleKeys.size() > 0) {
 
@@ -133,16 +121,6 @@ float3 Animation::GetUpdatedChannelScale(const Channels* channel, const int curr
 }
 
 
-void Animation::AnimateMesh(Mesh* mesh) {
-
-	mesh->verticesANIMATION.clear();
-	mesh->normalsANIMATION.clear();
-
-	AnimateMeshRecursively(mesh);
-
-}
-
-
 void GetGameObjects(GameObject* gameObject, std::map<std::string, GameObject*>* map) {
 
 	map->insert(std::pair<std::string, GameObject*>(gameObject->name, gameObject));
@@ -151,7 +129,24 @@ void GetGameObjects(GameObject* gameObject, std::map<std::string, GameObject*>* 
 
 }
 
-void Animation::AnimateMeshRecursively(Mesh* mesh) {
+
+void Animation::UpdateMesh(GameObject* gameObject) {
+
+	for (uint i = 0; i < gameObject->childs.size(); i++) {
+
+		if (gameObject->childs[i]->mesh != nullptr) { AnimateMesh(gameObject->childs[i]->mesh); }
+
+		UpdateMesh(gameObject->childs[i]);
+
+	}
+
+}
+
+
+void Animation::AnimateMesh(Mesh* mesh) {
+
+	mesh->verticesANIMATION.clear();
+	mesh->normalsANIMATION.clear();
 
 	std::map<int, float4x4> skinningMatrixMap;
 	std::map<std::string, GameObject*> gameObjectMap;
@@ -165,7 +160,8 @@ void Animation::AnimateMeshRecursively(Mesh* mesh) {
 
 	}
 
-	for (uint vertexIndex = 0; vertexIndex < mesh->vertices.size(); vertexIndex++) {
+	int size = mesh->vertices.size() / 3;
+	for (uint vertexIndex = 0; vertexIndex < size; vertexIndex++) {
 
 		for (uint vertexBones = 0; vertexBones < 4; vertexBones++) {
 
@@ -196,8 +192,12 @@ void Animation::AnimateMeshRecursively(Mesh* mesh) {
 
 	}
 
-	// Set vertices to upload them to OpenGL
+	if (mesh->vertexIdANIMATION != 0) { glDeleteBuffers(1, &mesh->vertexIdANIMATION); }
+	if (mesh->normalsIdANIMATION != 0) { glDeleteBuffers(1, &mesh->normalsIdANIMATION); }
+	OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->vertexIdANIMATION, mesh->verticesANIMATION.size(), mesh->verticesANIMATION.data());
+	if (mesh->normalsANIMATION.size() > 0) { OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->normalsIdANIMATION, mesh->normalsANIMATION.size(), mesh->normalsANIMATION.data()); }
 
 }
+
 
 

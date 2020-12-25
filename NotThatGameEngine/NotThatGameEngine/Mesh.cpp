@@ -31,6 +31,9 @@ Mesh::~Mesh() {
 	glDeleteBuffers(1, &textureCoordId);
 	glDeleteBuffers(1, &indexId);
 
+	glDeleteBuffers(1, &vertexIdANIMATION);
+	glDeleteBuffers(1, &normalsIdANIMATION);
+
 }
 
 

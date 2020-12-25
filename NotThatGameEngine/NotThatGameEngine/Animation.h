@@ -53,7 +53,6 @@ private:
 	Quat GetUpdatedChannelRotation(const Channels* channel, const int currentFrame) const;
 	float3 GetUpdatedChannelScale(const Channels* channel, const int currentFrame) const;
 	void AnimateMesh(Mesh* mesh);
-	void AnimateMeshRecursively(Mesh* mesh);
 
 public:
 
