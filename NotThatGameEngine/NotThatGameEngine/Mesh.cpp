@@ -98,3 +98,10 @@ GLuint Mesh::DebugNormals() {
 
 void Mesh::CalculateBoundingBoxes() { for (int i = 0; i < vertices.size(); i += 3) { boundingBox.Enclose(float3(vertices[i], vertices[i + 1], vertices[i + 2])); } }
 
+
+void Mesh::AnimateMesh() {
+
+
+
+}
+

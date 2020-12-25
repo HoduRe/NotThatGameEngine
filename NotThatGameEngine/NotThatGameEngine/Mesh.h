@@ -20,6 +20,7 @@ public:
 	void SetNormals(std::vector<float> _normals);
 	void SetTextureCoord(std::vector<float> _textureCoord);
 	void CalculateBoundingBoxes();
+	void AnimateMesh();
 
 	GLuint DebugNormals();
 

@@ -53,19 +53,29 @@ void Animation::UpdateGameObjectsTransform(const AnimationData* data) {
 
 void Animation::UpdateGameObjectsTransformRecursively(GameObject* gameObject, const AnimationData* data, int currentFrame) {
 
-	for (int i = 0; i < gameObject->childs.size(); i++) {
 
-		if (data->channels.count(gameObject->name) == 1) {
+	if (data->channels.count(gameObject->name) == 1) {
 
-			Channels* channel = (Channels*)&data->channels.find(gameObject->name)->second;
+		Channels* channel = (Channels*)&data->channels.find(gameObject->name)->second;
 
-			gameObject->childs[i]->transform->SetPosition(GetUpdatedChannelPosition(channel, currentFrame));
-			gameObject->childs[i]->transform->SetRotation(GetUpdatedChannelRotation(channel, currentFrame));
-			gameObject->childs[i]->transform->SetScale(GetUpdatedChannelScale(channel, currentFrame));
+		gameObject->transform->SetPosition(GetUpdatedChannelPosition(channel, currentFrame));
+		gameObject->transform->SetRotation(GetUpdatedChannelRotation(channel, currentFrame));
+		gameObject->transform->SetScale(GetUpdatedChannelScale(channel, currentFrame));
 
-		}
+	}
 
-		UpdateGameObjectsTransformRecursively(gameObject->childs[i], data, currentFrame);
+	for (int i = 0; i < gameObject->childs.size(); i++) { UpdateGameObjectsTransformRecursively(gameObject->childs[i], data, currentFrame); }
+
+}
+
+
+void Animation::UpdateMesh(GameObject* gameObject) {
+
+	for (uint i = 0; i < gameObject->childs.size(); i++) {
+
+		if (gameObject->childs[i]->mesh != nullptr) { gameObject->childs[i]->mesh->AnimateMesh(); }
+
+		UpdateMesh(gameObject->childs[i]);
 
 	}
 
