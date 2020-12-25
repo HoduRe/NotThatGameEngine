@@ -44,7 +44,7 @@ bool Importer::ImportNewModelComponents(Application* App, const char* buffer, ui
 	if (scene->mRootNode->mNumChildren != 0) {
 
 		for (uint i = 0; i < scene->mRootNode->mNumChildren; i++) { ImportNodes(App, scene->mRootNode->mChildren[i], newObject, &meshMap, trans); }
-		for (uint i = 0; i < scene->mRootNode->mNumChildren; i++) { Importer::ImportNewModelMesh(App, scene, &meshMap); }
+		Importer::ImportNewModelMesh(App, scene, &meshMap);
 		ImportAnimation(App, scene, newObject);
 
 	}
@@ -60,8 +60,15 @@ bool Importer::ImportNewModelComponents(Application* App, const char* buffer, ui
 
 void Importer::ImportNodes(Application* App, aiNode* node, GameObject* parent, std::map<GameObject*, std::vector<int>>* meshMap, aiMatrix4x4 accTransform) {
 
-	aiMatrix4x4 transform = accTransform * node->mTransformation;
+	aiVector3D aiPosition, aiScale;
+	aiQuaternion aiRotation;
 
+	node->mTransformation.Decompose(aiScale, aiRotation, aiPosition);
+
+	float3 position(aiPosition.x, aiPosition.y, aiPosition.z);
+	float3 scale(aiScale.x, aiScale.y, aiScale.z);
+	Quat rotation(aiRotation.x, aiRotation.y, aiRotation.z, aiRotation.w);
+	
 	std::string nodeName = node->mName.C_Str();
 	bool dummyFound = true;
 	while (dummyFound) {
@@ -71,6 +78,12 @@ void Importer::ImportNodes(Application* App, aiNode* node, GameObject* parent, s
 		if (nodeName.find("_$AssimpFbx$_") != std::string::npos && node->mNumChildren == 1) {
 
 			node = node->mChildren[0];
+
+			node->mTransformation.Decompose(aiScale, aiRotation, aiPosition);
+			position += float3(aiPosition.x, aiPosition.y, aiPosition.z);
+			scale = float3(scale.x * aiScale.x, scale.y * aiScale.y, scale.z * aiScale.z);
+			rotation = rotation * Quat(aiRotation.x, aiRotation.y, aiRotation.z, aiRotation.w);
+			
 			nodeName = node->mName.C_Str();
 			dummyFound = true;
 
@@ -80,6 +93,8 @@ void Importer::ImportNodes(Application* App, aiNode* node, GameObject* parent, s
 	long long int id = App->idGenerator.Int();
 	GameObject* newObject = new GameObject(App, id, nodeName, parent);
 	parent->childs.push_back(newObject);
+	
+	aiMatrix4x4 transform(aiVector3D(scale.x, scale.y, scale.z), aiQuaternion(rotation.w, rotation.x, rotation.y, rotation.z), aiVector3D(position.x, position.y, position.z));
 	Importer::aiTransformTofloat4x4Transform(transform, newObject->transform);
 
 	std::vector<int> meshVec;
@@ -99,10 +114,9 @@ void Importer::ImportNewModelMesh(Application* App, aiScene* scene, std::map<Gam
 
 	for (std::map<GameObject*, std::vector<int>>::iterator mapIt = meshMap->begin(); mapIt != meshMap->end(); mapIt++) {
 
-		mesh = (Mesh*)mapIt->first->AddComponent(COMPONENT_TYPE::MESH);
+		for (int i = 0; i < mapIt->second.size() && i < 1; i++) {
 
-		for (int i = 0; i < mapIt->second.size(); i++) {
-
+			mesh = (Mesh*)mapIt->first->AddComponent(COMPONENT_TYPE::MESH);
 			const aiMesh* paiMesh = (aiMesh*)scene->mMeshes[mapIt->second[i]];
 			const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
 
@@ -121,7 +135,6 @@ void Importer::ImportNewModelMesh(Application* App, aiScene* scene, std::map<Gam
 				mesh->normals.push_back(pNormal->z);
 			}
 
-			mesh->CalculateBoundingBoxes();
 			LOG("New mesh with %d vertices.\n", mesh->vertices.size());
 
 			for (unsigned int j = 0; j < paiMesh->mNumFaces; j++) {		// Indices
@@ -171,11 +184,6 @@ void Importer::ImportNewModelMesh(Application* App, aiScene* scene, std::map<Gam
 				}
 
 			}
-
-			OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->vertexId, mesh->vertices.size(), mesh->vertices.data());	// TODO: there is already a function in Mesh to do this... If we use it maybe we can kill OpenGLFunctionality header? :3
-			OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->normalsId, mesh->normals.size(), mesh->normals.data());
-			OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->textureCoordId, mesh->textureCoord.size(), mesh->textureCoord.data());
-			OpenGLFunctionality::LoadDataBufferUint(GL_ELEMENT_ARRAY_BUFFER, &mesh->indexId, mesh->indices.size(), mesh->indices.data());
 
 			Importer::ImportNewModelMaterial(App, scene, mapIt->first, scene->mMeshes[mapIt->second[i]]->mMaterialIndex);
 

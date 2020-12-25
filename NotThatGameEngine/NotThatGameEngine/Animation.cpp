@@ -34,7 +34,7 @@ void Animation::PlayAnimation() {
 
 			currentAnimationIndex = i;
 			time += 0.01;
-			UpdateBones(&animationVec[i]);
+			UpdateGameObjectsTransform(&animationVec[i]);
 
 		}
 
@@ -43,39 +43,29 @@ void Animation::PlayAnimation() {
 }
 
 
-void Animation::UpdateBones(const AnimationData* data) {
+void Animation::UpdateGameObjectsTransform(const AnimationData* data) {
 
 	int currentFrame = time * data->ticksPerSecond;
-	UpdateBonesRecursively(owner, data, currentFrame);
+	UpdateGameObjectsTransformRecursively(owner, data, currentFrame);
 
 }
 
 
-void Animation::UpdateBonesRecursively(GameObject* gameObject, const AnimationData* data, int currentFrame) {
+void Animation::UpdateGameObjectsTransformRecursively(GameObject* gameObject, const AnimationData* data, int currentFrame) {
 
 	for (int i = 0; i < gameObject->childs.size(); i++) {
 
-		if (gameObject->childs[i]->mesh != nullptr) {
+		if (data->channels.count(gameObject->name) == 1) {
 
-			Mesh* mesh = gameObject->childs[i]->mesh;
+			Channels* channel = (Channels*)&data->channels.find(gameObject->name)->second;
 
-			for (int j = 0; j < mesh->boneNamesVec.size(); j++) {
-
-				if (data->channels.count(mesh->boneNamesVec[j]) == 1) {
-
-					Channels* channel = (Channels*)&data->channels.find(mesh->boneNamesVec[j])->second;
-
-					gameObject->childs[i]->transform->SetPosition(GetUpdatedChannelPosition(channel, currentFrame));
-					gameObject->childs[i]->transform->SetRotation(GetUpdatedChannelRotation(channel, currentFrame));
-					gameObject->childs[i]->transform->SetScale(GetUpdatedChannelScale(channel, currentFrame));
-
-				}
-
-			}
+			gameObject->childs[i]->transform->SetPosition(GetUpdatedChannelPosition(channel, currentFrame));
+			gameObject->childs[i]->transform->SetRotation(GetUpdatedChannelRotation(channel, currentFrame));
+			gameObject->childs[i]->transform->SetScale(GetUpdatedChannelScale(channel, currentFrame));
 
 		}
 
-		UpdateBonesRecursively(gameObject->childs[i], data, currentFrame);
+		UpdateGameObjectsTransformRecursively(gameObject->childs[i], data, currentFrame);
 
 	}
 

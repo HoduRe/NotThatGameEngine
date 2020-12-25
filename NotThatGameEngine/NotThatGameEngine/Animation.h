@@ -45,8 +45,8 @@ public:
 
 private:
 
-	void UpdateBones(const AnimationData* data);
-	void UpdateBonesRecursively(GameObject* gameObject, const AnimationData* data, int currentFrame);
+	void UpdateGameObjectsTransform(const AnimationData* data);
+	void UpdateGameObjectsTransformRecursively(GameObject* gameObject, const AnimationData* data, int currentFrame);
 	float3 GetUpdatedChannelPosition(const Channels* channel, const int currentFrame) const;
 	Quat GetUpdatedChannelRotation(const Channels* channel, const int currentFrame) const;
 	float3 GetUpdatedChannelScale(const Channels* channel, const int currentFrame) const;
