@@ -68,7 +68,7 @@ void Importer::ImportNodes(Application* App, aiNode* node, GameObject* parent, s
 	float3 position(aiPosition.x, aiPosition.y, aiPosition.z);
 	float3 scale(aiScale.x, aiScale.y, aiScale.z);
 	Quat rotation(aiRotation.x, aiRotation.y, aiRotation.z, aiRotation.w);
-	
+
 	std::string nodeName = node->mName.C_Str();
 	bool dummyFound = true;
 	while (dummyFound) {
@@ -83,7 +83,7 @@ void Importer::ImportNodes(Application* App, aiNode* node, GameObject* parent, s
 			position += float3(aiPosition.x, aiPosition.y, aiPosition.z);
 			scale = float3(scale.x * aiScale.x, scale.y * aiScale.y, scale.z * aiScale.z);
 			rotation = rotation * Quat(aiRotation.x, aiRotation.y, aiRotation.z, aiRotation.w);
-			
+
 			nodeName = node->mName.C_Str();
 			dummyFound = true;
 
@@ -93,7 +93,7 @@ void Importer::ImportNodes(Application* App, aiNode* node, GameObject* parent, s
 	long long int id = App->idGenerator.Int();
 	GameObject* newObject = new GameObject(App, id, nodeName, parent);
 	parent->childs.push_back(newObject);
-	
+
 	aiMatrix4x4 transform(aiVector3D(scale.x, scale.y, scale.z), aiQuaternion(rotation.w, rotation.x, rotation.y, rotation.z), aiVector3D(position.x, position.y, position.z));
 	Importer::aiTransformTofloat4x4Transform(transform, newObject->transform);
 
@@ -111,12 +111,31 @@ void Importer::ImportNodes(Application* App, aiNode* node, GameObject* parent, s
 void Importer::ImportNewModelMesh(Application* App, aiScene* scene, std::map<GameObject*, std::vector<int>>* meshMap) {
 
 	Mesh* mesh = nullptr;
+	GameObject* gameObjectPtr = nullptr;
 
 	for (std::map<GameObject*, std::vector<int>>::iterator mapIt = meshMap->begin(); mapIt != meshMap->end(); mapIt++) {
 
-		for (int i = 0; i < mapIt->second.size() && i < 1; i++) {
+		for (int i = 0; i < mapIt->second.size(); i++) {
 
-			mesh = (Mesh*)mapIt->first->AddComponent(COMPONENT_TYPE::MESH);
+			if (i > 0) {
+
+				std::string stringAux = std::to_string(i);
+				gameObjectPtr = new GameObject(App, App->idGenerator.Int(), mapIt->first->name + stringAux, mapIt->first->parent);
+				gameObjectPtr->transform->SetPosition(mapIt->first->transform->GetPosition());
+				gameObjectPtr->transform->SetRotation(mapIt->first->transform->GetEulerQuat());
+				gameObjectPtr->transform->SetScale(mapIt->first->transform->GetScale());
+				mapIt->first->parent->childs.push_back(gameObjectPtr);
+				mesh = (Mesh*)gameObjectPtr->AddComponent(COMPONENT_TYPE::MESH);
+
+			}
+
+			else {
+
+				gameObjectPtr = mapIt->first;
+				mesh = (Mesh*)gameObjectPtr->AddComponent(COMPONENT_TYPE::MESH);
+
+			}
+
 			const aiMesh* paiMesh = (aiMesh*)scene->mMeshes[mapIt->second[i]];
 			const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
 
@@ -185,7 +204,7 @@ void Importer::ImportNewModelMesh(Application* App, aiScene* scene, std::map<Gam
 
 			}
 
-			Importer::ImportNewModelMaterial(App, scene, mapIt->first, scene->mMeshes[mapIt->second[i]]->mMaterialIndex);
+			Importer::ImportNewModelMaterial(App, scene, gameObjectPtr, scene->mMeshes[mapIt->second[i]]->mMaterialIndex);
 
 		}
 

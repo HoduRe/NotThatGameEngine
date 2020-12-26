@@ -36,6 +36,7 @@ void Transform::SetPosition(float3 _position) {
 void Transform::SetRotation(Quat _rotation) {
 
 	rotation = _rotation;
+	RecalculateEulerAngles();
 	RecalculateTransform();
 
 }

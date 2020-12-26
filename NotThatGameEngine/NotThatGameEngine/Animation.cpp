@@ -35,7 +35,7 @@ void Animation::PlayAnimation() {
 		if (animationVec[i].playing) {
 
 			currentAnimationIndex = i;
-			time += 0.01;
+			time++;
 			UpdateGameObjectsTransform(&animationVec[i]);
 			UpdateMesh(owner);
 			animation = true;
@@ -64,9 +64,9 @@ void Animation::UpdateGameObjectsTransformRecursively(GameObject* gameObject, co
 
 		Channels* channel = (Channels*)&data->channels.find(gameObject->name)->second;
 
-		gameObject->transform->SetPosition(GetUpdatedChannelPosition(channel, currentFrame));
-		gameObject->transform->SetRotation(GetUpdatedChannelRotation(channel, currentFrame));
-		gameObject->transform->SetScale(GetUpdatedChannelScale(channel, currentFrame));
+		gameObject->transform->SetPosition(GetUpdatedChannelPosition(channel, currentFrame, gameObject->transform->GetPosition()));
+		gameObject->transform->SetRotation(GetUpdatedChannelRotation(channel, currentFrame, gameObject->transform->GetEulerQuat()));
+		gameObject->transform->SetScale(GetUpdatedChannelScale(channel, currentFrame, gameObject->transform->GetScale()));
 
 	}
 
@@ -75,15 +75,15 @@ void Animation::UpdateGameObjectsTransformRecursively(GameObject* gameObject, co
 }
 
 
-float3 Animation::GetUpdatedChannelPosition(const Channels* channel, const float currentFrame) const {
+float3 Animation::GetUpdatedChannelPosition(const Channels* channel, const float currentFrame, float3 objectPosition) const {
 
-	float3 newPosition(0, 0, 0);
+	float3 newPosition(objectPosition);
 
 	if (channel->positionKeys.size() > 0) {
 
 		std::map<float, float3>::const_iterator it = channel->positionKeys.lower_bound(currentFrame);
 		if (it != channel->positionKeys.begin()) { it--; }
-		newPosition = it->second;
+		newPosition += it->second;
 
 	}
 
@@ -92,15 +92,15 @@ float3 Animation::GetUpdatedChannelPosition(const Channels* channel, const float
 }
 
 
-Quat Animation::GetUpdatedChannelRotation(const Channels* channel, const float currentFrame) const {
+Quat Animation::GetUpdatedChannelRotation(const Channels* channel, const float currentFrame, Quat objectRotation) const {
 
-	Quat newRotation(0, 0, 0, 0);
+	Quat newRotation(objectRotation);
 
 	if (channel->rotationKeys.size() > 0) {
 
 		std::map<float, Quat>::const_iterator it = channel->rotationKeys.lower_bound(currentFrame);
 		if (it != channel->rotationKeys.begin()) { it--; }
-		newRotation = it->second;
+		newRotation = newRotation * it->second;
 
 	}
 
@@ -109,15 +109,17 @@ Quat Animation::GetUpdatedChannelRotation(const Channels* channel, const float c
 }
 
 
-float3 Animation::GetUpdatedChannelScale(const Channels* channel, const float currentFrame) const {
+float3 Animation::GetUpdatedChannelScale(const Channels* channel, const float currentFrame, float3 objectScale) const {
 
-	float3 newScale(0, 0, 0);
+	float3 newScale(objectScale);
 
 	if (channel->scaleKeys.size() > 0) {
 
 		std::map<float, float3>::const_iterator it = channel->scaleKeys.lower_bound(currentFrame);
 		if (it != channel->scaleKeys.begin()) { it--; }
-		newScale = it->second;
+		newScale.x *= it->second.x;	// This keeps scale proportions, but I'm not sure if the way ASSIMP things it should be read is that if scale = 0.5 it means it decreases its scale by half, or if it
+		newScale.y *= it->second.y;	// decreases to 0.5. If it's the first this is fine, but if not, we would have to keep a modelScale and an animationScale to keep user modified scale and animation scale
+		newScale.z *= it->second.z;	// at the same time. However, since scale is probably not going to be altered, I leave it like this and I trust it will be good enough ):v
 
 	}
 
