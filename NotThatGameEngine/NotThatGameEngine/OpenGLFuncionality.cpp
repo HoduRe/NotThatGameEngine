@@ -76,14 +76,40 @@ void OpenGLFunctionality::DrawMeshes(Mesh& mesh, float4x4 worldTransform, GLuint
 	glPushMatrix();
 	glMultMatrixf((float*)&matrixT);
 
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh.vertexId);
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
+	if (mesh.isAnimated) {
 
-	if (mesh.normalsId != 0) {
-		glEnableClientState(GL_NORMAL_ARRAY);
-		glBindBuffer(GL_ARRAY_BUFFER, mesh.normalsId);
-		glNormalPointer(GL_FLOAT, 0, NULL);
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glBindBuffer(GL_ARRAY_BUFFER, mesh.vertexIdANIMATION);
+		glVertexPointer(3, GL_FLOAT, 0, NULL);
+
+	}
+
+	else {
+
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glBindBuffer(GL_ARRAY_BUFFER, mesh.vertexId);
+		glVertexPointer(3, GL_FLOAT, 0, NULL);
+
+	}
+
+	if (mesh.isAnimated) {
+
+		if (mesh.normalsIdANIMATION != 0) {
+			glEnableClientState(GL_NORMAL_ARRAY);
+			glBindBuffer(GL_ARRAY_BUFFER, mesh.normalsIdANIMATION);
+			glNormalPointer(GL_FLOAT, 0, NULL);
+		}
+
+	}
+
+	else {
+
+		if (mesh.normalsId != 0) {
+			glEnableClientState(GL_NORMAL_ARRAY);
+			glBindBuffer(GL_ARRAY_BUFFER, mesh.normalsId);
+			glNormalPointer(GL_FLOAT, 0, NULL);
+		}
+
 	}
 
 	if (mesh.textureCoordId != 0) {
@@ -99,7 +125,8 @@ void OpenGLFunctionality::DrawMeshes(Mesh& mesh, float4x4 worldTransform, GLuint
 	glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, NULL);
 
 	if (textureId != 0) { glBindTexture(GL_TEXTURE_2D, 0); }
-	if (mesh.normalsId != 0) { glDisableClientState(GL_NORMAL_ARRAY); }
+	if (mesh.isAnimated) { if (mesh.normalsIdANIMATION != 0) { glDisableClientState(GL_NORMAL_ARRAY); } }
+	else { if (mesh.normalsId != 0) { glDisableClientState(GL_NORMAL_ARRAY); } }
 	if (mesh.textureCoordId != 0) { glDisableClientState(GL_TEXTURE_COORD_ARRAY); }
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);

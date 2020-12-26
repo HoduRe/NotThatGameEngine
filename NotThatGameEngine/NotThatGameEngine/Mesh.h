@@ -15,6 +15,7 @@ public:
 	Mesh(long long int _id, GameObject* _gameObject);
 	~Mesh();
 
+	void SetIsAnimation(bool boolean);
 	void SetVertices(std::vector<float> _vertices);
 	void SetIndices(std::vector<GLuint> _indices);
 	void SetNormals(std::vector<float> _normals);
@@ -40,6 +41,7 @@ public:
 	std::vector<float> debugNormals;
 	bool paintNormals;
 	bool showAllBones;
+	bool isAnimated;
 
 	AABB boundingBox;
 

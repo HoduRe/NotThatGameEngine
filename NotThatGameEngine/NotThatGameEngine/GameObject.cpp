@@ -35,6 +35,8 @@ GameObject::~GameObject() {
 
 void GameObject::Update() {
 
+	if (mesh != nullptr) { mesh->SetIsAnimation(false); }
+
 	int size = childs.size();
 	for (int i = 0; i < size; i++) { if (childs[i]->enabled) { childs[i]->Update(); } }
 
