@@ -28,6 +28,8 @@ Animation::~Animation() {}
 
 void Animation::PlayAnimation() {
 
+	bool animation = false;
+
 	for (uint i = 0; i < animationVec.size(); i++) {
 
 		if (animationVec[i].playing) {
@@ -36,23 +38,26 @@ void Animation::PlayAnimation() {
 			time += 0.01;
 			UpdateGameObjectsTransform(&animationVec[i]);
 			UpdateMesh(owner);
+			animation = true;
 
 		}
 
 	}
+
+	if (animation == false) { currentAnimationIndex = -1; }
 
 }
 
 
 void Animation::UpdateGameObjectsTransform(const AnimationData* data) {
 
-	int currentFrame = time * data->ticksPerSecond;
+	float currentFrame = time * data->ticksPerSecond;
 	UpdateGameObjectsTransformRecursively(owner, data, currentFrame);
 
 }
 
 
-void Animation::UpdateGameObjectsTransformRecursively(GameObject* gameObject, const AnimationData* data, int currentFrame) {
+void Animation::UpdateGameObjectsTransformRecursively(GameObject* gameObject, const AnimationData* data, float currentFrame) {
 
 
 	if (data->channels.count(gameObject->name) == 1) {
@@ -70,7 +75,7 @@ void Animation::UpdateGameObjectsTransformRecursively(GameObject* gameObject, co
 }
 
 
-float3 Animation::GetUpdatedChannelPosition(const Channels* channel, const int currentFrame) const {
+float3 Animation::GetUpdatedChannelPosition(const Channels* channel, const float currentFrame) const {
 
 	float3 newPosition(0, 0, 0);
 
@@ -87,7 +92,7 @@ float3 Animation::GetUpdatedChannelPosition(const Channels* channel, const int c
 }
 
 
-Quat Animation::GetUpdatedChannelRotation(const Channels* channel, const int currentFrame) const {
+Quat Animation::GetUpdatedChannelRotation(const Channels* channel, const float currentFrame) const {
 
 	Quat newRotation(0, 0, 0, 0);
 
@@ -104,7 +109,7 @@ Quat Animation::GetUpdatedChannelRotation(const Channels* channel, const int cur
 }
 
 
-float3 Animation::GetUpdatedChannelScale(const Channels* channel, const int currentFrame) const {
+float3 Animation::GetUpdatedChannelScale(const Channels* channel, const float currentFrame) const {
 
 	float3 newScale(0, 0, 0);
 
@@ -145,44 +150,48 @@ void Animation::UpdateMesh(GameObject* gameObject) {
 
 void Animation::AnimateMesh(Mesh* mesh) {
 
-	mesh->verticesANIMATION.clear();
-	mesh->normalsANIMATION.clear();
+	if (mesh->boneNamesVec.size() != 0) {
 
-	std::map<int, float4x4> skinningMatrixMap;
-	std::map<std::string, GameObject*> gameObjectMap;
+		mesh->verticesANIMATION.clear();
+		mesh->normalsANIMATION.clear();
 
-	GetGameObjects(owner, &gameObjectMap);
+		std::map<int, float4x4> skinningMatrixMap;
+		std::map<std::string, GameObject*> gameObjectMap;
 
-	for (int i = 0; i < mesh->boneNamesVec.size(); i++) {
+		GetGameObjects(owner, &gameObjectMap);
 
-		GameObject* bone = gameObjectMap.find(mesh->boneNamesVec[i])->second;
-		skinningMatrixMap[i] = mesh->owner->worldTransform.Inverted() * bone->worldTransform * mesh->boneOffsetMatrixVec[i];
+		for (int i = 0; i < mesh->boneNamesVec.size(); i++) {
 
-	}
+			GameObject* bone = gameObjectMap.find(mesh->boneNamesVec[i])->second;
+			skinningMatrixMap[i] = mesh->owner->worldTransform.Inverted() * bone->worldTransform * mesh->boneOffsetMatrixVec[i];
 
-	int size = mesh->vertices.size() / 3;
-	for (uint vertexIndex = 0; vertexIndex < size; vertexIndex++) {
+		}
 
-		for (uint vertexBones = 0; vertexBones < 4; vertexBones++) {
+		int size = mesh->vertices.size() / 3;
+		for (uint vertexIndex = 0; vertexIndex < size; vertexIndex++) {
 
-			int boneID = mesh->boneIDs[vertexIndex * 4 + vertexBones];
-			float boneWeight = mesh->boneWeights[vertexIndex * 4 + vertexBones];
+			for (uint vertexBones = 0; vertexBones < 4; vertexBones++) {
 
-			if (boneID != -1) {
+				int boneID = mesh->boneIDs[vertexIndex * 4 + vertexBones];
+				float boneWeight = mesh->boneWeights[vertexIndex * 4 + vertexBones];
 
-				float3 newDeviation = skinningMatrixMap[boneID].TransformPos(float3(mesh->vertices[vertexIndex * 3]));
+				if (boneID != -1) {
 
-				mesh->verticesANIMATION.push_back(mesh->vertices[vertexIndex * 3] += newDeviation.x * boneWeight);
-				mesh->verticesANIMATION.push_back(mesh->vertices[vertexIndex * 3 + 1] += newDeviation.y * boneWeight);
-				mesh->verticesANIMATION.push_back(mesh->vertices[vertexIndex * 3 + 2] += newDeviation.z * boneWeight);
+					float3 newDeviation = skinningMatrixMap[boneID].TransformPos(float3(mesh->vertices[vertexIndex * 3]));
 
-				if (mesh->normals.size() > 0) {
+					mesh->verticesANIMATION.push_back(mesh->vertices[vertexIndex * 3] += newDeviation.x * boneWeight);
+					mesh->verticesANIMATION.push_back(mesh->vertices[vertexIndex * 3 + 1] += newDeviation.y * boneWeight);
+					mesh->verticesANIMATION.push_back(mesh->vertices[vertexIndex * 3 + 2] += newDeviation.z * boneWeight);
 
-					float3 newDeviation = skinningMatrixMap[boneID].TransformPos(float3(mesh->normals[vertexIndex * 3]));
+					if (mesh->normals.size() > 0) {
 
-					mesh->normalsANIMATION.push_back(mesh->normals[vertexIndex * 3] += newDeviation.x * boneWeight);
-					mesh->normalsANIMATION.push_back(mesh->normals[vertexIndex * 3 + 1] += newDeviation.y * boneWeight);
-					mesh->normalsANIMATION.push_back(mesh->normals[vertexIndex * 3 + 2] += newDeviation.z * boneWeight);
+						float3 newDeviation = skinningMatrixMap[boneID].TransformPos(float3(mesh->normals[vertexIndex * 3]));
+
+						mesh->normalsANIMATION.push_back(mesh->normals[vertexIndex * 3] += newDeviation.x * boneWeight);
+						mesh->normalsANIMATION.push_back(mesh->normals[vertexIndex * 3 + 1] += newDeviation.y * boneWeight);
+						mesh->normalsANIMATION.push_back(mesh->normals[vertexIndex * 3 + 2] += newDeviation.z * boneWeight);
+
+					}
 
 				}
 
@@ -190,12 +199,12 @@ void Animation::AnimateMesh(Mesh* mesh) {
 
 		}
 
-	}
+		if (mesh->vertexIdANIMATION != 0) { glDeleteBuffers(1, &mesh->vertexIdANIMATION); }
+		if (mesh->normalsIdANIMATION != 0) { glDeleteBuffers(1, &mesh->normalsIdANIMATION); }
+		OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->vertexIdANIMATION, mesh->verticesANIMATION.size(), mesh->verticesANIMATION.data());
+		if (mesh->normalsANIMATION.size() > 0) { OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->normalsIdANIMATION, mesh->normalsANIMATION.size(), mesh->normalsANIMATION.data()); }
 
-	if (mesh->vertexIdANIMATION != 0) { glDeleteBuffers(1, &mesh->vertexIdANIMATION); }
-	if (mesh->normalsIdANIMATION != 0) { glDeleteBuffers(1, &mesh->normalsIdANIMATION); }
-	OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->vertexIdANIMATION, mesh->verticesANIMATION.size(), mesh->verticesANIMATION.data());
-	if (mesh->normalsANIMATION.size() > 0) { OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->normalsIdANIMATION, mesh->normalsANIMATION.size(), mesh->normalsANIMATION.data()); }
+	}
 
 }
 
