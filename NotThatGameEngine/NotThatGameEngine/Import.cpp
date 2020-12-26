@@ -255,7 +255,7 @@ void Importer::ImportAnimation(Application* App, aiScene* scene, GameObject* new
 		for (uint i = 0; i < scene->mNumAnimations; i++) {
 
 			aiAnimation* a = scene->mAnimations[i];
-			modelAnimation->push_back(AnimationData(a->mName.C_Str(), a->mDuration, a->mTicksPerSecond, a->mNumChannels));
+			modelAnimation->push_back(AnimationData(a->mName.C_Str(), a->mDuration, a->mTicksPerSecond));
 
 			for (uint j = 0; j < a->mNumChannels; j++) {
 

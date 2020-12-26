@@ -329,7 +329,7 @@ void DataLoading::LoadAnimation(char* fileBuffer, Animation* animation) {
 		memcpy(&playing, cursor, boolSize);
 		cursor += boolSize;
 
-		animation->animationVec.push_back(AnimationData(name, duration, ticksPerSecond, channelsAmount, playing));
+		animation->animationVec.push_back(AnimationData(name, duration, ticksPerSecond, playing));
 
 		for (int j = 0; j < channelsAmount; j++) {
 

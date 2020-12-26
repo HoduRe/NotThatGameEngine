@@ -12,8 +12,8 @@ Channels::~Channels() {
 }
 
 
-AnimationData::AnimationData(std::string _name, float _duration, float _ticks, int _channels, bool _playing) :
-	name(_name), duration(_duration), ticksPerSecond(_ticks), channelsAmount(_channels), channels(), playing(_playing) {}
+AnimationData::AnimationData(std::string _name, float _duration, float _ticks, bool _playing) :
+	name(_name), duration(_duration), ticksPerSecond(_ticks), channels(), playing(_playing) {}
 
 
 AnimationData::~AnimationData() {}
@@ -35,7 +35,7 @@ void Animation::PlayAnimation() {
 		if (animationVec[i].playing) {
 
 			currentAnimationIndex = i;
-			time++;
+			time += 1/60;
 			UpdateGameObjectsTransform(&animationVec[i]);
 			UpdateMesh(owner);
 			animation = true;
@@ -179,7 +179,7 @@ void Animation::AnimateMesh(Mesh* mesh) {
 
 				if (boneID != -1) {
 
-					float3 newDeviation = skinningMatrixMap[boneID].TransformPos(float3(mesh->vertices[vertexIndex * 3]));
+					float3 newDeviation = skinningMatrixMap[boneID].TransformPos(float3(mesh->vertices[vertexIndex * 3], mesh->vertices[vertexIndex * 3 + 1], mesh->vertices[vertexIndex * 3 + 2]));
 
 					mesh->verticesANIMATION.push_back(mesh->vertices[vertexIndex * 3] += newDeviation.x * boneWeight);
 					mesh->verticesANIMATION.push_back(mesh->vertices[vertexIndex * 3 + 1] += newDeviation.y * boneWeight);

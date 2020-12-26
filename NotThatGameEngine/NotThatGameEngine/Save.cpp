@@ -356,7 +356,8 @@ void DataSaving::SaveAnimation(Application* App, Animation* animation) {
 		memcpy(cursor, &animation->animationVec[i].ticksPerSecond, sizeFloat);
 		cursor += sizeFloat;
 
-		memcpy(cursor, &animation->animationVec[i].channelsAmount, sizeInt);
+		varSize = animation->animationVec[i].channels.size();
+		memcpy(cursor, &varSize, sizeInt);
 		cursor += sizeInt;
 
 		memcpy(cursor, &animation->animationVec[i].playing, sizeBool);
