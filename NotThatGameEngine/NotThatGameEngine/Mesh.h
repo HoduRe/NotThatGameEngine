@@ -41,7 +41,7 @@ public:
 	std::vector<float> debugNormals;
 	bool paintNormals;
 	bool showAllBones;
-	bool isAnimated;
+	bool isAnimatedWithBones;
 
 	AABB boundingBox;
 

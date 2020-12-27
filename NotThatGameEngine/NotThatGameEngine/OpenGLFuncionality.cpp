@@ -76,7 +76,7 @@ void OpenGLFunctionality::DrawMeshes(Mesh& mesh, float4x4 worldTransform, GLuint
 	glPushMatrix();
 	glMultMatrixf((float*)&matrixT);
 
-	if (mesh.isAnimated) {
+	if (mesh.isAnimatedWithBones) {
 
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, mesh.vertexIdANIMATION);
@@ -92,7 +92,7 @@ void OpenGLFunctionality::DrawMeshes(Mesh& mesh, float4x4 worldTransform, GLuint
 
 	}
 
-	if (mesh.isAnimated) {
+	if (mesh.isAnimatedWithBones) {
 
 		if (mesh.normalsIdANIMATION != 0) {
 			glEnableClientState(GL_NORMAL_ARRAY);
@@ -125,7 +125,7 @@ void OpenGLFunctionality::DrawMeshes(Mesh& mesh, float4x4 worldTransform, GLuint
 	glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, NULL);
 
 	if (textureId != 0) { glBindTexture(GL_TEXTURE_2D, 0); }
-	if (mesh.isAnimated) { if (mesh.normalsIdANIMATION != 0) { glDisableClientState(GL_NORMAL_ARRAY); } }
+	if (mesh.isAnimatedWithBones) { if (mesh.normalsIdANIMATION != 0) { glDisableClientState(GL_NORMAL_ARRAY); } }
 	else { if (mesh.normalsId != 0) { glDisableClientState(GL_NORMAL_ARRAY); } }
 	if (mesh.textureCoordId != 0) { glDisableClientState(GL_TEXTURE_COORD_ARRAY); }
 

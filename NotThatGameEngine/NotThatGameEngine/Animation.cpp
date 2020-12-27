@@ -32,13 +32,20 @@ void Animation::PlayAnimation() {
 
 	for (uint i = 0; i < animationVec.size(); i++) {
 
-		if (animationVec[i].playing) {
+		if (animationVec[i].playing && time <= animationVec[i].duration) {
 
 			currentAnimationIndex = i;
-			time += 1/60;
+			time += 1.0f / 60.0f;
 			UpdateGameObjectsTransform(&animationVec[i]);
 			UpdateMesh(owner);
 			animation = true;
+
+		}
+
+		else if (animationVec[i].playing && time > animationVec[i].duration) {
+
+			time = 0;
+			animationVec[i].playing = false;
 
 		}
 
@@ -117,9 +124,7 @@ float3 Animation::GetUpdatedChannelScale(const Channels* channel, const float cu
 
 		std::map<float, float3>::const_iterator it = channel->scaleKeys.lower_bound(currentFrame);
 		if (it != channel->scaleKeys.begin()) { it--; }
-		newScale.x *= it->second.x;	// This keeps scale proportions, but I'm not sure if the way ASSIMP things it should be read is that if scale = 0.5 it means it decreases its scale by half, or if it
-		newScale.y *= it->second.y;	// decreases to 0.5. If it's the first this is fine, but if not, we would have to keep a modelScale and an animationScale to keep user modified scale and animation scale
-		newScale.z *= it->second.z;	// at the same time. However, since scale is probably not going to be altered, I leave it like this and I trust it will be good enough ):v
+		newScale = it->second;	// This should probably stack as well. Not sure if newScale *= it->second, or if it's more complicated than that
 
 	}
 
@@ -154,6 +159,8 @@ void Animation::AnimateMesh(Mesh* mesh) {
 
 	if (mesh->boneNamesVec.size() != 0) {
 
+		mesh->isAnimatedWithBones = true;
+
 		mesh->verticesANIMATION.clear();
 		mesh->normalsANIMATION.clear();
 
@@ -180,18 +187,24 @@ void Animation::AnimateMesh(Mesh* mesh) {
 				if (boneID != -1) {
 
 					float3 newDeviation = skinningMatrixMap[boneID].TransformPos(float3(mesh->vertices[vertexIndex * 3], mesh->vertices[vertexIndex * 3 + 1], mesh->vertices[vertexIndex * 3 + 2]));
+					float verticesX = mesh->vertices[vertexIndex * 3];
+					float verticesY = mesh->vertices[vertexIndex * 3 + 1];
+					float verticesZ = mesh->vertices[vertexIndex * 3 + 2];
+					float normalsX = mesh->normals[vertexIndex * 3];
+					float normalsY = mesh->normals[vertexIndex * 3 + 1];
+					float normalsZ = mesh->normals[vertexIndex * 3 + 2];
 
-					mesh->verticesANIMATION.push_back(mesh->vertices[vertexIndex * 3] += newDeviation.x * boneWeight);
-					mesh->verticesANIMATION.push_back(mesh->vertices[vertexIndex * 3 + 1] += newDeviation.y * boneWeight);
-					mesh->verticesANIMATION.push_back(mesh->vertices[vertexIndex * 3 + 2] += newDeviation.z * boneWeight);
+					mesh->verticesANIMATION.push_back(verticesX += newDeviation.x * boneWeight);
+					mesh->verticesANIMATION.push_back(verticesY += newDeviation.y * boneWeight);
+					mesh->verticesANIMATION.push_back(verticesZ += newDeviation.z * boneWeight);
 
 					if (mesh->normals.size() > 0) {
 
 						float3 newDeviation = skinningMatrixMap[boneID].TransformPos(float3(mesh->normals[vertexIndex * 3]));
 
-						mesh->normalsANIMATION.push_back(mesh->normals[vertexIndex * 3] += newDeviation.x * boneWeight);
-						mesh->normalsANIMATION.push_back(mesh->normals[vertexIndex * 3 + 1] += newDeviation.y * boneWeight);
-						mesh->normalsANIMATION.push_back(mesh->normals[vertexIndex * 3 + 2] += newDeviation.z * boneWeight);
+						mesh->normalsANIMATION.push_back(normalsX += newDeviation.x * boneWeight);
+						mesh->normalsANIMATION.push_back(normalsY += newDeviation.y * boneWeight);
+						mesh->normalsANIMATION.push_back(normalsZ += newDeviation.z * boneWeight);
 
 					}
 
