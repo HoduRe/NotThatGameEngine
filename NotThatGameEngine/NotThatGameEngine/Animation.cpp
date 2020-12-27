@@ -86,7 +86,7 @@ float3 Animation::GetUpdatedChannelPosition(const Channels* channel, const float
 
 	float3 newPosition(objectPosition);
 
-	if (channel->positionKeys.size() > 0) {
+	if (channel->positionKeys.size() > 0 && channel->positionKeys.begin()->first != -1) {
 
 		std::map<float, float3>::const_iterator it = channel->positionKeys.lower_bound(currentFrame);
 		if (it != channel->positionKeys.begin()) { it--; }
@@ -103,7 +103,7 @@ Quat Animation::GetUpdatedChannelRotation(const Channels* channel, const float c
 
 	Quat newRotation(objectRotation);
 
-	if (channel->rotationKeys.size() > 0) {
+	if (channel->rotationKeys.size() > 0 && channel->rotationKeys.begin()->first != -1) {
 
 		std::map<float, Quat>::const_iterator it = channel->rotationKeys.lower_bound(currentFrame);
 		if (it != channel->rotationKeys.begin()) { it--; }
@@ -120,7 +120,7 @@ float3 Animation::GetUpdatedChannelScale(const Channels* channel, const float cu
 
 	float3 newScale(objectScale);
 
-	if (channel->scaleKeys.size() > 0) {
+	if (channel->scaleKeys.size() > 0 && channel->scaleKeys.begin()->first != -1) {
 
 		std::map<float, float3>::const_iterator it = channel->scaleKeys.lower_bound(currentFrame);
 		if (it != channel->scaleKeys.begin()) { it--; }
@@ -169,10 +169,18 @@ void Animation::AnimateMesh(Mesh* mesh) {
 
 		GetGameObjects(owner, &gameObjectMap);
 
+//		GameObject* root = nullptr;
+//		GameObject* auxPtr = owner;
+
 		for (int i = 0; i < mesh->boneNamesVec.size(); i++) {
 
+			/*while (root == nullptr) {
+				if (auxPtr->parent == nullptr) { root = auxPtr; }
+				else { auxPtr = auxPtr->parent; }
+			}*/
+
 			GameObject* boneGameObject = gameObjectMap.find(mesh->boneNamesVec[i])->second;
-			skinningMatrixMap[i] = mesh->owner->worldTransform.Inverted() * boneGameObject->worldTransform * mesh->boneOffsetMatrixVec[i];
+			skinningMatrixMap[i] = (owner->transform->transform.Inverted() * /*root->worldTransform.Inverted() * */ boneGameObject->worldTransform) * mesh->boneOffsetMatrixVec[i];
 
 		}
 
