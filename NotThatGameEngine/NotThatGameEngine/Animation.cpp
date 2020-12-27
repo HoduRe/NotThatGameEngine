@@ -42,7 +42,7 @@ void Animation::PlayAnimation() {
 
 		}
 
-		else if (animationVec[i].playing && time > animationVec[i].duration) {
+		else if (animationVec[i].playing == false || time > animationVec[i].duration) {
 
 			time = 0;
 			animationVec[i].playing = false;
@@ -90,7 +90,7 @@ float3 Animation::GetUpdatedChannelPosition(const Channels* channel, const float
 
 		std::map<float, float3>::const_iterator it = channel->positionKeys.lower_bound(currentFrame);
 		if (it != channel->positionKeys.begin()) { it--; }
-		newPosition += it->second;
+		newPosition = it->second;
 
 	}
 
@@ -107,7 +107,7 @@ Quat Animation::GetUpdatedChannelRotation(const Channels* channel, const float c
 
 		std::map<float, Quat>::const_iterator it = channel->rotationKeys.lower_bound(currentFrame);
 		if (it != channel->rotationKeys.begin()) { it--; }
-		newRotation = newRotation * it->second;
+		newRotation = it->second;
 
 	}
 
@@ -124,7 +124,7 @@ float3 Animation::GetUpdatedChannelScale(const Channels* channel, const float cu
 
 		std::map<float, float3>::const_iterator it = channel->scaleKeys.lower_bound(currentFrame);
 		if (it != channel->scaleKeys.begin()) { it--; }
-		newScale = it->second;	// This should probably stack as well. Not sure if newScale *= it->second, or if it's more complicated than that
+		newScale = it->second;
 
 	}
 
@@ -186,25 +186,52 @@ void Animation::AnimateMesh(Mesh* mesh) {
 
 				if (boneID != -1) {
 
-					float3 newDeviation = skinningMatrixMap[boneID].TransformPos(float3(mesh->vertices[vertexIndex * 3], mesh->vertices[vertexIndex * 3 + 1], mesh->vertices[vertexIndex * 3 + 2]));
-					float verticesX = mesh->vertices[vertexIndex * 3];
-					float verticesY = mesh->vertices[vertexIndex * 3 + 1];
-					float verticesZ = mesh->vertices[vertexIndex * 3 + 2];
-					float normalsX = mesh->normals[vertexIndex * 3];
-					float normalsY = mesh->normals[vertexIndex * 3 + 1];
-					float normalsZ = mesh->normals[vertexIndex * 3 + 2];
+					int vectorVertexIndex = vertexIndex * 3;
 
-					mesh->verticesANIMATION.push_back(verticesX += (newDeviation.x * boneWeight));
-					mesh->verticesANIMATION.push_back(verticesY += (newDeviation.y * boneWeight));
-					mesh->verticesANIMATION.push_back(verticesZ += (newDeviation.z * boneWeight));
+					float3 newDeviation = skinningMatrixMap[boneID].TransformPos(float3(mesh->vertices[vectorVertexIndex], mesh->vertices[vectorVertexIndex + 1], mesh->vertices[vectorVertexIndex + 2]));
+					float verticesX = mesh->vertices[vectorVertexIndex];
+					float verticesY = mesh->vertices[vectorVertexIndex];
+					float verticesZ = mesh->vertices[vectorVertexIndex];
+					float normalsX = mesh->normals[vectorVertexIndex];
+					float normalsY = mesh->normals[vectorVertexIndex];
+					float normalsZ = mesh->normals[vectorVertexIndex];
+
+					if (vertexBones == 0) {
+
+						mesh->verticesANIMATION.push_back(verticesX += (newDeviation.x * boneWeight));
+						mesh->verticesANIMATION.push_back(verticesY += (newDeviation.y * boneWeight));
+						mesh->verticesANIMATION.push_back(verticesZ += (newDeviation.z * boneWeight));
+
+					}
+
+					else {
+
+						mesh->verticesANIMATION[vectorVertexIndex] += (newDeviation.x * boneWeight);
+						mesh->verticesANIMATION[vectorVertexIndex + 1] += (newDeviation.y * boneWeight);
+						mesh->verticesANIMATION[vectorVertexIndex + 2] += (newDeviation.z * boneWeight);
+
+					}
+
 
 					if (mesh->normals.size() > 0) {
 
-						float3 newDeviation = skinningMatrixMap[boneID].TransformPos(float3(mesh->normals[vertexIndex * 3]));
+						float3 newDeviation = skinningMatrixMap[boneID].TransformPos(float3(mesh->normals[vectorVertexIndex]));
 
-						mesh->normalsANIMATION.push_back(normalsX += (newDeviation.x * boneWeight));
-						mesh->normalsANIMATION.push_back(normalsY += (newDeviation.y * boneWeight));
-						mesh->normalsANIMATION.push_back(normalsZ += (newDeviation.z * boneWeight));
+						if (vertexBones == 0) {
+
+							mesh->normalsANIMATION.push_back(normalsX += (newDeviation.x * boneWeight));
+							mesh->normalsANIMATION.push_back(normalsY += (newDeviation.y * boneWeight));
+							mesh->normalsANIMATION.push_back(normalsZ += (newDeviation.z * boneWeight));
+
+						}
+
+						else {
+
+							mesh->normalsANIMATION[vectorVertexIndex] += (newDeviation.x * boneWeight);
+							mesh->normalsANIMATION[vectorVertexIndex + 1] += (newDeviation.y * boneWeight);
+							mesh->normalsANIMATION[vectorVertexIndex + 2] += (newDeviation.z * boneWeight);
+
+						}						
 
 					}
 
