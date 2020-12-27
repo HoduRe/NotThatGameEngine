@@ -171,8 +171,8 @@ void Animation::AnimateMesh(Mesh* mesh) {
 
 		for (int i = 0; i < mesh->boneNamesVec.size(); i++) {
 
-			GameObject* bone = gameObjectMap.find(mesh->boneNamesVec[i])->second;
-			skinningMatrixMap[i] = mesh->owner->worldTransform.Inverted() * bone->worldTransform * mesh->boneOffsetMatrixVec[i];
+			GameObject* boneGameObject = gameObjectMap.find(mesh->boneNamesVec[i])->second;
+			skinningMatrixMap[i] = mesh->owner->worldTransform.Inverted() * boneGameObject->worldTransform * mesh->boneOffsetMatrixVec[i];
 
 		}
 
@@ -181,8 +181,8 @@ void Animation::AnimateMesh(Mesh* mesh) {
 
 			for (uint vertexBones = 0; vertexBones < 4; vertexBones++) {
 
-				int boneID = mesh->boneIDs[vertexIndex * 4 + vertexBones];
-				float boneWeight = mesh->boneWeights[vertexIndex * 4 + vertexBones];
+				int boneID = mesh->boneIDs[(vertexIndex * 4) + vertexBones];
+				float boneWeight = mesh->boneWeights[(vertexIndex * 4) + vertexBones];
 
 				if (boneID != -1) {
 
@@ -192,15 +192,12 @@ void Animation::AnimateMesh(Mesh* mesh) {
 					float verticesX = mesh->vertices[vectorVertexIndex];
 					float verticesY = mesh->vertices[vectorVertexIndex];
 					float verticesZ = mesh->vertices[vectorVertexIndex];
-					float normalsX = mesh->normals[vectorVertexIndex];
-					float normalsY = mesh->normals[vectorVertexIndex];
-					float normalsZ = mesh->normals[vectorVertexIndex];
 
 					if (vertexBones == 0) {
 
-						mesh->verticesANIMATION.push_back(verticesX += (newDeviation.x * boneWeight));
-						mesh->verticesANIMATION.push_back(verticesY += (newDeviation.y * boneWeight));
-						mesh->verticesANIMATION.push_back(verticesZ += (newDeviation.z * boneWeight));
+						mesh->verticesANIMATION.push_back(verticesX + (newDeviation.x * boneWeight));
+						mesh->verticesANIMATION.push_back(verticesY + (newDeviation.y * boneWeight));
+						mesh->verticesANIMATION.push_back(verticesZ + (newDeviation.z * boneWeight));
 
 					}
 
@@ -215,13 +212,16 @@ void Animation::AnimateMesh(Mesh* mesh) {
 
 					if (mesh->normals.size() > 0) {
 
-						float3 newDeviation = skinningMatrixMap[boneID].TransformPos(float3(mesh->normals[vectorVertexIndex]));
+						newDeviation = skinningMatrixMap[boneID].TransformPos(float3(mesh->normals[vectorVertexIndex]));
+						float normalsX = mesh->normals[vectorVertexIndex];
+						float normalsY = mesh->normals[vectorVertexIndex];
+						float normalsZ = mesh->normals[vectorVertexIndex];
 
 						if (vertexBones == 0) {
 
-							mesh->normalsANIMATION.push_back(normalsX += (newDeviation.x * boneWeight));
-							mesh->normalsANIMATION.push_back(normalsY += (newDeviation.y * boneWeight));
-							mesh->normalsANIMATION.push_back(normalsZ += (newDeviation.z * boneWeight));
+							mesh->normalsANIMATION.push_back(normalsX + (newDeviation.x * boneWeight));
+							mesh->normalsANIMATION.push_back(normalsY + (newDeviation.y * boneWeight));
+							mesh->normalsANIMATION.push_back(normalsZ + (newDeviation.z * boneWeight));
 
 						}
 
