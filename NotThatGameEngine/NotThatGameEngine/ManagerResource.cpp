@@ -40,13 +40,15 @@ bool ResourceManager::Init() {
 	CheckAssetsImported(&assetsFiles);
 	CheckDeletedAssets();
 
-	std::string name = "Alex";	// TODO: Delete PreLoaded files
+	std::string name = "Alex";
 	if (assetsMap.count(name) == 1) { App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)assetsMap.find(name)->second.filePath.c_str()); }
 	name = "Checker";
 	if (assetsMap.count(name) == 1) { App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)assetsMap.find(name)->second.filePath.c_str()); }
 	name = "Degenerate";
 	if (assetsMap.count(name) == 1) { App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)assetsMap.find(name)->second.filePath.c_str()); }
 	name = "Street environment_V01";
+	if (assetsMap.count(name) == 1) { App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)assetsMap.find(name)->second.filePath.c_str()); }
+	name = "aniTest";
 	if (assetsMap.count(name) == 1) { App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)assetsMap.find(name)->second.filePath.c_str()); }
 
 	return true;

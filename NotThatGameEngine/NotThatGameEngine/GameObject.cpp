@@ -14,6 +14,7 @@ GameObject::GameObject(Application* _App, long long int _id, std::string _name, 
 	mesh(nullptr), material(nullptr), transform(nullptr), camera(nullptr), App(_App) {
 
 	AddComponent(COMPONENT_TYPE::TRANSFORM, idGenerator.Int());
+
 }
 
 GameObject::~GameObject() {
