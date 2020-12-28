@@ -22,7 +22,7 @@ class AnimationData {	// This is the resources, the "animations"
 
 public:
 
-	AnimationData(std::string _name, float _duration, float _ticks, bool _playing = false);
+	AnimationData(std::string _name, float _duration, float _ticks, bool _loop = false, bool _playing = false);
 	~AnimationData();
 
 public:
@@ -30,8 +30,10 @@ public:
 	std::string name;
 	float duration;
 	float ticksPerSecond;
+	float realDuration;
 	std::map<std::string, Channels> channels;
 	bool playing;
+	bool loop;
 
 };
 

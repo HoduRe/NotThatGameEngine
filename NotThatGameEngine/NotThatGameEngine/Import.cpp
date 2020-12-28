@@ -46,7 +46,7 @@ bool Importer::ImportNewModelComponents(Application* App, const char* buffer, ui
 		for (uint i = 0; i < scene->mRootNode->mNumChildren; i++) { ImportNodes(App, scene->mRootNode->mChildren[i], newObject, &meshMap, trans); }
 		Importer::ImportNewModelMesh(App, scene, &meshMap);
 		ImportAnimation(App, scene, newObject);
-		if (newObject->name == "aniTest") { newObject->transform->SetScale(float3(0.1f, 0.1f, 0.1f)); }
+		if (newObject->name == "aniTest") { newObject->transform->SetScale(float3(0.1f, 0.1f, 0.1f)); }	// Stupid assignment condition
 
 	}
 

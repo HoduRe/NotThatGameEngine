@@ -12,8 +12,11 @@ Channels::~Channels() {
 }
 
 
-AnimationData::AnimationData(std::string _name, float _duration, float _ticks, bool _playing) :
-	name(_name), duration(_duration), ticksPerSecond(_ticks), channels(), playing(_playing) {}
+AnimationData::AnimationData(std::string _name, float _duration, float _ticks, bool _loop, bool _playing) :
+	name(_name), duration(_duration), ticksPerSecond(_ticks), channels(), loop(_loop), playing(_playing)
+{
+	realDuration = duration / ticksPerSecond;
+}
 
 
 AnimationData::~AnimationData() {}
@@ -32,7 +35,7 @@ void Animation::PlayAnimation() {
 
 	for (uint i = 0; i < animationVec.size(); i++) {
 
-		if (animationVec[i].playing && time <= animationVec[i].duration) {
+		if (animationVec[i].playing && time <= animationVec[i].realDuration) {
 
 			currentAnimationIndex = i;
 			time += 1.0f / 60.0f;
@@ -42,10 +45,11 @@ void Animation::PlayAnimation() {
 
 		}
 
-		else if (animationVec[i].playing == false || time > animationVec[i].duration) {
+		else if (animationVec[i].playing == false || time > animationVec[i].realDuration) {
 
 			time = 0;
-			animationVec[i].playing = false;
+
+			if (animationVec[i].loop == false) { animationVec[i].playing = false; }
 
 		}
 
