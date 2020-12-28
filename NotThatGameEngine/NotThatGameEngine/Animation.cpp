@@ -169,18 +169,10 @@ void Animation::AnimateMesh(Mesh* mesh) {
 
 		GetGameObjects(owner, &gameObjectMap);
 
-//		GameObject* root = nullptr;
-//		GameObject* auxPtr = owner;
-
 		for (int i = 0; i < mesh->boneNamesVec.size(); i++) {
 
-			/*while (root == nullptr) {
-				if (auxPtr->parent == nullptr) { root = auxPtr; }
-				else { auxPtr = auxPtr->parent; }
-			}*/
-
 			GameObject* boneGameObject = gameObjectMap.find(mesh->boneNamesVec[i])->second;
-			skinningMatrixMap[i] = (owner->transform->transform.Inverted() * /*root->worldTransform.Inverted() * */ boneGameObject->worldTransform) * mesh->boneOffsetMatrixVec[i];
+			skinningMatrixMap[i] = (owner->transform->transform.Inverted() * boneGameObject->worldTransform) * mesh->boneOffsetMatrixVec[i];
 
 		}
 
@@ -198,8 +190,8 @@ void Animation::AnimateMesh(Mesh* mesh) {
 
 					float3 newDeviation = skinningMatrixMap[boneID].TransformPos(float3(mesh->vertices[vectorVertexIndex], mesh->vertices[vectorVertexIndex + 1], mesh->vertices[vectorVertexIndex + 2]));
 					float verticesX = mesh->vertices[vectorVertexIndex];
-					float verticesY = mesh->vertices[vectorVertexIndex];
-					float verticesZ = mesh->vertices[vectorVertexIndex];
+					float verticesY = mesh->vertices[vectorVertexIndex + 1];
+					float verticesZ = mesh->vertices[vectorVertexIndex + 2];
 
 					if (vertexBones == 0) {
 
@@ -222,8 +214,8 @@ void Animation::AnimateMesh(Mesh* mesh) {
 
 						newDeviation = skinningMatrixMap[boneID].TransformPos(float3(mesh->normals[vectorVertexIndex]));
 						float normalsX = mesh->normals[vectorVertexIndex];
-						float normalsY = mesh->normals[vectorVertexIndex];
-						float normalsZ = mesh->normals[vectorVertexIndex];
+						float normalsY = mesh->normals[vectorVertexIndex + 1];
+						float normalsZ = mesh->normals[vectorVertexIndex + 2];
 
 						if (vertexBones == 0) {
 
