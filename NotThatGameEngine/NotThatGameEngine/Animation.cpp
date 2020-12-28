@@ -13,7 +13,7 @@ Channels::~Channels() {
 
 
 AnimationData::AnimationData(std::string _name, float _duration, float _ticks, bool _loop, bool _playing) :
-	name(_name), duration(_duration), ticksPerSecond(_ticks), channels(), loop(_loop), playing(_playing)
+	name(_name), duration(_duration), ticksPerSecond(_ticks), channels(), loop(_loop), playing(_playing), time(0.0f), started(false)
 {
 	realDuration = duration / ticksPerSecond;
 }
@@ -23,7 +23,7 @@ AnimationData::~AnimationData() {}
 
 
 Animation::Animation(long long int _id, GameObject* _gameObject) : Component(_id, _gameObject, COMPONENT_TYPE::ANIMATION), animationVec(),
-time(0.0f), currentAnimationIndex(-1) {}
+currentAnimationIndex(-1), previousAnimationIndex(-1) {}
 
 
 Animation::~Animation() {}
@@ -35,34 +35,66 @@ void Animation::PlayAnimation() {
 
 	for (uint i = 0; i < animationVec.size(); i++) {
 
-		if (animationVec[i].playing && time <= animationVec[i].realDuration) {
+		if (animationVec[i].playing && animationVec[i].time <= animationVec[i].realDuration) {
 
-			currentAnimationIndex = i;
-			time += 1.0f / 60.0f;
-			UpdateGameObjectsTransform(&animationVec[i]);
-			UpdateMesh(owner);
-			animation = true;
+			if (animationVec[i].started == false) {
 
+				animationVec[i].started = true;
+
+				if (currentAnimationIndex == -1) { currentAnimationIndex = i; }
+				else if (previousAnimationIndex == -1) {
+
+					previousAnimationIndex = currentAnimationIndex;
+					currentAnimationIndex = i;
+
+				}
+				else {
+					
+					animationVec[i].started = false;
+					animationVec[i].playing = false;
+
+				}
+
+			}
+			
+			else {
+			
+				animationVec[i].time += 1.0f / 60.0f;
+				UpdateGameObjectsTransform(&animationVec[i]);
+				UpdateMesh(owner);
+				animation = true;
+
+			}
 		}
 
-		else if (animationVec[i].playing == false || time > animationVec[i].realDuration) {
+		else if (animationVec[i].playing == false || animationVec[i].time > animationVec[i].realDuration) {
 
-			time = 0;
+			animationVec[i].time = 0;
+			if (animationVec[i].loop == false) {
 
-			if (animationVec[i].loop == false) { animationVec[i].playing = false; }
+				animationVec[i].playing = false;
+				if (currentAnimationIndex == i) { currentAnimationIndex = -1; }
+				if (previousAnimationIndex == i) { previousAnimationIndex = -1; }
+
+			}
 
 		}
 
 	}
 
-	if (animation == false) { currentAnimationIndex = -1; }
+	if (animation == false) {
+
+		currentAnimationIndex = -1;
+		previousAnimationIndex = -1;
+
+	}
 
 }
 
 
 void Animation::UpdateGameObjectsTransform(const AnimationData* data) {
 
-	float currentFrame = time * data->ticksPerSecond;
+	float currentFrame = data->time * data->ticksPerSecond;
 	UpdateGameObjectsTransformRecursively(owner, data, currentFrame);
 
 }
@@ -70,7 +102,7 @@ void Animation::UpdateGameObjectsTransform(const AnimationData* data) {
 
 void Animation::UpdateGameObjectsTransformRecursively(GameObject* gameObject, const AnimationData* data, float currentFrame) {
 
-
+	// TODO: DO THINGS WITH PREVIOUS ANIMATION
 	if (data->channels.count(gameObject->name) == 1) {
 
 		Channels* channel = (Channels*)&data->channels.find(gameObject->name)->second;

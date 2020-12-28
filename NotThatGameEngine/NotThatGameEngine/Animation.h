@@ -28,12 +28,16 @@ public:
 public:
 
 	std::string name;
+	std::map<std::string, Channels> channels;
+
 	float duration;
 	float ticksPerSecond;
 	float realDuration;
-	std::map<std::string, Channels> channels;
+	float time;
+
 	bool playing;
 	bool loop;
+	bool started;
 
 };
 
@@ -62,7 +66,7 @@ public:
 private:
 
 	int currentAnimationIndex;
-	float time;
+	int previousAnimationIndex;
 
 };
 
