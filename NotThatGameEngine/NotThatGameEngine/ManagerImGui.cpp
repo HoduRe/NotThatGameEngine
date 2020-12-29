@@ -755,6 +755,7 @@ void ManagerImGui::InspectorWindow() {
 					ImGui::Text("Texture coordinates ID: %u", mesh->textureCoordId);
 					ImGui::Text("Indices ID: %u", mesh->indexId);
 					ImGui::NewLine();
+					ImGui::Checkbox(" Show boxes", &mesh->showBoxes);
 					ImGui::Checkbox(" Show all mesh bones", &mesh->showAllBones);
 
 					for (uint i = 0; i < mesh->boneNamesVec.size(); i++) {

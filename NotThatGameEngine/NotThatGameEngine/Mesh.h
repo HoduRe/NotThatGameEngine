@@ -40,6 +40,7 @@ public:
 
 	std::vector<float> debugNormals;
 	bool paintNormals;
+	bool showBoxes;
 	bool showAllBones;
 	bool isAnimatedWithBones;
 

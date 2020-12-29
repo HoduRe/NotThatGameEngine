@@ -223,29 +223,35 @@ GameObject* GameObject::FindGameObjectChild(long long int id) {
 }
 
 
-void GameObject::ManageAABB(AABB aabb, bool focus) {
+void GameObject::ManageAABB(AABB aabb, bool focus, bool guaranteedShow) {
 
 	if (mesh != nullptr) {
 
-		OBB obb = aabb;
-		obb.Transform(worldTransform);
+		bool show = guaranteedShow || focus ? true : mesh->showBoxes;
+		
+		if (show) {
 
-		AABB newBoundingBox;
-		newBoundingBox.SetNegativeInfinity();
-		newBoundingBox.Enclose(obb);
-		std::vector<float> cornerVec;
+			OBB obb = aabb;
+			obb.Transform(worldTransform);
 
-		for (int i = 0; i < 8; i++) {
+			AABB newBoundingBox;
+			newBoundingBox.SetNegativeInfinity();
+			newBoundingBox.Enclose(obb);
+			std::vector<float> cornerVec;
 
-			float3 corner = newBoundingBox.CornerPoint(i);
-			cornerVec.push_back(corner.x);
-			cornerVec.push_back(corner.y);
-			cornerVec.push_back(corner.z);
+			for (int i = 0; i < 8; i++) {
+
+				float3 corner = newBoundingBox.CornerPoint(i);
+				cornerVec.push_back(corner.x);
+				cornerVec.push_back(corner.y);
+				cornerVec.push_back(corner.z);
+
+			}
+
+			if (focus) { OpenGLFunctionality::DrawBox(cornerVec, 80.0f, 0.0f, 0.0f); }
+			else { OpenGLFunctionality::DrawBox(cornerVec); }
 
 		}
-
-		if (focus) { OpenGLFunctionality::DrawBox(cornerVec, 80.0f, 0.0f, 0.0f); }
-		else { OpenGLFunctionality::DrawBox(cornerVec); }
 
 	}
 
@@ -277,7 +283,7 @@ void GameObject::DebugBones() {
 
 			}
 
-			ManageAABB(boneAABB);
+			ManageAABB(boneAABB, false, true);
 
 		}
 
@@ -306,7 +312,7 @@ void GameObject::DebugBones() {
 
 				}
 
-				ManageAABB(boneAABB);
+				ManageAABB(boneAABB, false, true);
 
 			}
 

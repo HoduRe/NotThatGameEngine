@@ -3,7 +3,7 @@
 Mesh::Mesh(long long int _id, GameObject* _gameObject) : Component(_id, _gameObject, COMPONENT_TYPE::MESH), vertexId(0), indexId(0), normalsId(0), textureCoordId(0),
 vertices(), normals(), textureCoord(), indices(), paintNormals(false), debugNormalsId(0), debugNormals(), boneIDs(nullptr), boneWeights(nullptr),
 boneNamesVec(), boneOffsetMatrixVec(), boneDisplayVec(nullptr), showAllBones(false), boneIDsSize(0), boneWeightsSize(0), boneDisplayVecSize(0),
-vertexIdANIMATION(0), normalsIdANIMATION(0), verticesANIMATION(), normalsANIMATION(), isAnimatedWithBones(false)
+vertexIdANIMATION(0), normalsIdANIMATION(0), verticesANIMATION(), normalsANIMATION(), isAnimatedWithBones(false), showBoxes(false)
 {
 	boundingBox.SetNegativeInfinity();
 }
