@@ -991,9 +991,11 @@ void ManagerImGui::InspectorWindow() {
 					for (uint i = 0; i < animation->animationVec.size(); i++) {
 
 						ImGui::Text("Animation %u: %s", i, animation->animationVec[i].name.c_str());
-						ImGui::Text("Duration: %f", animation->animationVec[i].duration);
-						ImGui::Checkbox("Animation playing", &animation->animationVec[i].playing);
-						ImGui::Checkbox("Animation looped", &animation->animationVec[i].loop);
+						ImGui::Text("Duration: %f", animation->animationVec[i].realDuration);
+						ImGui::Text("Frames: %f", animation->animationVec[i].duration);
+						ImGui::Text("Animation frames per\nengine frame: %f", animation->animationVec[i].ticksPerSecond);
+						ImGui::Checkbox(("Animation playing" + std::string("##" + std::to_string(i))).c_str(), &animation->animationVec[i].playing);
+						ImGui::Checkbox(("Animation looped" + std::string("##" + std::to_string(i))).c_str(), &animation->animationVec[i].loop);
 						ImGui::NewLine();
 
 					}

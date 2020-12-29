@@ -60,9 +60,11 @@ void Animation::PlayAnimation() {
 			else {
 			
 				animationVec[i].time += 1.0f / 60.0f;
-				animation = true;
 
 			}
+
+			animation = true;
+
 		}
 
 		else if (animationVec[i].playing == false || animationVec[i].time > animationVec[i].realDuration) {
@@ -71,10 +73,12 @@ void Animation::PlayAnimation() {
 			if (animationVec[i].loop == false) {
 
 				animationVec[i].playing = false;
+				animationVec[i].started = false;
 				if (currentAnimationIndex == i) { currentAnimationIndex = -1; }
 				if (previousAnimationIndex == i) { previousAnimationIndex = -1; }
 
 			}
+			else if (animationVec[i].playing) { animation = true; }
 
 		}
 
@@ -89,8 +93,10 @@ void Animation::PlayAnimation() {
 
 	else {
 
-		UpdateGameObjectsTransform(&animationVec[currentAnimationIndex]);
-		UpdateMesh(owner);
+		if (currentAnimationIndex != -1) {
+			UpdateGameObjectsTransform(&animationVec[currentAnimationIndex]);
+			UpdateMesh(owner);
+		}
 
 	}
 

@@ -48,7 +48,7 @@ bool ResourceManager::Init() {
 	if (assetsMap.count(name) == 1) { App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)assetsMap.find(name)->second.filePath.c_str()); }
 	name = "Street environment_V01";
 	if (assetsMap.count(name) == 1) { App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)assetsMap.find(name)->second.filePath.c_str()); }
-	name = "aniTest";
+	name = "robotto";
 	if (assetsMap.count(name) == 1) { App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)assetsMap.find(name)->second.filePath.c_str()); }
 
 	return true;
