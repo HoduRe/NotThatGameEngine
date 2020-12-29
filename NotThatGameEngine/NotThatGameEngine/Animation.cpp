@@ -49,19 +49,15 @@ void Animation::PlayAnimation() {
 
 				}
 				else {
-					
+
 					animationVec[i].started = false;
 					animationVec[i].playing = false;
 
 				}
 
 			}
-			
-			else {
-			
-				animationVec[i].time += 1.0f / 60.0f;
 
-			}
+			else { animationVec[i].time += 1.0f / 60.0f; }
 
 			animation = true;
 
@@ -206,7 +202,7 @@ float3 Animation::GetUpdatedChannelScale(const Channels* channel, const float cu
 
 	}
 
-	return float3(0.1, 0.1, 0.1);
+	return newScale;
 
 }
 
@@ -267,15 +263,12 @@ void Animation::AnimateMesh(Mesh* mesh) {
 					int vectorVertexIndex = vertexIndex * 3;
 
 					float3 newDeviation = skinningMatrixMap[boneID].TransformPos(float3(mesh->vertices[vectorVertexIndex], mesh->vertices[vectorVertexIndex + 1], mesh->vertices[vectorVertexIndex + 2]));
-					float verticesX = mesh->vertices[vectorVertexIndex];
-					float verticesY = mesh->vertices[vectorVertexIndex + 1];
-					float verticesZ = mesh->vertices[vectorVertexIndex + 2];
 
 					if (vertexBones == 0) {
 
-						mesh->verticesANIMATION.push_back(verticesX + (newDeviation.x * boneWeight));
-						mesh->verticesANIMATION.push_back(verticesY + (newDeviation.y * boneWeight));
-						mesh->verticesANIMATION.push_back(verticesZ + (newDeviation.z * boneWeight));
+						mesh->verticesANIMATION.push_back(newDeviation.x * boneWeight);
+						mesh->verticesANIMATION.push_back(newDeviation.y * boneWeight);
+						mesh->verticesANIMATION.push_back(newDeviation.z * boneWeight);
 
 					}
 
@@ -291,15 +284,12 @@ void Animation::AnimateMesh(Mesh* mesh) {
 					if (mesh->normals.size() > 0) {
 
 						newDeviation = skinningMatrixMap[boneID].TransformPos(float3(mesh->normals[vectorVertexIndex]));
-						float normalsX = mesh->normals[vectorVertexIndex];
-						float normalsY = mesh->normals[vectorVertexIndex + 1];
-						float normalsZ = mesh->normals[vectorVertexIndex + 2];
 
 						if (vertexBones == 0) {
 
-							mesh->normalsANIMATION.push_back(normalsX + (newDeviation.x * boneWeight));
-							mesh->normalsANIMATION.push_back(normalsY + (newDeviation.y * boneWeight));
-							mesh->normalsANIMATION.push_back(normalsZ + (newDeviation.z * boneWeight));
+							mesh->normalsANIMATION.push_back(newDeviation.x * boneWeight);
+							mesh->normalsANIMATION.push_back(newDeviation.y * boneWeight);
+							mesh->normalsANIMATION.push_back(newDeviation.z * boneWeight);
 
 						}
 
