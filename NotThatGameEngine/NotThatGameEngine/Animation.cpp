@@ -60,8 +60,6 @@ void Animation::PlayAnimation() {
 			else {
 			
 				animationVec[i].time += 1.0f / 60.0f;
-				UpdateGameObjectsTransform(&animationVec[i]);
-				UpdateMesh(owner);
 				animation = true;
 
 			}
@@ -89,31 +87,54 @@ void Animation::PlayAnimation() {
 
 	}
 
+	else {
+
+		UpdateGameObjectsTransform(&animationVec[currentAnimationIndex]);
+		UpdateMesh(owner);
+
+	}
+
 }
 
 
 void Animation::UpdateGameObjectsTransform(const AnimationData* data) {
 
 	float currentFrame = data->time * data->ticksPerSecond;
-	UpdateGameObjectsTransformRecursively(owner, data, currentFrame);
+	float previousFrame = -1.0f;
+	if (previousAnimationIndex != -1) { previousFrame = animationVec[previousAnimationIndex].time * animationVec[previousAnimationIndex].ticksPerSecond; }
+	UpdateGameObjectsTransformRecursively(owner, data, currentFrame, previousFrame);
 
 }
 
 
-void Animation::UpdateGameObjectsTransformRecursively(GameObject* gameObject, const AnimationData* data, float currentFrame) {
+void Animation::UpdateGameObjectsTransformRecursively(GameObject* gameObject, const AnimationData* data, float currentFrame, float previousFrame) {
 
-	// TODO: DO THINGS WITH PREVIOUS ANIMATION
 	if (data->channels.count(gameObject->name) == 1) {
 
 		Channels* channel = (Channels*)&data->channels.find(gameObject->name)->second;
 
-		gameObject->transform->SetPosition(GetUpdatedChannelPosition(channel, currentFrame, gameObject->transform->GetPosition()));
-		gameObject->transform->SetRotation(GetUpdatedChannelRotation(channel, currentFrame, gameObject->transform->GetEulerQuat()));
-		gameObject->transform->SetScale(GetUpdatedChannelScale(channel, currentFrame, gameObject->transform->GetScale()));
+		float3 position = GetUpdatedChannelPosition(channel, currentFrame, gameObject->transform->GetPosition());
+		Quat rotation = GetUpdatedChannelRotation(channel, currentFrame, gameObject->transform->GetEulerQuat());
+		float3 scale = GetUpdatedChannelScale(channel, currentFrame, gameObject->transform->GetScale());
+
+		if (previousFrame != -1.0f) {
+
+			Channels* previousChannel = (Channels*)&animationVec[previousAnimationIndex].channels.find(gameObject->name)->second;
+			float blendWeight = (animationVec[previousAnimationIndex].duration - animationVec[previousAnimationIndex].time) / animationVec[previousAnimationIndex].duration;
+
+			position = float3::Lerp(GetUpdatedChannelPosition(previousChannel, previousFrame, gameObject->transform->GetPosition()), position, blendWeight);
+			rotation = Quat::Slerp(GetUpdatedChannelRotation(previousChannel, previousFrame, gameObject->transform->GetEulerQuat()), rotation, blendWeight);
+			scale = float3::Lerp(GetUpdatedChannelScale(previousChannel, previousFrame, gameObject->transform->GetScale()), scale, blendWeight);
+
+		}
+
+		gameObject->transform->SetPosition(position);
+		gameObject->transform->SetRotation(rotation);
+		gameObject->transform->SetScale(scale);
 
 	}
 
-	for (int i = 0; i < gameObject->childs.size(); i++) { UpdateGameObjectsTransformRecursively(gameObject->childs[i], data, currentFrame); }
+	for (int i = 0; i < gameObject->childs.size(); i++) { UpdateGameObjectsTransformRecursively(gameObject->childs[i], data, currentFrame, previousFrame); }
 
 }
 

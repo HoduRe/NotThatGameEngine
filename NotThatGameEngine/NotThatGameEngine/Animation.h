@@ -52,7 +52,7 @@ public:
 private:
 
 	void UpdateGameObjectsTransform(const AnimationData* data);
-	void UpdateGameObjectsTransformRecursively(GameObject* gameObject, const AnimationData* data, float currentFrame);
+	void UpdateGameObjectsTransformRecursively(GameObject* gameObject, const AnimationData* data, float currentFrame, float previousFrame);
 	void UpdateMesh(GameObject* gameObject);
 	float3 GetUpdatedChannelPosition(const Channels* channel, const float currentFrame, float3 objectPosition) const;
 	Quat GetUpdatedChannelRotation(const Channels* channel, const float currentFrame, Quat objectRotation) const;
