@@ -246,7 +246,7 @@ void Animation::AnimateMesh(Mesh* mesh) {
 		for (int i = 0; i < mesh->boneNamesVec.size(); i++) {
 
 			GameObject* boneGameObject = gameObjectMap.find(mesh->boneNamesVec[i])->second;
-			skinningMatrixMap[i] = (owner->transform->transform.Inverted() * boneGameObject->worldTransform) * mesh->boneOffsetMatrixVec[i];
+			skinningMatrixMap[i] = (mesh->owner->transform->transform.Inverted() * (owner->transform->transform.Inverted() * boneGameObject->worldTransform)) * mesh->boneOffsetMatrixVec[i];
 
 		}
 
