@@ -148,19 +148,14 @@ void Animation::UpdateGameObjectsTransformRecursively(GameObject* gameObject, co
 float3 Animation::GetUpdatedChannelPosition(const Channels* channel, const float currentFrame, float3 objectPosition) const {
 
 	float3 newPosition(objectPosition);
-	float3 previousKeyFramePosition, nextKeyFramePosition;
 
 	if (channel->positionKeys.size() > 0 && channel->positionKeys.begin()->first != -1) {
 
 		std::map<float, float3>::const_iterator prevIt = channel->positionKeys.lower_bound(currentFrame);
 		if (prevIt != channel->positionKeys.begin()) { prevIt--; }
 
-		previousKeyFramePosition = prevIt->second;
-
 		std::map<float, float3>::const_iterator nextIt = channel->positionKeys.upper_bound(currentFrame);
 		if (nextIt == channel->positionKeys.end()) { nextIt--; }
-
-		nextKeyFramePosition = nextIt->second;
 
 		if (prevIt == nextIt) { newPosition = prevIt->second; }	// Without this, we end up with a weight calculation of x / 0, so... Yeah, important
 		else { newPosition = prevIt->second.Lerp(nextIt->second, ((currentFrame - prevIt->first) / (nextIt->first - prevIt->first))); }
@@ -175,19 +170,14 @@ float3 Animation::GetUpdatedChannelPosition(const Channels* channel, const float
 Quat Animation::GetUpdatedChannelRotation(const Channels* channel, const float currentFrame, Quat objectRotation) const {
 
 	Quat newRotation(objectRotation);
-	Quat previousKeyFrameRotation, nextKeyFrameRotation;
 
 	if (channel->rotationKeys.size() > 0 && channel->rotationKeys.begin()->first != -1) {
 
 		std::map<float, Quat>::const_iterator prevIt = channel->rotationKeys.lower_bound(currentFrame);
 		if (prevIt != channel->rotationKeys.begin()) { prevIt--; }
 
-		previousKeyFrameRotation = prevIt->second;
-
 		std::map<float, Quat>::const_iterator nextIt = channel->rotationKeys.upper_bound(currentFrame);
 		if (nextIt == channel->rotationKeys.end()) { nextIt--; }
-
-		nextKeyFrameRotation = nextIt->second;
 
 		if (prevIt == nextIt) { newRotation = prevIt->second; }	// Without this, we end up with a weight calculation of x / 0, so... Yeah, important
 		else { newRotation = prevIt->second.Slerp(nextIt->second, ((currentFrame - prevIt->first) / (nextIt->first - prevIt->first))); }
@@ -202,26 +192,21 @@ Quat Animation::GetUpdatedChannelRotation(const Channels* channel, const float c
 float3 Animation::GetUpdatedChannelScale(const Channels* channel, const float currentFrame, float3 objectScale) const {
 
 	float3 newScale(objectScale);
-	float3 previousKeyFrameScale, nextKeyFrameScale;
 
 	if (channel->scaleKeys.size() > 0 && channel->scaleKeys.begin()->first != -1) {
 
 		std::map<float, float3>::const_iterator prevIt = channel->scaleKeys.lower_bound(currentFrame);
 		if (prevIt != channel->scaleKeys.begin()) { prevIt--; }
 
-		previousKeyFrameScale = prevIt->second;
-
 		std::map<float, float3>::const_iterator nextIt = channel->scaleKeys.upper_bound(currentFrame);
 		if (nextIt == channel->scaleKeys.end()) { nextIt--; }
-
-		nextKeyFrameScale = nextIt->second;
 
 		if (prevIt == nextIt) { newScale = prevIt->second; }	// Without this, we end up with a weight calculation of x / 0, so... Yeah, important
 		else { newScale = prevIt->second.Lerp(nextIt->second, ((currentFrame - prevIt->first) / (nextIt->first - prevIt->first))); }
 
 	}
 
-	return newScale;
+	return float3(0.1, 0.1, 0.1);
 
 }
 
