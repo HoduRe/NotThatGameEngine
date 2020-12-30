@@ -1,0 +1,832 @@
+{
+    "GameObjects": [
+        {
+            "Name": "aniTest",
+            "ID": 1881534190,
+            "ParentID": 0,
+            "Translation": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 5,
+                    "ComponentID": 221947428
+                }
+            ]
+        },
+        {
+            "Name": "Object02",
+            "ID": 2084342284,
+            "ParentID": 1881534190,
+            "Translation": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                -89.999992,
+                0,
+                0
+            ],
+            "Scale": [
+                2.540000,
+                2.540000,
+                2.540000
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 549473047
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1736801176
+                }
+            ]
+        },
+        {
+            "Name": "transform1",
+            "ID": 2081675633,
+            "ParentID": 1881534190,
+            "Translation": [
+                -1.116104,
+                15.688704,
+                -0.138407
+            ],
+            "Rotation": [
+                -67.708000,
+                -3.439450,
+                -67.620430
+            ],
+            "Scale": [
+                2.540000,
+                2.540000,
+                2.540000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 Pelvis",
+            "ID": 1110360004,
+            "ParentID": 2081675633,
+            "Translation": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                -90.000008,
+                -0.000073,
+                -90
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 Spine",
+            "ID": 1404997425,
+            "ParentID": 1110360004,
+            "Translation": [
+                0.627852,
+                0.318001,
+                -0.000000
+            ],
+            "Rotation": [
+                -0.000239,
+                -0.000079,
+                0.045624
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 Spine1",
+            "ID": 1593088722,
+            "ParentID": 1404997425,
+            "Translation": [
+                1.798031,
+                -0.001359,
+                -0.000495
+            ],
+            "Rotation": [
+                27.338631,
+                -8.437817,
+                41.227718
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 Neck",
+            "ID": 1341997753,
+            "ParentID": 1593088722,
+            "Translation": [
+                2.997202,
+                -0.234361,
+                -0.000000
+            ],
+            "Rotation": [
+                -7.527960,
+                22.155216,
+                19.357075
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 L Clavicle",
+            "ID": 654531584,
+            "ParentID": 1341997753,
+            "Translation": [
+                -0.455274,
+                -0.096788,
+                0.797643
+            ],
+            "Rotation": [
+                18.904264,
+                34.349174,
+                159.977676
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 L UpperArm",
+            "ID": 1687903971,
+            "ParentID": 654531584,
+            "Translation": [
+                0.986254,
+                0.000000,
+                0.000000
+            ],
+            "Rotation": [
+                -28.174101,
+                40.113071,
+                -5.683660
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 L Forearm",
+            "ID": 1109717504,
+            "ParentID": 1687903971,
+            "Translation": [
+                2.375838,
+                0,
+                0.000000
+            ],
+            "Rotation": [
+                0,
+                0,
+                -38.258602
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 L Hand",
+            "ID": 1770661512,
+            "ParentID": 1109717504,
+            "Translation": [
+                1.846415,
+                0.000000,
+                -0.000000
+            ],
+            "Rotation": [
+                -21.448099,
+                2.539082,
+                12.230515
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 L Finger0",
+            "ID": 1073854564,
+            "ParentID": 1770661512,
+            "Translation": [
+                0.940946,
+                0.081812,
+                -0.580381
+            ],
+            "Rotation": [
+                89.212646,
+                39.880962,
+                -27.754452
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 L Finger01",
+            "ID": 332913586,
+            "ParentID": 1073854564,
+            "Translation": [
+                0.517244,
+                0.000000,
+                0.000000
+            ],
+            "Rotation": [
+                0.000001,
+                0.000002,
+                8.992414
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 L Finger02",
+            "ID": 2133252482,
+            "ParentID": 332913586,
+            "Translation": [
+                0.304696,
+                0,
+                0.000000
+            ],
+            "Rotation": [
+                0.000002,
+                0.000001,
+                19.887533
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 L Finger1",
+            "ID": 1349506449,
+            "ParentID": 1770661512,
+            "Translation": [
+                1.770775,
+                0.000361,
+                -0.041459
+            ],
+            "Rotation": [
+                -8.385210,
+                -9.105930,
+                22.121117
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 L Finger11",
+            "ID": 1578929579,
+            "ParentID": 1349506449,
+            "Translation": [
+                0.341537,
+                0.000000,
+                0.000000
+            ],
+            "Rotation": [
+                -8.250282,
+                -4.832024,
+                30.153896
+            ],
+            "Scale": [
+                1.000000,
+                1,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 L Finger12",
+            "ID": 1263296923,
+            "ParentID": 1578929579,
+            "Translation": [
+                0.252604,
+                -0.000000,
+                -0.000000
+            ],
+            "Rotation": [
+                -7.929821,
+                -5.343642,
+                33.766224
+            ],
+            "Scale": [
+                1.000000,
+                1,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 R Clavicle",
+            "ID": 1802313298,
+            "ParentID": 1341997753,
+            "Translation": [
+                0.267881,
+                -0.097360,
+                -0.878430
+            ],
+            "Rotation": [
+                -37.400402,
+                -77.277023,
+                122.551125
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 R UpperArm",
+            "ID": 1384625848,
+            "ParentID": 1802313298,
+            "Translation": [
+                0.986254,
+                -0.000000,
+                0
+            ],
+            "Rotation": [
+                64.551109,
+                -40.277058,
+                10.936147
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 R Forearm",
+            "ID": 642733425,
+            "ParentID": 1384625848,
+            "Translation": [
+                2.375838,
+                0.000000,
+                0.000000
+            ],
+            "Rotation": [
+                0,
+                0,
+                -31.601667
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 R Hand",
+            "ID": 627029386,
+            "ParentID": 642733425,
+            "Translation": [
+                1.846414,
+                -0.000001,
+                0
+            ],
+            "Rotation": [
+                67.642189,
+                17.605196,
+                11.859199
+            ],
+            "Scale": [
+                1.000000,
+                1,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 R Finger0",
+            "ID": 365306490,
+            "ParentID": 627029386,
+            "Translation": [
+                0.940946,
+                0.081812,
+                0.580381
+            ],
+            "Rotation": [
+                -77.555962,
+                -45.889187,
+                -8.317765
+            ],
+            "Scale": [
+                1.000000,
+                1,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 R Finger01",
+            "ID": 354308869,
+            "ParentID": 365306490,
+            "Translation": [
+                0.517245,
+                0,
+                -0.000000
+            ],
+            "Rotation": [
+                0,
+                0,
+                26.992416
+            ],
+            "Scale": [
+                1.000000,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 R Finger02",
+            "ID": 1340599207,
+            "ParentID": 354308869,
+            "Translation": [
+                0.304696,
+                0.000000,
+                0.000000
+            ],
+            "Rotation": [
+                0.000000,
+                0.000004,
+                19.887518
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 R Finger1",
+            "ID": 2070608280,
+            "ParentID": 627029386,
+            "Translation": [
+                1.770776,
+                0.000361,
+                0.041459
+            ],
+            "Rotation": [
+                -9.110815,
+                21.116283,
+                49.236862
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 R Finger11",
+            "ID": 1536806064,
+            "ParentID": 2070608280,
+            "Translation": [
+                0.341537,
+                0,
+                0
+            ],
+            "Rotation": [
+                -0.000002,
+                -0.000003,
+                50.502602
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 R Finger12",
+            "ID": 2044720910,
+            "ParentID": 1536806064,
+            "Translation": [
+                0.252603,
+                -0.000000,
+                0.000000
+            ],
+            "Rotation": [
+                -0.000003,
+                0.000001,
+                65.136909
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 Head",
+            "ID": 970999127,
+            "ParentID": 1341997753,
+            "Translation": [
+                1.101905,
+                -0.000001,
+                0
+            ],
+            "Rotation": [
+                -37.137497,
+                13.305360,
+                -54.168171
+            ],
+            "Scale": [
+                1,
+                1,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bone001",
+            "ID": 1292496954,
+            "ParentID": 970999127,
+            "Translation": [
+                0.192795,
+                0.020197,
+                -0.000001
+            ],
+            "Rotation": [
+                -179.092377,
+                2.789655,
+                -108.028358
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 L Thigh",
+            "ID": 1070657840,
+            "ParentID": 1404997425,
+            "Translation": [
+                -0.628105,
+                -0.317504,
+                1.153569
+            ],
+            "Rotation": [
+                -171.541046,
+                -10.998534,
+                -147.518539
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 L Calf",
+            "ID": 1112091270,
+            "ParentID": 1070657840,
+            "Translation": [
+                2.656434,
+                0.000000,
+                0.000000
+            ],
+            "Rotation": [
+                0,
+                0,
+                -38.427593
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 L Foot",
+            "ID": 1678383379,
+            "ParentID": 1112091270,
+            "Translation": [
+                3.316416,
+                -0.000000,
+                0
+            ],
+            "Rotation": [
+                19.385164,
+                -13.582026,
+                25.431017
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 L Toe0",
+            "ID": 1849028795,
+            "ParentID": 1678383379,
+            "Translation": [
+                0.806603,
+                1.325963,
+                0
+            ],
+            "Rotation": [
+                -0.000068,
+                0.000044,
+                90.000076
+            ],
+            "Scale": [
+                1.000000,
+                1,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 R Thigh",
+            "ID": 326517280,
+            "ParentID": 1404997425,
+            "Translation": [
+                -0.628105,
+                -0.317498,
+                -1.153570
+            ],
+            "Rotation": [
+                169.689911,
+                21.927866,
+                -121.645576
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 R Calf",
+            "ID": 1345147385,
+            "ParentID": 326517280,
+            "Translation": [
+                2.656434,
+                0.000000,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                -54.959938
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 R Foot",
+            "ID": 891729062,
+            "ParentID": 1345147385,
+            "Translation": [
+                3.316417,
+                -0.000000,
+                0.000000
+            ],
+            "Rotation": [
+                -6.774252,
+                15.455060,
+                15.011108
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Bip001 R Toe0",
+            "ID": 1464274379,
+            "ParentID": 891729062,
+            "Translation": [
+                0.806603,
+                1.325963,
+                0.000000
+            ],
+            "Rotation": [
+                -0.000029,
+                0.000018,
+                90.000076
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        }
+    ]
+} 

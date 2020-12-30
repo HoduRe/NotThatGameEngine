@@ -46,7 +46,6 @@ bool Importer::ImportNewModelComponents(Application* App, const char* buffer, ui
 		for (uint i = 0; i < scene->mRootNode->mNumChildren; i++) { ImportNodes(App, scene->mRootNode->mChildren[i], newObject, &meshMap, trans); }
 		Importer::ImportNewModelMesh(App, scene, &meshMap);
 		ImportAnimation(App, scene, newObject);
-		if (newObject->name == "robotto") { newObject->transform->SetScale(float3(0.01f, 0.01f, 0.01f)); }	// Stupid assignment condition
 
 	}
 
@@ -238,10 +237,11 @@ void Importer::ImportNewModelMaterial(Application* App, aiScene* scene, GameObje
 
 				std::string name;
 				App->externalManager->SplitFilePath(Path.C_Str(), nullptr, &name);
-				material = (Material*)newObject->AddComponent(COMPONENT_TYPE::MATERIAL);
-				material->SetTextureName(App, name);
-				LOG("Material with texture = %s loaded.\n", material->GetTextureName().c_str());
-
+				if (name.size() > 2) {	// Weird bug don't ask
+					material = (Material*)newObject->AddComponent(COMPONENT_TYPE::MATERIAL);
+					material->SetTextureName(App, name);
+					LOG("Material with texture = %s loaded.\n", material->GetTextureName().c_str());
+				}
 			}
 
 		}

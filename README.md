@@ -40,5 +40,6 @@ An engine for CITM's Engine project, which focuses on providing a functional sys
 	- [José Luis Redondo](https://github.com/jose-tello)<br/>
 	- [Oscar Pérez](https://github.com/oscarpm5)<br/>
 for being honestly awesome and helping throughout this project.<br/>
+- "Undead Dragon+motions" by Pablo444 is licensed under Creative Commons Attribution. https://skfb.ly/6XIWU To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/.<br/>
 
 

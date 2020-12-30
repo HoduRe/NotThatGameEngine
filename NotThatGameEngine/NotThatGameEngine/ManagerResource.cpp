@@ -46,9 +46,7 @@ bool ResourceManager::Init() {
 	if (assetsMap.count(name) == 1) { App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)assetsMap.find(name)->second.filePath.c_str()); }
 	name = "Degenerate";
 	if (assetsMap.count(name) == 1) { App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)assetsMap.find(name)->second.filePath.c_str()); }
-	name = "Street environment_V01";
-	if (assetsMap.count(name) == 1) { App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)assetsMap.find(name)->second.filePath.c_str()); }
-	name = "robotto";
+	name = "Scene";
 	if (assetsMap.count(name) == 1) { App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)assetsMap.find(name)->second.filePath.c_str()); }
 
 	return true;
@@ -546,7 +544,7 @@ ResourceEnum ResourceManager::GetTypeByExtension(std::string extension) {
 	else if (extension == EXTENSION_CAMERA) { return ResourceEnum::CAMERA; }
 	else if (extension == ".FBX" || extension == ".fbx" || extension == ".OBJ" || extension == ".obj") { return ResourceEnum::EXTERNAL_MODEL; }
 	else if (extension == ".tga" || extension == ".png" || extension == ".jpg" || extension == ".dds" || extension == ".TGA"
-		|| extension == ".PNG" || extension == ".JPG" || extension == ".DDS" || extension == EXTENSION_TEXTURES) {
+		|| extension == ".PNG" || extension == ".JPG" || extension == ".DDS" || extension == ".jpeg" || extension == ".JPEG" || extension == EXTENSION_TEXTURES) {
 		return ResourceEnum::TEXTURE;
 	}
 

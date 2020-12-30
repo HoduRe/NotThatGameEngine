@@ -1,0 +1,1182 @@
+{
+    "GameObjects": [
+        {
+            "Name": "Street environment_V01",
+            "ID": 321096046,
+            "ParentID": 0,
+            "Translation": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 5,
+                    "ComponentID": 1574806113
+                }
+            ]
+        },
+        {
+            "Name": "Sky001",
+            "ID": 1870536943,
+            "ParentID": 321096046,
+            "Translation": [
+                18.153732,
+                0,
+                58.960911
+            ],
+            "Rotation": [
+                -180,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Dummy001",
+            "ID": 949187229,
+            "ParentID": 321096046,
+            "Translation": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                -89.999992,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "City_building_004",
+            "ID": 997284725,
+            "ParentID": 949187229,
+            "Translation": [
+                -41.475891,
+                21.014099,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 758534567
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1164725730
+                }
+            ]
+        },
+        {
+            "Name": "City_building_001",
+            "ID": 1666048068,
+            "ParentID": 949187229,
+            "Translation": [
+                17.707165,
+                20.053276,
+                0.000000
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 323749883
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1949729078
+                }
+            ]
+        },
+        {
+            "Name": "City_building_007",
+            "ID": 2045800464,
+            "ParentID": 949187229,
+            "Translation": [
+                16.010492,
+                37.493286,
+                -0.000002
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 569606384
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1133034962
+                }
+            ]
+        },
+        {
+            "Name": "City_building_008",
+            "ID": 968700516,
+            "ParentID": 949187229,
+            "Translation": [
+                40.979996,
+                18.270824,
+                -0.000002
+            ],
+            "Rotation": [
+                0,
+                0,
+                90
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1797732097
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 264410783
+                }
+            ]
+        },
+        {
+            "Name": "Line002",
+            "ID": 174690401,
+            "ParentID": 949187229,
+            "Translation": [
+                -2.159772,
+                1.853838,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                -90
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1555734670
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1318239978
+                }
+            ]
+        },
+        {
+            "Name": "Plane001",
+            "ID": 920515060,
+            "ParentID": 949187229,
+            "Translation": [
+                -0.028603,
+                0.026032,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                0.996635,
+                0.970616,
+                0.996635
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1252755502
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 189965484
+                }
+            ]
+        },
+        {
+            "Name": "City_building_010",
+            "ID": 1971998486,
+            "ParentID": 949187229,
+            "Translation": [
+                25.154011,
+                -39.153721,
+                0.000001
+            ],
+            "Rotation": [
+                0,
+                0,
+                90
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1071739816
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1278414721
+                }
+            ]
+        },
+        {
+            "Name": "City_building_011",
+            "ID": 1729557449,
+            "ParentID": 949187229,
+            "Translation": [
+                30.134541,
+                37.493286,
+                -0.000002
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 640235810
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 686750878
+                }
+            ]
+        },
+        {
+            "Name": "City_building_013",
+            "ID": 1963585892,
+            "ParentID": 949187229,
+            "Translation": [
+                -42.288055,
+                33.201576,
+                0.000001
+            ],
+            "Rotation": [
+                0,
+                0,
+                90
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 516921187
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1039003701
+                }
+            ]
+        },
+        {
+            "Name": "City_building_014",
+            "ID": 151902559,
+            "ParentID": 949187229,
+            "Translation": [
+                -19.439707,
+                32.061729,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                -180
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 271643082
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1322016440
+                }
+            ]
+        },
+        {
+            "Name": "City_building_016",
+            "ID": 1398582311,
+            "ParentID": 949187229,
+            "Translation": [
+                34.270424,
+                -41.972748,
+                0.000001
+            ],
+            "Rotation": [
+                0,
+                0,
+                -180
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1130597671
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1622339200
+                }
+            ]
+        },
+        {
+            "Name": "City_building_017",
+            "ID": 1643035504,
+            "ParentID": 949187229,
+            "Translation": [
+                44.260082,
+                -39.153721,
+                0.000001
+            ],
+            "Rotation": [
+                0,
+                0,
+                90
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1251210012
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 2113072191
+                }
+            ]
+        },
+        {
+            "Name": "City_building_022",
+            "ID": 1910882882,
+            "ParentID": 949187229,
+            "Translation": [
+                -20.831324,
+                -27.426489,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                179.999985
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 514797301
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1348308138
+                }
+            ]
+        },
+        {
+            "Name": "City_building_023",
+            "ID": 965196072,
+            "ParentID": 949187229,
+            "Translation": [
+                42.130642,
+                37.493286,
+                -0.000002
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 516726838
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 393133854
+                }
+            ]
+        },
+        {
+            "Name": "City_building_024",
+            "ID": 1004930435,
+            "ParentID": 949187229,
+            "Translation": [
+                -20.572771,
+                43.060829,
+                -0.069194
+            ],
+            "Rotation": [
+                0,
+                0,
+                180
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 271448733
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 676146593
+                }
+            ]
+        },
+        {
+            "Name": "City_building_026",
+            "ID": 1392079522,
+            "ParentID": 949187229,
+            "Translation": [
+                31.511889,
+                -16.446016,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                180
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1868745570
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 786059122
+                }
+            ]
+        },
+        {
+            "Name": "City_building_028",
+            "ID": 2031412052,
+            "ParentID": 949187229,
+            "Translation": [
+                13.387990,
+                -33.755039,
+                -0.000001
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 214326066
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 878661630
+                }
+            ]
+        },
+        {
+            "Name": "Object010",
+            "ID": 2107931813,
+            "ParentID": 949187229,
+            "Translation": [
+                -2.503353,
+                15.800846,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 463463245
+                }
+            ]
+        },
+        {
+            "Name": "City_building_030",
+            "ID": 1583284187,
+            "ParentID": 949187229,
+            "Translation": [
+                -42.807240,
+                -41.835564,
+                -0.000001
+            ],
+            "Rotation": [
+                0,
+                0,
+                -90
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1325698512
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1903923186
+                }
+            ]
+        },
+        {
+            "Name": "City_building_031",
+            "ID": 1640266264,
+            "ParentID": 949187229,
+            "Translation": [
+                -34.679482,
+                -41.835564,
+                -0.000001
+            ],
+            "Rotation": [
+                0,
+                0,
+                -90
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 223395355
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 931438881
+                }
+            ]
+        },
+        {
+            "Name": "City_building_032",
+            "ID": 239669425,
+            "ParentID": 949187229,
+            "Translation": [
+                -29.478403,
+                21.014099,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1634466291
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 166674828
+                }
+            ]
+        },
+        {
+            "Name": "City_building_033",
+            "ID": 77100735,
+            "ParentID": 949187229,
+            "Translation": [
+                -32.361496,
+                42.370422,
+                0.000001
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1514432346
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1289744107
+                }
+            ]
+        },
+        {
+            "Name": "City_building_034",
+            "ID": 1268637582,
+            "ParentID": 949187229,
+            "Translation": [
+                16.049517,
+                -16.696884,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                -90.000008
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1455380142
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 299949781
+                }
+            ]
+        },
+        {
+            "Name": "City_building_035",
+            "ID": 2109662606,
+            "ParentID": 949187229,
+            "Translation": [
+                13.387990,
+                -40.802517,
+                -0.000001
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 966175073
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 444482352
+                }
+            ]
+        },
+        {
+            "Name": "City_building_036",
+            "ID": 1823739408,
+            "ParentID": 949187229,
+            "Translation": [
+                -31.216331,
+                33.201576,
+                0.000001
+            ],
+            "Rotation": [
+                0,
+                0,
+                -90
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1642184439
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 640944986
+                }
+            ]
+        },
+        {
+            "Name": "City_building_037",
+            "ID": 590695493,
+            "ParentID": 949187229,
+            "Translation": [
+                -20.317694,
+                -16.163609,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                179.999985
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1091997629
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 750857515
+                }
+            ]
+        },
+        {
+            "Name": "City_building_038",
+            "ID": 499078103,
+            "ParentID": 949187229,
+            "Translation": [
+                -41.649002,
+                -16.495394,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                -90.000008
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1585061772
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 843460023
+                }
+            ]
+        },
+        {
+            "Name": "City_building_039",
+            "ID": 31200503,
+            "ParentID": 949187229,
+            "Translation": [
+                -42.807240,
+                -30.643888,
+                -0.000001
+            ],
+            "Rotation": [
+                0,
+                0,
+                -90
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 2078125915
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 936062531
+                }
+            ]
+        },
+        {
+            "Name": "City_building_040",
+            "ID": 1104252246,
+            "ParentID": 949187229,
+            "Translation": [
+                -34.679482,
+                -30.643888,
+                -0.000001
+            ],
+            "Rotation": [
+                0,
+                0,
+                -90
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 2080055452
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 2128371894
+                }
+            ]
+        },
+        {
+            "Name": "City_building_041",
+            "ID": 1378539813,
+            "ParentID": 949187229,
+            "Translation": [
+                30.695278,
+                21.612646,
+                0.000000
+            ],
+            "Rotation": [
+                0,
+                0,
+                90
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1834777347
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 263900986
+                }
+            ]
+        },
+        {
+            "Name": "City_building_0161",
+            "ID": 1913420727,
+            "ParentID": 949187229,
+            "Translation": [
+                34.270424,
+                -41.972748,
+                0.000001
+            ],
+            "Rotation": [
+                0,
+                0,
+                -180
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 432051341
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 42968232
+                }
+            ]
+        },
+        {
+            "Name": "City_building_0171",
+            "ID": 1558843763,
+            "ParentID": 949187229,
+            "Translation": [
+                44.260082,
+                -39.153721,
+                0.000001
+            ],
+            "Rotation": [
+                0,
+                0,
+                90
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1712794311
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 980775515
+                }
+            ]
+        },
+        {
+            "Name": "City_building_0101",
+            "ID": 880555384,
+            "ParentID": 949187229,
+            "Translation": [
+                25.154011,
+                -39.153721,
+                0.000001
+            ],
+            "Rotation": [
+                0,
+                0,
+                90
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1579234995
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1051827789
+                }
+            ]
+        },
+        {
+            "Name": "Camera001",
+            "ID": 2128652796,
+            "ParentID": 321096046,
+            "Translation": [
+                -78.312431,
+                45.251217,
+                -97.031113
+            ],
+            "Rotation": [
+                -158.525238,
+                -37.000519,
+                -166.680038
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Camera001.Target",
+            "ID": 1089830846,
+            "ParentID": 321096046,
+            "Translation": [
+                -28.132622,
+                20.873329,
+                -35.064213
+            ],
+            "Rotation": [
+                -158.525238,
+                -37.000530,
+                -166.680038
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Spot001",
+            "ID": 221113562,
+            "ParentID": 321096046,
+            "Translation": [
+                -66.721268,
+                141.934128,
+                0.000006
+            ],
+            "Rotation": [
+                -90.000015,
+                64.768646,
+                -89.999992
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Spot001.Target",
+            "ID": 984518306,
+            "ParentID": 321096046,
+            "Translation": [
+                28.890945,
+                -60.963882,
+                -0.000003
+            ],
+            "Rotation": [
+                0.000007,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        }
+    ]
+} 

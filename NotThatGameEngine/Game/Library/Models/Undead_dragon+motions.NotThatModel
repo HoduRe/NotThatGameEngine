@@ -1,0 +1,1234 @@
+{
+    "GameObjects": [
+        {
+            "Name": "Undead_dragon+motions",
+            "ID": 897963403,
+            "ParentID": 0,
+            "Translation": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 5,
+                    "ComponentID": 1737455842
+                }
+            ]
+        },
+        {
+            "Name": "SK_undead_dragon",
+            "ID": 1713632446,
+            "ParentID": 897963403,
+            "Translation": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                -89.999992,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_pelvis",
+            "ID": 1350513881,
+            "ParentID": 1713632446,
+            "Translation": [
+                -26.164986,
+                198.806671,
+                321.997955
+            ],
+            "Rotation": [
+                -5.257268,
+                -9.791216,
+                -14.554694
+            ],
+            "Scale": [
+                1.000000,
+                1,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_RB_leg_1",
+            "ID": 850392500,
+            "ParentID": 1350513881,
+            "Translation": [
+                -71.799179,
+                -0.000061,
+                -0.000141
+            ],
+            "Rotation": [
+                -175.317459,
+                -24.290224,
+                -21.154232
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_RB_leg_2",
+            "ID": 1199578357,
+            "ParentID": 850392500,
+            "Translation": [
+                -0.000023,
+                0.000031,
+                150.964966
+            ],
+            "Rotation": [
+                53.952831,
+                15.477263,
+                -6.555503
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_RB_leg_3",
+            "ID": 205760867,
+            "ParentID": 1199578357,
+            "Translation": [
+                -0.000015,
+                0.000076,
+                116.200584
+            ],
+            "Rotation": [
+                -43.635033,
+                -16.463762,
+                2.987741
+            ],
+            "Scale": [
+                1,
+                1,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_RB_foot",
+            "ID": 1561395917,
+            "ParentID": 205760867,
+            "Translation": [
+                0.000076,
+                0.000122,
+                89.760262
+            ],
+            "Rotation": [
+                -96.493851,
+                -28.936666,
+                17.300758
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_RB_toe_1",
+            "ID": 322926317,
+            "ParentID": 1561395917,
+            "Translation": [
+                12.120696,
+                -0.000108,
+                53.301403
+            ],
+            "Rotation": [
+                0.000091,
+                10.283382,
+                -0.000049
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_RB_toe_2",
+            "ID": 446815414,
+            "ParentID": 1561395917,
+            "Translation": [
+                -24.870451,
+                -0.000072,
+                47.526150
+            ],
+            "Rotation": [
+                0.000091,
+                -22.834728,
+                -0.000016
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_LB_leg_1",
+            "ID": 1435311299,
+            "ParentID": 1350513881,
+            "Translation": [
+                71.799049,
+                0.000076,
+                -0.000271
+            ],
+            "Rotation": [
+                170.376419,
+                16.782049,
+                -13.788981
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_LB_leg_2",
+            "ID": 1098885475,
+            "ParentID": 1435311299,
+            "Translation": [
+                0.000053,
+                -0.000031,
+                150.965027
+            ],
+            "Rotation": [
+                57.726849,
+                -16.149065,
+                7.464540
+            ],
+            "Scale": [
+                1.000000,
+                1,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_LB_leg_3",
+            "ID": 1400730600,
+            "ParentID": 1098885475,
+            "Translation": [
+                -0.000031,
+                -0.000046,
+                116.200752
+            ],
+            "Rotation": [
+                -66.890022,
+                19.298132,
+                -11.876475
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_LB_foot",
+            "ID": 885208683,
+            "ParentID": 1400730600,
+            "Translation": [
+                -0.000046,
+                -0.000015,
+                89.760483
+            ],
+            "Rotation": [
+                -51.894634,
+                4.840891,
+                -12.724074
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_LB_toe_1",
+            "ID": 628017537,
+            "ParentID": 885208683,
+            "Translation": [
+                -12.120668,
+                -0.000058,
+                53.301441
+            ],
+            "Rotation": [
+                0.000078,
+                -10.283385,
+                0.000032
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_LB_toe_2",
+            "ID": 441890557,
+            "ParentID": 885208683,
+            "Translation": [
+                24.870426,
+                -0.000088,
+                47.526184
+            ],
+            "Rotation": [
+                0.000039,
+                22.834743,
+                0.000025
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_spine_1",
+            "ID": 11741975,
+            "ParentID": 1350513881,
+            "Translation": [
+                -0.000031,
+                -38.419044,
+                30.179155
+            ],
+            "Rotation": [
+                105.529678,
+                12.436942,
+                -4.366347
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_spine_2",
+            "ID": 1444255615,
+            "ParentID": 11741975,
+            "Translation": [
+                -0.000019,
+                0.000106,
+                144.092392
+            ],
+            "Rotation": [
+                -2.692031,
+                7.846740,
+                -7.597108
+            ],
+            "Scale": [
+                1,
+                1,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_LF_leg_1",
+            "ID": 1040852081,
+            "ParentID": 1444255615,
+            "Translation": [
+                41.681240,
+                85.450035,
+                98.259430
+            ],
+            "Rotation": [
+                58.476986,
+                35.763573,
+                -7.929547
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_LF_leg_2",
+            "ID": 474546933,
+            "ParentID": 1040852081,
+            "Translation": [
+                0.000061,
+                -0.000023,
+                121.192909
+            ],
+            "Rotation": [
+                44.437557,
+                4.074801,
+                0.151585
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_LF_leg_3",
+            "ID": 1543596945,
+            "ParentID": 474546933,
+            "Translation": [
+                -0.000008,
+                -0.000053,
+                191.246994
+            ],
+            "Rotation": [
+                -3.447846,
+                -47.381447,
+                55.153408
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_LF_leg_4",
+            "ID": 238761024,
+            "ParentID": 1543596945,
+            "Translation": [
+                -0.000046,
+                0.000010,
+                104.992096
+            ],
+            "Rotation": [
+                -0.020027,
+                -0.003916,
+                0.000036
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_LF_foot",
+            "ID": 1257824124,
+            "ParentID": 238761024,
+            "Translation": [
+                -0.000031,
+                0.000030,
+                43.504162
+            ],
+            "Rotation": [
+                -86.113632,
+                20.194754,
+                12.643669
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_LF_toe_1",
+            "ID": 885179638,
+            "ParentID": 1257824124,
+            "Translation": [
+                -11.587279,
+                -0.000166,
+                33.735497
+            ],
+            "Rotation": [
+                0.000054,
+                -6.928124,
+                -0.000018
+            ],
+            "Scale": [
+                1.000000,
+                1,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_LF_toe_2",
+            "ID": 753359239,
+            "ParentID": 1257824124,
+            "Translation": [
+                26.756514,
+                -0.000195,
+                27.423166
+            ],
+            "Rotation": [
+                0.000067,
+                26.846605,
+                -0.000044
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_RF_leg_1",
+            "ID": 1630467738,
+            "ParentID": 1444255615,
+            "Translation": [
+                -64.499008,
+                63.871956,
+                85.957764
+            ],
+            "Rotation": [
+                16.882286,
+                -10.996030,
+                -15.212225
+            ],
+            "Scale": [
+                1.000000,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_RF_leg_2",
+            "ID": 956290525,
+            "ParentID": 1630467738,
+            "Translation": [
+                0.000031,
+                0.000031,
+                121.192871
+            ],
+            "Rotation": [
+                83.517082,
+                -5.773007,
+                1.829627
+            ],
+            "Scale": [
+                1.000000,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_RF_leg_3",
+            "ID": 1614616731,
+            "ParentID": 956290525,
+            "Translation": [
+                -0.000015,
+                0.000046,
+                191.247162
+            ],
+            "Rotation": [
+                -83.824692,
+                15.564958,
+                -1.650794
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_RF_leg_4",
+            "ID": 1199926736,
+            "ParentID": 1614616731,
+            "Translation": [
+                -0.000031,
+                -0.000050,
+                104.992142
+            ],
+            "Rotation": [
+                -0.079114,
+                0.003323,
+                0.000002
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_RF_foot",
+            "ID": 837935109,
+            "ParentID": 1199926736,
+            "Translation": [
+                0.000061,
+                0.000008,
+                43.504238
+            ],
+            "Rotation": [
+                3.590918,
+                2.379686,
+                42.717064
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_RF_toe_2",
+            "ID": 1486952934,
+            "ParentID": 837935109,
+            "Translation": [
+                -26.756529,
+                -0.000183,
+                27.423094
+            ],
+            "Rotation": [
+                27.379007,
+                -24.202023,
+                11.986467
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_RF_toe_1",
+            "ID": 1553530732,
+            "ParentID": 837935109,
+            "Translation": [
+                11.587241,
+                -0.000153,
+                33.735363
+            ],
+            "Rotation": [
+                24.917107,
+                6.288676,
+                -2.913048
+            ],
+            "Scale": [
+                1,
+                1,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_neck_1",
+            "ID": 349211417,
+            "ParentID": 1444255615,
+            "Translation": [
+                -0.090820,
+                48.596363,
+                177.629288
+            ],
+            "Rotation": [
+                -29.232815,
+                -3.591980,
+                -1.463203
+            ],
+            "Scale": [
+                1.000000,
+                1,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_neck_2",
+            "ID": 785695270,
+            "ParentID": 349211417,
+            "Translation": [
+                -0.000004,
+                -0.000061,
+                92.459099
+            ],
+            "Rotation": [
+                20.552387,
+                -3.680725,
+                -1.171407
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_head",
+            "ID": 186936286,
+            "ParentID": 785695270,
+            "Translation": [
+                -0.000002,
+                -0.000053,
+                86.183418
+            ],
+            "Rotation": [
+                53.553837,
+                1.374502,
+                0.299202
+            ],
+            "Scale": [
+                1,
+                1,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_jaw",
+            "ID": 940266786,
+            "ParentID": 186936286,
+            "Translation": [
+                0.000008,
+                -27.860540,
+                5.373491
+            ],
+            "Rotation": [
+                44.668751,
+                0.000001,
+                0.000016
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_tongue_1",
+            "ID": 569896605,
+            "ParentID": 940266786,
+            "Translation": [
+                3.143900,
+                110.214622,
+                31.529520
+            ],
+            "Rotation": [
+                -63.133980,
+                -1.250606,
+                -0.235546
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_tongue_2",
+            "ID": 2011158380,
+            "ParentID": 569896605,
+            "Translation": [
+                -0.000002,
+                -0.000015,
+                20.269283
+            ],
+            "Rotation": [
+                6.500007,
+                -1.220276,
+                0.000000
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_tongue_3",
+            "ID": 776305933,
+            "ParentID": 2011158380,
+            "Translation": [
+                -0.000002,
+                -0.000031,
+                20.269224
+            ],
+            "Rotation": [
+                -9.999990,
+                -0.998975,
+                -0.000009
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_tongue_4",
+            "ID": 1474417344,
+            "ParentID": 776305933,
+            "Translation": [
+                -0.000003,
+                -0.000153,
+                20.269255
+            ],
+            "Rotation": [
+                -11.499992,
+                -1.433257,
+                -0.000008
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_tongue_5",
+            "ID": 691580024,
+            "ParentID": 1474417344,
+            "Translation": [
+                0.000002,
+                -0.000046,
+                20.269289
+            ],
+            "Rotation": [
+                12.499987,
+                -0.780984,
+                0.000000
+            ],
+            "Scale": [
+                1.000000,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_tongue_6",
+            "ID": 1909485164,
+            "ParentID": 691580024,
+            "Translation": [
+                -0.000008,
+                0,
+                20.269438
+            ],
+            "Rotation": [
+                19.499983,
+                -0.080987,
+                0.000000
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_R_lowerlip",
+            "ID": 291435309,
+            "ParentID": 940266786,
+            "Translation": [
+                -25.779028,
+                166.845810,
+                84.272438
+            ],
+            "Rotation": [
+                -44.668777,
+                -0.000010,
+                0.000034
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_L_lowerlip",
+            "ID": 592151033,
+            "ParentID": 940266786,
+            "Translation": [
+                26.358084,
+                166.845871,
+                84.272537
+            ],
+            "Rotation": [
+                135.331207,
+                0.000043,
+                0.000042
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_R_upperlip",
+            "ID": 903497034,
+            "ParentID": 186936286,
+            "Translation": [
+                -24.876162,
+                79.272629,
+                149.974121
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_L_upperlip",
+            "ID": 423499837,
+            "ParentID": 186936286,
+            "Translation": [
+                24.263014,
+                79.272598,
+                149.974121
+            ],
+            "Rotation": [
+                179.999985,
+                0.000024,
+                0.000000
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_belly",
+            "ID": 1679162114,
+            "ParentID": 11741975,
+            "Translation": [
+                -24.563883,
+                -151.397339,
+                101.349632
+            ],
+            "Rotation": [
+                -7.806332,
+                5.052411,
+                -9.020921
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_tail_1",
+            "ID": 230763408,
+            "ParentID": 1350513881,
+            "Translation": [
+                -0.000008,
+                113.239998,
+                -18.516422
+            ],
+            "Rotation": [
+                -118.144463,
+                -3.834324,
+                -177.601944
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_tail_2",
+            "ID": 654065161,
+            "ParentID": 230763408,
+            "Translation": [
+                0,
+                -0.000015,
+                137.046814
+            ],
+            "Rotation": [
+                3.475631,
+                7.713676,
+                2.426076
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_tail_3",
+            "ID": 1427322993,
+            "ParentID": 654065161,
+            "Translation": [
+                0.000026,
+                -0.000061,
+                111.160637
+            ],
+            "Rotation": [
+                0,
+                7.284474,
+                0
+            ],
+            "Scale": [
+                1.000000,
+                1,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_tail_4",
+            "ID": 1143298022,
+            "ParentID": 1427322993,
+            "Translation": [
+                0.000011,
+                -0.000031,
+                111.160484
+            ],
+            "Rotation": [
+                -7.723780,
+                4.534621,
+                0.614356
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_tail_5",
+            "ID": 1070213607,
+            "ParentID": 1143298022,
+            "Translation": [
+                -0.000023,
+                -0.000122,
+                111.161034
+            ],
+            "Rotation": [
+                -17.061586,
+                7.150527,
+                2.187785
+            ],
+            "Scale": [
+                1,
+                1,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "b_tail_6",
+            "ID": 248916635,
+            "ParentID": 1070213607,
+            "Translation": [
+                0.000046,
+                -0.000153,
+                111.160698
+            ],
+            "Rotation": [
+                -9.073996,
+                6.866665,
+                -0.000001
+            ],
+            "Scale": [
+                1.000000,
+                1,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "0001_SK_undead_dragon",
+            "ID": 1779497692,
+            "ParentID": 897963403,
+            "Translation": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                -0.000058,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 27908687
+                }
+            ]
+        },
+        {
+            "Name": "0000_SK_undead_dragon",
+            "ID": 2077219302,
+            "ParentID": 897963403,
+            "Translation": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                -0.000058,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1037001719
+                }
+            ]
+        },
+        {
+            "Name": "0002_SK_undead_dragon",
+            "ID": 93784621,
+            "ParentID": 897963403,
+            "Translation": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                -0.000058,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1086790285
+                }
+            ]
+        }
+    ]
+} 

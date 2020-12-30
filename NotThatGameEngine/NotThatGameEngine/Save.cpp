@@ -259,8 +259,8 @@ void DataSaving::SaveMaterial(Application* App, Material* material) {
 	uint bufferSize;
 	int nameSize;
 
-	nameSize = material->GetTextureName().size();
-	bufferSize = material->GetTextureName().size() + sizeof(int);
+	nameSize = material->GetTextureName().size() + 2;
+	bufferSize = material->GetTextureName().size() + sizeof(int) + 2;
 
 	buffer = new char[bufferSize];
 	char* cursor = buffer;
@@ -268,7 +268,8 @@ void DataSaving::SaveMaterial(Application* App, Material* material) {
 	memcpy(cursor, &nameSize, sizeof(int));
 	cursor += sizeof(int);
 
-	memcpy(cursor, material->GetTextureName().c_str(), nameSize);
+	std::string name = (material->GetTextureName() + "\0");
+	memcpy(cursor, name.c_str(), nameSize);
 
 	App->externalManager->Save(path.c_str(), buffer, bufferSize);
 

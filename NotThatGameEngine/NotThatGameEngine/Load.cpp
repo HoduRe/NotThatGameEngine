@@ -260,9 +260,9 @@ void DataLoading::LoadMaterial(Application* App, char* fileBuffer, Material* mat
 	memcpy(&nameSize, cursor, sizeof(int));
 	cursor += sizeof(int);
 
-	std::string name;
-	memcpy((void*)name.c_str(), cursor, nameSize + 1);	// I was about to write something very disturbing. Happy thoughts, happy thoughts
-	material->SetTextureName(App, name.c_str());
+	char* name = new char[nameSize];;
+	memcpy(name, cursor, nameSize);	// I was about to write something very disturbing. Happy thoughts, happy thoughts
+	material->SetTextureName(App, name);
 
 }
 
