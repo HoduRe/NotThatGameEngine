@@ -116,10 +116,10 @@ std::string DataSaving::SaveModel(Application* App, GameObject* gameObject, std:
 void DataSaving::SaveMesh(Application* App, Mesh* mesh) {
 
 	int intSize = sizeof(int);
-	int vertexSize = sizeof(float) * mesh->vertices.size();
-	int indexSize = sizeof(uint) * mesh->indices.size();
-	int normalSize = sizeof(float) * mesh->normals.size();
-	int textureCoordSize = sizeof(float) * mesh->textureCoord.size();
+	int vertexSize = sizeof(float) * mesh->vertexSize;
+	int indexSize = sizeof(uint) * mesh->indexSize;
+	int normalSize = sizeof(float) * mesh->normalsSize;
+	int textureCoordSize = sizeof(float) * mesh->textureCoordSize;
 	int boneIdsArraySize = sizeof(int) * mesh->boneIDsSize;
 	int weightsSize = sizeof(float) * mesh->boneWeightsSize;
 	int boneDisplaySize = sizeof(bool) * mesh->boneDisplayVecSize;
@@ -141,19 +141,19 @@ void DataSaving::SaveMesh(Application* App, Mesh* mesh) {
 	char* buffer = new char[size];
 	char* cursor = buffer;
 
-	int vecSize = mesh->vertices.size();
+	int vecSize = mesh->vertexSize;
 	memcpy(cursor, &vecSize, intSize);
 	cursor += intSize;
 
-	vecSize = mesh->indices.size();
+	vecSize = mesh->indexSize;
 	memcpy(cursor, &vecSize, intSize);
 	cursor += intSize;
 
-	vecSize = mesh->normals.size();
+	vecSize = mesh->normalsSize;
 	memcpy(cursor, &vecSize, intSize);
 	cursor += intSize;
 
-	vecSize = mesh->textureCoord.size();
+	vecSize = mesh->textureCoordSize;
 	memcpy(cursor, &vecSize, intSize);
 	cursor += intSize;
 
@@ -177,30 +177,30 @@ void DataSaving::SaveMesh(Application* App, Mesh* mesh) {
 	memcpy(cursor, &vecSize, intSize);
 	cursor += intSize;
 
-	if (mesh->vertices.size() > 0) {
+	if (mesh->vertexSize > 0) {
 
-		memcpy(cursor, &mesh->vertices.at(0), vertexSize);
+		memcpy(cursor, mesh->vertices, vertexSize);
 		cursor += vertexSize;
 
 	}
 
-	if (mesh->indices.size() > 0) {
+	if (mesh->indexSize > 0) {
 
-		memcpy(cursor, &mesh->indices.at(0), indexSize);
+		memcpy(cursor, mesh->indices, indexSize);
 		cursor += indexSize;
 
 	}
 
-	if (mesh->normals.size() > 0) {
+	if (mesh->normalsSize > 0) {
 
-		memcpy(cursor, &mesh->normals.at(0), normalSize);
+		memcpy(cursor, mesh->normals, normalSize);
 		cursor += normalSize;
 
 	}
 
-	if (mesh->textureCoord.size() > 0) {
+	if (mesh->textureCoordSize > 0) {
 
-		memcpy(cursor, &mesh->textureCoord.at(0), textureCoordSize);
+		memcpy(cursor, mesh->textureCoord, textureCoordSize);
 		cursor += textureCoordSize;
 
 	}

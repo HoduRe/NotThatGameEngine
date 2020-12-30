@@ -16,10 +16,10 @@ public:
 	~Mesh();
 
 	void SetIsAnimation(bool boolean);
-	void SetVertices(std::vector<float> _vertices);
-	void SetIndices(std::vector<GLuint> _indices);
-	void SetNormals(std::vector<float> _normals);
-	void SetTextureCoord(std::vector<float> _textureCoord);
+	void SetVertices(float* _vertices);
+	void SetIndices(GLuint* _indices);
+	void SetNormals(float* _normals);
+	void SetTextureCoord(float* _textureCoord);
 	void CalculateBoundingBoxes();
 
 	GLuint DebugNormals();
@@ -33,10 +33,14 @@ public:
 
 	GLuint debugNormalsId;
 
-	std::vector<float> vertices;
-	std::vector<float> normals;
-	std::vector<float> textureCoord;
-	std::vector<GLuint> indices;
+	float* vertices;
+	float* normals;
+	float* textureCoord;
+	GLuint* indices;
+	int vertexSize;
+	int indexSize;
+	int normalsSize;
+	int textureCoordSize;
 
 	std::vector<float> debugNormals;
 	bool paintNormals;
@@ -62,8 +66,8 @@ public:
 	GLuint vertexIdANIMATION;
 	GLuint normalsIdANIMATION;
 
-	std::vector<float> verticesANIMATION;
-	std::vector<float> normalsANIMATION;
+	float* verticesANIMATION;
+	float* normalsANIMATION;
 
 };
 

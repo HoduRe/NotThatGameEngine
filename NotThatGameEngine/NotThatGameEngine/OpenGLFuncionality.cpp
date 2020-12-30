@@ -122,7 +122,7 @@ void OpenGLFunctionality::DrawMeshes(Mesh& mesh, float4x4 worldTransform, GLuint
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.indexId);
 
-	glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, NULL);
+	glDrawElements(GL_TRIANGLES, mesh.indexSize, GL_UNSIGNED_INT, NULL);
 
 	if (textureId != 0) { glBindTexture(GL_TEXTURE_2D, 0); }
 	if (mesh.isAnimatedWithBones) { if (mesh.normalsIdANIMATION != 0) { glDisableClientState(GL_NORMAL_ARRAY); } }

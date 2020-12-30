@@ -1,9 +1,10 @@
 #include "Mesh.h"
 
 Mesh::Mesh(long long int _id, GameObject* _gameObject) : Component(_id, _gameObject, COMPONENT_TYPE::MESH), vertexId(0), indexId(0), normalsId(0), textureCoordId(0),
-vertices(), normals(), textureCoord(), indices(), paintNormals(false), debugNormalsId(0), debugNormals(), boneIDs(nullptr), boneWeights(nullptr),
+vertices(nullptr), normals(nullptr), textureCoord(nullptr), indices(nullptr), paintNormals(false), debugNormalsId(0), debugNormals(), boneIDs(nullptr), boneWeights(nullptr),
 boneNamesVec(), boneOffsetMatrixVec(), boneDisplayVec(nullptr), showAllBones(false), boneIDsSize(0), boneWeightsSize(0), boneDisplayVecSize(0),
-vertexIdANIMATION(0), normalsIdANIMATION(0), verticesANIMATION(), normalsANIMATION(), isAnimatedWithBones(false), showBoxes(false)
+vertexIdANIMATION(0), normalsIdANIMATION(0), verticesANIMATION(nullptr), normalsANIMATION(nullptr), isAnimatedWithBones(false), showBoxes(false),
+vertexSize(0), indexSize(0), normalsSize(0), textureCoordSize(0)
 {
 	boundingBox.SetNegativeInfinity();
 }
@@ -11,13 +12,13 @@ vertexIdANIMATION(0), normalsIdANIMATION(0), verticesANIMATION(), normalsANIMATI
 
 Mesh::~Mesh() {
 
-	vertices.clear();
-	normals.clear();
-	textureCoord.clear();
-	indices.clear();
+	RELEASE_ARRAY(vertices);
+	RELEASE_ARRAY(normals);
+	RELEASE_ARRAY(indices);
+	RELEASE_ARRAY(textureCoord);
 
-	verticesANIMATION.clear();
-	normalsANIMATION.clear();
+	RELEASE_ARRAY(verticesANIMATION);
+	RELEASE_ARRAY(normalsANIMATION);
 
 	debugNormals.clear();
 	RELEASE_ARRAY(boneIDs);
@@ -40,45 +41,45 @@ Mesh::~Mesh() {
 void Mesh::SetIsAnimation(bool boolean) { isAnimatedWithBones = boolean; }
 
 
-void Mesh::SetVertices(std::vector<float> _vertices) {
+void Mesh::SetVertices(float* _vertices) {
 
-	vertices = _vertices;
-	OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &vertexId, vertices.size(), vertices.data());
+	if(_vertices != nullptr){ vertices = _vertices; }
+	OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &vertexId, vertexSize, vertices);
 	CalculateBoundingBoxes();
 
 }
 
 
-void Mesh::SetIndices(std::vector<GLuint> _indices) {
+void Mesh::SetIndices(GLuint* _indices) {
 
-	indices = _indices;
-	OpenGLFunctionality::LoadDataBufferUint(GL_ELEMENT_ARRAY_BUFFER, &indexId, indices.size(), indices.data());
-
-}
-
-
-void Mesh::SetNormals(std::vector<float> _normals) {
-
-	normals = _normals;
-	OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &normalsId, normals.size(), normals.data());
+	if (_indices != nullptr) { indices = _indices; }
+	OpenGLFunctionality::LoadDataBufferUint(GL_ELEMENT_ARRAY_BUFFER, &indexId, indexSize, indices);
 
 }
 
 
-void Mesh::SetTextureCoord(std::vector<float> _textureCoord)
+void Mesh::SetNormals(float* _normals) {
+
+	if (_normals != nullptr) { normals = _normals; }
+	OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &normalsId, normalsSize, normals);
+
+}
+
+
+void Mesh::SetTextureCoord(float* _textureCoord)
 {
 
-	textureCoord = _textureCoord;
-	OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &textureCoordId, textureCoord.size(), textureCoord.data());
+	if (_textureCoord != nullptr) { textureCoord = _textureCoord; }
+	OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &textureCoordId, textureCoordSize, textureCoord);
 
 }
 
 
 GLuint Mesh::DebugNormals() {
 
-	int verticesSize = vertices.size();
+	int verticesSize = vertexSize;
 
-	if (normals.size() != 0 && verticesSize != 0) {
+	if (normalsSize != 0 && verticesSize != 0) {
 
 		if (debugNormalsId != 0) { return debugNormalsId; }
 
@@ -108,7 +109,7 @@ GLuint Mesh::DebugNormals() {
 }
 
 
-void Mesh::CalculateBoundingBoxes() { for (int i = 0; i < vertices.size(); i += 3) { boundingBox.Enclose(float3(vertices[i], vertices[i + 1], vertices[i + 2])); } }
+void Mesh::CalculateBoundingBoxes() { for (int i = 0; i < vertexSize; i += 3) { boundingBox.Enclose(float3(vertices[i], vertices[i + 1], vertices[i + 2])); } }
 
 
 

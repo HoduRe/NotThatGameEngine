@@ -136,6 +136,11 @@ void DataLoading::LoadModel(Application* App, char* buffer) {
 
 void DataLoading::LoadMesh(char* fileBuffer, Mesh* mesh) {
 
+	RELEASE_ARRAY(mesh->vertices);
+	RELEASE_ARRAY(mesh->indices);
+	RELEASE_ARRAY(mesh->normals);
+	RELEASE_ARRAY(mesh->textureCoord);
+
 	const char* cursor = fileBuffer;
 
 	int intSize = sizeof(int);
@@ -146,22 +151,21 @@ void DataLoading::LoadMesh(char* fileBuffer, Mesh* mesh) {
 	int boneNamesSize;
 	int boneOffsetMatrixSize;
 
-	std::vector<float> vertices;
-	std::vector<float> normals;
-	std::vector<float> textureCoord;
-	std::vector<GLuint> indices;
-
 	memcpy(&vertexVecSize, cursor, intSize);
 	cursor += intSize;
+	mesh->vertexSize = vertexVecSize;
 
 	memcpy(&indexVecSize, cursor, intSize);
 	cursor += intSize;
+	mesh->indexSize = indexVecSize;
 
 	memcpy(&normalVecSize, cursor, intSize);
 	cursor += intSize;
+	mesh->normalsSize = normalVecSize;
 
 	memcpy(&textureCoordVecSize, cursor, intSize);
 	cursor += intSize;
+	mesh->textureCoordSize = textureCoordVecSize;
 
 	memcpy(&mesh->boneIDsSize, cursor, intSize);
 	cursor += intSize;
@@ -178,41 +182,21 @@ void DataLoading::LoadMesh(char* fileBuffer, Mesh* mesh) {
 	memcpy(&boneOffsetMatrixSize, cursor, intSize);
 	cursor += intSize;
 
-	for (int i = 0; i < vertexVecSize; i++) {
+	mesh->vertices = new float[mesh->vertexSize];
+	memcpy(mesh->vertices, cursor, mesh->vertexSize * sizeof(float));
+	cursor += mesh->vertexSize * sizeof(float);
 
-		float data;
-		memcpy(&data, cursor, sizeof(float));
-		vertices.push_back(data);
-		cursor += sizeof(float);
+	mesh->indices = new GLuint[mesh->indexSize];
+	memcpy(mesh->indices, cursor, mesh->indexSize * sizeof(uint));
+	cursor += mesh->indexSize * sizeof(uint);
 
-	}
+	mesh->normals = new float[mesh->normalsSize];
+	memcpy(mesh->normals, cursor, mesh->normalsSize * sizeof(float));
+	cursor += mesh->normalsSize * sizeof(float);
 
-	for (int i = 0; i < indexVecSize; i++) {
-
-		uint data;
-		memcpy(&data, cursor, sizeof(uint));
-		indices.push_back(data);
-		cursor += sizeof(uint);
-
-	}
-
-	for (int i = 0; i < normalVecSize; i++) {
-
-		float data;
-		memcpy(&data, cursor, sizeof(float));
-		normals.push_back(data);
-		cursor += sizeof(float);
-
-	}
-
-	for (int i = 0; i < textureCoordVecSize; i++) {
-
-		float data;
-		memcpy(&data, cursor, sizeof(float));
-		textureCoord.push_back(data);
-		cursor += sizeof(float);
-
-	}
+	mesh->textureCoord = new float[mesh->textureCoordSize];
+	memcpy(mesh->textureCoord, cursor, mesh->textureCoordSize * sizeof(float));
+	cursor += mesh->textureCoordSize * sizeof(float);
 
 	if (mesh->boneIDsSize > 0) {
 
@@ -260,15 +244,10 @@ void DataLoading::LoadMesh(char* fileBuffer, Mesh* mesh) {
 
 	}
 
-	mesh->vertices.clear();
-	mesh->indices.clear();
-	mesh->normals.clear();
-	mesh->textureCoord.clear();
-
-	mesh->SetVertices(vertices);
-	mesh->SetNormals(normals);
-	mesh->SetTextureCoord(textureCoord);
-	mesh->SetIndices(indices);
+	mesh->SetVertices(nullptr);
+	mesh->SetNormals(nullptr);
+	mesh->SetTextureCoord(nullptr);
+	mesh->SetIndices(nullptr);
 
 }
 

@@ -14,16 +14,16 @@ enum class PrimitiveEnum {
 
 namespace PrimitivesF {
 
-	void SetCubeVertices(float _edgeLength, std::vector<float>* vertices, std::vector<GLuint>* indices);
+	void SetCubeVertices(float _edgeLength, float*& vertices, GLuint*& indices, int* vertexSize, int* indexSize);
 
 
-	void SetSphereVertices(float radius, int stacks, int sectors, std::vector<float>* vertices, std::vector<GLuint>* indices);
+	void SetSphereVertices(float radius, int stacks, int sectors, float*& vertices, GLuint*& indices, int* vertexSize, int* indexSize);
 
 
-	void SetPyramidVertices(float _height, float _baseEdgeLength, std::vector<float>* vertices, std::vector<GLuint>* indices);
+	void SetPyramidVertices(float _height, float _baseEdgeLength, float*& vertices, GLuint*& indices, int* vertexSize, int* indexSize);
 
 
-	void SetCylinderVertices(float _height, float _radius, int _sectors, std::vector<float>* vertices, std::vector<GLuint>* indices);
+	void SetCylinderVertices(float _height, float _radius, int _sectors, float*& vertices, GLuint*& indices, int* vertexSize, int* indexSize);
 
 }
 

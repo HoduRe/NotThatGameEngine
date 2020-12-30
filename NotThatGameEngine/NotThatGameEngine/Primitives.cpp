@@ -2,29 +2,38 @@
 #include "OpenGLFuncionality.h"
 
 
-void PrimitivesF::SetCubeVertices(float _edgeLength, std::vector<float>* vertices, std::vector<GLuint>* indices) {
+void PrimitivesF::SetCubeVertices(float _edgeLength, float*& vertices, GLuint*& indices, int* vertexSize, int* indexSize) {
 
-	vertices->push_back(0); vertices->push_back(0); vertices->push_back(0);
-	vertices->push_back(0); vertices->push_back(0); vertices->push_back(_edgeLength);
-	vertices->push_back(_edgeLength); vertices->push_back(0); vertices->push_back(_edgeLength);
-	vertices->push_back(_edgeLength); vertices->push_back(0); vertices->push_back(0);
+	*vertexSize = 24;
+	*indexSize = 36;
+	vertices = new float[*vertexSize];
+	indices = new GLuint[*indexSize];
+	
 
-	vertices->push_back(0); vertices->push_back(_edgeLength); vertices->push_back(0);
-	vertices->push_back(0); vertices->push_back(_edgeLength); vertices->push_back(_edgeLength);
-	vertices->push_back(_edgeLength); vertices->push_back(_edgeLength); vertices->push_back(_edgeLength);
-	vertices->push_back(_edgeLength); vertices->push_back(_edgeLength); vertices->push_back(0);
+	vertices[0] = 0; vertices[1] = 0; vertices[2] = 0;
+	vertices[3] = 0; vertices[4] = 0; vertices[5] = _edgeLength;
+	vertices[6] = _edgeLength; vertices[7] = 0; vertices[8] = _edgeLength;
+	vertices[9] = _edgeLength; vertices[10] = 0; vertices[11] = 0;
 
-	indices->push_back(0); indices->push_back(2);	indices->push_back(1);	indices->push_back(0); indices->push_back(3);	indices->push_back(2);	// Up
-	indices->push_back(5); indices->push_back(7);	indices->push_back(4);	indices->push_back(5); indices->push_back(6);	indices->push_back(7);	// Down
-	indices->push_back(7); indices->push_back(3);	indices->push_back(0);	indices->push_back(7); indices->push_back(0);	indices->push_back(4);	// Front
-	indices->push_back(6); indices->push_back(1);	indices->push_back(2);	indices->push_back(6); indices->push_back(5);	indices->push_back(1);	// Back
-	indices->push_back(6); indices->push_back(2);	indices->push_back(3);	indices->push_back(6); indices->push_back(3);	indices->push_back(7);	// Right
-	indices->push_back(4); indices->push_back(0);	indices->push_back(1);	indices->push_back(4); indices->push_back(1);	indices->push_back(5);	// Left
+	vertices[12] = 0; vertices[13] = _edgeLength; vertices[14] = 0;
+	vertices[15] = 0; vertices[16] = _edgeLength; vertices[17] = _edgeLength;
+	vertices[18] = _edgeLength; vertices[19] = _edgeLength; vertices[20] = _edgeLength;
+	vertices[21] = _edgeLength; vertices[22] = _edgeLength; vertices[23] = 0;
+
+	indices[0] = 0;  indices[1] = 2;	indices[2] = 1;		indices[3] = 0;  indices[4] = 3;	indices[5] = 2;		// Up
+	indices[6] = 5;  indices[7] = 7;	indices[8] = 4;		indices[9] = 5;	 indices[10] = 6;	indices[11] = 7;	// Down
+	indices[12] = 7; indices[13] = 3;	indices[14] = 0;	indices[15] = 7; indices[16] = 0;	indices[17] = 4;	// Front
+	indices[18] = 6; indices[19] = 1;	indices[20] = 2;	indices[21] = 6; indices[22] = 5;	indices[23] = 1;	// Back
+	indices[24] = 6; indices[25] = 2;	indices[26] = 3;	indices[27] = 6; indices[28] = 3;	indices[29] = 7;	// Right
+	indices[30] = 4; indices[31] = 0;	indices[32] = 1;	indices[33] = 4; indices[34] = 1;	indices[35] = 5;	// Left
 
 }
 
 
-void PrimitivesF::SetSphereVertices(float radius, int stacks, int sectors, std::vector<float>* vertices, std::vector<GLuint>* indices) {
+void PrimitivesF::SetSphereVertices(float radius, int stacks, int sectors, float*& vertices, GLuint*& indices, int* vertexSize, int* indexSize) {
+
+	std::vector<float> verticesVec;
+	std::vector<GLuint> indicesVec;
 
 	if (stacks < 3) { stacks = 3; }
 	if (sectors < 3) { sectors = 3; }
@@ -65,16 +74,16 @@ void PrimitivesF::SetSphereVertices(float radius, int stacks, int sectors, std::
 
 				if (i != 0)
 				{
-					indices->push_back(k1);
-					indices->push_back(k2);
-					indices->push_back(k1 + 1);
+					indicesVec.push_back(k1);
+					indicesVec.push_back(k2);
+					indicesVec.push_back(k1 + 1);
 				}
 
 				if (i != (stacks - 1))
 				{
-					indices->push_back(k1 + 1);
-					indices->push_back(k2);
-					indices->push_back(k2 + 1);
+					indicesVec.push_back(k1 + 1);
+					indicesVec.push_back(k2);
+					indicesVec.push_back(k2 + 1);
 				}
 			}
 		}
@@ -106,9 +115,9 @@ void PrimitivesF::SetSphereVertices(float radius, int stacks, int sectors, std::
 				tmpVertices.push_back(v2);
 				tmpVertices.push_back(v4);
 
-				indices->push_back(index);
-				indices->push_back(index + 1);
-				indices->push_back(index + 2);
+				indicesVec.push_back(index);
+				indicesVec.push_back(index + 1);
+				indicesVec.push_back(index + 2);
 
 				index += 3;
 			}
@@ -118,9 +127,9 @@ void PrimitivesF::SetSphereVertices(float radius, int stacks, int sectors, std::
 				tmpVertices.push_back(v2);
 				tmpVertices.push_back(v3);
 
-				indices->push_back(index);
-				indices->push_back(index + 1);
-				indices->push_back(index + 2);
+				indicesVec.push_back(index);
+				indicesVec.push_back(index + 1);
+				indicesVec.push_back(index + 2);
 
 				index += 3;
 			}
@@ -131,12 +140,12 @@ void PrimitivesF::SetSphereVertices(float radius, int stacks, int sectors, std::
 				tmpVertices.push_back(v3);
 				tmpVertices.push_back(v4);
 
-				indices->push_back(index);
-				indices->push_back(index + 1);
-				indices->push_back(index + 2);
-				indices->push_back(index + 2);
-				indices->push_back(index + 1);
-				indices->push_back(index + 3);
+				indicesVec.push_back(index);
+				indicesVec.push_back(index + 1);
+				indicesVec.push_back(index + 2);
+				indicesVec.push_back(index + 2);
+				indicesVec.push_back(index + 1);
+				indicesVec.push_back(index + 3);
 
 				index += 4;
 			}
@@ -144,33 +153,48 @@ void PrimitivesF::SetSphereVertices(float radius, int stacks, int sectors, std::
 	}
 
 	for (int i = 0; i < tmpVertices.size(); i++) {
-		vertices->push_back(tmpVertices[i].x);
-		vertices->push_back(tmpVertices[i].y);
-		vertices->push_back(tmpVertices[i].z);
+		verticesVec.push_back(tmpVertices[i].x);
+		verticesVec.push_back(tmpVertices[i].y);
+		verticesVec.push_back(tmpVertices[i].z);
 	}
 
-}
+	*vertexSize = verticesVec.size();
+	*indexSize = indicesVec.size();
+	
+	vertices = new float[*vertexSize];
+	indices = new GLuint[*indexSize];
 
-
-void PrimitivesF::SetPyramidVertices(float _height, float _baseEdgeLength, std::vector<float>* vertices, std::vector<GLuint>* indices) {
-
-	vertices->push_back(0); vertices->push_back(0); vertices->push_back(0);
-	vertices->push_back(_baseEdgeLength); vertices->push_back(0); vertices->push_back(0);
-	vertices->push_back(_baseEdgeLength); vertices->push_back(0); vertices->push_back(_baseEdgeLength);
-	vertices->push_back(0); vertices->push_back(0); vertices->push_back(_baseEdgeLength);
-	vertices->push_back(_baseEdgeLength * 0.5); vertices->push_back(_height); vertices->push_back(_baseEdgeLength * 0.5);
-
-
-	indices->push_back(0); indices->push_back(4); indices->push_back(1); 	// Front side
-	indices->push_back(1); indices->push_back(4); indices->push_back(2); 	// Right side
-	indices->push_back(2); indices->push_back(4); indices->push_back(3); 	// Back side
-	indices->push_back(3); indices->push_back(4); indices->push_back(0); 	// Left side
-	indices->push_back(0); indices->push_back(2); indices->push_back(3);	indices->push_back(0); indices->push_back(1); indices->push_back(2);	// Base
+	for (int i = 0; i < verticesVec.size(); i++) { vertices[i] = verticesVec[i]; }
+	for (int i = 0; i < indicesVec.size(); i++) { indices[i] = indicesVec[i]; }
 
 }
 
 
-void PrimitivesF::SetCylinderVertices(float _height, float _radius, int _sectors, std::vector<float>* vertices, std::vector<GLuint>* indices) {
+void PrimitivesF::SetPyramidVertices(float _height, float _baseEdgeLength, float*& vertices, GLuint*& indices, int* vertexSize, int* indexSize) {
+
+	*vertexSize = 15;
+	*indexSize = 18;
+	vertices = new float[*vertexSize];
+	indices = new GLuint[*indexSize];
+
+
+	vertices[0] = 0; vertices[1] = 0; vertices[2] = 0;
+	vertices[3] = _baseEdgeLength; vertices[4] = 0; vertices[5] = 0;
+	vertices[6] = _baseEdgeLength; vertices[7] = 0; vertices[8] = _baseEdgeLength;
+	vertices[9] = 0; vertices[10] = 0; vertices[11] = _baseEdgeLength;
+	vertices[12] = _baseEdgeLength * 0.5; vertices[13] = _height; vertices[14] = _baseEdgeLength * 0.5;
+
+
+	indices[0] = 0; indices[1] = 4; indices[2] = 1; 	// Front side
+	indices[3] = 1; indices[4] = 4; indices[5] = 2; 	// Right side
+	indices[6] = 2; indices[7] = 4; indices[8] = 3; 	// Back side
+	indices[9] = 3; indices[10] = 4; indices[11] = 0; 	// Left side
+	indices[12] = 0; indices[13] = 2; indices[14] = 3;	indices[15] = 0; indices[16] = 1; indices[17] = 2;	// Base
+
+}
+
+
+void PrimitivesF::SetCylinderVertices(float _height, float _radius, int _sectors, float*& vertices, GLuint*& indices, int* vertexSize, int* indexSize) {
 
 	if (_sectors < 3) { _sectors = 3; }
 
@@ -180,6 +204,8 @@ void PrimitivesF::SetCylinderVertices(float _height, float _radius, int _sectors
 	float vertex3;
 	float secondVertex2;
 	float secondVertex3;
+	std::vector<float> verticesVec;
+	std::vector<GLuint> indicesVec;
 
 	for (int i = 0; i < _sectors; i++) {
 
@@ -191,9 +217,9 @@ void PrimitivesF::SetCylinderVertices(float _height, float _radius, int _sectors
 		secondVertex2 = _radius * cosf((i + 1) * angleDiversion);
 		secondVertex3 = _radius * sinf((i + 1) * angleDiversion);
 
-		vertices->push_back(0.0f); vertices->push_back(0.0f); vertices->push_back(0.0f);
-		vertices->push_back(vertex2); vertices->push_back(0.0f); vertices->push_back(vertex3);
-		vertices->push_back(secondVertex2); vertices->push_back(0.0f); vertices->push_back(secondVertex3);
+		verticesVec.push_back(0.0f); verticesVec.push_back(0.0f); verticesVec.push_back(0.0f);
+		verticesVec.push_back(vertex2); verticesVec.push_back(0.0f); verticesVec.push_back(vertex3);
+		verticesVec.push_back(secondVertex2); verticesVec.push_back(0.0f); verticesVec.push_back(secondVertex3);
 
 		vertex2 = secondVertex2;
 		vertex3 = secondVertex3;
@@ -202,7 +228,7 @@ void PrimitivesF::SetCylinderVertices(float _height, float _radius, int _sectors
 
 	// Copy it but with +_height in Y axis and reverse order for reversed normals
 
-	int firstCircleSize = vertices->size();
+	int firstCircleSize = verticesVec.size();
 
 	for (int i = 0; i < _sectors; i++) {
 
@@ -214,9 +240,9 @@ void PrimitivesF::SetCylinderVertices(float _height, float _radius, int _sectors
 		secondVertex2 = _radius * cosf((i + 1) * angleDiversion);
 		secondVertex3 = _radius * sinf((i + 1) * angleDiversion);
 
-		vertices->push_back(0.0f); vertices->push_back(_height); vertices->push_back(0.0f);
-		vertices->push_back(secondVertex2); vertices->push_back(_height); vertices->push_back(secondVertex3);
-		vertices->push_back(vertex2); vertices->push_back(_height); vertices->push_back(vertex3);
+		verticesVec.push_back(0.0f); verticesVec.push_back(_height); verticesVec.push_back(0.0f);
+		verticesVec.push_back(secondVertex2); verticesVec.push_back(_height); verticesVec.push_back(secondVertex3);
+		verticesVec.push_back(vertex2); verticesVec.push_back(_height); verticesVec.push_back(vertex3);
 
 		vertex2 = secondVertex2;
 		vertex3 = secondVertex3;
@@ -239,49 +265,49 @@ void PrimitivesF::SetCylinderVertices(float _height, float _radius, int _sectors
 
 		switch (loopRegulator) {
 		case 3:
-			firstPointX = vertices->at(i);
+			firstPointX = verticesVec.at(i);
 			loopRegulator++;
 			break;
 		case 4:
-			firstPointY = vertices->at(i);
+			firstPointY = verticesVec.at(i);
 			loopRegulator++;
 			break;
 		case 5:
-			firstPointZ = vertices->at(i);
+			firstPointZ = verticesVec.at(i);
 			loopRegulator++;
 			break;
 		case 6:
-			secondPointX = vertices->at(i);
+			secondPointX = verticesVec.at(i);
 			loopRegulator++;
 			break;
 		case 7:
-			secondPointY = vertices->at(i);
+			secondPointY = verticesVec.at(i);
 			loopRegulator++;
 			break;
 		case 8:
-			secondPointZ = vertices->at(i);
+			secondPointZ = verticesVec.at(i);
 
 			// First triangle
-			vertices->push_back(firstPointX);
-			vertices->push_back(firstPointY + _height);
-			vertices->push_back(firstPointZ);
-			vertices->push_back(secondPointX);
-			vertices->push_back(secondPointY + _height);
-			vertices->push_back(secondPointZ);
-			vertices->push_back(firstPointX);
-			vertices->push_back(firstPointY);
-			vertices->push_back(firstPointZ);
+			verticesVec.push_back(firstPointX);
+			verticesVec.push_back(firstPointY + _height);
+			verticesVec.push_back(firstPointZ);
+			verticesVec.push_back(secondPointX);
+			verticesVec.push_back(secondPointY + _height);
+			verticesVec.push_back(secondPointZ);
+			verticesVec.push_back(firstPointX);
+			verticesVec.push_back(firstPointY);
+			verticesVec.push_back(firstPointZ);
 
 			// Second triangle
-			vertices->push_back(secondPointX);
-			vertices->push_back(secondPointY + _height);
-			vertices->push_back(secondPointZ);
-			vertices->push_back(secondPointX);
-			vertices->push_back(secondPointY);
-			vertices->push_back(secondPointZ);
-			vertices->push_back(firstPointX);
-			vertices->push_back(firstPointY);
-			vertices->push_back(firstPointZ);
+			verticesVec.push_back(secondPointX);
+			verticesVec.push_back(secondPointY + _height);
+			verticesVec.push_back(secondPointZ);
+			verticesVec.push_back(secondPointX);
+			verticesVec.push_back(secondPointY);
+			verticesVec.push_back(secondPointZ);
+			verticesVec.push_back(firstPointX);
+			verticesVec.push_back(firstPointY);
+			verticesVec.push_back(firstPointZ);
 
 			loopRegulator = 0;
 			break;
@@ -292,8 +318,17 @@ void PrimitivesF::SetCylinderVertices(float _height, float _radius, int _sectors
 
 	}
 
-	int size = vertices->size();
-	for (int i = 0; i < size; i++) { indices->push_back(i); }
+	*vertexSize = verticesVec.size();
+
+	for (GLuint i = 0; i < *vertexSize; i++) { indicesVec.push_back(i); }
+
+	*indexSize = indicesVec.size();
+
+	vertices = new float[*vertexSize];
+	indices = new GLuint[*indexSize];
+
+	for (int i = 0; i < *vertexSize; i++) { vertices[i] = verticesVec[i]; }
+	for (int i = 0; i < *indexSize; i++) { indices[i] = indicesVec[i]; }
 
 }
 

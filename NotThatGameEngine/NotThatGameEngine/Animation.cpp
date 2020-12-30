@@ -235,8 +235,8 @@ void Animation::AnimateMesh(Mesh* mesh) {
 
 		mesh->isAnimatedWithBones = true;
 
-		mesh->verticesANIMATION.clear();
-		mesh->normalsANIMATION.clear();
+		RELEASE_ARRAY(mesh->verticesANIMATION);
+		RELEASE_ARRAY(mesh->normalsANIMATION);
 
 		std::map<int, float4x4> skinningMatrixMap;
 		std::map<std::string, GameObject*> gameObjectMap;
@@ -250,7 +250,9 @@ void Animation::AnimateMesh(Mesh* mesh) {
 
 		}
 
-		int size = mesh->vertices.size() / 3;
+		mesh->verticesANIMATION = new float[mesh->vertexSize];
+		mesh->normalsANIMATION = new float[mesh->vertexSize];
+		int size = mesh->vertexSize / 3;
 		for (uint vertexIndex = 0; vertexIndex < size; vertexIndex++) {
 
 			for (uint vertexBones = 0; vertexBones < 4; vertexBones++) {
@@ -266,9 +268,9 @@ void Animation::AnimateMesh(Mesh* mesh) {
 
 					if (vertexBones == 0) {
 
-						mesh->verticesANIMATION.push_back(newDeviation.x * boneWeight);
-						mesh->verticesANIMATION.push_back(newDeviation.y * boneWeight);
-						mesh->verticesANIMATION.push_back(newDeviation.z * boneWeight);
+						mesh->verticesANIMATION[vectorVertexIndex] = (newDeviation.x * boneWeight);
+						mesh->verticesANIMATION[vectorVertexIndex + 1] = (newDeviation.y * boneWeight);
+						mesh->verticesANIMATION[vectorVertexIndex + 2] = (newDeviation.z * boneWeight);
 
 					}
 
@@ -281,15 +283,15 @@ void Animation::AnimateMesh(Mesh* mesh) {
 					}
 
 
-					if (mesh->normals.size() > 0) {
+					if (mesh->normalsSize > 0) {
 
 						newDeviation = skinningMatrixMap[boneID].TransformPos(float3(mesh->normals[vectorVertexIndex]));
 
 						if (vertexBones == 0) {
 
-							mesh->normalsANIMATION.push_back(newDeviation.x * boneWeight);
-							mesh->normalsANIMATION.push_back(newDeviation.y * boneWeight);
-							mesh->normalsANIMATION.push_back(newDeviation.z * boneWeight);
+							mesh->normalsANIMATION[vectorVertexIndex] = (newDeviation.x * boneWeight);
+							mesh->normalsANIMATION[vectorVertexIndex + 1] = (newDeviation.y * boneWeight);
+							mesh->normalsANIMATION[vectorVertexIndex + 2] = (newDeviation.z * boneWeight);
 
 						}
 
@@ -311,8 +313,8 @@ void Animation::AnimateMesh(Mesh* mesh) {
 
 		if (mesh->vertexIdANIMATION != 0) { glDeleteBuffers(1, &mesh->vertexIdANIMATION); }
 		if (mesh->normalsIdANIMATION != 0) { glDeleteBuffers(1, &mesh->normalsIdANIMATION); }
-		OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->vertexIdANIMATION, mesh->verticesANIMATION.size(), mesh->verticesANIMATION.data());
-		if (mesh->normalsANIMATION.size() > 0) { OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->normalsIdANIMATION, mesh->normalsANIMATION.size(), mesh->normalsANIMATION.data()); }
+		OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->vertexIdANIMATION, mesh->vertexSize, mesh->verticesANIMATION);
+		if (mesh->normalsSize > 0) { OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->normalsIdANIMATION, mesh->normalsSize, mesh->normalsANIMATION); }
 
 	}
 

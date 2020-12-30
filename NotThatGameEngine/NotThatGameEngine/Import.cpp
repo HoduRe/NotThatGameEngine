@@ -140,29 +140,38 @@ void Importer::ImportNewModelMesh(Application* App, aiScene* scene, std::map<Gam
 			const aiMesh* paiMesh = (aiMesh*)scene->mMeshes[mapIt->second[i]];
 			const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
 
+			mesh->vertexSize = paiMesh->mNumVertices * 3;
+			mesh->vertices = new float[mesh->vertexSize];
+			mesh->indexSize = paiMesh->mNumFaces * 3;
+			if (mesh->indexSize > 0) { mesh->indices = new GLuint[mesh->indexSize]; }
+			mesh->normalsSize = paiMesh->mNumVertices * 3;
+			mesh->normals = new float[mesh->normalsSize];
+			mesh->textureCoordSize = paiMesh->mNumVertices * 2;
+			mesh->textureCoord = new float[mesh->textureCoordSize];
+
 			for (unsigned int j = 0; j < paiMesh->mNumVertices; j++) {		// Vertices
 				const aiVector3D* pPos = &(paiMesh->mVertices[j]);
 				const aiVector3D* pNormal = &(paiMesh->mNormals[j]); //: &Zero3D	// There are the same normals as there are vertices, so we don't need a loop for them
 				const aiVector3D* pTexCoord = paiMesh->HasTextureCoords(0) ? &(paiMesh->mTextureCoords[0][j]) : &Zero3D;	// Same as above
 
-				mesh->vertices.push_back(pPos->x);
-				mesh->vertices.push_back(pPos->y);
-				mesh->vertices.push_back(pPos->z);
-				mesh->textureCoord.push_back(pTexCoord->x);
-				mesh->textureCoord.push_back(pTexCoord->y);
-				mesh->normals.push_back(pNormal->x);
-				mesh->normals.push_back(pNormal->y);
-				mesh->normals.push_back(pNormal->z);
+				mesh->vertices[j * 3] = pPos->x;
+				mesh->vertices[j * 3 + 1] = pPos->y;
+				mesh->vertices[j * 3 + 2] = pPos->z;
+				mesh->textureCoord[j * 2] = pTexCoord->x;
+				mesh->textureCoord[j * 2 + 1] = pTexCoord->y;
+				mesh->normals[j * 3] = pNormal->x;
+				mesh->normals[j * 3 + 1] = pNormal->y;
+				mesh->normals[j * 3 + 2] = pNormal->z;
 			}
 
-			LOG("New mesh with %d vertices.\n", mesh->vertices.size());
+			LOG("New mesh with %i vertices.\n", mesh->vertexSize);
 
 			for (unsigned int j = 0; j < paiMesh->mNumFaces; j++) {		// Indices
 				const aiFace& Face = paiMesh->mFaces[j];
 				if (Face.mNumIndices != 3) { LOG("Not all faces of %s are triangles.\n", scene->mMeshes[mapIt->second[i]]->mName.C_Str()); }
-				mesh->indices.push_back(Face.mIndices[0]);
-				mesh->indices.push_back(Face.mIndices[1]);
-				mesh->indices.push_back(Face.mIndices[2]);
+				mesh->indices[j * 3] = Face.mIndices[0];
+				mesh->indices[j * 3 + 1] = Face.mIndices[1];
+				mesh->indices[j * 3 + 2] = Face.mIndices[2];
 			}
 
 			if (paiMesh->HasBones()) {

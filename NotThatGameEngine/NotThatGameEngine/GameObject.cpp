@@ -268,7 +268,7 @@ void GameObject::DebugBones() {
 
 			boneAABB.SetNegativeInfinity();
 
-			int size = mesh->vertices.size() / 3;
+			int size = mesh->vertexSize / 3;
 			for (int it = 0; it < size; it++) {
 
 				for (int itAux = 0; itAux < 4; itAux++) {
@@ -297,7 +297,7 @@ void GameObject::DebugBones() {
 
 				boneAABB.SetNegativeInfinity();
 
-				int size = mesh->vertices.size() / 3;
+				int size = mesh->vertexSize / 3;
 				for (int it = 0; it < size; it++) {
 
 					for (int itAux = 0; itAux < 4; itAux++) {
