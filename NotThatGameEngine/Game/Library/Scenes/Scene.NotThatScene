@@ -2,7 +2,7 @@
     "GameObjects": [
         {
             "Name": "Street environment_V01",
-            "ID": 100091131,
+            "ID": 69703121,
             "ParentID": 0,
             "Translation": [
                 0,
@@ -23,14 +23,14 @@
             "Components": [
                 {
                     "ComponentType": 5,
-                    "ComponentID": 1280976668
+                    "ComponentID": 756322182
                 }
             ]
         },
         {
             "Name": "Sky001",
-            "ID": 1307291007,
-            "ParentID": 100091131,
+            "ID": 589368788,
+            "ParentID": 69703121,
             "Translation": [
                 18.153732,
                 0,
@@ -51,8 +51,8 @@
         },
         {
             "Name": "Dummy001",
-            "ID": 1808548928,
-            "ParentID": 100091131,
+            "ID": 447627333,
+            "ParentID": 69703121,
             "Translation": [
                 0,
                 0,
@@ -73,8 +73,8 @@
         },
         {
             "Name": "City_building_004",
-            "ID": 1803797810,
-            "ParentID": 1808548928,
+            "ID": 524816000,
+            "ParentID": 447627333,
             "Translation": [
                 -41.475891,
                 21.014099,
@@ -94,18 +94,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 344151540
+                    "ComponentID": 1018811634
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 699316761
+                    "ComponentID": 1447393951
                 }
             ]
         },
         {
             "Name": "City_building_001",
-            "ID": 1530456444,
-            "ParentID": 1808548928,
+            "ID": 491610743,
+            "ParentID": 447627333,
             "Translation": [
                 17.707165,
                 20.053276,
@@ -125,18 +125,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 370782841
+                    "ComponentID": 353978570
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1518736321
+                    "ComponentID": 1967172645
                 }
             ]
         },
         {
             "Name": "City_building_007",
-            "ID": 289077002,
-            "ParentID": 1808548928,
+            "ID": 757130120,
+            "ParentID": 447627333,
             "Translation": [
                 16.010492,
                 37.493286,
@@ -156,18 +156,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1194917898
+                    "ComponentID": 2078052202
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 9975525
+                    "ComponentID": 99057052
                 }
             ]
         },
         {
             "Name": "City_building_008",
-            "ID": 868808044,
-            "ParentID": 1808548928,
+            "ID": 881026775,
+            "ParentID": 447627333,
             "Translation": [
                 40.979996,
                 18.270824,
@@ -187,18 +187,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1914815848
+                    "ComponentID": 2076250883
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 2051798789
+                    "ComponentID": 1390962126
                 }
             ]
         },
         {
             "Name": "Line002",
-            "ID": 1966257823,
-            "ParentID": 1808548928,
+            "ID": 1546596428,
+            "ParentID": 447627333,
             "Translation": [
                 -2.159772,
                 1.853838,
@@ -218,18 +218,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 2142948071
+                    "ComponentID": 628033970
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 2056243060
+                    "ComponentID": 1585972450
                 }
             ]
         },
         {
             "Name": "Plane001",
-            "ID": 2143203946,
-            "ParentID": 1808548928,
+            "ID": 1968747298,
+            "ParentID": 447627333,
             "Translation": [
                 -0.028603,
                 0.026032,
@@ -249,18 +249,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 554291029
+                    "ComponentID": 110019075
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 14593419
+                    "ComponentID": 1711335373
                 }
             ]
         },
         {
             "Name": "City_building_010",
-            "ID": 248659168,
-            "ParentID": 1808548928,
+            "ID": 339784426,
+            "ParentID": 447627333,
             "Translation": [
                 25.154011,
                 -39.153721,
@@ -280,18 +280,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 870235771
+                    "ComponentID": 338506193
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1875963627
+                    "ComponentID": 654120675
                 }
             ]
         },
         {
             "Name": "City_building_011",
-            "ID": 803232121,
-            "ParentID": 1808548928,
+            "ID": 997295893,
+            "ParentID": 447627333,
             "Translation": [
                 30.134541,
                 37.493286,
@@ -311,18 +311,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 2058204713
+                    "ComponentID": 508129576
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1276494051
+                    "ComponentID": 991093665
                 }
             ]
         },
         {
             "Name": "City_building_013",
-            "ID": 1476560870,
-            "ParentID": 1808548928,
+            "ID": 134989208,
+            "ParentID": 447627333,
             "Translation": [
                 -42.288055,
                 33.201576,
@@ -342,18 +342,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1563926633
+                    "ComponentID": 1291354330
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 420245899
+                    "ComponentID": 976927275
                 }
             ]
         },
         {
             "Name": "City_building_014",
-            "ID": 622527551,
-            "ParentID": 1808548928,
+            "ID": 1699228638,
+            "ParentID": 447627333,
             "Translation": [
                 -19.439707,
                 32.061729,
@@ -373,18 +373,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 2034539217
+                    "ComponentID": 1615982700
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 780954284
+                    "ComponentID": 1810774017
                 }
             ]
         },
         {
             "Name": "City_building_016",
-            "ID": 827231618,
-            "ParentID": 1808548928,
+            "ID": 2017824069,
+            "ParentID": 447627333,
             "Translation": [
                 34.270424,
                 -41.972748,
@@ -404,18 +404,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1403813128
+                    "ComponentID": 120191059
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 745525871
+                    "ComponentID": 1225429927
                 }
             ]
         },
         {
             "Name": "City_building_017",
-            "ID": 1724400548,
-            "ParentID": 1808548928,
+            "ID": 426619651,
+            "ParentID": 447627333,
             "Translation": [
                 44.260082,
                 -39.153721,
@@ -435,18 +435,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1938545804
+                    "ComponentID": 1759020519
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 592657275
+                    "ComponentID": 217615830
                 }
             ]
         },
         {
             "Name": "City_building_022",
-            "ID": 1788832964,
-            "ParentID": 1808548928,
+            "ID": 134570845,
+            "ParentID": 447627333,
             "Translation": [
                 -20.831324,
                 -27.426489,
@@ -466,18 +466,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 194864128
+                    "ComponentID": 1728629336
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 981257389
+                    "ComponentID": 1771940129
                 }
             ]
         },
         {
             "Name": "City_building_023",
-            "ID": 370901205,
-            "ParentID": 1808548928,
+            "ID": 2045619194,
+            "ParentID": 447627333,
             "Translation": [
                 42.130642,
                 37.493286,
@@ -497,18 +497,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 913511453
+                    "ComponentID": 1519838146
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1852663408
+                    "ComponentID": 1837307682
                 }
             ]
         },
         {
             "Name": "City_building_024",
-            "ID": 2116322254,
-            "ParentID": 1808548928,
+            "ID": 334694967,
+            "ParentID": 447627333,
             "Translation": [
                 -20.572771,
                 43.060829,
@@ -528,18 +528,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1091204419
+                    "ComponentID": 589384832
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1361358927
+                    "ComponentID": 1591345443
                 }
             ]
         },
         {
             "Name": "City_building_026",
-            "ID": 2126579969,
-            "ParentID": 1808548928,
+            "ID": 232254726,
+            "ParentID": 447627333,
             "Translation": [
                 31.511889,
                 -16.446016,
@@ -559,18 +559,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1977520774
+                    "ComponentID": 736216540
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1797197484
+                    "ComponentID": 2139528391
                 }
             ]
         },
         {
             "Name": "City_building_028",
-            "ID": 1698824756,
-            "ParentID": 1808548928,
+            "ID": 197902950,
+            "ParentID": 447627333,
             "Translation": [
                 13.387990,
                 -33.755039,
@@ -590,18 +590,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 20977185
+                    "ComponentID": 1943963573
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 163716925
+                    "ComponentID": 1973514599
                 }
             ]
         },
         {
             "Name": "Object010",
-            "ID": 1440320796,
-            "ParentID": 1808548928,
+            "ID": 2056161919,
+            "ParentID": 447627333,
             "Translation": [
                 -2.503353,
                 15.800846,
@@ -621,14 +621,14 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 791328173
+                    "ComponentID": 2074495399
                 }
             ]
         },
         {
             "Name": "City_building_030",
-            "ID": 1513252295,
-            "ParentID": 1808548928,
+            "ID": 1578978441,
+            "ParentID": 447627333,
             "Translation": [
                 -42.807240,
                 -41.835564,
@@ -648,18 +648,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 157011069
+                    "ComponentID": 474203151
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 575871619
+                    "ComponentID": 1231470440
                 }
             ]
         },
         {
             "Name": "City_building_031",
-            "ID": 1385780556,
-            "ParentID": 1808548928,
+            "ID": 66380412,
+            "ParentID": 447627333,
             "Translation": [
                 -34.679482,
                 -41.835564,
@@ -679,18 +679,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1729621584
+                    "ComponentID": 899332867
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 2133761433
+                    "ComponentID": 420321475
                 }
             ]
         },
         {
             "Name": "City_building_032",
-            "ID": 275962021,
-            "ParentID": 1808548928,
+            "ID": 1589236953,
+            "ParentID": 447627333,
             "Translation": [
                 -29.478403,
                 21.014099,
@@ -710,18 +710,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 676844088
+                    "ComponentID": 1163100430
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 328584527
+                    "ComponentID": 1049159601
                 }
             ]
         },
         {
             "Name": "City_building_033",
-            "ID": 1387546423,
-            "ParentID": 1808548928,
+            "ID": 1179295810,
+            "ParentID": 447627333,
             "Translation": [
                 -32.361496,
                 42.370422,
@@ -741,18 +741,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1748760492
+                    "ComponentID": 2011604777
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1016330514
+                    "ComponentID": 1790140412
                 }
             ]
         },
         {
             "Name": "City_building_034",
-            "ID": 508030191,
-            "ParentID": 1808548928,
+            "ID": 4686560,
+            "ParentID": 447627333,
             "Translation": [
                 16.049517,
                 -16.696884,
@@ -772,18 +772,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 553990757
+                    "ComponentID": 1866089550
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 584192977
+                    "ComponentID": 554884344
                 }
             ]
         },
         {
             "Name": "City_building_035",
-            "ID": 906461184,
-            "ParentID": 1808548928,
+            "ID": 519587741,
+            "ParentID": 447627333,
             "Translation": [
                 13.387990,
                 -40.802517,
@@ -803,18 +803,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 863932757
+                    "ComponentID": 474669868
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1140489921
+                    "ComponentID": 1512519992
                 }
             ]
         },
         {
             "Name": "City_building_036",
-            "ID": 988425763,
-            "ParentID": 1808548928,
+            "ID": 1293732387,
+            "ParentID": 447627333,
             "Translation": [
                 -31.216331,
                 33.201576,
@@ -834,18 +834,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1782032554
+                    "ComponentID": 783701558
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 315703903
+                    "ComponentID": 969150189
                 }
             ]
         },
         {
             "Name": "City_building_037",
-            "ID": 126303718,
-            "ParentID": 1808548928,
+            "ID": 1416603276,
+            "ParentID": 447627333,
             "Translation": [
                 -20.317694,
                 -16.163609,
@@ -865,18 +865,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 2131360651
+                    "ComponentID": 1582424865
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 634842865
+                    "ComponentID": 1942951418
                 }
             ]
         },
         {
             "Name": "City_building_038",
-            "ID": 1034165258,
-            "ParentID": 1808548928,
+            "ID": 225748048,
+            "ParentID": 447627333,
             "Translation": [
                 -41.649002,
                 -16.495394,
@@ -896,18 +896,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1749599883
+                    "ComponentID": 1236438988
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1473512856
+                    "ComponentID": 236793553
                 }
             ]
         },
         {
             "Name": "City_building_039",
-            "ID": 2144730386,
-            "ParentID": 1808548928,
+            "ID": 1719479041,
+            "ParentID": 447627333,
             "Translation": [
                 -42.807240,
                 -30.643888,
@@ -927,18 +927,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1663675147
+                    "ComponentID": 742774680
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 49424695
+                    "ComponentID": 1309776520
                 }
             ]
         },
         {
             "Name": "City_building_040",
-            "ID": 727888101,
-            "ParentID": 1808548928,
+            "ID": 1500480006,
+            "ParentID": 447627333,
             "Translation": [
                 -34.679482,
                 -30.643888,
@@ -958,18 +958,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 27894662
+                    "ComponentID": 1447404448
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 729046214
+                    "ComponentID": 1222422380
                 }
             ]
         },
         {
             "Name": "City_building_041",
-            "ID": 1150468049,
-            "ParentID": 1808548928,
+            "ID": 1491587370,
+            "ParentID": 447627333,
             "Translation": [
                 30.695278,
                 21.612646,
@@ -989,18 +989,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 829299028
+                    "ComponentID": 2131183386
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1529778793
+                    "ComponentID": 1178378182
                 }
             ]
         },
         {
             "Name": "City_building_0101",
-            "ID": 277874488,
-            "ParentID": 1808548928,
+            "ID": 1697126328,
+            "ParentID": 447627333,
             "Translation": [
                 25.154011,
                 -39.153721,
@@ -1020,49 +1020,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 146314119
+                    "ComponentID": 1104691924
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1020341178
-                }
-            ]
-        },
-        {
-            "Name": "City_building_0161",
-            "ID": 561594425,
-            "ParentID": 1808548928,
-            "Translation": [
-                34.270424,
-                -41.972748,
-                0.000001
-            ],
-            "Rotation": [
-                0,
-                0,
-                -180
-            ],
-            "Scale": [
-                1,
-                1,
-                1
-            ],
-            "Enabled": true,
-            "Components": [
-                {
-                    "ComponentType": 2,
-                    "ComponentID": 967352621
-                },
-                {
-                    "ComponentType": 3,
-                    "ComponentID": 822173074
+                    "ComponentID": 1924590793
                 }
             ]
         },
         {
             "Name": "City_building_0171",
-            "ID": 1482457816,
-            "ParentID": 1808548928,
+            "ID": 1840928535,
+            "ParentID": 447627333,
             "Translation": [
                 44.260082,
                 -39.153721,
@@ -1082,18 +1051,49 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1890686195
+                    "ComponentID": 402929955
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1453439230
+                    "ComponentID": 1954999941
+                }
+            ]
+        },
+        {
+            "Name": "City_building_0161",
+            "ID": 1537345501,
+            "ParentID": 447627333,
+            "Translation": [
+                34.270424,
+                -41.972748,
+                0.000001
+            ],
+            "Rotation": [
+                0,
+                0,
+                -180
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 597356983
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 422205641
                 }
             ]
         },
         {
             "Name": "Camera001",
-            "ID": 463185190,
-            "ParentID": 100091131,
+            "ID": 1770255572,
+            "ParentID": 69703121,
             "Translation": [
                 -78.312431,
                 45.251217,
@@ -1114,8 +1114,8 @@
         },
         {
             "Name": "Camera001.Target",
-            "ID": 2089365315,
-            "ParentID": 100091131,
+            "ID": 648798855,
+            "ParentID": 69703121,
             "Translation": [
                 -28.132622,
                 20.873329,
@@ -1136,8 +1136,8 @@
         },
         {
             "Name": "Spot001",
-            "ID": 1747989962,
-            "ParentID": 100091131,
+            "ID": 913536901,
+            "ParentID": 69703121,
             "Translation": [
                 -66.721268,
                 141.934128,
@@ -1158,8 +1158,8 @@
         },
         {
             "Name": "Spot001.Target",
-            "ID": 1252097922,
-            "ParentID": 100091131,
+            "ID": 1387618389,
+            "ParentID": 69703121,
             "Translation": [
                 28.890945,
                 -60.963882,
@@ -1180,7 +1180,7 @@
         },
         {
             "Name": "robotto",
-            "ID": 847091924,
+            "ID": 1803339807,
             "ParentID": 0,
             "Translation": [
                 0,
@@ -1201,14 +1201,14 @@
             "Components": [
                 {
                     "ComponentType": 5,
-                    "ComponentID": 454786737
+                    "ComponentID": 841170386
                 }
             ]
         },
         {
             "Name": "Armature.001",
-            "ID": 1324881667,
-            "ParentID": 847091924,
+            "ID": 2042761690,
+            "ParentID": 1803339807,
             "Translation": [
                 0,
                 0,
@@ -1229,8 +1229,8 @@
         },
         {
             "Name": "root_2.001",
-            "ID": 1318746333,
-            "ParentID": 1324881667,
+            "ID": 1480892572,
+            "ParentID": 2042761690,
             "Translation": [
                 0,
                 0,
@@ -1251,8 +1251,8 @@
         },
         {
             "Name": "Bone.001",
-            "ID": 205499118,
-            "ParentID": 1318746333,
+            "ID": 1902919208,
+            "ParentID": 1480892572,
             "Translation": [
                 0,
                 -1,
@@ -1273,8 +1273,8 @@
         },
         {
             "Name": "root_2",
-            "ID": 1480723926,
-            "ParentID": 205499118,
+            "ID": 390336295,
+            "ParentID": 1902919208,
             "Translation": [
                 0,
                 -1.000000,
@@ -1295,30 +1295,30 @@
         },
         {
             "Name": "Body",
-            "ID": 285429672,
-            "ParentID": 1480723926,
+            "ID": 1484715021,
+            "ParentID": 390336295,
             "Translation": [
-                0,
-                -1.915648,
-                0
+                -0.049829,
+                -1.927037,
+                0.199851
             ],
             "Rotation": [
-                -169.610840,
-                -89.980217,
-                9.256001
+                -113.191879,
+                -81.248062,
+                118.228073
             ],
             "Scale": [
-                1.000000,
-                1.000000,
-                1.000000
+                1,
+                1,
+                1
             ],
             "Enabled": true,
             "Components": []
         },
         {
             "Name": "Body_Up",
-            "ID": 1929381110,
-            "ParentID": 285429672,
+            "ID": 1074787408,
+            "ParentID": 1484715021,
             "Translation": [
                 0,
                 0.088817,
@@ -1339,30 +1339,30 @@
         },
         {
             "Name": "Leg11",
-            "ID": 547169191,
-            "ParentID": 1929381110,
+            "ID": 961858752,
+            "ParentID": 1074787408,
             "Translation": [
                 0.000000,
                 0.064968,
                 -0.124292
             ],
             "Rotation": [
-                -14.999989,
-                90,
-                0
+                -104.993210,
+                89.955765,
+                89.990776
             ],
             "Scale": [
                 1.000000,
                 1,
-                1
+                1.000000
             ],
             "Enabled": true,
             "Components": []
         },
         {
             "Name": "Leg11.001",
-            "ID": 428019675,
-            "ParentID": 547169191,
+            "ID": 678675716,
+            "ParentID": 961858752,
             "Translation": [
                 -0.000000,
                 0.111171,
@@ -1371,7 +1371,7 @@
             "Rotation": [
                 0,
                 0,
-                0.000018
+                -19.745399
             ],
             "Scale": [
                 1,
@@ -1383,20 +1383,20 @@
         },
         {
             "Name": "Leg11.002",
-            "ID": 1894293432,
-            "ParentID": 428019675,
+            "ID": 1623760569,
+            "ParentID": 678675716,
             "Translation": [
                 0.000000,
                 0.353334,
                 -0.000000
             ],
             "Rotation": [
-                90.000008,
-                -24.193958,
-                -89.999977
+                90,
+                7.515719,
+                -89.999985
             ],
             "Scale": [
-                1.000000,
+                1,
                 1.000000,
                 1.000000
             ],
@@ -1405,20 +1405,20 @@
         },
         {
             "Name": "Leg11.003",
-            "ID": 2136938630,
-            "ParentID": 1894293432,
+            "ID": 1948381064,
+            "ParentID": 1623760569,
             "Translation": [
                 -0.000000,
                 0.829179,
                 -0.000000
             ],
             "Rotation": [
-                7.670801,
-                0.000026,
-                -179.999985
+                107.076988,
+                0.000015,
+                179.999985
             ],
             "Scale": [
-                1,
+                1.000000,
                 1.000000,
                 0.999993
             ],
@@ -1427,8 +1427,8 @@
         },
         {
             "Name": "Leg11.003_end",
-            "ID": 1010027153,
-            "ParentID": 2136938630,
+            "ID": 857645398,
+            "ParentID": 1948381064,
             "Translation": [
                 0,
                 1.232361,
@@ -1449,39 +1449,39 @@
         },
         {
             "Name": "Leg10",
-            "ID": 241127337,
-            "ParentID": 1929381110,
+            "ID": 933352515,
+            "ParentID": 1074787408,
             "Translation": [
                 -0.107640,
                 0.064968,
                 -0.062146
             ],
             "Rotation": [
-                -180,
-                30.000042,
-                165.000015
+                179.053711,
+                30.215763,
+                165.474701
             ],
             "Scale": [
                 1.000001,
                 1.000000,
-                1.000001
+                1.000000
             ],
             "Enabled": true,
             "Components": []
         },
         {
             "Name": "Leg10.001",
-            "ID": 1315887330,
-            "ParentID": 241127337,
+            "ID": 712010834,
+            "ParentID": 933352515,
             "Translation": [
                 0,
                 0.111171,
                 0.000000
             ],
             "Rotation": [
-                -0.000000,
+                0.000002,
                 0.000016,
-                0.000007
+                -8.680755
             ],
             "Scale": [
                 1.000000,
@@ -1493,43 +1493,43 @@
         },
         {
             "Name": "Leg10.002",
-            "ID": 1472837133,
-            "ParentID": 1315887330,
+            "ID": 485525364,
+            "ParentID": 712010834,
             "Translation": [
                 -0.000000,
                 0.353334,
                 -0.000000
             ],
             "Rotation": [
-                90.000015,
-                -24.193607,
-                -90
+                90,
+                23.707813,
+                -89.999985
             ],
             "Scale": [
                 1.000000,
                 1.000000,
-                1
+                1.000000
             ],
             "Enabled": true,
             "Components": []
         },
         {
             "Name": "Leg10.003",
-            "ID": 1913426284,
-            "ParentID": 1472837133,
+            "ID": 80367319,
+            "ParentID": 485525364,
             "Translation": [
                 -0.000000,
                 0.829179,
                 0.000000
             ],
             "Rotation": [
-                7.670876,
-                0.000032,
-                -179.999985
+                130.819580,
+                -0.000003,
+                179.999969
             ],
             "Scale": [
-                1,
                 1.000000,
+                0.999999,
                 0.999970
             ],
             "Enabled": true,
@@ -1537,8 +1537,8 @@
         },
         {
             "Name": "Leg10.003_end",
-            "ID": 236964100,
-            "ParentID": 1913426284,
+            "ID": 311265715,
+            "ParentID": 80367319,
             "Translation": [
                 0,
                 1.232361,
@@ -1559,17 +1559,17 @@
         },
         {
             "Name": "Leg9",
-            "ID": 1445573246,
-            "ParentID": 1929381110,
+            "ID": 252584762,
+            "ParentID": 1074787408,
             "Translation": [
                 -0.107640,
                 0.064968,
                 0.062146
             ],
             "Rotation": [
-                179.996475,
-                -29.999123,
-                164.998260
+                -179.460892,
+                -30.123791,
+                165.270081
             ],
             "Scale": [
                 1.000000,
@@ -1581,21 +1581,21 @@
         },
         {
             "Name": "Leg9.001",
-            "ID": 233735876,
-            "ParentID": 1445573246,
+            "ID": 1111364140,
+            "ParentID": 252584762,
             "Translation": [
                 -0.000000,
                 0.111171,
                 -0.000000
             ],
             "Rotation": [
-                0.000001,
+                -0.000001,
                 -0.000013,
-                -0.000162
+                -8.576489
             ],
             "Scale": [
                 1.000000,
-                1,
+                1.000000,
                 1.000000
             ],
             "Enabled": true,
@@ -1603,17 +1603,17 @@
         },
         {
             "Name": "Leg9.002",
-            "ID": 1795830696,
-            "ParentID": 233735876,
+            "ID": 672539453,
+            "ParentID": 1111364140,
             "Translation": [
                 -0.000000,
                 0.353334,
                 0.000000
             ],
             "Rotation": [
-                90.000031,
-                -24.193909,
-                -89.999947
+                90,
+                23.430098,
+                -89.999977
             ],
             "Scale": [
                 1.000000,
@@ -1625,30 +1625,30 @@
         },
         {
             "Name": "Leg9.003",
-            "ID": 972351315,
-            "ParentID": 1795830696,
+            "ID": 843018624,
+            "ParentID": 672539453,
             "Translation": [
                 -0.000000,
                 0.829179,
                 -0.000000
             ],
             "Rotation": [
-                7.670837,
-                0.000025,
-                -179.999985
+                130.384003,
+                0.000003,
+                179.999969
             ],
             "Scale": [
                 1.000000,
                 1.000001,
-                1.000047
+                1.000048
             ],
             "Enabled": true,
             "Components": []
         },
         {
             "Name": "Leg9.003_end",
-            "ID": 2069730114,
-            "ParentID": 972351315,
+            "ID": 878098141,
+            "ParentID": 843018624,
             "Translation": [
                 0,
                 1.232361,
@@ -1669,17 +1669,17 @@
         },
         {
             "Name": "Leg8",
-            "ID": 361142733,
-            "ParentID": 1929381110,
+            "ID": 1034995888,
+            "ParentID": 1074787408,
             "Translation": [
                 -0.000000,
                 0.064968,
                 0.124292
             ],
             "Rotation": [
-                105.060272,
-                -89.972031,
-                90.064354
+                105.019272,
+                -89.925987,
+                90.020744
             ],
             "Scale": [
                 1.000000,
@@ -1691,17 +1691,17 @@
         },
         {
             "Name": "Leg8.001",
-            "ID": 2132593381,
-            "ParentID": 361142733,
+            "ID": 280673408,
+            "ParentID": 1034995888,
             "Translation": [
                 0.000000,
                 0.111171,
                 0.000000
             ],
             "Rotation": [
-                0.000000,
+                0.000001,
                 0.000003,
-                -0.000014
+                -19.697636
             ],
             "Scale": [
                 1.000000,
@@ -1713,21 +1713,21 @@
         },
         {
             "Name": "Leg8.002",
-            "ID": 836424270,
-            "ParentID": 2132593381,
+            "ID": 399878159,
+            "ParentID": 280673408,
             "Translation": [
                 0.000000,
                 0.353334,
                 0.000000
             ],
             "Rotation": [
-                90.000023,
-                -24.193995,
-                -89.999985
+                90.000015,
+                7.563024,
+                -90
             ],
             "Scale": [
                 1.000000,
-                1,
+                1.000000,
                 1.000000
             ],
             "Enabled": true,
@@ -1735,17 +1735,17 @@
         },
         {
             "Name": "Leg8.003",
-            "ID": 454368044,
-            "ParentID": 836424270,
+            "ID": 812243547,
+            "ParentID": 399878159,
             "Translation": [
                 0.000000,
                 0.829179,
                 -0.000000
             ],
             "Rotation": [
-                7.670820,
-                0.000028,
-                -179.999985
+                107.131134,
+                0.000014,
+                179.999969
             ],
             "Scale": [
                 1.000000,
@@ -1757,8 +1757,8 @@
         },
         {
             "Name": "Leg8.003_end",
-            "ID": 1526074660,
-            "ParentID": 454368044,
+            "ID": 977222878,
+            "ParentID": 812243547,
             "Translation": [
                 0,
                 1.232361,
@@ -1779,17 +1779,17 @@
         },
         {
             "Name": "Leg7",
-            "ID": 2087822231,
-            "ParentID": 1929381110,
+            "ID": 2056694150,
+            "ParentID": 1074787408,
             "Translation": [
                 0.107640,
                 0.064968,
                 0.062146
             ],
             "Rotation": [
-                -0.003571,
-                -29.999199,
-                -15.001777
+                -0.000056,
+                -30.000015,
+                -15.000019
             ],
             "Scale": [
                 1.000000,
@@ -1801,17 +1801,17 @@
         },
         {
             "Name": "Leg7.001",
-            "ID": 296651889,
-            "ParentID": 2087822231,
+            "ID": 290171017,
+            "ParentID": 2056694150,
             "Translation": [
                 0.000000,
                 0.111171,
                 0.000000
             ],
             "Rotation": [
-                0.000000,
+                0.000004,
                 0.000011,
-                -0.000192
+                -19.745493
             ],
             "Scale": [
                 1.000000,
@@ -1823,42 +1823,42 @@
         },
         {
             "Name": "Leg7.002",
-            "ID": 26730481,
-            "ParentID": 296651889,
+            "ID": 2034889413,
+            "ParentID": 290171017,
             "Translation": [
                 -0.000000,
                 0.353334,
                 0.000000
             ],
             "Rotation": [
-                90.000053,
-                -24.193913,
-                -89.999939
+                90,
+                7.328713,
+                -89.999954
             ],
             "Scale": [
-                0.999999,
                 1.000000,
-                1.000000
+                1.000000,
+                1
             ],
             "Enabled": true,
             "Components": []
         },
         {
             "Name": "Leg7.003",
-            "ID": 1119884812,
-            "ParentID": 26730481,
+            "ID": 1073327985,
+            "ParentID": 2034889413,
             "Translation": [
                 -0.000000,
                 0.829179,
                 0.000000
             ],
             "Rotation": [
-                7.670816,
-                0.000040,
-                -179.999985
+                106.785423,
+                0.000011,
+                179.999969
             ],
             "Scale": [
-                1,
+                1.000000,
                 1.000001,
                 1.000043
             ],
@@ -1867,8 +1867,8 @@
         },
         {
             "Name": "Leg7.003_end",
-            "ID": 739994911,
-            "ParentID": 1119884812,
+            "ID": 2037947370,
+            "ParentID": 1073327985,
             "Translation": [
                 0,
                 1.232361,
@@ -1889,17 +1889,17 @@
         },
         {
             "Name": "Leg12",
-            "ID": 617599535,
-            "ParentID": 1929381110,
+            "ID": 1773146958,
+            "ParentID": 1074787408,
             "Translation": [
                 0.107640,
                 0.064968,
                 -0.062146
             ],
             "Rotation": [
-                -0.000012,
-                29.999987,
-                -14.999984
+                -0.000036,
+                29.999990,
+                -14.999971
             ],
             "Scale": [
                 1.000000,
@@ -1911,17 +1911,17 @@
         },
         {
             "Name": "Leg12.001",
-            "ID": 2001090548,
-            "ParentID": 617599535,
+            "ID": 763764466,
+            "ParentID": 1773146958,
             "Translation": [
                 -0.000000,
                 0.111171,
                 -0.000000
             ],
             "Rotation": [
-                0.000001,
-                0.000009,
-                -0.000194
+                0.000004,
+                0.000008,
+                -19.726910
             ],
             "Scale": [
                 1.000000,
@@ -1933,8 +1933,8 @@
         },
         {
             "Name": "Leg12.002",
-            "ID": 92255497,
-            "ParentID": 2001090548,
+            "ID": 164389422,
+            "ParentID": 763764466,
             "Translation": [
                 -0.000000,
                 0.353334,
@@ -1942,43 +1942,43 @@
             ],
             "Rotation": [
                 90,
-                -24.193882,
-                -89.999992
+                7.582005,
+                -89.999977
             ],
             "Scale": [
-                1,
-                1,
-                1
+                1.000000,
+                1.000000,
+                1.000000
             ],
             "Enabled": true,
             "Components": []
         },
         {
             "Name": "Leg12.003",
-            "ID": 655591154,
-            "ParentID": 92255497,
+            "ID": 784651104,
+            "ParentID": 164389422,
             "Translation": [
                 -0.000000,
                 0.829179,
                 -0.000000
             ],
             "Rotation": [
-                7.670816,
-                0.000027,
-                -179.999985
+                107.033798,
+                0.000014,
+                179.999969
             ],
             "Scale": [
                 1,
                 1.000001,
-                1.000044
+                1.000043
             ],
             "Enabled": true,
             "Components": []
         },
         {
             "Name": "Leg12.003_end",
-            "ID": 269810789,
-            "ParentID": 655591154,
+            "ID": 397656922,
+            "ParentID": 784651104,
             "Translation": [
                 0,
                 1.232361,
@@ -1999,12 +1999,12 @@
         },
         {
             "Name": "Leg11.005",
-            "ID": 931061203,
-            "ParentID": 1929381110,
+            "ID": 220143774,
+            "ParentID": 1074787408,
             "Translation": [
-                -0.000000,
-                0.938185,
-                -0.398418
+                0.000000,
+                1.013613,
+                -2.307569
             ],
             "Rotation": [
                 90,
@@ -2021,8 +2021,8 @@
         },
         {
             "Name": "Leg11.004",
-            "ID": 1779763035,
-            "ParentID": 931061203,
+            "ID": 350686448,
+            "ParentID": 220143774,
             "Translation": [
                 0.049231,
                 0.353874,
@@ -2043,8 +2043,8 @@
         },
         {
             "Name": "Leg11.004_end",
-            "ID": 1114731949,
-            "ParentID": 1779763035,
+            "ID": 838399880,
+            "ParentID": 350686448,
             "Translation": [
                 0,
                 0.020239,
@@ -2065,12 +2065,12 @@
         },
         {
             "Name": "Leg10.005",
-            "ID": 736938109,
-            "ParentID": 1929381110,
+            "ID": 2104294945,
+            "ParentID": 1074787408,
             "Translation": [
-                -0.345040,
-                0.938185,
-                -0.199209
+                -1.964303,
+                1.477939,
+                -1.164604
             ],
             "Rotation": [
                 -9.462360,
@@ -2087,8 +2087,8 @@
         },
         {
             "Name": "Leg10.004",
-            "ID": 1957001835,
-            "ParentID": 736938109,
+            "ID": 1884941360,
+            "ParentID": 2104294945,
             "Translation": [
                 0.048726,
                 0.353874,
@@ -2109,8 +2109,8 @@
         },
         {
             "Name": "Leg10.004_end",
-            "ID": 1727663664,
-            "ParentID": 1957001835,
+            "ID": 1463100916,
+            "ParentID": 1884941360,
             "Translation": [
                 0,
                 0.020239,
@@ -2131,12 +2131,12 @@
         },
         {
             "Name": "Leg9.005",
-            "ID": 956070641,
-            "ParentID": 1929381110,
+            "ID": 432898916,
+            "ParentID": 1074787408,
             "Translation": [
-                -0.345040,
-                0.938185,
-                0.199209
+                -1.965299,
+                1.479543,
+                1.153686
             ],
             "Rotation": [
                 -9.462309,
@@ -2153,8 +2153,8 @@
         },
         {
             "Name": "Leg9.004",
-            "ID": 1194615192,
-            "ParentID": 956070641,
+            "ID": 1897850556,
+            "ParentID": 432898916,
             "Translation": [
                 0.048726,
                 0.353874,
@@ -2175,8 +2175,8 @@
         },
         {
             "Name": "Leg9.004_end",
-            "ID": 2000184484,
-            "ParentID": 1194615192,
+            "ID": 1636019160,
+            "ParentID": 1897850556,
             "Translation": [
                 0,
                 0.020239,
@@ -2197,12 +2197,12 @@
         },
         {
             "Name": "Leg8.005",
-            "ID": 1514512292,
-            "ParentID": 1929381110,
+            "ID": 2054993063,
+            "ParentID": 1074787408,
             "Translation": [
-                -0.000000,
-                0.938185,
-                0.398418
+                -0.000001,
+                1.014864,
+                2.309666
             ],
             "Rotation": [
                 90.000031,
@@ -2219,8 +2219,8 @@
         },
         {
             "Name": "Leg8.004",
-            "ID": 655338260,
-            "ParentID": 1514512292,
+            "ID": 27849984,
+            "ParentID": 2054993063,
             "Translation": [
                 0.000000,
                 0.353874,
@@ -2241,8 +2241,8 @@
         },
         {
             "Name": "Leg8.004_end",
-            "ID": 597596864,
-            "ParentID": 655338260,
+            "ID": 1840969872,
+            "ParentID": 27849984,
             "Translation": [
                 0,
                 0.020239,
@@ -2263,12 +2263,12 @@
         },
         {
             "Name": "Leg7.005",
-            "ID": 85245201,
-            "ParentID": 1929381110,
+            "ID": 1927649225,
+            "ParentID": 1074787408,
             "Translation": [
-                0.345040,
-                0.938185,
-                0.199209
+                1.996282,
+                1.013613,
+                1.154055
             ],
             "Rotation": [
                 -9.462283,
@@ -2285,8 +2285,8 @@
         },
         {
             "Name": "Leg7.004",
-            "ID": 1607983716,
-            "ParentID": 85245201,
+            "ID": 2128593845,
+            "ParentID": 1927649225,
             "Translation": [
                 -0.048726,
                 0.353874,
@@ -2307,8 +2307,8 @@
         },
         {
             "Name": "Leg7.004_end",
-            "ID": 1031564825,
-            "ParentID": 1607983716,
+            "ID": 1819979144,
+            "ParentID": 2128593845,
             "Translation": [
                 0,
                 0.020239,
@@ -2329,12 +2329,12 @@
         },
         {
             "Name": "Leg12.005",
-            "ID": 1175412775,
-            "ParentID": 1929381110,
+            "ID": 713699862,
+            "ParentID": 1074787408,
             "Translation": [
-                0.345040,
-                0.938185,
-                -0.199209
+                1.998003,
+                1.014273,
+                -1.151787
             ],
             "Rotation": [
                 -9.462285,
@@ -2351,30 +2351,30 @@
         },
         {
             "Name": "Leg12.004",
-            "ID": 1524022907,
-            "ParentID": 1175412775,
+            "ID": 2123607271,
+            "ParentID": 713699862,
             "Translation": [
                 -0.048726,
                 0.353874,
                 -0.007033
             ],
             "Rotation": [
-                -97.623741,
-                -42.587017,
-                -101.188301
+                -97.623795,
+                -42.587032,
+                -101.188362
             ],
             "Scale": [
                 1.000000,
                 1,
-                1.000000
+                1
             ],
             "Enabled": true,
             "Components": []
         },
         {
             "Name": "Leg12.004_end",
-            "ID": 1930243028,
-            "ParentID": 1524022907,
+            "ID": 1323788434,
+            "ParentID": 2123607271,
             "Translation": [
                 0,
                 0.020239,
@@ -2395,8 +2395,8 @@
         },
         {
             "Name": "Body_Down",
-            "ID": 1483534831,
-            "ParentID": 285429672,
+            "ID": 589545125,
+            "ParentID": 1484715021,
             "Translation": [
                 0,
                 -0.075665,
@@ -2417,17 +2417,17 @@
         },
         {
             "Name": "Leg5",
-            "ID": 1256296100,
-            "ParentID": 1483534831,
+            "ID": 669287880,
+            "ParentID": 589545125,
             "Translation": [
                 -0.000000,
                 -0.031522,
                 -0.124292
             ],
             "Rotation": [
-                -165,
-                -90,
-                0
+                -75.000282,
+                -48.247910,
+                89.999588
             ],
             "Scale": [
                 1.000000,
@@ -2439,8 +2439,8 @@
         },
         {
             "Name": "Leg5.001",
-            "ID": 1265009449,
-            "ParentID": 1256296100,
+            "ID": 1173022912,
+            "ParentID": 669287880,
             "Translation": [
                 -0.000000,
                 0.111171,
@@ -2449,11 +2449,11 @@
             "Rotation": [
                 0,
                 0,
-                -0.000009
+                -0.537976
             ],
             "Scale": [
-                1,
-                1,
+                1.000000,
+                1.000000,
                 1
             ],
             "Enabled": true,
@@ -2461,17 +2461,17 @@
         },
         {
             "Name": "Leg5.002",
-            "ID": 1556434387,
-            "ParentID": 1265009449,
+            "ID": 1766825950,
+            "ParentID": 1173022912,
             "Translation": [
                 -0.000000,
                 0.353334,
                 0.000000
             ],
             "Rotation": [
-                89.999947,
-                48.696384,
-                -89.999939
+                90,
+                34.827309,
+                -89.999977
             ],
             "Scale": [
                 1.000000,
@@ -2483,30 +2483,30 @@
         },
         {
             "Name": "Leg5.003",
-            "ID": 1652699586,
-            "ParentID": 1556434387,
+            "ID": 426761212,
+            "ParentID": 1766825950,
             "Translation": [
                 0.000000,
                 0.829179,
                 0.000000
             ],
             "Rotation": [
-                77.560005,
-                0.000032,
-                179.999969
+                121.306633,
+                -0.000005,
+                179.999954
             ],
             "Scale": [
                 1.000000,
                 1.000001,
-                1.000043
+                1.000044
             ],
             "Enabled": true,
             "Components": []
         },
         {
             "Name": "Leg5.003_end",
-            "ID": 617266210,
-            "ParentID": 1652699586,
+            "ID": 86401974,
+            "ParentID": 426761212,
             "Translation": [
                 0,
                 1.232361,
@@ -2527,21 +2527,21 @@
         },
         {
             "Name": "Leg6",
-            "ID": 725823732,
-            "ParentID": 1483534831,
+            "ID": 369532265,
+            "ParentID": 589545125,
             "Translation": [
                 0.107640,
                 -0.031522,
                 -0.062146
             ],
             "Rotation": [
-                179.955795,
-                -29.991695,
-                -15.028785
+                -159.358368,
+                -33.001823,
+                -4.131716
             ],
             "Scale": [
                 1.000005,
-                1.000001,
+                1.000000,
                 1.000002
             ],
             "Enabled": true,
@@ -2549,8 +2549,8 @@
         },
         {
             "Name": "Leg6.001",
-            "ID": 807432575,
-            "ParentID": 725823732,
+            "ID": 73461864,
+            "ParentID": 369532265,
             "Translation": [
                 -0.000000,
                 0.111171,
@@ -2559,7 +2559,7 @@
             "Rotation": [
                 -0.000005,
                 0.000015,
-                -0.000032
+                -0.000020
             ],
             "Scale": [
                 1.000000,
@@ -2571,43 +2571,43 @@
         },
         {
             "Name": "Leg6.002",
-            "ID": 771586953,
-            "ParentID": 807432575,
+            "ID": 271889219,
+            "ParentID": 73461864,
             "Translation": [
                 0.000000,
                 0.353334,
                 -0.000000
             ],
             "Rotation": [
-                89.999794,
-                47.051605,
-                -89.999741
+                -89.999641,
+                78.458412,
+                89.999489
             ],
             "Scale": [
+                1.000001,
                 1.000000,
-                1,
-                1.000000
+                1.000001
             ],
             "Enabled": true,
             "Components": []
         },
         {
             "Name": "Leg6.003",
-            "ID": 637202126,
-            "ParentID": 771586953,
+            "ID": 306094552,
+            "ParentID": 271889219,
             "Translation": [
                 -0.000000,
                 0.829177,
                 0
             ],
             "Rotation": [
-                77.562332,
-                0.000038,
+                145.841309,
+                -0.000049,
                 179.999939
             ],
             "Scale": [
-                1,
                 1.000000,
+                1,
                 0.999985
             ],
             "Enabled": true,
@@ -2615,8 +2615,8 @@
         },
         {
             "Name": "Leg6.003_end",
-            "ID": 1229274908,
-            "ParentID": 637202126,
+            "ID": 430936995,
+            "ParentID": 306094552,
             "Translation": [
                 0,
                 1.232361,
@@ -2637,20 +2637,20 @@
         },
         {
             "Name": "Leg1",
-            "ID": 1072515994,
-            "ParentID": 1483534831,
+            "ID": 1173643945,
+            "ParentID": 589545125,
             "Translation": [
                 0.107640,
                 -0.031522,
                 0.062146
             ],
             "Rotation": [
-                179.954880,
-                30.009604,
-                -14.974873
+                145.051575,
+                33.040890,
+                3.700767
             ],
             "Scale": [
-                0.999998,
+                0.999999,
                 1.000000,
                 1.000000
             ],
@@ -2659,8 +2659,8 @@
         },
         {
             "Name": "Leg1.001",
-            "ID": 1514345507,
-            "ParentID": 1072515994,
+            "ID": 1966686852,
+            "ParentID": 1173643945,
             "Translation": [
                 0.000000,
                 0.111171,
@@ -2669,7 +2669,7 @@
             "Rotation": [
                 -0.000005,
                 0.000022,
-                -0.000012
+                -0.000011
             ],
             "Scale": [
                 1.000000,
@@ -2681,52 +2681,52 @@
         },
         {
             "Name": "Leg1.002",
-            "ID": 29187225,
-            "ParentID": 1514345507,
+            "ID": 30986446,
+            "ParentID": 1966686852,
             "Translation": [
                 -0.000000,
                 0.353334,
                 0.000000
             ],
             "Rotation": [
-                89.999931,
-                48.698299,
-                -89.999893
+                89.999443,
+                80.885941,
+                -89.999443
             ],
             "Scale": [
-                1.000001,
                 1.000000,
-                1
+                1.000000,
+                1.000000
             ],
             "Enabled": true,
             "Components": []
         },
         {
             "Name": "Leg1.003",
-            "ID": 989175311,
-            "ParentID": 29187225,
+            "ID": 1624679032,
+            "ParentID": 30986446,
             "Translation": [
                 0.000000,
                 0.829180,
                 0.000000
             ],
             "Rotation": [
-                77.562141,
-                0.000031,
-                179.999969
+                132.932022,
+                -0.000013,
+                179.999954
             ],
             "Scale": [
                 1.000000,
                 1.000000,
-                0.999993
+                0.999992
             ],
             "Enabled": true,
             "Components": []
         },
         {
             "Name": "Leg1.003_end",
-            "ID": 59563987,
-            "ParentID": 989175311,
+            "ID": 38844086,
+            "ParentID": 1624679032,
             "Translation": [
                 0,
                 1.232361,
@@ -2747,17 +2747,17 @@
         },
         {
             "Name": "Leg2",
-            "ID": 2025133598,
-            "ParentID": 1483534831,
+            "ID": 1686236241,
+            "ParentID": 589545125,
             "Translation": [
                 -0.000000,
                 -0.031522,
                 0.124292
             ],
             "Rotation": [
-                165,
-                90,
-                0
+                75.000252,
+                47.868179,
+                89.999672
             ],
             "Scale": [
                 1.000000,
@@ -2769,8 +2769,8 @@
         },
         {
             "Name": "Leg2.001",
-            "ID": 386729344,
-            "ParentID": 2025133598,
+            "ID": 1633570686,
+            "ParentID": 1686236241,
             "Translation": [
                 -0.000000,
                 0.111171,
@@ -2779,7 +2779,7 @@
             "Rotation": [
                 -0.000000,
                 -0.000002,
-                -0.000010
+                -3.622304
             ],
             "Scale": [
                 1,
@@ -2791,17 +2791,17 @@
         },
         {
             "Name": "Leg2.002",
-            "ID": 949930592,
-            "ParentID": 386729344,
+            "ID": 490175085,
+            "ParentID": 1633570686,
             "Translation": [
                 0.000000,
                 0.353334,
                 0.000000
             ],
             "Rotation": [
-                90,
-                48.696583,
-                -89.999985
+                90.000008,
+                17.380196,
+                -89.999992
             ],
             "Scale": [
                 1.000000,
@@ -2813,16 +2813,16 @@
         },
         {
             "Name": "Leg2.003",
-            "ID": 1750455683,
-            "ParentID": 949930592,
+            "ID": 1349970473,
+            "ParentID": 490175085,
             "Translation": [
                 0.000000,
                 0.829179,
                 0.000000
             ],
             "Rotation": [
-                77.560219,
-                -0.000004,
+                119.253838,
+                -0.000006,
                 180
             ],
             "Scale": [
@@ -2835,8 +2835,8 @@
         },
         {
             "Name": "Leg2.003_end",
-            "ID": 1077578164,
-            "ParentID": 1750455683,
+            "ID": 1700010151,
+            "ParentID": 1349970473,
             "Translation": [
                 0,
                 1.232361,
@@ -2857,21 +2857,21 @@
         },
         {
             "Name": "Leg3",
-            "ID": 1305740937,
-            "ParentID": 1483534831,
+            "ID": 271934942,
+            "ParentID": 589545125,
             "Translation": [
                 -0.107640,
                 -0.031522,
                 0.062146
             ],
             "Rotation": [
-                0.001534,
-                29.999735,
-                164.998917
+                23.509945,
+                22.097223,
+                154.532593
             ],
             "Scale": [
                 0.999997,
-                1,
+                1.000000,
                 0.999999
             ],
             "Enabled": true,
@@ -2879,17 +2879,17 @@
         },
         {
             "Name": "Leg3.001",
-            "ID": 153040725,
-            "ParentID": 1305740937,
+            "ID": 1051557948,
+            "ParentID": 271934942,
             "Translation": [
                 0.000000,
                 0.111171,
                 0.000000
             ],
             "Rotation": [
-                -0.000007,
-                -0.000006,
-                -0.000014
+                -0.000009,
+                0.000000,
+                -40.350006
             ],
             "Scale": [
                 1.000000,
@@ -2901,17 +2901,17 @@
         },
         {
             "Name": "Leg3.002",
-            "ID": 737482672,
-            "ParentID": 153040725,
+            "ID": 1409246704,
+            "ParentID": 1051557948,
             "Translation": [
                 -0.000000,
                 0.353334,
                 -0.000000
             ],
             "Rotation": [
-                90.000175,
-                48.696556,
-                -90.000237
+                90.000076,
+                16.263287,
+                -90.000175
             ],
             "Scale": [
                 1.000000,
@@ -2923,30 +2923,30 @@
         },
         {
             "Name": "Leg3.003",
-            "ID": 1348307667,
-            "ParentID": 737482672,
+            "ID": 1921285124,
+            "ParentID": 1409246704,
             "Translation": [
                 -0.000000,
                 0.829180,
                 0.000000
             ],
             "Rotation": [
-                77.560143,
-                -0.000015,
+                115.821953,
+                0.000015,
                 -179.999954
             ],
             "Scale": [
-                1,
-                1.000001,
-                1.000040
+                1.000000,
+                1.000000,
+                1.000041
             ],
             "Enabled": true,
             "Components": []
         },
         {
             "Name": "Leg3.003_end",
-            "ID": 1469514851,
-            "ParentID": 1348307667,
+            "ID": 1413174433,
+            "ParentID": 1921285124,
             "Translation": [
                 0,
                 1.232361,
@@ -2967,21 +2967,21 @@
         },
         {
             "Name": "Leg4",
-            "ID": 1753869362,
-            "ParentID": 1483534831,
+            "ID": 1962292135,
+            "ParentID": 589545125,
             "Translation": [
                 -0.107640,
                 -0.031522,
                 -0.062146
             ],
             "Rotation": [
-                -0.000459,
-                -30.000036,
-                164.999634
+                -35.262566,
+                -16.319567,
+                150.648987
             ],
             "Scale": [
                 0.999999,
-                1.000000,
+                1,
                 1.000000
             ],
             "Enabled": true,
@@ -2989,20 +2989,20 @@
         },
         {
             "Name": "Leg4.001",
-            "ID": 1444164639,
-            "ParentID": 1753869362,
+            "ID": 1610436360,
+            "ParentID": 1962292135,
             "Translation": [
                 0.000000,
                 0.111171,
                 -0.000000
             ],
             "Rotation": [
-                -0.000004,
-                -0.000009,
-                -0.000011
+                -0.000008,
+                -0.000005,
+                -31.456007
             ],
             "Scale": [
-                1,
+                1.000000,
                 1.000000,
                 1
             ],
@@ -3011,17 +3011,17 @@
         },
         {
             "Name": "Leg4.002",
-            "ID": 780265591,
-            "ParentID": 1444164639,
+            "ID": 671596562,
+            "ParentID": 1610436360,
             "Translation": [
                 0.000000,
                 0.353334,
                 -0.000000
             ],
             "Rotation": [
-                89.999985,
-                48.698544,
-                -89.999985
+                90,
+                14.942191,
+                -89.999992
             ],
             "Scale": [
                 1.000000,
@@ -3033,16 +3033,16 @@
         },
         {
             "Name": "Leg4.003",
-            "ID": 562172175,
-            "ParentID": 780265591,
+            "ID": 1851734246,
+            "ParentID": 671596562,
             "Translation": [
                 0.000000,
                 0.829179,
                 0.000000
             ],
             "Rotation": [
-                77.562431,
-                0.000009,
+                117.266136,
+                -0.000004,
                 179.999985
             ],
             "Scale": [
@@ -3055,8 +3055,8 @@
         },
         {
             "Name": "Leg4.003_end",
-            "ID": 1113390138,
-            "ParentID": 562172175,
+            "ID": 2015394739,
+            "ParentID": 1851734246,
             "Translation": [
                 0,
                 1.232361,
@@ -3077,30 +3077,30 @@
         },
         {
             "Name": "Body.001",
-            "ID": 1710312105,
-            "ParentID": 285429672,
+            "ID": 503693162,
+            "ParentID": 1484715021,
             "Translation": [
                 -0.000000,
                 0.024144,
                 -0.000000
             ],
             "Rotation": [
-                0,
-                9.552817,
-                0
+                0.000079,
+                41.304935,
+                -0.000120
             ],
             "Scale": [
-                1.000000,
                 1,
-                1.000000
+                1,
+                1
             ],
             "Enabled": true,
             "Components": []
         },
         {
             "Name": "Body.001_end",
-            "ID": 754325252,
-            "ParentID": 1710312105,
+            "ID": 1143814103,
+            "ParentID": 503693162,
             "Translation": [
                 0,
                 0.242663,
@@ -3121,10 +3121,10 @@
         },
         {
             "Name": "Leg5.005",
-            "ID": 1338952469,
-            "ParentID": 1480723926,
+            "ID": 285174194,
+            "ParentID": 390336295,
             "Translation": [
-                0.400135,
+                1.741207,
                 0.003702,
                 0.000000
             ],
@@ -3143,8 +3143,8 @@
         },
         {
             "Name": "Leg5.004",
-            "ID": 1456828603,
-            "ParentID": 1338952469,
+            "ID": 1517668145,
+            "ParentID": 285174194,
             "Translation": [
                 0.049231,
                 0.353874,
@@ -3165,8 +3165,8 @@
         },
         {
             "Name": "Leg5.004_end",
-            "ID": 1053636034,
-            "ParentID": 1456828603,
+            "ID": 1321151802,
+            "ParentID": 1517668145,
             "Translation": [
                 0,
                 0.020239,
@@ -3187,12 +3187,12 @@
         },
         {
             "Name": "Leg6.005",
-            "ID": 1982301268,
-            "ParentID": 1480723926,
+            "ID": 586015593,
+            "ParentID": 390336295,
             "Translation": [
-                0.200067,
+                0.870604,
                 0.003702,
-                -0.346527
+                -1.507930
             ],
             "Rotation": [
                 -16.102100,
@@ -3209,8 +3209,8 @@
         },
         {
             "Name": "Leg6.004",
-            "ID": 36811060,
-            "ParentID": 1982301268,
+            "ID": 915461956,
+            "ParentID": 586015593,
             "Translation": [
                 -0.048726,
                 0.353874,
@@ -3231,8 +3231,8 @@
         },
         {
             "Name": "Leg6.004_end",
-            "ID": 877727002,
-            "ParentID": 36811060,
+            "ID": 1640582764,
+            "ParentID": 915461956,
             "Translation": [
                 0,
                 0.020239,
@@ -3253,12 +3253,12 @@
         },
         {
             "Name": "Leg1.005",
-            "ID": 2015683395,
-            "ParentID": 1480723926,
+            "ID": 2009086198,
+            "ParentID": 390336295,
             "Translation": [
-                -0.200067,
+                -0.870604,
                 0.003702,
-                -0.346527
+                -1.507930
             ],
             "Rotation": [
                 -163.897873,
@@ -3275,8 +3275,8 @@
         },
         {
             "Name": "Leg1.004",
-            "ID": 996057983,
-            "ParentID": 2015683395,
+            "ID": 716099322,
+            "ParentID": 2009086198,
             "Translation": [
                 -0.048726,
                 0.353874,
@@ -3297,8 +3297,8 @@
         },
         {
             "Name": "Leg1.004_end",
-            "ID": 1191410908,
-            "ParentID": 996057983,
+            "ID": 551745591,
+            "ParentID": 716099322,
             "Translation": [
                 0,
                 0.020239,
@@ -3319,10 +3319,10 @@
         },
         {
             "Name": "Leg2.005",
-            "ID": 106458182,
-            "ParentID": 1480723926,
+            "ID": 41690392,
+            "ParentID": 390336295,
             "Translation": [
-                -0.400135,
+                -1.741208,
                 0.003702,
                 -0.000000
             ],
@@ -3341,8 +3341,8 @@
         },
         {
             "Name": "Leg2.004",
-            "ID": 825845996,
-            "ParentID": 106458182,
+            "ID": 1731747822,
+            "ParentID": 41690392,
             "Translation": [
                 -0.024616,
                 0.353874,
@@ -3363,8 +3363,8 @@
         },
         {
             "Name": "Leg2.004_end",
-            "ID": 716224868,
-            "ParentID": 825845996,
+            "ID": 507807469,
+            "ParentID": 1731747822,
             "Translation": [
                 0,
                 0.020239,
@@ -3385,12 +3385,12 @@
         },
         {
             "Name": "Leg3.005",
-            "ID": 73488187,
-            "ParentID": 1480723926,
+            "ID": 1305548737,
+            "ParentID": 390336295,
             "Translation": [
-                -0.200067,
+                -0.870604,
                 0.003702,
-                0.346527
+                1.507930
             ],
             "Rotation": [
                 -16.102081,
@@ -3407,8 +3407,8 @@
         },
         {
             "Name": "Leg3.004",
-            "ID": 1608652051,
-            "ParentID": 73488187,
+            "ID": 1295563830,
+            "ParentID": 1305548737,
             "Translation": [
                 0.048726,
                 0.353874,
@@ -3429,8 +3429,8 @@
         },
         {
             "Name": "Leg3.004_end",
-            "ID": 1890240354,
-            "ParentID": 1608652051,
+            "ID": 1957606565,
+            "ParentID": 1295563830,
             "Translation": [
                 0,
                 0.020239,
@@ -3451,12 +3451,12 @@
         },
         {
             "Name": "Leg4.005",
-            "ID": 1819443385,
-            "ParentID": 1480723926,
+            "ID": 878684002,
+            "ParentID": 390336295,
             "Translation": [
-                0.200068,
+                0.870605,
                 0.003702,
-                0.346527
+                1.507930
             ],
             "Rotation": [
                 -163.897842,
@@ -3473,8 +3473,8 @@
         },
         {
             "Name": "Leg4.004",
-            "ID": 251736210,
-            "ParentID": 1819443385,
+            "ID": 1893319927,
+            "ParentID": 878684002,
             "Translation": [
                 0.048726,
                 0.353874,
@@ -3495,8 +3495,8 @@
         },
         {
             "Name": "Leg4.004_end",
-            "ID": 1008281410,
-            "ParentID": 251736210,
+            "ID": 1352109084,
+            "ParentID": 1893319927,
             "Translation": [
                 0,
                 0.020239,
@@ -3517,8 +3517,8 @@
         },
         {
             "Name": "Sphere-Bot",
-            "ID": 2078449526,
-            "ParentID": 847091924,
+            "ID": 2121935923,
+            "ParentID": 1803339807,
             "Translation": [
                 0,
                 100,
@@ -3527,7 +3527,7 @@
             "Rotation": [
                 -14.999975,
                 -0.000046,
-                180
+                -180
             ],
             "Scale": [
                 100,
@@ -3538,18 +3538,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 206973859
+                    "ComponentID": 789545872
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 111766069
+                    "ComponentID": 1981725900
                 }
             ]
         },
         {
             "Name": "Sphere-Bot1",
-            "ID": 932236768,
-            "ParentID": 847091924,
+            "ID": 357015091,
+            "ParentID": 1803339807,
             "Translation": [
                 0,
                 100,
@@ -3558,7 +3558,7 @@
             "Rotation": [
                 -14.999975,
                 -0.000046,
-                180
+                -180
             ],
             "Scale": [
                 100,
@@ -3569,14 +3569,14 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1418205751
+                    "ComponentID": 1073313418
                 }
             ]
         },
         {
             "Name": "Sphere-Bot2",
-            "ID": 2046952252,
-            "ParentID": 847091924,
+            "ID": 1312493566,
+            "ParentID": 1803339807,
             "Translation": [
                 0,
                 100,
@@ -3585,7 +3585,7 @@
             "Rotation": [
                 -14.999975,
                 -0.000046,
-                180
+                -180
             ],
             "Scale": [
                 100,
@@ -3596,7 +3596,7 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1857768256
+                    "ComponentID": 1387028523
                 }
             ]
         }
