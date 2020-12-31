@@ -376,7 +376,7 @@ bool EditorScene::ExecuteEvent(EVENT_ENUM eventId, void* var) {
 		if (focus != nullptr) {
 
 			if (focus->material != nullptr) { focus->material->SetTextureName(App, (char*)var); }
-			else { LOG("This object has no material. Assign it a material through the inspector.\n"); }
+			else { LOG("This object has no material created\n"); }
 
 		}
 
