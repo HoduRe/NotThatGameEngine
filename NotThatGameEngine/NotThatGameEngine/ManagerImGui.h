@@ -38,6 +38,7 @@ public:
 	bool vsync;
 	bool hasHierarchyFocus;
 	bool gameMode;
+	bool gameStopped;
 
 private:
 

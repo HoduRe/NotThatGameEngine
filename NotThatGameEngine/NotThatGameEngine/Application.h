@@ -54,6 +54,7 @@ public:
 
 	void UserDt(bool dt);
 	void log(const char file[], int line, const char* format, ...);
+	float GetDt();
 
 	float framerate;
 	std::vector<std::string> consoleVec;
@@ -65,6 +66,7 @@ public:
 	int msVecCounter;
 	int framerateVecCounter;
 	LCG idGenerator;
+	float gameDt;
 
 private:
 

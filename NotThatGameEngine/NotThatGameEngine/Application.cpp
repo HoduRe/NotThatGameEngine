@@ -38,7 +38,7 @@ Application::Application() : userDt(false), msVecCounter(0), framerateVecCounter
 	AddModule(camera);
 	AddModule(audio);
 	AddModule(editorScene);
-	
+
 	// Renderer last!
 	AddModule(renderer3D);
 	AddModule(imGui);
@@ -102,6 +102,8 @@ void Application::PrepareUpdate()
 		msVec.erase(msVec.begin());
 		msVecCounter--;
 	}
+
+	gameDt = dt;
 
 	ms_timer.Start();
 }
@@ -174,6 +176,9 @@ void Application::AddModule(Module* mod)
 void Application::UserDt(bool dt) {
 	userDt = dt;
 }
+
+
+float Application::GetDt() { return dt; }
 
 
 void Application::log(const char file[], int line, const char* format, ...)

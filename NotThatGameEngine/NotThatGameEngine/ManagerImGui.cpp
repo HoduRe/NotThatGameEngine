@@ -34,7 +34,8 @@ fullscreen(WIN_FULLSCREEN), resizable(WIN_RESIZABLE), borderless(WIN_BORDERLESS)
 AVX(false), AVX2(false), AltiVec(false), MMX(false), RDTSC(false), SSE(false), SSE2(false), SSE3(false), SSE41(false), SSE42(false),
 showDemoWindow(false), defaultButtonsMenu(false), aboutWindow(false), configMenu(false), appActive(false), consoleMenu(true), sceneWindow(true), hierarchyWindow(true), inspectorWindow(true),
 Devil(), Assimp(), PhysFS(), GLEW(), loadFileMenu(false), selectedFilePath(), position(), rotationEuler(), scaling(), itemHovered(nullptr), itemFocusedLastFrame(nullptr), loadMeshMenu(false),
-deletedFileName(), dragDropFile(), loadTexturesMenu(false), hierarchyWindowPos(), hierarchyWindowSize(), hasHierarchyFocus(false), referenceMenu(true), gameMode(false), playWindow(true), loadAnimationsMenu(false)
+deletedFileName(), dragDropFile(), loadTexturesMenu(false), hierarchyWindowPos(), hierarchyWindowSize(), hasHierarchyFocus(false), referenceMenu(true), gameMode(false), playWindow(true),
+loadAnimationsMenu(false), gameStopped(false)
 {}
 
 
@@ -120,6 +121,8 @@ update_status ManagerImGui::PreUpdate(float dt) {
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->camera->GetViewMatrix());
+
+	if (gameStopped) { App->gameDt = 0.0f; }
 
 	return update_status::UPDATE_CONTINUE;
 
@@ -540,16 +543,19 @@ void ManagerImGui::SceneWindow() {
 			if (ImGui::Button("Stop", ImVec2(40, 20))) {
 
 				gameMode = false;
+				gameStopped = false;
 				App->eventManager->GenerateEvent(EVENT_ENUM::LEAVING_GAME_MODE);
 
 			}
 
 			ImGui::SameLine();
 
-			ImGui::Button("Pause", ImVec2(40, 20));
+			if (gameStopped == false) { if (ImGui::Button("Pause", ImVec2(40, 20))) { gameStopped = true; } }
+			else { if(ImGui::Button("Resume", ImVec2(47, 20))) { gameStopped = false; } }
+
 			ImGui::SameLine();
 
-			ImGui::Button("Tick", ImVec2(40, 20));
+			if (gameStopped) { if (ImGui::Button("Tick", ImVec2(40, 20))) { App->gameDt = App->GetDt(); } }
 
 		}
 

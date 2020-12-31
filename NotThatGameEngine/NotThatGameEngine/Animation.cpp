@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Mesh.h"
 #include "Transform.h"
+#include "Application.h"
 
 Channels::~Channels() {
 
@@ -32,6 +33,7 @@ Animation::~Animation() {}
 void Animation::PlayAnimation() {
 
 	bool animation = false;
+	float time = owner->App->gameDt;
 
 	for (uint i = 0; i < animationVec.size(); i++) {
 
@@ -39,7 +41,7 @@ void Animation::PlayAnimation() {
 
 			if (animationVec[i].started == false) { StartAnimation(i); }
 
-			else { animationVec[i].time += 1.0f / 60.0f; }
+			else { animationVec[i].time += time; }
 
 			animation = true;
 
