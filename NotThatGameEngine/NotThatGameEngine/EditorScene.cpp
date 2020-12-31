@@ -14,6 +14,7 @@
 #include "Transform.h"
 #include "Camera.h"
 #include "ManagerImGui.h"
+#include "Animation.h"
 
 #pragma comment( lib, "Assimp/libx86/assimp.lib" )
 
@@ -89,6 +90,37 @@ update_status EditorScene::PostUpdate(float dt) {
 	if (focus != nullptr) {
 		if (App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN && App->imGui->hasHierarchyFocus) { focus->deleteGameObject = true; }
 		id = focus->id;
+	}
+
+	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN){
+		
+		if (rootGameObjectsVec.size() > 1) {
+			if(rootGameObjectsVec[1]->name == "robotto"){
+				rootGameObjectsVec[1]->animation->StartAnimation(9);
+			}
+		}
+	
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) {
+
+		if (rootGameObjectsVec.size() > 1) {
+			if (rootGameObjectsVec[1]->name == "robotto") {
+				rootGameObjectsVec[1]->animation->StartAnimation(2, true);
+			}
+		}
+
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_UP) {
+
+		if (rootGameObjectsVec.size() > 1) {
+			if (rootGameObjectsVec[1]->name == "robotto") {
+				rootGameObjectsVec[1]->animation->animationVec[2].playing = false;
+				rootGameObjectsVec[1]->animation->animationVec[2].loop = false;
+			}
+		}
+
 	}
 
 	int size = rootGameObjectsVec.size();

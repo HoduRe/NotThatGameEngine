@@ -48,6 +48,7 @@ public:
 	Animation(long long int _id, GameObject* _gameObject);
 	~Animation();
 	void PlayAnimation();
+	void StartAnimation(int index, bool loop = false);
 
 private:
 

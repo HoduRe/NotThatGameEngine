@@ -280,7 +280,7 @@ void DataLoading::LoadAnimation(char* fileBuffer, Animation* animation) {
 	float duration;
 	float ticksPerSecond;
 	int channelsAmount;
-	bool playing;
+	bool playing, loop;
 
 	float time, x, y, z, w;
 
@@ -307,8 +307,11 @@ void DataLoading::LoadAnimation(char* fileBuffer, Animation* animation) {
 
 		memcpy(&playing, cursor, boolSize);
 		cursor += boolSize;
+		
+		memcpy(&loop, cursor, boolSize);
+		cursor += boolSize;
 
-		animation->animationVec.push_back(AnimationData(name, duration, ticksPerSecond, playing));
+		animation->animationVec.push_back(AnimationData(name, duration, ticksPerSecond, loop, playing));
 
 		for (int j = 0; j < channelsAmount; j++) {
 

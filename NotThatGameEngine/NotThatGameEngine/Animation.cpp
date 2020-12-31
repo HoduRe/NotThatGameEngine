@@ -37,25 +37,7 @@ void Animation::PlayAnimation() {
 
 		if (animationVec[i].playing && animationVec[i].time <= animationVec[i].realDuration) {
 
-			if (animationVec[i].started == false) {
-
-				animationVec[i].started = true;
-
-				if (currentAnimationIndex == -1) { currentAnimationIndex = i; }
-				else if (previousAnimationIndex == -1) {
-
-					previousAnimationIndex = currentAnimationIndex;
-					currentAnimationIndex = i;
-
-				}
-				else {
-
-					animationVec[i].started = false;
-					animationVec[i].playing = false;
-
-				}
-
-			}
+			if (animationVec[i].started == false) { StartAnimation(i); }
 
 			else { animationVec[i].time += 1.0f / 60.0f; }
 
@@ -70,7 +52,18 @@ void Animation::PlayAnimation() {
 
 				animationVec[i].playing = false;
 				animationVec[i].started = false;
-				if (currentAnimationIndex == i) { currentAnimationIndex = -1; }
+				if (currentAnimationIndex == i) {
+
+					if (previousAnimationIndex != -1) {
+
+						currentAnimationIndex = previousAnimationIndex;
+						previousAnimationIndex = -1;
+
+					}
+					else { currentAnimationIndex = -1; }
+
+				}
+
 				if (previousAnimationIndex == i) { previousAnimationIndex = -1; }
 
 			}
@@ -93,6 +86,29 @@ void Animation::PlayAnimation() {
 			UpdateGameObjectsTransform(&animationVec[currentAnimationIndex]);
 			UpdateMesh(owner);
 		}
+
+	}
+
+}
+
+
+void Animation::StartAnimation(int index, bool loop) {
+
+	animationVec[index].started = true;
+	animationVec[index].playing = true;
+	if (loop) { animationVec[index].loop = true; }
+
+	if (currentAnimationIndex == -1) { currentAnimationIndex = index; }
+	else if (previousAnimationIndex == -1) {
+
+		previousAnimationIndex = currentAnimationIndex;
+		currentAnimationIndex = index;
+
+	}
+	else {
+
+		animationVec[index].started = false;
+		animationVec[index].playing = false;
 
 	}
 

@@ -321,7 +321,7 @@ void DataSaving::SaveAnimation(Application* App, Animation* animation) {
 		bufferSize += sizeof(char) * animation->animationVec[i].name.size() + 2;
 		bufferSize += (sizeFloat * 2);
 		bufferSize += sizeInt;
-		bufferSize += sizeBool;
+		bufferSize += (sizeBool * 2);
 
 		for (std::map<std::string, Channels>::iterator it = animation->animationVec[i].channels.begin(); it != animation->animationVec[i].channels.end(); it++) {
 
@@ -362,6 +362,9 @@ void DataSaving::SaveAnimation(Application* App, Animation* animation) {
 		cursor += sizeInt;
 
 		memcpy(cursor, &animation->animationVec[i].playing, sizeBool);
+		cursor += sizeBool;
+
+		memcpy(cursor, &animation->animationVec[i].loop, sizeBool);
 		cursor += sizeBool;
 
 		for (std::map<std::string, Channels>::iterator channelIt = animation->animationVec[i].channels.begin(); channelIt != animation->animationVec[i].channels.end(); channelIt++) {
