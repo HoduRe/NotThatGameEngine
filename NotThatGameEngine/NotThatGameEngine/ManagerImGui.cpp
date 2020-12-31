@@ -479,7 +479,7 @@ void ManagerImGui::SceneWindow() {
 	if (sceneWindow) {
 
 		int x, y;
-		ImGuiWindowFlags flag = ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse;
+		ImGuiWindowFlags flag = ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_AlwaysAutoResize;
 		ImGuiWindowFlags flag2 = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse;
 		SDL_GetWindowSize(App->window->window, &x, &y);
 		ImVec2 vec2(x, y);
@@ -519,7 +519,7 @@ void ManagerImGui::SceneWindow() {
 
 		ImGui::SetWindowPos("Play Window", ImVec2((vec2.x * 0.5) - size.x * 0.5, vec2.y * 0.05));
 		ImGui::SetWindowSize("Play Window", size);
-		
+
 		if (gameMode) { ImGui::SetNextWindowFocus(); }
 
 		ImGui::Begin("Play Window", &playWindow, flag2);
