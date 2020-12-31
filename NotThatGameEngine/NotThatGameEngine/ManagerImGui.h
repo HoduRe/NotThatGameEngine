@@ -53,6 +53,7 @@ private:
 	void InspectorWindow();
 	void ReferenceWindow();
 	void DrawDirectoryRecursively(const char* directory, const char* extension);
+	void AnimationEventEditor(GameObject* focus);
 
 	void AddChildNode(GameObject* nextObject, int index);
 
@@ -94,6 +95,7 @@ private:
 	bool loadAnimationsMenu;
 	bool referenceMenu;
 	bool playWindow;
+	bool animationEventEditor;
 
 	float3 position;
 	float3 rotationEuler;

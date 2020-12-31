@@ -18,6 +18,18 @@ struct Channels {
 
 };
 
+struct AnimationEvent {
+
+	AnimationEvent(float _animationId, float _animationKeyFrame, int _eventId, bool _onlyOnce = false);
+
+	float animationId;
+	float animationKeyFrame;
+	int eventId;
+	bool onlyOnce;
+	bool eventTriggered;
+
+};
+
 class AnimationData {	// This is the resources, the "animations"
 
 public:
@@ -39,6 +51,8 @@ public:
 	bool loop;
 	bool started;
 
+	bool hasEnded;
+
 };
 
 class Animation : public Component {	// This is the component, the "animator"
@@ -59,10 +73,12 @@ private:
 	Quat GetUpdatedChannelRotation(const Channels* channel, const float currentFrame, Quat objectRotation) const;
 	float3 GetUpdatedChannelScale(const Channels* channel, const float currentFrame, float3 objectScale) const;
 	void AnimateMesh(Mesh* mesh);
+	void ManageAnimationEvents();
 
 public:
 
-	std::vector<AnimationData> animationVec;
+	std::vector<AnimationData> animationVec;	// Resource part
+	std::vector<AnimationEvent> animationEventVec;	// Component part
 
 private:
 

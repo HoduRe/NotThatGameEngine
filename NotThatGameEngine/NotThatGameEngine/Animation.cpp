@@ -3,6 +3,7 @@
 #include "Mesh.h"
 #include "Transform.h"
 #include "Application.h"
+#include "ManagerEvent.h"
 
 Channels::~Channels() {
 
@@ -14,13 +15,17 @@ Channels::~Channels() {
 
 
 AnimationData::AnimationData(std::string _name, float _duration, float _ticks, bool _loop, bool _playing) :
-	name(_name), duration(_duration), ticksPerSecond(_ticks), channels(), loop(_loop), playing(_playing), time(0.0f), started(false)
+	name(_name), duration(_duration), ticksPerSecond(_ticks), channels(), loop(_loop), playing(_playing), time(0.0f), started(false), hasEnded(false)
 {
 	realDuration = duration / ticksPerSecond;
 }
 
 
 AnimationData::~AnimationData() {}
+
+
+AnimationEvent::AnimationEvent(float _animationId, float _animationKeyFrame, int _eventId, bool _onlyOnce) :
+	animationId(_animationId), animationKeyFrame(_animationKeyFrame), eventId(_eventId), onlyOnce(_onlyOnce), eventTriggered(false) {}
 
 
 Animation::Animation(long long int _id, GameObject* _gameObject) : Component(_id, _gameObject, COMPONENT_TYPE::ANIMATION), animationVec(),
@@ -37,6 +42,8 @@ void Animation::PlayAnimation() {
 
 	for (uint i = 0; i < animationVec.size(); i++) {
 
+		animationVec[i].hasEnded = false;
+
 		if (animationVec[i].playing && animationVec[i].time <= animationVec[i].realDuration) {
 
 			if (animationVec[i].started == false) { StartAnimation(i); }
@@ -50,6 +57,8 @@ void Animation::PlayAnimation() {
 		else if (animationVec[i].playing == false || animationVec[i].time > animationVec[i].realDuration) {
 
 			animationVec[i].time = 0;
+			animationVec[i].hasEnded = true;
+
 			if (animationVec[i].loop == false) {
 
 				animationVec[i].playing = false;
@@ -90,6 +99,8 @@ void Animation::PlayAnimation() {
 		}
 
 	}
+
+	ManageAnimationEvents();
 
 }
 
@@ -333,6 +344,35 @@ void Animation::AnimateMesh(Mesh* mesh) {
 		if (mesh->normalsIdANIMATION != 0) { glDeleteBuffers(1, &mesh->normalsIdANIMATION); }
 		OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->vertexIdANIMATION, mesh->vertexSize, mesh->verticesANIMATION);
 		if (mesh->normalsSize > 0) { OpenGLFunctionality::LoadDataBufferFloat(GL_ARRAY_BUFFER, &mesh->normalsIdANIMATION, mesh->normalsSize, mesh->normalsANIMATION); }
+
+	}
+
+}
+
+
+void Animation::ManageAnimationEvents() {
+
+	AnimationData* data = nullptr;
+
+	for (int i = 0; i < animationEventVec.size(); i++) {
+
+		data = &animationVec[animationEventVec[i].animationId];
+
+		if (animationEventVec[i].eventTriggered == false) {
+
+			if (animationVec[animationEventVec[i].animationId].time > animationEventVec[i].animationKeyFrame) {
+
+				animationEventVec[i].eventTriggered = true;
+				if (animationEventVec[i].eventId != -1) {
+					EVENT_ENUM eventEnum = (EVENT_ENUM)animationEventVec[i].eventId;
+					owner->App->eventManager->GenerateEvent(eventEnum);
+				}
+
+			}
+
+		}
+
+		if (data->hasEnded && data->loop) { animationEventVec[i].eventTriggered = false; }
 
 	}
 

@@ -35,7 +35,7 @@ AVX(false), AVX2(false), AltiVec(false), MMX(false), RDTSC(false), SSE(false), S
 showDemoWindow(false), defaultButtonsMenu(false), aboutWindow(false), configMenu(false), appActive(false), consoleMenu(true), sceneWindow(true), hierarchyWindow(true), inspectorWindow(true),
 Devil(), Assimp(), PhysFS(), GLEW(), loadFileMenu(false), selectedFilePath(), position(), rotationEuler(), scaling(), itemHovered(nullptr), itemFocusedLastFrame(nullptr), loadMeshMenu(false),
 deletedFileName(), dragDropFile(), loadTexturesMenu(false), hierarchyWindowPos(), hierarchyWindowSize(), hasHierarchyFocus(false), referenceMenu(true), gameMode(false), playWindow(true),
-loadAnimationsMenu(false), gameStopped(false)
+loadAnimationsMenu(false), gameStopped(false), animationEventEditor(false)
 {}
 
 
@@ -156,6 +156,7 @@ update_status ManagerImGui::Update(float dt) {
 		InspectorWindow();
 		ReferenceWindow();
 		if (loadFileMenu) { LoadFileMenu(ASSETS_PATH, nullptr); }
+		if (animationEventEditor) { AnimationEventEditor(App->editorScene->GetFocus()); }
 
 	}
 
@@ -551,7 +552,7 @@ void ManagerImGui::SceneWindow() {
 			ImGui::SameLine();
 
 			if (gameStopped == false) { if (ImGui::Button("Pause", ImVec2(40, 20))) { gameStopped = true; } }
-			else { if(ImGui::Button("Resume", ImVec2(47, 20))) { gameStopped = false; } }
+			else { if (ImGui::Button("Resume", ImVec2(47, 20))) { gameStopped = false; } }
 
 			ImGui::SameLine();
 
@@ -994,9 +995,15 @@ void ManagerImGui::InspectorWindow() {
 
 				if (animation == nullptr) {
 					ImGui::Text("Funny you, there's no animation.");
-					if (ImGui::Button("Add animation")) { focus->AddComponent(COMPONENT_TYPE::ANIMATION); }
+					if (ImGui::Button("Add animation")) { focus->AddComponent(COMPONENT_TYPE::ANIMATION); }	// This eventually will have to load an animation resource (but you may want to add animation components to copy frame events settings)
 				}
 				else {
+
+					ImGui::NewLine();
+
+					if (ImGui::Button("Open Animation Event Editor")) { animationEventEditor = true; }
+
+					ImGui::NewLine();
 
 					if (ImGui::Button("Change Animation")) {
 						loadAnimationsMenu = true;
@@ -1027,7 +1034,7 @@ void ManagerImGui::InspectorWindow() {
 				if (ImGui::BeginPopupModal("Load animation", &loadAnimationsMenu)) {
 
 					ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 5.0f);
-					ImGui::BeginChild("Texture Browser", ImVec2(0, 300), true);
+					ImGui::BeginChild("Animation Browser", ImVec2(0, 300), true);
 
 					std::vector<std::string> files;
 
@@ -1313,3 +1320,78 @@ bool ManagerImGui::MouseIsInside(ImVec2 position, ImVec2 size) {
 }
 
 
+void ManagerImGui::AnimationEventEditor(GameObject* focus) {
+
+	if (focus != nullptr) {
+
+		ImGuiWindowFlags flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_AlwaysAutoResize;
+		Animation* anim = focus->animation;
+		int eventIndex = 0;
+
+		if (anim != nullptr) {
+
+			ImGui::OpenPopup("Animation Editor");
+
+			if (ImGui::BeginPopupModal("Animation Editor", &animationEventEditor)) {
+
+				ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 5.0f);
+				ImGui::BeginChild("Animation list", ImVec2(0, 300), true);
+
+				for (uint i = 0; i < anim->animationVec.size(); i++) {
+
+					bool controller = true;
+					std::string auxName = "##" + std::to_string(i);
+
+					if (ImGui::TreeNodeEx(anim->animationVec[i].name.c_str(), ImGuiTreeNodeFlags_Leaf)) { ImGui::TreePop(); }
+					std::string durationShowcase = "Frames " + std::to_string(anim->animationVec[i].duration) + "/ Ticks " + std::to_string(anim->animationVec[i].ticksPerSecond) + " = duration " + std::to_string(anim->animationVec[i].realDuration);
+					ImGui::Text(durationShowcase.c_str());
+
+					ImGui::NewLine();
+
+					ImGui::Indent();
+
+					while (controller) {
+
+						if (anim->animationEventVec.size() > eventIndex) {
+
+							AnimationEvent* data = &anim->animationEventVec[eventIndex];
+
+							if (data->animationId == i) {
+
+								ImGui::InputFloat(("Frame" + auxName + std::to_string(eventIndex)).c_str(), &data->animationKeyFrame);
+								ImGui::InputInt(("EventId" + auxName + std::to_string(eventIndex)).c_str(), &data->eventId);
+								ImGui::Checkbox(("Trigger once" + auxName + std::to_string(eventIndex)).c_str(), &data->onlyOnce);
+
+								if (ImGui::Button(("Delete event" + auxName + std::to_string(eventIndex)).c_str())) { anim->animationEventVec.erase(anim->animationEventVec.begin() + eventIndex); }
+								ImGui::NewLine();
+								eventIndex++;
+
+							}
+							else { controller = false; }
+
+						}
+						else { controller = false; }
+
+					}
+
+					if (ImGui::Button(("Add event" + auxName).c_str())) { anim->animationEventVec.insert(anim->animationEventVec.begin() + eventIndex, AnimationEvent(i, 0, -1)); }
+
+					ImGui::NewLine();
+
+					ImGui::Unindent();
+
+				}
+
+				ImGui::EndChild();
+				ImGui::PopStyleVar();
+
+
+				ImGui::EndPopup();
+
+			}
+
+		}
+
+	}
+
+}
