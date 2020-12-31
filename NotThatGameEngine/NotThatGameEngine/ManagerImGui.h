@@ -90,6 +90,7 @@ private:
 	bool loadFileMenu;
 	bool loadMeshMenu;
 	bool loadTexturesMenu;
+	bool loadAnimationsMenu;
 	bool referenceMenu;
 	bool playWindow;
 

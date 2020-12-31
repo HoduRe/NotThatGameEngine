@@ -305,6 +305,11 @@ void ResourceManager::LoadResourceByPath(std::string filePath, std::string fileN
 			DataLoading::LoadCamera(buffer, (Camera*)component);
 			break;
 
+		case ResourceEnum::ANIMATION:
+
+			DataLoading::LoadAnimation((char*)buffer, App->editorScene->GetFocus()->animation);
+			break;
+
 		case ResourceEnum::UNKNOWN:
 			break;
 
@@ -535,13 +540,14 @@ ResourceEnum ResourceManager::GetTypeByExtension(std::string extension) {
 
 	extension = "." + extension;
 
-	static_assert(static_cast<int>(ResourceEnum::UNKNOWN) == 8, "Code Needs Update");
+	static_assert(static_cast<int>(ResourceEnum::UNKNOWN) == 9, "Code Needs Update");
 
 	if (extension == EXTENSION_SCENES) { return ResourceEnum::SCENE; }
 	else if (extension == EXTENSION_MODELS) { return ResourceEnum::OWN_MODEL; }
 	else if (extension == EXTENSION_MESHES) { return ResourceEnum::MESH; }
 	else if (extension == EXTENSION_MATERIALS) { return ResourceEnum::MATERIAL; }
 	else if (extension == EXTENSION_CAMERA) { return ResourceEnum::CAMERA; }
+	else if (extension == EXTENSION_ANIMATIONS) { return ResourceEnum::ANIMATION; }
 	else if (extension == ".FBX" || extension == ".fbx" || extension == ".OBJ" || extension == ".obj") { return ResourceEnum::EXTERNAL_MODEL; }
 	else if (extension == ".tga" || extension == ".png" || extension == ".jpg" || extension == ".dds" || extension == ".TGA"
 		|| extension == ".PNG" || extension == ".JPG" || extension == ".DDS" || extension == ".jpeg" || extension == ".JPEG" || extension == EXTENSION_TEXTURES) {
@@ -560,6 +566,7 @@ std::string ResourceManager::GetExtensionByType(ResourceEnum type) {
 	else if (type == ResourceEnum::MESH) { return EXTENSION_MESHES; }
 	else if (type == ResourceEnum::MATERIAL) { return EXTENSION_MATERIALS; }
 	else if (type == ResourceEnum::CAMERA) { return EXTENSION_CAMERA; }
+	else if (type == ResourceEnum::ANIMATION) { return EXTENSION_ANIMATIONS; }
 	else if (type == ResourceEnum::EXTERNAL_MODEL) { return ".fbx"; }
 	else if (type == ResourceEnum::TEXTURE) { return EXTENSION_TEXTURES; }
 
@@ -575,6 +582,7 @@ std::string ResourceManager::GetPathByType(ResourceEnum type) {
 	else if (type == ResourceEnum::MESH) { return MESHES_PATH; }
 	else if (type == ResourceEnum::MATERIAL) { return MATERIALS_PATH; }
 	else if (type == ResourceEnum::CAMERA) { return CAMERAS_PATH; }
+	else if (type == ResourceEnum::ANIMATION) { return ANIMATIONS_PATH; }
 	else if (type == ResourceEnum::TEXTURE) { return TEXTURES_PATH; }
 
 	return std::string();
@@ -597,6 +605,10 @@ ResourceEnum ResourceManager::ConvertComponentTypeToResourceType(COMPONENT_TYPE*
 	case COMPONENT_TYPE::MATERIAL:
 
 		return ResourceEnum::MATERIAL;
+
+	case COMPONENT_TYPE::ANIMATION:
+
+		return ResourceEnum::ANIMATION;
 
 	default:
 

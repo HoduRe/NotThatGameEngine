@@ -45,6 +45,7 @@ enum class ResourceEnum {
 	NONE,
 
 	CAMERA,
+	ANIMATION,
 	EXTERNAL_MODEL,
 	MESH,
 	MATERIAL,

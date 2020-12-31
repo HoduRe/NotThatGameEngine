@@ -34,7 +34,7 @@ fullscreen(WIN_FULLSCREEN), resizable(WIN_RESIZABLE), borderless(WIN_BORDERLESS)
 AVX(false), AVX2(false), AltiVec(false), MMX(false), RDTSC(false), SSE(false), SSE2(false), SSE3(false), SSE41(false), SSE42(false),
 showDemoWindow(false), defaultButtonsMenu(false), aboutWindow(false), configMenu(false), appActive(false), consoleMenu(true), sceneWindow(true), hierarchyWindow(true), inspectorWindow(true),
 Devil(), Assimp(), PhysFS(), GLEW(), loadFileMenu(false), selectedFilePath(), position(), rotationEuler(), scaling(), itemHovered(nullptr), itemFocusedLastFrame(nullptr), loadMeshMenu(false),
-deletedFileName(), dragDropFile(), loadTexturesMenu(false), hierarchyWindowPos(), hierarchyWindowSize(), hasHierarchyFocus(false), referenceMenu(true), gameMode(false), playWindow(true)
+deletedFileName(), dragDropFile(), loadTexturesMenu(false), hierarchyWindowPos(), hierarchyWindowSize(), hasHierarchyFocus(false), referenceMenu(true), gameMode(false), playWindow(true), loadAnimationsMenu(false)
 {}
 
 
@@ -986,8 +986,17 @@ void ManagerImGui::InspectorWindow() {
 
 			if (ImGui::CollapsingHeader("Animation")) {
 
-				if (animation == nullptr) { ImGui::Text("Funny you, there's no animation."); }
+				if (animation == nullptr) {
+					ImGui::Text("Funny you, there's no animation.");
+					if (ImGui::Button("Add animation")) { focus->AddComponent(COMPONENT_TYPE::ANIMATION); }
+				}
 				else {
+
+					if (ImGui::Button("Change Animation")) {
+						loadAnimationsMenu = true;
+						selectedFilePath.clear();
+					}
+					ImGui::NewLine();
 
 					for (uint i = 0; i < animation->animationVec.size(); i++) {
 
@@ -1000,6 +1009,69 @@ void ManagerImGui::InspectorWindow() {
 						ImGui::NewLine();
 
 					}
+
+				}
+
+			}
+
+			if (loadAnimationsMenu) {
+
+				ImGui::OpenPopup("Load animation");
+
+				if (ImGui::BeginPopupModal("Load animation", &loadAnimationsMenu)) {
+
+					ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 5.0f);
+					ImGui::BeginChild("Texture Browser", ImVec2(0, 300), true);
+
+					std::vector<std::string> files;
+
+					App->externalManager->DiscoverFiles(ANIMATIONS_PATH, files);
+					std::sort(files.begin(), files.end());
+
+					for (uint i = 0; i < files.size(); i++) {
+
+						if (ImGui::TreeNodeEx(files[i].c_str(), ImGuiTreeNodeFlags_Leaf)) {
+
+							if (ImGui::IsItemClicked()) {
+
+								selectedFilePath = (ANIMATIONS_PATH + files[i]).c_str();
+
+								if (ImGui::IsMouseDoubleClicked(0)) {
+
+									App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)selectedFilePath.c_str());
+									loadAnimationsMenu = false;
+
+								}
+
+							}
+
+							ImGui::TreePop();
+
+						}
+
+					}
+
+					ImGui::EndChild();
+					ImGui::PopStyleVar();
+
+					ImGui::PushItemWidth(250.f);
+					ImGui::Text("%s", (char*)selectedFilePath.c_str(), FILE_MAX_LENGTH, ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll);
+
+					ImGui::PopItemWidth();
+					ImGui::SameLine();
+
+					if (ImGui::Button("Ok", ImVec2(50, 20))) {
+
+						App->eventManager->GenerateEvent(EVENT_ENUM::FILE_LOADING, EVENT_ENUM::NULL_EVENT, (char*)selectedFilePath.c_str());
+						loadAnimationsMenu = false;
+
+					}
+
+					ImGui::SameLine();
+
+					if (ImGui::Button("Cancel", ImVec2(50, 20))) { selectedFilePath[0] = '\0'; }
+
+					ImGui::EndPopup();
 
 				}
 

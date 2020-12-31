@@ -273,6 +273,7 @@ void DataLoading::LoadAnimation(char* fileBuffer, Animation* animation) {
 	int intSize = sizeof(int);
 	int floatSize = sizeof(float);
 	int boolSize = sizeof(bool);
+	int auxVecSize = animation->animationVec.size();
 
 	int animationVecSize, nameSize, mapSize;
 
@@ -322,8 +323,8 @@ void DataLoading::LoadAnimation(char* fileBuffer, Animation* animation) {
 			memcpy(name, cursor, nameSize);
 			cursor += nameSize;
 
-			animation->animationVec[i].channels.insert(std::pair <std::string, Channels>(name, Channels()));
-			std::map<std::string, Channels>::iterator channelIt = prev(animation->animationVec[i].channels.end());
+			animation->animationVec[auxVecSize + i].channels.insert(std::pair <std::string, Channels>(name, Channels()));
+			std::map<std::string, Channels>::iterator channelIt = prev(animation->animationVec[auxVecSize + i].channels.end());
 
 			memcpy(&mapSize, cursor, intSize);
 			cursor += intSize;

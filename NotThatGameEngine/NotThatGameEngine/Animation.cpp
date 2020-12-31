@@ -138,7 +138,7 @@ void Animation::UpdateGameObjectsTransformRecursively(GameObject* gameObject, co
 		if (previousFrame != -1.0f) {
 
 			Channels* previousChannel = (Channels*)&animationVec[previousAnimationIndex].channels.find(gameObject->name)->second;
-			float blendWeight = (animationVec[previousAnimationIndex].duration - animationVec[previousAnimationIndex].time) / animationVec[previousAnimationIndex].duration;
+			float blendWeight = (animationVec[previousAnimationIndex].duration - (animationVec[previousAnimationIndex].time * animationVec[previousAnimationIndex].ticksPerSecond)) / animationVec[previousAnimationIndex].duration;
 
 			position = float3::Lerp(GetUpdatedChannelPosition(previousChannel, previousFrame, gameObject->transform->GetPosition()), position, blendWeight);
 			rotation = Quat::Slerp(GetUpdatedChannelRotation(previousChannel, previousFrame, gameObject->transform->GetEulerQuat()), rotation, blendWeight);
