@@ -335,6 +335,13 @@ void DataSaving::SaveAnimation(Application* App, Animation* animation) {
 
 	}
 
+	bufferSize += sizeInt;
+	for (int i = 0; i < animation->animationEventVec.size(); i++) {
+		bufferSize += sizeFloat;
+		bufferSize += (sizeInt * 2);
+		bufferSize += (sizeBool * 2);
+	}
+
 	buffer = new char[bufferSize];
 	char* cursor = buffer;
 
@@ -440,6 +447,30 @@ void DataSaving::SaveAnimation(Application* App, Animation* animation) {
 			}
 
 		}
+
+	}
+
+	varSize = animation->animationEventVec.size();
+	memcpy(cursor, &varSize, sizeInt);
+	cursor += sizeInt;
+
+	for (int i = 0; i < animation->animationEventVec.size(); i++) {
+
+		memcpy(cursor, &animation->animationEventVec[i].animationId, sizeInt);
+		cursor += sizeInt;
+
+		memcpy(cursor, &animation->animationEventVec[i].animationKeyFrame, sizeFloat);
+		cursor += sizeFloat;
+
+		memcpy(cursor, &animation->animationEventVec[i].eventId, sizeInt);
+		cursor += sizeInt;
+
+		memcpy(cursor, &animation->animationEventVec[i].eventTriggered, sizeBool);
+		cursor += sizeBool;
+
+		memcpy(cursor, &animation->animationEventVec[i].onlyOnce, sizeBool);
+		cursor += sizeBool;
+
 
 	}
 

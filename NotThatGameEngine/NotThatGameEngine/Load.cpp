@@ -282,6 +282,9 @@ void DataLoading::LoadAnimation(char* fileBuffer, Animation* animation) {
 	float ticksPerSecond;
 	int channelsAmount;
 	bool playing, loop;
+	int eventId, animationId;
+	bool onlyOnce, eventTriggered;
+	float animationKey;
 
 	float time, x, y, z, w;
 
@@ -308,7 +311,7 @@ void DataLoading::LoadAnimation(char* fileBuffer, Animation* animation) {
 
 		memcpy(&playing, cursor, boolSize);
 		cursor += boolSize;
-		
+
 		memcpy(&loop, cursor, boolSize);
 		cursor += boolSize;
 
@@ -393,6 +396,30 @@ void DataLoading::LoadAnimation(char* fileBuffer, Animation* animation) {
 			}
 
 		}
+
+	}
+
+	memcpy(&mapSize, cursor, intSize);
+	cursor += intSize;
+
+	for (int i = 0; i < mapSize; i++) {
+
+		memcpy(&animationId, cursor, intSize);
+		cursor += intSize;
+
+		memcpy(&animationKey, cursor, floatSize);
+		cursor += floatSize;
+
+		memcpy(&eventId, cursor, intSize);
+		cursor += intSize;
+
+		memcpy(&eventTriggered, cursor, boolSize);
+		cursor += boolSize;
+
+		memcpy(&onlyOnce, cursor, boolSize);
+		cursor += boolSize;
+
+		animation->animationEventVec.push_back(AnimationEvent(animationId, animationKey, eventId, onlyOnce, eventTriggered));
 
 	}
 

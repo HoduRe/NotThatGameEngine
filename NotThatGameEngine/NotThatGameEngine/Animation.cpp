@@ -24,8 +24,8 @@ AnimationData::AnimationData(std::string _name, float _duration, float _ticks, b
 AnimationData::~AnimationData() {}
 
 
-AnimationEvent::AnimationEvent(float _animationId, float _animationKeyFrame, int _eventId, bool _onlyOnce) :
-	animationId(_animationId), animationKeyFrame(_animationKeyFrame), eventId(_eventId), onlyOnce(_onlyOnce), eventTriggered(false) {}
+AnimationEvent::AnimationEvent(int _animationId, float _animationKeyFrame, int _eventId, bool _onlyOnce, bool _eventTriggered) :
+	animationId(_animationId), animationKeyFrame(_animationKeyFrame), eventId(_eventId), onlyOnce(_onlyOnce), eventTriggered(_eventTriggered) {}
 
 
 Animation::Animation(long long int _id, GameObject* _gameObject) : Component(_id, _gameObject, COMPONENT_TYPE::ANIMATION), animationVec(),
@@ -351,6 +351,8 @@ void Animation::AnimateMesh(Mesh* mesh) {
 
 
 void Animation::ManageAnimationEvents() {
+
+	// Here should probably go an if(gamemode){}, but for testing purposes I'll leave it like this until we implement engine to Projecte 3. Unless mine doesn't get chosen, in which case, RIP
 
 	AnimationData* data = nullptr;
 

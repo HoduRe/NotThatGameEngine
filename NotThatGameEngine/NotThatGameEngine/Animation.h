@@ -20,9 +20,9 @@ struct Channels {
 
 struct AnimationEvent {
 
-	AnimationEvent(float _animationId, float _animationKeyFrame, int _eventId, bool _onlyOnce = false);
+	AnimationEvent(int _animationId, float _animationKeyFrame, int _eventId, bool _onlyOnce = false, bool _eventTriggered = false);
 
-	float animationId;
+	int animationId;
 	float animationKeyFrame;
 	int eventId;
 	bool onlyOnce;
