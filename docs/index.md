@@ -29,9 +29,9 @@ Nonetheless, a list of useful features of the engine:
 - Object transforming: user can change an object's position, rotation and scale. Note that pressing 1 or 2 will trigger animations on the robotto model. That's for assignment specific reasons, ignore it
 - Component importing: any mesh / material / animation can be added to any other object
 - Component / object drop: dropping a mesh / material / texture / model... onto the Engine either adds it to the focused element or adds it to the scene
-- Resource management: 
-- Scene serialization
-- Start / Stop / Tick system
+- Resource management: there is a perfectly (I think) functional resource manager, as long as the Library/ folder's content isn't altered (in any case, you can delete it to "reset" any corrupted material there may be). But it doesn't use traditional resource managing, that is, resource pattern
+- Scene serialization: scene can be saved and loaded
+- Start / Stop / Tick system: in a very rudimentary way, you can toggle editor mode and game mode. In reality, this only affects animations, but it's there, I guess
 
 Gif 1
 Gif 2
