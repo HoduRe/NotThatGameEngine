@@ -5,6 +5,9 @@ An engine for CITM's Engine project, which focuses on providing a functional sys
 - [Me (Hodu)](https://github.com/ferba93)<br/>
 - Lots of [hopes and dreams](https://images-na.ssl-images-amazon.com/images/I/91Hv6KacesL.jpg)<br/>
 
+## Project web:
+- [Web](https://github.com/ferba93)<br/>
+
 ## Instructions:
 - Camera controls:<br/>
 	<ul>
@@ -20,11 +23,12 @@ An engine for CITM's Engine project, which focuses on providing a functional sys
 - Create GO creates a game object, child to whatever is focused<br/>
 - Delete GO deletes the focused game object and its childs<br/>
 - Game objects that have focus can be deleted with Supr / Delete key<br/>
+- Animations (that are correctly assembled into a model) can be reproduced in editor mode or game mode<br/>
+- A system of play - stop - tick to simulate the game can be triggered through the correspondant buttons<br/>
 
 ## Additional functionality:
 - Windows have docking options enabled<br/>
-- Transforms input don't take other values but numbers and operators<br/>
-- Trees can be moved through with keyboard input (but focus is only on click)<br/>
+- Animations have an event system tied to the Animation Event Editor, which opens a window that allows tying events to animation keyframes<br/>
 
 ## Additional comments:
 - For user use: "Assets/", the program uses: "Library/" <br/>
