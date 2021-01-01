@@ -4,18 +4,15 @@
 Transform::Transform(long long int _id, GameObject* _gameObject) : Component(_id, _gameObject, COMPONENT_TYPE::TRANSFORM), position(0.0f, 0.0f, 0.0f),
 rotationEuler(0.0f, 0.0f, 0.0f), scale(1.0f, 1.0f, 1.0f), rotation(Quat::identity) {
 	RecalculateTransform();
-	RecalculateTransformFromParent();
 }
 
 
 Transform::~Transform() {}
 
 
-void Transform::RecalculateTransformFromParent() {
+void Transform::RecalculateTransformFromParent(float4x4& parentTransform) {
 
-	if (owner->parent != nullptr) { owner->worldTransform = owner->parent->worldTransform * transform; }
-	else { owner->worldTransform = transform; }
-
+	owner->worldTransform = parentTransform * transform;
 	transform.Decompose(position, rotation, scale);
 	RecalculateEulerAngles();
 
