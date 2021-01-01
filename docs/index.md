@@ -1,8 +1,6 @@
-## Welcome to GitHub Pages
+## What is NotThatGameEngine?
 
-You can use the [editor on GitHub](https://github.com/ferba93/NotThatGameEngine/edit/master/docs/index.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+NotThatGameEngine is my personal attempt to create a skeletal animation system that is functional is the context of a pseudo-engine. Its reason to be is found in the Enginge subject from CITM's third year of the Videogame Design & Development degree, conducted by our lovely teacher [Marc Garrigó](https://www.linkedin.com/in/mgarrigo/). His engine has been used as reference: [ThorEngine](https://github.com/markitus18/Thor-Engine).
 
 ### Markdown
 
