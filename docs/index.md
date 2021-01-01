@@ -33,10 +33,14 @@ Nonetheless, a list of useful features of the engine:
 - Scene serialization: scene can be saved and loaded
 - Start / Stop / Tick system: in a very rudimentary way, you can toggle editor mode and game mode. In reality, this only affects animations, but it's there, I guess
 
-Gif 1
-Gif 2
+### Material
 
-Video saving and loading animations and its events
+Engine showcase gifs:
+https://github.com/ferba93/NotThatGameEngine/blob/master/docs/EngineShowcase1.gif
+https://github.com/ferba93/NotThatGameEngine/blob/master/docs/EngineShowcase2.gif
+
+Animation usage in the editor:
+https://github.com/ferba93/NotThatGameEngine/blob/master/docs/EngineVideo.mp4
 
 ### Links
 
