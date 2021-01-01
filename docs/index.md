@@ -6,7 +6,7 @@ NotThatGameEngine is my personal attempt to create a skeletal animation system t
 
 Me: I did everything. Well, props to hopes & dreams for being there as well, and Thor Engine, because let's face it, having reference makes things easier. A photo of me:
 
-<img src="NotThatGameEngine/docs/Hando.jpg">
+<img src="https://github.com/ferba93/NotThatGameEngine/blob/master/docs/Hando.jpg">
 
 ### Skeletical animation
 
