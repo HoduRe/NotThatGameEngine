@@ -50,8 +50,7 @@ void GameObject::PostUpdate(int focusId) {
 
 	if (enabled) {
 
-		if (parent != nullptr) { transform->RecalculateTransformFromParent(parent->worldTransform); }
-		else { worldTransform = transform->transform; }
+		transform->RecalculateTransformFromParent();
 		if (camera != nullptr) { camera->UpdateTransform(); }
 		if (animation != nullptr) { animation->PlayAnimation(); }
 

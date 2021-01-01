@@ -13,7 +13,7 @@ public:
 	Transform(long long int _id, GameObject* _gameObject);
 	~Transform();
 
-	void RecalculateTransformFromParent(float4x4& parentPosition);
+	void RecalculateTransformFromParent();
 
 	void SetPosition(float3 position);
 	void SetRotation(Quat _rotation);
