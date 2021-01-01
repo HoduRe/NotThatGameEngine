@@ -6,7 +6,7 @@ An engine for CITM's Engine project, which focuses on providing a functional sys
 - Lots of [hopes and dreams](https://images-na.ssl-images-amazon.com/images/I/91Hv6KacesL.jpg)<br/>
 
 ## Project web:
-- [Web](https://github.com/ferba93)<br/>
+- [Web](https://ferba93.github.io/NotThatGameEngine/)<br/>
 
 ## Instructions:
 - Camera controls:<br/>
