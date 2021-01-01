@@ -2,7 +2,7 @@
     "GameObjects": [
         {
             "Name": "aniTest",
-            "ID": 926272659,
+            "ID": 1542182606,
             "ParentID": 0,
             "Translation": [
                 0,
@@ -23,14 +23,14 @@
             "Components": [
                 {
                     "ComponentType": 5,
-                    "ComponentID": 353213979
+                    "ComponentID": 1133448776
                 }
             ]
         },
         {
             "Name": "Object02",
-            "ID": 1242356476,
-            "ParentID": 926272659,
+            "ID": 555313267,
+            "ParentID": 1542182606,
             "Translation": [
                 0,
                 0,
@@ -50,18 +50,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 626333166
+                    "ComponentID": 197358224
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1285897751
+                    "ComponentID": 676539598
                 }
             ]
         },
         {
             "Name": "transform1",
-            "ID": 2048849024,
-            "ParentID": 926272659,
+            "ID": 316864866,
+            "ParentID": 1542182606,
             "Translation": [
                 -1.116104,
                 15.688704,
@@ -82,8 +82,8 @@
         },
         {
             "Name": "Bip001 Pelvis",
-            "ID": 611615223,
-            "ParentID": 2048849024,
+            "ID": 1496813802,
+            "ParentID": 316864866,
             "Translation": [
                 0,
                 0,
@@ -104,8 +104,8 @@
         },
         {
             "Name": "Bip001 Spine",
-            "ID": 957687767,
-            "ParentID": 611615223,
+            "ID": 882254720,
+            "ParentID": 1496813802,
             "Translation": [
                 0.627852,
                 0.318001,
@@ -126,8 +126,8 @@
         },
         {
             "Name": "Bip001 Spine1",
-            "ID": 107754251,
-            "ParentID": 957687767,
+            "ID": 1128589626,
+            "ParentID": 882254720,
             "Translation": [
                 1.798031,
                 -0.001359,
@@ -148,8 +148,8 @@
         },
         {
             "Name": "Bip001 Neck",
-            "ID": 798329900,
-            "ParentID": 107754251,
+            "ID": 1406675310,
+            "ParentID": 1128589626,
             "Translation": [
                 2.997202,
                 -0.234361,
@@ -170,8 +170,8 @@
         },
         {
             "Name": "Bip001 L Clavicle",
-            "ID": 1501699893,
-            "ParentID": 798329900,
+            "ID": 297519722,
+            "ParentID": 1406675310,
             "Translation": [
                 -0.455274,
                 -0.096788,
@@ -192,8 +192,8 @@
         },
         {
             "Name": "Bip001 L UpperArm",
-            "ID": 1754380005,
-            "ParentID": 1501699893,
+            "ID": 1140790047,
+            "ParentID": 297519722,
             "Translation": [
                 0.986254,
                 0.000000,
@@ -214,8 +214,8 @@
         },
         {
             "Name": "Bip001 L Forearm",
-            "ID": 1410421333,
-            "ParentID": 1754380005,
+            "ID": 408661539,
+            "ParentID": 1140790047,
             "Translation": [
                 2.375838,
                 0,
@@ -236,8 +236,8 @@
         },
         {
             "Name": "Bip001 L Hand",
-            "ID": 1253865718,
-            "ParentID": 1410421333,
+            "ID": 1561651263,
+            "ParentID": 408661539,
             "Translation": [
                 1.846415,
                 0.000000,
@@ -258,8 +258,8 @@
         },
         {
             "Name": "Bip001 L Finger0",
-            "ID": 174902328,
-            "ParentID": 1253865718,
+            "ID": 920501007,
+            "ParentID": 1561651263,
             "Translation": [
                 0.940946,
                 0.081812,
@@ -280,8 +280,8 @@
         },
         {
             "Name": "Bip001 L Finger01",
-            "ID": 642699198,
-            "ParentID": 174902328,
+            "ID": 993614573,
+            "ParentID": 920501007,
             "Translation": [
                 0.517244,
                 0.000000,
@@ -302,8 +302,8 @@
         },
         {
             "Name": "Bip001 L Finger02",
-            "ID": 391595066,
-            "ParentID": 642699198,
+            "ID": 1696949669,
+            "ParentID": 993614573,
             "Translation": [
                 0.304696,
                 0,
@@ -324,8 +324,8 @@
         },
         {
             "Name": "Bip001 L Finger1",
-            "ID": 935191321,
-            "ParentID": 1253865718,
+            "ID": 1667549391,
+            "ParentID": 1561651263,
             "Translation": [
                 1.770775,
                 0.000361,
@@ -346,8 +346,8 @@
         },
         {
             "Name": "Bip001 L Finger11",
-            "ID": 1545749595,
-            "ParentID": 935191321,
+            "ID": 1342710344,
+            "ParentID": 1667549391,
             "Translation": [
                 0.341537,
                 0.000000,
@@ -368,8 +368,8 @@
         },
         {
             "Name": "Bip001 L Finger12",
-            "ID": 1932035031,
-            "ParentID": 1545749595,
+            "ID": 873705714,
+            "ParentID": 1342710344,
             "Translation": [
                 0.252604,
                 -0.000000,
@@ -390,8 +390,8 @@
         },
         {
             "Name": "Bip001 R Clavicle",
-            "ID": 425179759,
-            "ParentID": 798329900,
+            "ID": 791213119,
+            "ParentID": 1406675310,
             "Translation": [
                 0.267881,
                 -0.097360,
@@ -412,8 +412,8 @@
         },
         {
             "Name": "Bip001 R UpperArm",
-            "ID": 525411091,
-            "ParentID": 425179759,
+            "ID": 2093012349,
+            "ParentID": 791213119,
             "Translation": [
                 0.986254,
                 -0.000000,
@@ -434,8 +434,8 @@
         },
         {
             "Name": "Bip001 R Forearm",
-            "ID": 1556607160,
-            "ParentID": 525411091,
+            "ID": 109882544,
+            "ParentID": 2093012349,
             "Translation": [
                 2.375838,
                 0.000000,
@@ -456,8 +456,8 @@
         },
         {
             "Name": "Bip001 R Hand",
-            "ID": 1932324152,
-            "ParentID": 1556607160,
+            "ID": 795845210,
+            "ParentID": 109882544,
             "Translation": [
                 1.846414,
                 -0.000001,
@@ -478,8 +478,8 @@
         },
         {
             "Name": "Bip001 R Finger0",
-            "ID": 1226720077,
-            "ParentID": 1932324152,
+            "ID": 313789163,
+            "ParentID": 795845210,
             "Translation": [
                 0.940946,
                 0.081812,
@@ -500,8 +500,8 @@
         },
         {
             "Name": "Bip001 R Finger01",
-            "ID": 53839627,
-            "ParentID": 1226720077,
+            "ID": 2111659939,
+            "ParentID": 313789163,
             "Translation": [
                 0.517245,
                 0,
@@ -522,8 +522,8 @@
         },
         {
             "Name": "Bip001 R Finger02",
-            "ID": 1009707352,
-            "ParentID": 53839627,
+            "ID": 1293623146,
+            "ParentID": 2111659939,
             "Translation": [
                 0.304696,
                 0.000000,
@@ -544,8 +544,8 @@
         },
         {
             "Name": "Bip001 R Finger1",
-            "ID": 1105852694,
-            "ParentID": 1932324152,
+            "ID": 20376133,
+            "ParentID": 795845210,
             "Translation": [
                 1.770776,
                 0.000361,
@@ -566,8 +566,8 @@
         },
         {
             "Name": "Bip001 R Finger11",
-            "ID": 1134180377,
-            "ParentID": 1105852694,
+            "ID": 1267548573,
+            "ParentID": 20376133,
             "Translation": [
                 0.341537,
                 0,
@@ -588,8 +588,8 @@
         },
         {
             "Name": "Bip001 R Finger12",
-            "ID": 1945810574,
-            "ParentID": 1134180377,
+            "ID": 1453694662,
+            "ParentID": 1267548573,
             "Translation": [
                 0.252603,
                 -0.000000,
@@ -610,8 +610,8 @@
         },
         {
             "Name": "Bip001 Head",
-            "ID": 1714552400,
-            "ParentID": 798329900,
+            "ID": 1066747286,
+            "ParentID": 1406675310,
             "Translation": [
                 1.101905,
                 -0.000001,
@@ -632,8 +632,8 @@
         },
         {
             "Name": "Bone001",
-            "ID": 974121905,
-            "ParentID": 1714552400,
+            "ID": 1585834405,
+            "ParentID": 1066747286,
             "Translation": [
                 0.192795,
                 0.020197,
@@ -654,8 +654,8 @@
         },
         {
             "Name": "Bip001 L Thigh",
-            "ID": 1807575745,
-            "ParentID": 957687767,
+            "ID": 947850941,
+            "ParentID": 882254720,
             "Translation": [
                 -0.628105,
                 -0.317504,
@@ -676,8 +676,8 @@
         },
         {
             "Name": "Bip001 L Calf",
-            "ID": 541744798,
-            "ParentID": 1807575745,
+            "ID": 305374698,
+            "ParentID": 947850941,
             "Translation": [
                 2.656434,
                 0.000000,
@@ -698,8 +698,8 @@
         },
         {
             "Name": "Bip001 L Foot",
-            "ID": 559289297,
-            "ParentID": 541744798,
+            "ID": 403744158,
+            "ParentID": 305374698,
             "Translation": [
                 3.316416,
                 -0.000000,
@@ -720,8 +720,8 @@
         },
         {
             "Name": "Bip001 L Toe0",
-            "ID": 106659033,
-            "ParentID": 559289297,
+            "ID": 658568535,
+            "ParentID": 403744158,
             "Translation": [
                 0.806603,
                 1.325963,
@@ -742,8 +742,8 @@
         },
         {
             "Name": "Bip001 R Thigh",
-            "ID": 1857568814,
-            "ParentID": 957687767,
+            "ID": 1424111785,
+            "ParentID": 882254720,
             "Translation": [
                 -0.628105,
                 -0.317498,
@@ -764,8 +764,8 @@
         },
         {
             "Name": "Bip001 R Calf",
-            "ID": 38209860,
-            "ParentID": 1857568814,
+            "ID": 914085142,
+            "ParentID": 1424111785,
             "Translation": [
                 2.656434,
                 0.000000,
@@ -786,8 +786,8 @@
         },
         {
             "Name": "Bip001 R Foot",
-            "ID": 1623908074,
-            "ParentID": 38209860,
+            "ID": 991275984,
+            "ParentID": 914085142,
             "Translation": [
                 3.316417,
                 -0.000000,
@@ -808,8 +808,8 @@
         },
         {
             "Name": "Bip001 R Toe0",
-            "ID": 1679939992,
-            "ParentID": 1623908074,
+            "ID": 2090802072,
+            "ParentID": 991275984,
             "Translation": [
                 0.806603,
                 1.325963,

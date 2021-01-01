@@ -2,7 +2,7 @@
     "GameObjects": [
         {
             "Name": "Street environment_V01",
-            "ID": 63327843,
+            "ID": 1763930520,
             "ParentID": 0,
             "Translation": [
                 0,
@@ -23,14 +23,14 @@
             "Components": [
                 {
                     "ComponentType": 5,
-                    "ComponentID": 229176049
+                    "ComponentID": 2048549899
                 }
             ]
         },
         {
             "Name": "Sky001",
-            "ID": 163830212,
-            "ParentID": 63327843,
+            "ID": 606895578,
+            "ParentID": 1763930520,
             "Translation": [
                 18.153732,
                 0,
@@ -51,8 +51,8 @@
         },
         {
             "Name": "Dummy001",
-            "ID": 737540435,
-            "ParentID": 63327843,
+            "ID": 936281213,
+            "ParentID": 1763930520,
             "Translation": [
                 0,
                 0,
@@ -73,8 +73,8 @@
         },
         {
             "Name": "City_building_004",
-            "ID": 1968625365,
-            "ParentID": 737540435,
+            "ID": 115709235,
+            "ParentID": 936281213,
             "Translation": [
                 -41.475891,
                 21.014099,
@@ -94,18 +94,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1710521942
+                    "ComponentID": 274718377
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1689963244
+                    "ComponentID": 678764935
                 }
             ]
         },
         {
             "Name": "City_building_001",
-            "ID": 965217831,
-            "ParentID": 737540435,
+            "ID": 581490038,
+            "ParentID": 936281213,
             "Translation": [
                 17.707165,
                 20.053276,
@@ -125,18 +125,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1883625131
+                    "ComponentID": 1376248789
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1628857649
+                    "ComponentID": 1539060770
                 }
             ]
         },
         {
             "Name": "City_building_007",
-            "ID": 372330127,
-            "ParentID": 737540435,
+            "ID": 1703706001,
+            "ParentID": 936281213,
             "Translation": [
                 16.010492,
                 37.493286,
@@ -156,18 +156,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 708568662
+                    "ComponentID": 106052658
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1411961865
+                    "ComponentID": 443324232
                 }
             ]
         },
         {
             "Name": "City_building_008",
-            "ID": 1868152577,
-            "ParentID": 737540435,
+            "ID": 1751220870,
+            "ParentID": 936281213,
             "Translation": [
                 40.979996,
                 18.270824,
@@ -187,18 +187,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 85628540
+                    "ComponentID": 1230547816
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 129979268
+                    "ComponentID": 256884318
                 }
             ]
         },
         {
             "Name": "Line002",
-            "ID": 303482762,
-            "ParentID": 737540435,
+            "ID": 511615492,
+            "ParentID": 936281213,
             "Translation": [
                 -2.159772,
                 1.853838,
@@ -218,18 +218,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1488208583
+                    "ComponentID": 85595845
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 926240234
+                    "ComponentID": 1204320
                 }
             ]
         },
         {
             "Name": "Plane001",
-            "ID": 1829254016,
-            "ParentID": 737540435,
+            "ID": 1018399390,
+            "ParentID": 936281213,
             "Translation": [
                 -0.028603,
                 0.026032,
@@ -249,18 +249,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1786555932
+                    "ComponentID": 2002853636
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1705191179
+                    "ComponentID": 264824952
                 }
             ]
         },
         {
             "Name": "City_building_010",
-            "ID": 123646248,
-            "ParentID": 737540435,
+            "ID": 663841838,
+            "ParentID": 936281213,
             "Translation": [
                 25.154011,
                 -39.153721,
@@ -280,18 +280,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 489535981
+                    "ComponentID": 1779189136
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1419055311
+                    "ComponentID": 2070078496
                 }
             ]
         },
         {
             "Name": "City_building_011",
-            "ID": 1260974832,
-            "ParentID": 737540435,
+            "ID": 1337036311,
+            "ParentID": 936281213,
             "Translation": [
                 30.134541,
                 37.493286,
@@ -311,18 +311,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 2075061247
+                    "ComponentID": 935865192
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 171692756
+                    "ComponentID": 1216682252
                 }
             ]
         },
         {
             "Name": "City_building_013",
-            "ID": 1197289312,
-            "ParentID": 737540435,
+            "ID": 978845269,
+            "ParentID": 936281213,
             "Translation": [
                 -42.288055,
                 33.201576,
@@ -342,18 +342,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 286906690
+                    "ComponentID": 1325298780
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 985263743
+                    "ComponentID": 1991469025
                 }
             ]
         },
         {
             "Name": "City_building_014",
-            "ID": 1901432447,
-            "ParentID": 737540435,
+            "ID": 2087902798,
+            "ParentID": 936281213,
             "Translation": [
                 -19.439707,
                 32.061729,
@@ -373,18 +373,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1682925377
+                    "ComponentID": 1653750627
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 239891797
+                    "ComponentID": 584152109
                 }
             ]
         },
         {
             "Name": "City_building_016",
-            "ID": 146456919,
-            "ParentID": 737540435,
+            "ID": 860117775,
+            "ParentID": 936281213,
             "Translation": [
                 34.270424,
                 -41.972748,
@@ -404,18 +404,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 260661266
+                    "ComponentID": 200609273
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1261183036
+                    "ComponentID": 1532039092
                 }
             ]
         },
         {
             "Name": "City_building_017",
-            "ID": 224801743,
-            "ParentID": 737540435,
+            "ID": 1825600327,
+            "ParentID": 936281213,
             "Translation": [
                 44.260082,
                 -39.153721,
@@ -435,18 +435,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 128855750
+                    "ComponentID": 1877220778
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1026977231
+                    "ComponentID": 280512365
                 }
             ]
         },
         {
             "Name": "City_building_022",
-            "ID": 61330067,
-            "ParentID": 737540435,
+            "ID": 1300718372,
+            "ParentID": 936281213,
             "Translation": [
                 -20.831324,
                 -27.426489,
@@ -466,18 +466,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 2144533881
+                    "ComponentID": 1406348636
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 792771426
+                    "ComponentID": 1176469285
                 }
             ]
         },
         {
             "Name": "City_building_023",
-            "ID": 663104371,
-            "ParentID": 737540435,
+            "ID": 75866669,
+            "ParentID": 936281213,
             "Translation": [
                 42.130642,
                 37.493286,
@@ -497,18 +497,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 2012728365
+                    "ComponentID": 78451442
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 558565621
+                    "ComponentID": 816929161
                 }
             ]
         },
         {
             "Name": "City_building_024",
-            "ID": 1533453832,
-            "ParentID": 737540435,
+            "ID": 1251074476,
+            "ParentID": 936281213,
             "Translation": [
                 -20.572771,
                 43.060829,
@@ -528,18 +528,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 224573808
+                    "ComponentID": 1135403503
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1372136608
+                    "ComponentID": 1201719940
                 }
             ]
         },
         {
             "Name": "City_building_026",
-            "ID": 587210714,
-            "ParentID": 737540435,
+            "ID": 1266854923,
+            "ParentID": 936281213,
             "Translation": [
                 31.511889,
                 -16.446016,
@@ -559,18 +559,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 522921157
+                    "ComponentID": 972720744
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 3603906
+                    "ComponentID": 894109879
                 }
             ]
         },
         {
             "Name": "City_building_028",
-            "ID": 550931455,
-            "ParentID": 737540435,
+            "ID": 405728246,
+            "ParentID": 936281213,
             "Translation": [
                 13.387990,
                 -33.755039,
@@ -590,18 +590,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1925501200
+                    "ComponentID": 749056244
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 799864872
+                    "ComponentID": 551879776
                 }
             ]
         },
         {
             "Name": "Object010",
-            "ID": 193409488,
-            "ParentID": 737540435,
+            "ID": 1353805775,
+            "ParentID": 936281213,
             "Translation": [
                 -2.503353,
                 15.800846,
@@ -621,14 +621,14 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1058634114
+                    "ComponentID": 37537816
                 }
             ]
         },
         {
             "Name": "City_building_030",
-            "ID": 639497358,
-            "ParentID": 737540435,
+            "ID": 254594445,
+            "ParentID": 936281213,
             "Translation": [
                 -42.807240,
                 -41.835564,
@@ -648,18 +648,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1848116069
+                    "ComponentID": 1778411740
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1206129844
+                    "ComponentID": 1634082755
                 }
             ]
         },
         {
             "Name": "City_building_031",
-            "ID": 814591714,
-            "ParentID": 737540435,
+            "ID": 1937316654,
+            "ParentID": 936281213,
             "Translation": [
                 -34.679482,
                 -41.835564,
@@ -679,18 +679,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 612077859
+                    "ComponentID": 2045881846
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 954614018
+                    "ComponentID": 192145797
                 }
             ]
         },
         {
             "Name": "City_building_032",
-            "ID": 1941570418,
-            "ParentID": 737540435,
+            "ID": 917351005,
+            "ParentID": 936281213,
             "Translation": [
                 -29.478403,
                 21.014099,
@@ -710,18 +710,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 233064701
+                    "ComponentID": 1635991445
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1958595236
+                    "ComponentID": 1122722759
                 }
             ]
         },
         {
             "Name": "City_building_033",
-            "ID": 715911163,
-            "ParentID": 737540435,
+            "ID": 730657325,
+            "ParentID": 936281213,
             "Translation": [
                 -32.361496,
                 42.370422,
@@ -741,18 +741,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1083528397
+                    "ComponentID": 1903461551
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1672459368
+                    "ComponentID": 1828269448
                 }
             ]
         },
         {
             "Name": "City_building_034",
-            "ID": 1503116000,
-            "ParentID": 737540435,
+            "ID": 1648477336,
+            "ParentID": 936281213,
             "Translation": [
                 16.049517,
                 -16.696884,
@@ -772,18 +772,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 277643052
+                    "ComponentID": 575564357
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 286616645
+                    "ComponentID": 1468729324
                 }
             ]
         },
         {
             "Name": "City_building_035",
-            "ID": 1560917690,
-            "ParentID": 737540435,
+            "ID": 672063035,
+            "ParentID": 936281213,
             "Translation": [
                 13.387990,
                 -40.802517,
@@ -803,18 +803,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 23874054
+                    "ComponentID": 274514726
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 2130654403
+                    "ComponentID": 1532764193
                 }
             ]
         },
         {
             "Name": "City_building_036",
-            "ID": 1388022702,
-            "ParentID": 737540435,
+            "ID": 326858899,
+            "ParentID": 936281213,
             "Translation": [
                 -31.216331,
                 33.201576,
@@ -834,18 +834,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1426454097
+                    "ComponentID": 2137352132
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 779431722
+                    "ComponentID": 1155914048
                 }
             ]
         },
         {
             "Name": "City_building_037",
-            "ID": 911904589,
-            "ParentID": 737540435,
+            "ID": 1506683667,
+            "ParentID": 936281213,
             "Translation": [
                 -20.317694,
                 -16.163609,
@@ -865,18 +865,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 129434146
+                    "ComponentID": 1483534767
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 493295854
+                    "ComponentID": 1948010842
                 }
             ]
         },
         {
             "Name": "City_building_038",
-            "ID": 1650334508,
-            "ParentID": 737540435,
+            "ID": 837358845,
+            "ParentID": 936281213,
             "Translation": [
                 -41.649002,
                 -16.495394,
@@ -896,18 +896,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 427781495
+                    "ComponentID": 155637573
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1272246799
+                    "ComponentID": 1588470718
                 }
             ]
         },
         {
             "Name": "City_building_039",
-            "ID": 1121216027,
-            "ParentID": 737540435,
+            "ID": 21582636,
+            "ParentID": 936281213,
             "Translation": [
                 -42.807240,
                 -30.643888,
@@ -927,18 +927,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1769379797
+                    "ComponentID": 484089420
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 2033887723
+                    "ComponentID": 181153802
                 }
             ]
         },
         {
             "Name": "City_building_040",
-            "ID": 1297930964,
-            "ParentID": 737540435,
+            "ID": 1513631703,
+            "ParentID": 936281213,
             "Translation": [
                 -34.679482,
                 -30.643888,
@@ -958,18 +958,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 2067727146
+                    "ComponentID": 812541267
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 665355021
+                    "ComponentID": 921320533
                 }
             ]
         },
         {
             "Name": "City_building_041",
-            "ID": 1434746178,
-            "ParentID": 737540435,
+            "ID": 1382752626,
+            "ParentID": 936281213,
             "Translation": [
                 30.695278,
                 21.612646,
@@ -989,49 +989,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 831688936
+                    "ComponentID": 1506883560
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 413839195
-                }
-            ]
-        },
-        {
-            "Name": "City_building_0101",
-            "ID": 158439459,
-            "ParentID": 737540435,
-            "Translation": [
-                25.154011,
-                -39.153721,
-                0.000001
-            ],
-            "Rotation": [
-                0,
-                0,
-                90
-            ],
-            "Scale": [
-                1.000000,
-                1.000000,
-                1
-            ],
-            "Enabled": true,
-            "Components": [
-                {
-                    "ComponentType": 2,
-                    "ComponentID": 1939392006
-                },
-                {
-                    "ComponentType": 3,
-                    "ComponentID": 1524028248
+                    "ComponentID": 1869207516
                 }
             ]
         },
         {
             "Name": "City_building_0161",
-            "ID": 1237564047,
-            "ParentID": 737540435,
+            "ID": 985611809,
+            "ParentID": 936281213,
             "Translation": [
                 34.270424,
                 -41.972748,
@@ -1051,18 +1020,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 440686603
+                    "ComponentID": 2083500841
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 2090606421
+                    "ComponentID": 1481630999
                 }
             ]
         },
         {
             "Name": "City_building_0171",
-            "ID": 1255114900,
-            "ParentID": 737540435,
+            "ID": 734781798,
+            "ParentID": 936281213,
             "Translation": [
                 44.260082,
                 -39.153721,
@@ -1082,18 +1051,49 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1440321648
+                    "ComponentID": 347254085
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 2032042390
+                    "ComponentID": 1953237506
+                }
+            ]
+        },
+        {
+            "Name": "City_building_0101",
+            "ID": 1035603371,
+            "ParentID": 936281213,
+            "Translation": [
+                25.154011,
+                -39.153721,
+                0.000001
+            ],
+            "Rotation": [
+                0,
+                0,
+                90
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 2093893365
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 1317555364
                 }
             ]
         },
         {
             "Name": "Camera001",
-            "ID": 409301980,
-            "ParentID": 63327843,
+            "ID": 1223647030,
+            "ParentID": 1763930520,
             "Translation": [
                 -78.312431,
                 45.251217,
@@ -1114,8 +1114,8 @@
         },
         {
             "Name": "Camera001.Target",
-            "ID": 1052637537,
-            "ParentID": 63327843,
+            "ID": 853599140,
+            "ParentID": 1763930520,
             "Translation": [
                 -28.132622,
                 20.873329,
@@ -1136,8 +1136,8 @@
         },
         {
             "Name": "Spot001",
-            "ID": 651025955,
-            "ParentID": 63327843,
+            "ID": 1110762509,
+            "ParentID": 1763930520,
             "Translation": [
                 -66.721268,
                 141.934128,
@@ -1158,8 +1158,8 @@
         },
         {
             "Name": "Spot001.Target",
-            "ID": 288159473,
-            "ParentID": 63327843,
+            "ID": 1510510619,
+            "ParentID": 1763930520,
             "Translation": [
                 28.890945,
                 -60.963882,

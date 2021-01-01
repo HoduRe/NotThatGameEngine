@@ -2,7 +2,7 @@
     "GameObjects": [
         {
             "Name": "Street environment_V01",
-            "ID": 2125987546,
+            "ID": 235022501,
             "ParentID": 0,
             "Translation": [
                 0,
@@ -23,14 +23,14 @@
             "Components": [
                 {
                     "ComponentType": 5,
-                    "ComponentID": 229176049
+                    "ComponentID": 2048549899
                 }
             ]
         },
         {
             "Name": "Sky001",
-            "ID": 936640210,
-            "ParentID": 2125987546,
+            "ID": 227714794,
+            "ParentID": 235022501,
             "Translation": [
                 18.153732,
                 0,
@@ -51,8 +51,8 @@
         },
         {
             "Name": "Dummy001",
-            "ID": 248063191,
-            "ParentID": 2125987546,
+            "ID": 894813947,
+            "ParentID": 235022501,
             "Translation": [
                 0,
                 0,
@@ -73,8 +73,8 @@
         },
         {
             "Name": "City_building_004",
-            "ID": 407911327,
-            "ParentID": 248063191,
+            "ID": 2109856430,
+            "ParentID": 894813947,
             "Translation": [
                 -41.475891,
                 21.014099,
@@ -94,18 +94,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1109935156
+                    "ComponentID": 584439117
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1891425875
+                    "ComponentID": 863104948
                 }
             ]
         },
         {
             "Name": "City_building_001",
-            "ID": 1411092982,
-            "ParentID": 248063191,
+            "ID": 1489658001,
+            "ParentID": 894813947,
             "Translation": [
                 17.707165,
                 20.053276,
@@ -125,18 +125,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1091084571
+                    "ComponentID": 1607662576
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1607355907
+                    "ComponentID": 228522056
                 }
             ]
         },
         {
             "Name": "City_building_007",
-            "ID": 352756077,
-            "ParentID": 248063191,
+            "ID": 1375203800,
+            "ParentID": 894813947,
             "Translation": [
                 16.010492,
                 37.493286,
@@ -156,18 +156,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 792956443
+                    "ComponentID": 437987177
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1058404674
+                    "ComponentID": 984946164
                 }
             ]
         },
         {
             "Name": "City_building_008",
-            "ID": 585429043,
-            "ParentID": 248063191,
+            "ID": 1636551487,
+            "ParentID": 894813947,
             "Translation": [
                 40.979996,
                 18.270824,
@@ -187,18 +187,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1901064000
+                    "ComponentID": 1734230465
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 264612096
+                    "ComponentID": 886118484
                 }
             ]
         },
         {
             "Name": "Line002",
-            "ID": 1444011650,
-            "ParentID": 248063191,
+            "ID": 1692247195,
+            "ParentID": 894813947,
             "Translation": [
                 -2.159772,
                 1.853838,
@@ -218,18 +218,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 26741859
+                    "ComponentID": 600158160
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 2074127137
+                    "ComponentID": 21937681
                 }
             ]
         },
         {
             "Name": "Plane001",
-            "ID": 1710013503,
-            "ParentID": 248063191,
+            "ID": 462415884,
+            "ParentID": 894813947,
             "Translation": [
                 -0.028603,
                 0.026032,
@@ -249,18 +249,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 28458548
+                    "ComponentID": 19009322
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1332647774
+                    "ComponentID": 598080410
                 }
             ]
         },
         {
             "Name": "City_building_010",
-            "ID": 387188666,
-            "ParentID": 248063191,
+            "ID": 1395792927,
+            "ParentID": 894813947,
             "Translation": [
                 25.154011,
                 -39.153721,
@@ -280,18 +280,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1643309449
+                    "ComponentID": 1008901390
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1655854904
+                    "ComponentID": 828547114
                 }
             ]
         },
         {
             "Name": "City_building_011",
-            "ID": 1057133130,
-            "ParentID": 248063191,
+            "ID": 720381727,
+            "ParentID": 894813947,
             "Translation": [
                 30.134541,
                 37.493286,
@@ -311,18 +311,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1156428233
+                    "ComponentID": 418922185
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 380600016
+                    "ComponentID": 806031978
                 }
             ]
         },
         {
             "Name": "City_building_013",
-            "ID": 2100477250,
-            "ParentID": 248063191,
+            "ID": 857160581,
+            "ParentID": 894813947,
             "Translation": [
                 -42.288055,
                 33.201576,
@@ -342,18 +342,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1101686517
+                    "ComponentID": 789012978
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 991063805
+                    "ComponentID": 1388334725
                 }
             ]
         },
         {
             "Name": "City_building_014",
-            "ID": 203589795,
-            "ParentID": 248063191,
+            "ID": 1160421402,
+            "ParentID": 894813947,
             "Translation": [
                 -19.439707,
                 32.061729,
@@ -373,18 +373,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 550778440
+                    "ComponentID": 1222871166
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 277770408
+                    "ComponentID": 524262771
                 }
             ]
         },
         {
             "Name": "City_building_016",
-            "ID": 563334133,
-            "ParentID": 248063191,
+            "ID": 1066315379,
+            "ParentID": 894813947,
             "Translation": [
                 34.270424,
                 -41.972748,
@@ -404,18 +404,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 2496431
+                    "ComponentID": 1059381033
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 2005330891
+                    "ComponentID": 1988525925
                 }
             ]
         },
         {
             "Name": "City_building_017",
-            "ID": 935103547,
-            "ParentID": 248063191,
+            "ID": 1335153276,
+            "ParentID": 894813947,
             "Translation": [
                 44.260082,
                 -39.153721,
@@ -435,18 +435,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 587771655
+                    "ComponentID": 350517175
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 949499170
+                    "ComponentID": 1499559814
                 }
             ]
         },
         {
             "Name": "City_building_022",
-            "ID": 1240092616,
-            "ParentID": 248063191,
+            "ID": 936311589,
+            "ParentID": 894813947,
             "Translation": [
                 -20.831324,
                 -27.426489,
@@ -466,18 +466,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1437744742
+                    "ComponentID": 1967847087
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 866412465
+                    "ComponentID": 467816368
                 }
             ]
         },
         {
             "Name": "City_building_023",
-            "ID": 1981548829,
-            "ParentID": 248063191,
+            "ID": 1106366126,
+            "ParentID": 894813947,
             "Translation": [
                 42.130642,
                 37.493286,
@@ -497,18 +497,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1171270171
+                    "ComponentID": 1862228537
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 751531307
+                    "ComponentID": 182754146
                 }
             ]
         },
         {
             "Name": "City_building_024",
-            "ID": 1069549139,
-            "ParentID": 248063191,
+            "ID": 1833273838,
+            "ParentID": 894813947,
             "Translation": [
                 -20.572771,
                 43.060829,
@@ -528,18 +528,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1355990894
+                    "ComponentID": 1382416095
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 2060909054
+                    "ComponentID": 1416342396
                 }
             ]
         },
         {
             "Name": "City_building_026",
-            "ID": 576857876,
-            "ParentID": 248063191,
+            "ID": 1167332617,
+            "ParentID": 894813947,
             "Translation": [
                 31.511889,
                 -16.446016,
@@ -559,18 +559,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1351372131
+                    "ComponentID": 1029125175
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 473073634
+                    "ComponentID": 79410167
                 }
             ]
         },
         {
             "Name": "City_building_028",
-            "ID": 2050262322,
-            "ParentID": 248063191,
+            "ID": 992329329,
+            "ParentID": 894813947,
             "Translation": [
                 13.387990,
                 -33.755039,
@@ -590,18 +590,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 523663547
+                    "ComponentID": 1204162168
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 149930568
+                    "ComponentID": 1507686742
                 }
             ]
         },
         {
             "Name": "Object010",
-            "ID": 1545550308,
-            "ParentID": 248063191,
+            "ID": 1952966716,
+            "ParentID": 894813947,
             "Translation": [
                 -2.503353,
                 15.800846,
@@ -621,14 +621,14 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1434356509
+                    "ComponentID": 1935645993
                 }
             ]
         },
         {
             "Name": "City_building_030",
-            "ID": 1197443942,
-            "ParentID": 248063191,
+            "ID": 568378462,
+            "ParentID": 894813947,
             "Translation": [
                 -42.807240,
                 -41.835564,
@@ -648,18 +648,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 684807044
+                    "ComponentID": 2141117470
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 666763277
+                    "ComponentID": 1309506012
                 }
             ]
         },
         {
             "Name": "City_building_031",
-            "ID": 719594465,
-            "ParentID": 248063191,
+            "ID": 1994795361,
+            "ParentID": 894813947,
             "Translation": [
                 -34.679482,
                 -41.835564,
@@ -679,18 +679,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1626921306
+                    "ComponentID": 954999344
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1010767658
+                    "ComponentID": 1915617504
                 }
             ]
         },
         {
             "Name": "City_building_032",
-            "ID": 1910972722,
-            "ParentID": 248063191,
+            "ID": 2029316343,
+            "ParentID": 894813947,
             "Translation": [
                 -29.478403,
                 21.014099,
@@ -710,18 +710,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 560266509
+                    "ComponentID": 1312250999
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1569142628
+                    "ComponentID": 1977490705
                 }
             ]
         },
         {
             "Name": "City_building_033",
-            "ID": 638297451,
-            "ParentID": 248063191,
+            "ID": 1851247282,
+            "ParentID": 894813947,
             "Translation": [
                 -32.361496,
                 42.370422,
@@ -741,18 +741,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1639671954
+                    "ComponentID": 1888231337
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1812885855
+                    "ComponentID": 194978525
                 }
             ]
         },
         {
             "Name": "City_building_034",
-            "ID": 869725824,
-            "ParentID": 248063191,
+            "ID": 355756338,
+            "ParentID": 894813947,
             "Translation": [
                 16.049517,
                 -16.696884,
@@ -772,18 +772,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 866935741
+                    "ComponentID": 212954855
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1905325226
+                    "ComponentID": 2050344714
                 }
             ]
         },
         {
             "Name": "City_building_035",
-            "ID": 582684156,
-            "ParentID": 248063191,
+            "ID": 1663833657,
+            "ParentID": 894813947,
             "Translation": [
                 13.387990,
                 -40.802517,
@@ -803,18 +803,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1307253287
+                    "ComponentID": 288984880
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1924134367
+                    "ComponentID": 1789525384
                 }
             ]
         },
         {
             "Name": "City_building_036",
-            "ID": 128865047,
-            "ParentID": 248063191,
+            "ID": 135495112,
+            "ParentID": 894813947,
             "Translation": [
                 -31.216331,
                 33.201576,
@@ -834,18 +834,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1401017962
+                    "ComponentID": 256769022
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1564285662
+                    "ComponentID": 862203034
                 }
             ]
         },
         {
             "Name": "City_building_037",
-            "ID": 1793883791,
-            "ParentID": 248063191,
+            "ID": 974529170,
+            "ParentID": 894813947,
             "Translation": [
                 -20.317694,
                 -16.163609,
@@ -865,18 +865,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 1540333836
+                    "ComponentID": 1635579324
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 691115917
+                    "ComponentID": 347734029
                 }
             ]
         },
         {
             "Name": "City_building_038",
-            "ID": 1810146422,
-            "ParentID": 248063191,
+            "ID": 1007680378,
+            "ParentID": 894813947,
             "Translation": [
                 -41.649002,
                 -16.495394,
@@ -896,18 +896,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 609354623
+                    "ComponentID": 249248450
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 338761398
+                    "ComponentID": 1258469690
                 }
             ]
         },
         {
             "Name": "City_building_039",
-            "ID": 1241878804,
-            "ParentID": 248063191,
+            "ID": 732973537,
+            "ParentID": 894813947,
             "Translation": [
                 -42.807240,
                 -30.643888,
@@ -927,18 +927,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 411115462
+                    "ComponentID": 1258526687
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 607532686
+                    "ComponentID": 406194380
                 }
             ]
         },
         {
             "Name": "City_building_040",
-            "ID": 195220694,
-            "ParentID": 248063191,
+            "ID": 1594266284,
+            "ParentID": 894813947,
             "Translation": [
                 -34.679482,
                 -30.643888,
@@ -958,18 +958,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 19914176
+                    "ComponentID": 1210208348
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1317894981
+                    "ComponentID": 1541989710
                 }
             ]
         },
         {
             "Name": "City_building_041",
-            "ID": 1927654126,
-            "ParentID": 248063191,
+            "ID": 10602733,
+            "ParentID": 894813947,
             "Translation": [
                 30.695278,
                 21.612646,
@@ -989,49 +989,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 73931625
+                    "ComponentID": 574702113
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 1822845913
-                }
-            ]
-        },
-        {
-            "Name": "City_building_0101",
-            "ID": 661705861,
-            "ParentID": 248063191,
-            "Translation": [
-                25.154011,
-                -39.153721,
-                0.000001
-            ],
-            "Rotation": [
-                0,
-                0,
-                90.000008
-            ],
-            "Scale": [
-                1.000000,
-                1.000000,
-                1
-            ],
-            "Enabled": true,
-            "Components": [
-                {
-                    "ComponentType": 2,
-                    "ComponentID": 984948476
-                },
-                {
-                    "ComponentType": 3,
-                    "ComponentID": 1797515239
+                    "ComponentID": 1567981916
                 }
             ]
         },
         {
             "Name": "City_building_0161",
-            "ID": 198925494,
-            "ParentID": 248063191,
+            "ID": 1432745885,
+            "ParentID": 894813947,
             "Translation": [
                 34.270424,
                 -41.972748,
@@ -1051,18 +1020,18 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 341028629
+                    "ComponentID": 1593625144
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 174978377
+                    "ComponentID": 33528169
                 }
             ]
         },
         {
             "Name": "City_building_0171",
-            "ID": 1642339333,
-            "ParentID": 248063191,
+            "ID": 2097413307,
+            "ParentID": 894813947,
             "Translation": [
                 44.260082,
                 -39.153721,
@@ -1082,18 +1051,49 @@
             "Components": [
                 {
                     "ComponentType": 2,
-                    "ComponentID": 936347030
+                    "ComponentID": 410747135
                 },
                 {
                     "ComponentType": 3,
-                    "ComponentID": 402987298
+                    "ComponentID": 734042383
+                }
+            ]
+        },
+        {
+            "Name": "City_building_0101",
+            "ID": 1096399184,
+            "ParentID": 894813947,
+            "Translation": [
+                25.154011,
+                -39.153721,
+                0.000001
+            ],
+            "Rotation": [
+                0,
+                0,
+                90.000008
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 2067479634
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 613191245
                 }
             ]
         },
         {
             "Name": "Camera001",
-            "ID": 1652309650,
-            "ParentID": 2125987546,
+            "ID": 1160249432,
+            "ParentID": 235022501,
             "Translation": [
                 -78.312431,
                 45.251217,
@@ -1114,8 +1114,8 @@
         },
         {
             "Name": "Camera001.Target",
-            "ID": 107961462,
-            "ParentID": 2125987546,
+            "ID": 469162387,
+            "ParentID": 235022501,
             "Translation": [
                 -28.132622,
                 20.873329,
@@ -1136,8 +1136,8 @@
         },
         {
             "Name": "Spot001",
-            "ID": 1038267832,
-            "ParentID": 2125987546,
+            "ID": 1274999423,
+            "ParentID": 235022501,
             "Translation": [
                 -66.721268,
                 141.934128,
@@ -1158,8 +1158,8 @@
         },
         {
             "Name": "Spot001.Target",
-            "ID": 740914518,
-            "ParentID": 2125987546,
+            "ID": 296729860,
+            "ParentID": 235022501,
             "Translation": [
                 28.890945,
                 -60.963882,
@@ -1179,8 +1179,8 @@
             "Components": []
         },
         {
-            "Name": "warriorWalk",
-            "ID": 539749269,
+            "Name": "robotto",
+            "ID": 149481366,
             "ParentID": 0,
             "Translation": [
                 0,
@@ -1201,53 +1201,44 @@
             "Components": [
                 {
                     "ComponentType": 5,
-                    "ComponentID": 1974531441
+                    "ComponentID": 159169821
                 }
             ]
         },
         {
-            "Name": "RPG-Character-Mesh",
-            "ID": 262456173,
-            "ParentID": 539749269,
+            "Name": "Armature.001",
+            "ID": 2061463622,
+            "ParentID": 149481366,
             "Translation": [
-                0.025967,
+                0,
                 0,
                 0
             ],
             "Rotation": [
-                -89.999985,
+                -90.000008,
                 0,
                 0
             ],
             "Scale": [
-                1,
-                1.000000,
-                1.000000
+                100,
+                99.999985,
+                99.999985
             ],
             "Enabled": true,
-            "Components": [
-                {
-                    "ComponentType": 2,
-                    "ComponentID": 1025221753
-                },
-                {
-                    "ComponentType": 3,
-                    "ComponentID": 1049690274
-                }
-            ]
+            "Components": []
         },
         {
-            "Name": "Motion",
-            "ID": 1618058744,
-            "ParentID": 539749269,
+            "Name": "root_2.001",
+            "ID": 1317919932,
+            "ParentID": 2061463622,
             "Translation": [
-                0.000001,
                 0,
-                -0.173290
+                0,
+                0
             ],
             "Rotation": [
-                0,
-                0,
+                -90.000023,
+                -90,
                 0
             ],
             "Scale": [
@@ -1259,348 +1250,106 @@
             "Components": []
         },
         {
-            "Name": "B_Pelvis",
-            "ID": 450729087,
-            "ParentID": 1618058744,
+            "Name": "Bone.001",
+            "ID": 112249120,
+            "ParentID": 1317919932,
             "Translation": [
-                211.343857,
-                0.839698,
-                133.200226
+                0,
+                -1,
+                0
             ],
             "Rotation": [
-                -85.203430,
-                -0.933486,
-                -83.140503
+                -169.610840,
+                -89.980217,
+                9.256001
             ],
             "Scale": [
-                1,
-                1,
+                1.000000,
+                1.000000,
                 1.000000
             ],
             "Enabled": true,
             "Components": []
         },
         {
-            "Name": "B_Spine",
-            "ID": 1598419312,
-            "ParentID": 450729087,
+            "Name": "root_2",
+            "ID": 2069691767,
+            "ParentID": 112249120,
             "Translation": [
-                9.224792,
-                3.395615,
-                0.812255
+                0,
+                -1.000000,
+                0
             ],
             "Rotation": [
-                0.416907,
-                -5.384845,
-                0.076138
+                -169.610840,
+                -89.980217,
+                9.256001
             ],
             "Scale": [
                 1.000000,
                 1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Body",
+            "ID": 396860097,
+            "ParentID": 2069691767,
+            "Translation": [
+                -0.232490,
+                -1.988804,
+                0.023175
+            ],
+            "Rotation": [
+                -92.427040,
+                -59.632122,
+                93.133408
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Body_Up",
+            "ID": 54320860,
+            "ParentID": 396860097,
+            "Translation": [
+                0,
+                0.088817,
+                0
+            ],
+            "Rotation": [
+                0,
+                0.000002,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
                 1
             ],
             "Enabled": true,
             "Components": []
         },
         {
-            "Name": "B_Spine1",
-            "ID": 1669309284,
-            "ParentID": 1598419312,
+            "Name": "Leg11",
+            "ID": 297643470,
+            "ParentID": 54320860,
             "Translation": [
-                17.632324,
-                -0.020142,
-                -0.000007
-            ],
-            "Rotation": [
-                0.018706,
-                -0.218095,
-                -0.000038
-            ],
-            "Scale": [
-                1.000000,
-                1,
-                1
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_Spine2",
-            "ID": 1084669436,
-            "ParentID": 1669309284,
-            "Translation": [
-                25.268356,
-                -0.016022,
-                -0.000011
-            ],
-            "Rotation": [
-                0.037330,
-                -0.436190,
-                -0.000033
-            ],
-            "Scale": [
-                1.000000,
-                1.000000,
-                1.000000
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_L_Clavicle",
-            "ID": 64616154,
-            "ParentID": 1084669436,
-            "Translation": [
-                12.008545,
-                -1.454865,
-                5.302795
-            ],
-            "Rotation": [
-                -0.890829,
-                83.624435,
-                179.589493
-            ],
-            "Scale": [
-                1.000000,
-                1.000000,
-                1.000000
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_L_UpperArm",
-            "ID": 177166424,
-            "ParentID": 64616154,
-            "Translation": [
-                27.203581,
-                0,
-                -0.000015
-            ],
-            "Rotation": [
-                39.424400,
-                67.476501,
-                -38.449070
-            ],
-            "Scale": [
-                1.000000,
-                1.000000,
-                1.000000
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_L_Forearm",
-            "ID": 1015904619,
-            "ParentID": 177166424,
-            "Translation": [
-                35.551208,
-                -0.000015,
-                0.000023
-            ],
-            "Rotation": [
-                0.000004,
-                -0.000006,
-                -13.666678
-            ],
-            "Scale": [
-                1.000000,
-                1,
-                1.000000
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_L_Hand",
-            "ID": 2087035162,
-            "ParentID": 1015904619,
-            "Translation": [
-                35.489609,
-                0,
-                -0.000015
-            ],
-            "Rotation": [
-                -92.922470,
-                -6.749964,
-                -5.161760
-            ],
-            "Scale": [
-                1.000000,
-                1,
-                1.000000
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_L_Finger0",
-            "ID": 688923631,
-            "ParentID": 2087035162,
-            "Translation": [
-                12.316864,
-                -0.520874,
-                -9.563904
-            ],
-            "Rotation": [
-                70.090225,
-                21.498068,
-                -6.651717
-            ],
-            "Scale": [
-                1.000000,
-                1.000000,
-                1
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_L_Finger01",
-            "ID": 1281183117,
-            "ParentID": 688923631,
-            "Translation": [
-                4.867077,
-                0.000031,
-                -0.000021
-            ],
-            "Rotation": [
-                0.000001,
-                -0.000004,
-                18.390928
-            ],
-            "Scale": [
-                1.000000,
-                1.000000,
-                1.000000
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_L_Finger02",
-            "ID": 2092334844,
-            "ParentID": 1281183117,
-            "Translation": [
-                4.867065,
-                0,
-                0.000017
-            ],
-            "Rotation": [
-                -0.000004,
-                0.000001,
-                18.390949
-            ],
-            "Scale": [
-                1,
-                1.000000,
-                1.000000
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_L_Finger1",
-            "ID": 796707317,
-            "ParentID": 2087035162,
-            "Translation": [
-                17.315132,
-                -2.635742,
-                -4.906815
-            ],
-            "Rotation": [
-                -0.045626,
-                0.000001,
-                5.360893
-            ],
-            "Scale": [
-                1.000000,
-                1.000000,
-                1.000000
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_L_Finger11",
-            "ID": 23832812,
-            "ParentID": 796707317,
-            "Translation": [
-                5.438889,
-                0.000008,
-                0.000031
-            ],
-            "Rotation": [
-                0.000004,
-                0.000005,
-                18.390944
-            ],
-            "Scale": [
-                1.000000,
-                1.000000,
-                1
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_L_Finger12",
-            "ID": 244000905,
-            "ParentID": 23832812,
-            "Translation": [
-                5.438850,
-                -0.000015,
-                -0.000031
-            ],
-            "Rotation": [
-                0.000016,
-                0.000009,
-                18.390944
-            ],
-            "Scale": [
-                1,
-                1.000000,
-                1.000000
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_L_Finger2",
-            "ID": 1444369002,
-            "ParentID": 2087035162,
-            "Translation": [
-                17.315147,
-                -2.632576,
-                -0.899368
-            ],
-            "Rotation": [
-                -0.045623,
-                -0.000023,
-                5.360880
-            ],
-            "Scale": [
-                1.000000,
-                1.000000,
-                1.000000
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_L_Finger21",
-            "ID": 1994990525,
-            "ParentID": 1444369002,
-            "Translation": [
-                6.345322,
-                0,
-                0.000015
-            ],
-            "Rotation": [
                 0.000000,
-                0.000028,
-                18.390949
+                0.064968,
+                -0.124292
+            ],
+            "Rotation": [
+                -105.007278,
+                89.940659,
+                90.005966
             ],
             "Scale": [
                 1.000000,
@@ -1611,106 +1360,216 @@
             "Components": []
         },
         {
-            "Name": "B_L_Finger22",
-            "ID": 2050273380,
-            "ParentID": 1994990525,
+            "Name": "Leg11.001",
+            "ID": 1510140790,
+            "ParentID": 297643470,
             "Translation": [
-                6.345345,
+                -0.000000,
+                0.111171,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                -19.745399
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg11.002",
+            "ID": 1285894836,
+            "ParentID": 1510140790,
+            "Translation": [
+                0.000000,
+                0.353334,
+                -0.000000
+            ],
+            "Rotation": [
+                90,
+                7.515723,
+                -89.999985
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg11.003",
+            "ID": 434402477,
+            "ParentID": 1285894836,
+            "Translation": [
+                -0.000000,
+                0.829179,
+                -0.000000
+            ],
+            "Rotation": [
+                107.076981,
                 0.000015,
-                0
-            ],
-            "Rotation": [
-                0.000002,
-                -0.000002,
-                18.390942
-            ],
-            "Scale": [
-                1.000000,
-                1.000000,
-                1.000000
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_L_Finger3",
-            "ID": 530220252,
-            "ParentID": 2087035162,
-            "Translation": [
-                17.315132,
-                -2.629341,
-                3.144577
-            ],
-            "Rotation": [
-                -0.045688,
-                -0.000029,
-                5.360896
-            ],
-            "Scale": [
-                1,
-                1,
-                1.000000
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_L_Finger31",
-            "ID": 835151515,
-            "ParentID": 530220252,
-            "Translation": [
-                5.438873,
-                0.000023,
-                0
-            ],
-            "Rotation": [
-                -0.000011,
-                0.000002,
-                18.390940
-            ],
-            "Scale": [
-                1.000000,
-                1.000000,
-                1.000000
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_L_Finger32",
-            "ID": 1949531634,
-            "ParentID": 835151515,
-            "Translation": [
-                5.438828,
-                0.000023,
-                0
-            ],
-            "Rotation": [
-                -0.000021,
-                -0.000036,
-                18.390942
+                179.999985
             ],
             "Scale": [
                 1,
                 1.000000,
+                0.999993
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg11.003_end",
+            "ID": 488659668,
+            "ParentID": 434402477,
+            "Translation": [
+                0,
+                1.232361,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg10",
+            "ID": 250423738,
+            "ParentID": 54320860,
+            "Translation": [
+                -0.107640,
+                0.064968,
+                -0.062146
+            ],
+            "Rotation": [
+                179.818222,
+                30.042086,
+                165.090973
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
                 1.000000
             ],
             "Enabled": true,
             "Components": []
         },
         {
-            "Name": "B_L_Finger4",
-            "ID": 77910471,
-            "ParentID": 2087035162,
+            "Name": "Leg10.001",
+            "ID": 2054010718,
+            "ParentID": 250423738,
             "Translation": [
-                17.315147,
-                -2.626274,
-                6.989273
+                0,
+                0.111171,
+                0.000000
             ],
             "Rotation": [
-                -0.045785,
-                -0.000039,
-                5.360894
+                0.000005,
+                0.000015,
+                -18.625259
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg10.002",
+            "ID": 1912326236,
+            "ParentID": 2054010718,
+            "Translation": [
+                -0.000000,
+                0.353334,
+                -0.000000
+            ],
+            "Rotation": [
+                90.000015,
+                8.431342,
+                -90.000015
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg10.003",
+            "ID": 1373691278,
+            "ParentID": 1912326236,
+            "Translation": [
+                -0.000000,
+                0.829179,
+                0.000000
+            ],
+            "Rotation": [
+                108.461067,
+                0.000012,
+                179.999969
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                0.999970
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg10.003_end",
+            "ID": 2134915286,
+            "ParentID": 1373691278,
+            "Translation": [
+                0,
+                1.232361,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg9",
+            "ID": 705192185,
+            "ParentID": 54320860,
+            "Translation": [
+                -0.107640,
+                0.064968,
+                0.062146
+            ],
+            "Rotation": [
+                -179.938065,
+                -30.014317,
+                165.031006
             ],
             "Scale": [
                 1.000000,
@@ -1721,18 +1580,18 @@
             "Components": []
         },
         {
-            "Name": "B_L_Finger41",
-            "ID": 1003933597,
-            "ParentID": 77910471,
+            "Name": "Leg9.001",
+            "ID": 2065216451,
+            "ParentID": 705192185,
             "Translation": [
-                4.532394,
-                0.000023,
-                0.000015
+                -0.000000,
+                0.111171,
+                -0.000000
             ],
             "Rotation": [
-                0.000024,
-                -0.000053,
-                18.390974
+                -0.000003,
+                -0.000012,
+                -18.604242
             ],
             "Scale": [
                 1.000000,
@@ -1743,18 +1602,18 @@
             "Components": []
         },
         {
-            "Name": "B_L_Finger42",
-            "ID": 1470256308,
-            "ParentID": 1003933597,
+            "Name": "Leg9.002",
+            "ID": 2106991292,
+            "ParentID": 2065216451,
             "Translation": [
-                4.532356,
-                -0.000015,
-                -0.000015
+                -0.000000,
+                0.353334,
+                0.000000
             ],
             "Rotation": [
-                0.000011,
-                -0.000045,
-                18.390921
+                90.000015,
+                8.371163,
+                -89.999992
             ],
             "Scale": [
                 1.000000,
@@ -1765,62 +1624,326 @@
             "Components": []
         },
         {
-            "Name": "B_R_Clavicle",
-            "ID": 1771506625,
-            "ParentID": 1084669436,
+            "Name": "Leg9.003",
+            "ID": 1199699606,
+            "ParentID": 2106991292,
             "Translation": [
-                12.008530,
-                -1.454834,
-                -5.302805
+                -0.000000,
+                0.829179,
+                -0.000000
             ],
             "Rotation": [
-                -2.847614,
-                -82.325119,
-                179.658997
+                108.369957,
+                0.000014,
+                179.999985
             ],
             "Scale": [
-                1.000000,
-                1.000000,
-                1.000000
+                1,
+                1.000001,
+                1.000047
             ],
             "Enabled": true,
             "Components": []
         },
         {
-            "Name": "B_R_UpperArm",
-            "ID": 83422931,
-            "ParentID": 1771506625,
+            "Name": "Leg9.003_end",
+            "ID": 1608625389,
+            "ParentID": 1199699606,
             "Translation": [
-                27.203564,
-                0.000015,
-                -0.000015
-            ],
-            "Rotation": [
-                -42.913456,
-                -67.742088,
-                -41.290714
-            ],
-            "Scale": [
-                1.000000,
-                1.000000,
-                1.000000
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_R_Forearm",
-            "ID": 1230890114,
-            "ParentID": 83422931,
-            "Translation": [
-                35.551208,
                 0,
-                0.000015
+                1.232361,
+                0
             ],
             "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg8",
+            "ID": 217113178,
+            "ParentID": 54320860,
+            "Translation": [
+                -0.000000,
+                0.064968,
+                0.124292
+            ],
+            "Rotation": [
+                105.018944,
+                -89.925987,
+                90.020744
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg8.001",
+            "ID": 706264744,
+            "ParentID": 217113178,
+            "Translation": [
+                0.000000,
+                0.111171,
+                0.000000
+            ],
+            "Rotation": [
+                0.000001,
+                0.000003,
+                -19.691448
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg8.002",
+            "ID": 69159939,
+            "ParentID": 706264744,
+            "Translation": [
+                0.000000,
+                0.353334,
+                0.000000
+            ],
+            "Rotation": [
+                90,
+                7.579373,
+                -90
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg8.003",
+            "ID": 1314043478,
+            "ParentID": 69159939,
+            "Translation": [
+                0.000000,
+                0.829179,
+                -0.000000
+            ],
+            "Rotation": [
+                107.154327,
+                0.000014,
+                179.999969
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000016
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg8.003_end",
+            "ID": 1707499780,
+            "ParentID": 1314043478,
+            "Translation": [
+                0,
+                1.232361,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg7",
+            "ID": 1757260886,
+            "ParentID": 54320860,
+            "Translation": [
+                0.107640,
+                0.064968,
+                0.062146
+            ],
+            "Rotation": [
+                -0.000056,
+                -30.000015,
+                -15.000019
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg7.001",
+            "ID": 1739936641,
+            "ParentID": 1757260886,
+            "Translation": [
+                0.000000,
+                0.111171,
+                0.000000
+            ],
+            "Rotation": [
+                0.000004,
+                0.000011,
+                -19.745493
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg7.002",
+            "ID": 266440329,
+            "ParentID": 1739936641,
+            "Translation": [
+                -0.000000,
+                0.353334,
+                0.000000
+            ],
+            "Rotation": [
+                90.000015,
+                7.328711,
+                -89.999962
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg7.003",
+            "ID": 1790073904,
+            "ParentID": 266440329,
+            "Translation": [
+                -0.000000,
+                0.829179,
+                0.000000
+            ],
+            "Rotation": [
+                106.785423,
+                0.000011,
+                179.999969
+            ],
+            "Scale": [
+                1.000000,
+                1.000001,
+                1.000043
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg7.003_end",
+            "ID": 1681836840,
+            "ParentID": 1790073904,
+            "Translation": [
+                0,
+                1.232361,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg12",
+            "ID": 522878593,
+            "ParentID": 54320860,
+            "Translation": [
+                0.107640,
+                0.064968,
+                -0.062146
+            ],
+            "Rotation": [
+                -0.000036,
+                29.999985,
+                -14.999969
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg12.001",
+            "ID": 1432791987,
+            "ParentID": 522878593,
+            "Translation": [
+                -0.000000,
+                0.111171,
+                -0.000000
+            ],
+            "Rotation": [
+                0.000004,
                 0.000008,
-                -0.000015,
-                -38.190853
+                -19.726910
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg12.002",
+            "ID": 1137786647,
+            "ParentID": 1432791987,
+            "Translation": [
+                -0.000000,
+                0.353334,
+                0.000000
+            ],
+            "Rotation": [
+                90,
+                7.623904,
+                -89.999977
             ],
             "Scale": [
                 1.000000,
@@ -1831,18 +1954,722 @@
             "Components": []
         },
         {
-            "Name": "B_R_Hand",
-            "ID": 1469766080,
-            "ParentID": 1230890114,
+            "Name": "Leg12.003",
+            "ID": 2067742747,
+            "ParentID": 1137786647,
             "Translation": [
-                35.489624,
+                -0.000000,
+                0.829179,
+                -0.000000
+            ],
+            "Rotation": [
+                107.081963,
+                0.000014,
+                179.999969
+            ],
+            "Scale": [
+                1.000000,
+                1.000001,
+                1.000044
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg12.003_end",
+            "ID": 1469872681,
+            "ParentID": 2067742747,
+            "Translation": [
+                0,
+                1.232361,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg11.005",
+            "ID": 1345759666,
+            "ParentID": 54320860,
+            "Translation": [
+                0.000000,
+                1.013613,
+                -2.307569
+            ],
+            "Rotation": [
+                90,
+                -90,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg11.004",
+            "ID": 1380072087,
+            "ParentID": 1345759666,
+            "Translation": [
+                0.049231,
+                0.353874,
+                -0.000000
+            ],
+            "Rotation": [
+                -89.999992,
+                43.135189,
+                89.999985
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg11.004_end",
+            "ID": 2020512862,
+            "ParentID": 1380072087,
+            "Translation": [
+                0,
+                0.020239,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg10.005",
+            "ID": 1308790188,
+            "ParentID": 54320860,
+            "Translation": [
+                -1.990058,
+                1.054125,
+                -1.156661
+            ],
+            "Rotation": [
+                -9.462360,
+                -29.661358,
+                -94.715027
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg10.004",
+            "ID": 196344702,
+            "ParentID": 1308790188,
+            "Translation": [
+                0.048726,
+                0.353874,
+                -0.007033
+            ],
+            "Rotation": [
+                -97.623833,
+                42.587036,
+                101.188454
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg10.004_end",
+            "ID": 1239079245,
+            "ParentID": 196344702,
+            "Translation": [
+                0,
+                0.020239,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg9.005",
+            "ID": 1690007444,
+            "ParentID": 54320860,
+            "Translation": [
+                -1.990690,
+                1.054499,
+                1.153686
+            ],
+            "Rotation": [
+                -9.462309,
+                29.661238,
+                -85.285011
+            ],
+            "Scale": [
+                1.000000,
+                1,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg9.004",
+            "ID": 148169749,
+            "ParentID": 1690007444,
+            "Translation": [
+                0.048726,
+                0.353874,
+                -0.007033
+            ],
+            "Rotation": [
+                -97.623711,
+                42.587048,
+                101.188347
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg9.004_end",
+            "ID": 572783628,
+            "ParentID": 148169749,
+            "Translation": [
+                0,
+                0.020239,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg8.005",
+            "ID": 1484301517,
+            "ParentID": 54320860,
+            "Translation": [
+                -0.000001,
+                1.014864,
+                2.309666
+            ],
+            "Rotation": [
+                90.000031,
+                0.000021,
+                -179.999939
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg8.004",
+            "ID": 2038317384,
+            "ParentID": 1484301517,
+            "Translation": [
+                0.000000,
+                0.353874,
+                0.049231
+            ],
+            "Rotation": [
+                -46.864830,
+                0.000025,
+                -0.000004
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg8.004_end",
+            "ID": 284343059,
+            "ParentID": 2038317384,
+            "Translation": [
+                0,
+                0.020239,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg7.005",
+            "ID": 1193229848,
+            "ParentID": 54320860,
+            "Translation": [
+                1.996282,
+                1.013613,
+                1.154055
+            ],
+            "Rotation": [
+                -9.462283,
+                -29.661306,
+                85.285019
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg7.004",
+            "ID": 182118106,
+            "ParentID": 1193229848,
+            "Translation": [
+                -0.048726,
+                0.353874,
+                -0.007033
+            ],
+            "Rotation": [
+                -97.623718,
+                -42.587067,
+                -101.188309
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg7.004_end",
+            "ID": 2144313042,
+            "ParentID": 182118106,
+            "Translation": [
+                0,
+                0.020239,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg12.005",
+            "ID": 2066792232,
+            "ParentID": 54320860,
+            "Translation": [
+                1.998003,
+                1.014273,
+                -1.151787
+            ],
+            "Rotation": [
+                -9.462285,
+                29.661276,
+                94.714973
+            ],
+            "Scale": [
+                1.000000,
+                1,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg12.004",
+            "ID": 64023248,
+            "ParentID": 2066792232,
+            "Translation": [
+                -0.048726,
+                0.353874,
+                -0.007033
+            ],
+            "Rotation": [
+                -97.623787,
+                -42.587048,
+                -101.188354
+            ],
+            "Scale": [
+                1.000000,
+                1,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg12.004_end",
+            "ID": 899546134,
+            "ParentID": 64023248,
+            "Translation": [
+                0,
+                0.020239,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Body_Down",
+            "ID": 1110363945,
+            "ParentID": 396860097,
+            "Translation": [
+                0,
+                -0.075665,
+                0
+            ],
+            "Rotation": [
+                0,
+                0.000002,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg5",
+            "ID": 2082677838,
+            "ParentID": 1110363945,
+            "Translation": [
+                -0.000000,
+                -0.031522,
+                -0.124292
+            ],
+            "Rotation": [
+                -75.003525,
+                -85.295593,
+                89.996674
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                0.999997
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg5.001",
+            "ID": 1647154658,
+            "ParentID": 2082677838,
+            "Translation": [
+                -0.000000,
+                0.111171,
+                -0.000000
+            ],
+            "Rotation": [
+                0,
+                0,
+                -0.000014
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg5.002",
+            "ID": 1470240453,
+            "ParentID": 1647154658,
+            "Translation": [
+                -0.000000,
+                0.353334,
+                0.000000
+            ],
+            "Rotation": [
+                89.999809,
+                76.673500,
+                -89.999809
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg5.003",
+            "ID": 1110170112,
+            "ParentID": 1470240453,
+            "Translation": [
+                0.000000,
+                0.829179,
+                0.000000
+            ],
+            "Rotation": [
+                141.012909,
+                -0.000021,
+                179.999954
+            ],
+            "Scale": [
+                1.000000,
+                1.000001,
+                1.000043
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg5.003_end",
+            "ID": 1414854385,
+            "ParentID": 1110170112,
+            "Translation": [
+                0,
+                1.232361,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg6",
+            "ID": 524273474,
+            "ParentID": 1110363945,
+            "Translation": [
+                0.107640,
+                -0.031522,
+                -0.062146
+            ],
+            "Rotation": [
+                161.624283,
+                -24.245338,
+                -23.452316
+            ],
+            "Scale": [
+                1.000005,
+                1.000001,
+                1.000002
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg6.001",
+            "ID": 1007073613,
+            "ParentID": 524273474,
+            "Translation": [
+                -0.000000,
+                0.111171,
+                0.000000
+            ],
+            "Rotation": [
+                -0.000005,
+                0.000015,
+                -0.002677
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg6.002",
+            "ID": 675409348,
+            "ParentID": 1007073613,
+            "Translation": [
+                0.000000,
+                0.353334,
+                -0.000000
+            ],
+            "Rotation": [
+                89.999672,
+                55.950459,
+                -89.999680
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg6.003",
+            "ID": 272720533,
+            "ParentID": 675409348,
+            "Translation": [
+                -0.000000,
+                0.829177,
+                0
+            ],
+            "Rotation": [
+                130.378265,
                 -0.000031,
-                -0.000023
+                179.999924
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                0.999985
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg6.003_end",
+            "ID": 675111200,
+            "ParentID": 272720533,
+            "Translation": [
+                0,
+                1.232361,
+                0
             ],
             "Rotation": [
-                83.813225,
-                -6.406887,
-                -2.485424
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg1",
+            "ID": 1099572315,
+            "ParentID": 1110363945,
+            "Translation": [
+                0.107640,
+                -0.031522,
+                0.062146
+            ],
+            "Rotation": [
+                155.197281,
+                33.178417,
+                -1.851429
+            ],
+            "Scale": [
+                0.999998,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg1.001",
+            "ID": 929693021,
+            "ParentID": 1099572315,
+            "Translation": [
+                0.000000,
+                0.111171,
+                -0.000000
+            ],
+            "Rotation": [
+                -0.000004,
+                0.000022,
+                -1.898702
             ],
             "Scale": [
                 1.000000,
@@ -1853,21 +2680,197 @@
             "Components": []
         },
         {
-            "Name": "B_R_Finger0",
-            "ID": 1275366448,
-            "ParentID": 1469766080,
+            "Name": "Leg1.002",
+            "ID": 684593307,
+            "ParentID": 929693021,
             "Translation": [
-                12.316833,
-                -0.520874,
-                9.563904
+                -0.000000,
+                0.353334,
+                0.000000
             ],
             "Rotation": [
-                -70.090248,
-                -21.498051,
-                -6.651721
+                90,
+                18.537052,
+                -89.999939
+            ],
+            "Scale": [
+                1.000001,
+                1.000001,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg1.003",
+            "ID": 1549305670,
+            "ParentID": 684593307,
+            "Translation": [
+                0.000000,
+                0.829180,
+                0.000000
+            ],
+            "Rotation": [
+                119.207718,
+                -0.000002,
+                179.999954
             ],
             "Scale": [
                 1.000000,
+                1.000000,
+                0.999992
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg1.003_end",
+            "ID": 574796976,
+            "ParentID": 1549305670,
+            "Translation": [
+                0,
+                1.232361,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg2",
+            "ID": 1867104663,
+            "ParentID": 1110363945,
+            "Translation": [
+                -0.000000,
+                -0.031522,
+                0.124292
+            ],
+            "Rotation": [
+                75.002792,
+                85.226028,
+                89.997208
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                0.999997
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg2.001",
+            "ID": 2128811304,
+            "ParentID": 1867104663,
+            "Translation": [
+                -0.000000,
+                0.111171,
+                -0.000000
+            ],
+            "Rotation": [
+                -0.000001,
+                -0.000002,
+                -18.045553
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg2.002",
+            "ID": 825461294,
+            "ParentID": 2128811304,
+            "Translation": [
+                0.000000,
+                0.353334,
+                0.000000
+            ],
+            "Rotation": [
+                90.000015,
+                11.778967,
+                -89.999992
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg2.003",
+            "ID": 1618375103,
+            "ParentID": 825461294,
+            "Translation": [
+                0.000000,
+                0.829179,
+                0.000000
+            ],
+            "Rotation": [
+                113.191971,
+                -0.000006,
+                180
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000038
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg2.003_end",
+            "ID": 1843720915,
+            "ParentID": 1618375103,
+            "Translation": [
+                0,
+                1.232361,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg3",
+            "ID": 1883078869,
+            "ParentID": 1110363945,
+            "Translation": [
+                -0.107640,
+                -0.031522,
+                0.062146
+            ],
+            "Rotation": [
+                -20.216003,
+                32.971672,
+                175.642075
+            ],
+            "Scale": [
+                0.999997,
                 1.000000,
                 0.999999
             ],
@@ -1875,18 +2878,40 @@
             "Components": []
         },
         {
-            "Name": "B_R_Finger01",
-            "ID": 2094572968,
-            "ParentID": 1275366448,
+            "Name": "Leg3.001",
+            "ID": 1542808254,
+            "ParentID": 1883078869,
             "Translation": [
-                4.867081,
-                -0.000031,
-                -0.000008
+                0.000000,
+                0.111171,
+                0.000000
             ],
             "Rotation": [
-                0.000004,
-                -0.000023,
-                18.390942
+                -0.000008,
+                -0.000004,
+                -9.342266
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg3.002",
+            "ID": 1618061831,
+            "ParentID": 1542808254,
+            "Translation": [
+                -0.000000,
+                0.353334,
+                -0.000000
+            ],
+            "Rotation": [
+                90.000114,
+                15.239238,
+                -90.000145
             ],
             "Scale": [
                 1.000000,
@@ -1897,285 +2922,65 @@
             "Components": []
         },
         {
-            "Name": "B_R_Finger02",
-            "ID": 603563605,
-            "ParentID": 2094572968,
+            "Name": "Leg3.003",
+            "ID": 1879360205,
+            "ParentID": 1618061831,
             "Translation": [
-                4.867081,
-                0,
-                0.000015
+                -0.000000,
+                0.829180,
+                0.000000
             ],
             "Rotation": [
-                0.000003,
-                0.000008,
-                18.390942
+                117.987068,
+                0.000017,
+                -179.999969
             ],
             "Scale": [
-                1.000000,
-                1.000000,
-                1.000000
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_R_Finger1",
-            "ID": 925881860,
-            "ParentID": 1469766080,
-            "Translation": [
-                17.315140,
-                -2.635742,
-                4.906830
-            ],
-            "Rotation": [
-                0.045627,
-                -0.000004,
-                5.360897
-            ],
-            "Scale": [
-                1.000000,
-                1.000000,
-                1.000000
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_R_Finger11",
-            "ID": 1804506449,
-            "ParentID": 925881860,
-            "Translation": [
-                5.438866,
-                0,
-                0
-            ],
-            "Rotation": [
-                0.000001,
-                -0.000003,
-                18.390930
-            ],
-            "Scale": [
-                1.000000,
-                1,
-                1.000000
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_R_Finger12",
-            "ID": 1474526343,
-            "ParentID": 1804506449,
-            "Translation": [
-                5.438835,
-                -0.000015,
-                0
-            ],
-            "Rotation": [
-                -0.000001,
-                0.000018,
-                18.390945
-            ],
-            "Scale": [
-                1.000000,
-                1.000000,
-                1.000000
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_R_Finger2",
-            "ID": 957468289,
-            "ParentID": 1469766080,
-            "Translation": [
-                17.315125,
-                -2.632538,
-                0.899368
-            ],
-            "Rotation": [
-                0.045625,
-                0.000001,
-                5.360897
-            ],
-            "Scale": [
-                1.000000,
-                1.000000,
-                1.000000
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_R_Finger21",
-            "ID": 1613955950,
-            "ParentID": 957468289,
-            "Translation": [
-                6.345352,
-                -0.000015,
-                -0.000046
-            ],
-            "Rotation": [
-                0.000000,
-                -0.000009,
-                18.390942
-            ],
-            "Scale": [
-                1.000000,
-                1.000000,
-                1.000000
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_R_Finger22",
-            "ID": 252902344,
-            "ParentID": 1613955950,
-            "Translation": [
-                6.345314,
-                0,
-                0.000015
-            ],
-            "Rotation": [
-                -0.000004,
-                -0.000005,
-                18.390940
-            ],
-            "Scale": [
-                1.000000,
-                1.000000,
-                1.000000
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_R_Finger3",
-            "ID": 1285299544,
-            "ParentID": 1469766080,
-            "Translation": [
-                17.315163,
-                -2.629318,
-                -3.144592
-            ],
-            "Rotation": [
-                0.045625,
-                -0.000011,
-                5.360892
-            ],
-            "Scale": [
-                1.000000,
-                1.000000,
-                1.000000
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_R_Finger31",
-            "ID": 214653856,
-            "ParentID": 1285299544,
-            "Translation": [
-                5.438828,
-                -0.000031,
-                0
-            ],
-            "Rotation": [
-                0.000004,
-                -0.000006,
-                18.390936
-            ],
-            "Scale": [
-                1.000000,
-                1.000000,
-                1.000000
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_R_Finger32",
-            "ID": 1262689640,
-            "ParentID": 214653856,
-            "Translation": [
-                5.438858,
-                0,
-                -0.000015
-            ],
-            "Rotation": [
-                0.000029,
-                0.000008,
-                18.390942
-            ],
-            "Scale": [
-                1,
-                1,
-                1.000000
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_R_Finger4",
-            "ID": 1429844051,
-            "ParentID": 1469766080,
-            "Translation": [
-                17.315155,
-                -2.626312,
-                -6.989304
-            ],
-            "Rotation": [
-                0.045646,
-                0.000003,
-                5.360889
-            ],
-            "Scale": [
-                1.000000,
                 1.000001,
-                1.000001
+                1.000001,
+                1.000041
             ],
             "Enabled": true,
             "Components": []
         },
         {
-            "Name": "B_R_Finger41",
-            "ID": 1108141919,
-            "ParentID": 1429844051,
+            "Name": "Leg3.003_end",
+            "ID": 312376901,
+            "ParentID": 1879360205,
             "Translation": [
-                4.532326,
-                0.000015,
-                0.000031
-            ],
-            "Rotation": [
-                0.000000,
-                0.000005,
-                18.390932
-            ],
-            "Scale": [
-                1.000000,
-                1.000000,
-                1.000000
-            ],
-            "Enabled": true,
-            "Components": []
-        },
-        {
-            "Name": "B_R_Finger42",
-            "ID": 1809960623,
-            "ParentID": 1108141919,
-            "Translation": [
-                4.532402,
                 0,
-                -0.000015
+                1.232361,
+                0
             ],
             "Rotation": [
-                -0.000006,
-                0.000009,
-                18.390936
+                0,
+                0,
+                0
             ],
             "Scale": [
                 1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg4",
+            "ID": 342049109,
+            "ParentID": 1110363945,
+            "Translation": [
+                -0.107640,
+                -0.031522,
+                -0.062146
+            ],
+            "Rotation": [
+                -22.457804,
+                -22.556740,
+                154.932465
+            ],
+            "Scale": [
+                1.000000,
                 1.000000,
                 1.000000
             ],
@@ -2183,18 +2988,150 @@
             "Components": []
         },
         {
-            "Name": "B_Neck",
-            "ID": 1090531913,
-            "ParentID": 1084669436,
+            "Name": "Leg4.001",
+            "ID": 785080738,
+            "ParentID": 342049109,
             "Translation": [
-                33.545319,
-                -3.045868,
-                -0.000001
-            ],
-            "Rotation": [
-                0.000027,
                 0.000000,
-                0.000038
+                0.111171,
+                -0.000000
+            ],
+            "Rotation": [
+                -0.000004,
+                -0.000009,
+                -0.244968
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg4.002",
+            "ID": 1603603594,
+            "ParentID": 785080738,
+            "Translation": [
+                0.000000,
+                0.353334,
+                -0.000000
+            ],
+            "Rotation": [
+                90,
+                44.417122,
+                -90
+            ],
+            "Scale": [
+                1,
+                1.000000,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg4.003",
+            "ID": 1242972013,
+            "ParentID": 1603603594,
+            "Translation": [
+                0.000000,
+                0.829179,
+                0.000000
+            ],
+            "Rotation": [
+                127.436363,
+                -0.000008,
+                179.999985
+            ],
+            "Scale": [
+                1.000000,
+                1.000000,
+                0.999986
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg4.003_end",
+            "ID": 774426224,
+            "ParentID": 1242972013,
+            "Translation": [
+                0,
+                1.232361,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Body.001",
+            "ID": 1342129985,
+            "ParentID": 396860097,
+            "Translation": [
+                -0.000000,
+                0.024144,
+                -0.000000
+            ],
+            "Rotation": [
+                -180,
+                39.010441,
+                180
+            ],
+            "Scale": [
+                1.000000,
+                1,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Body.001_end",
+            "ID": 1135153416,
+            "ParentID": 1342129985,
+            "Translation": [
+                0,
+                0.242663,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg5.005",
+            "ID": 763718237,
+            "ParentID": 2069691767,
+            "Translation": [
+                1.741208,
+                0.003702,
+                0.000000
+            ],
+            "Rotation": [
+                180,
+                0.000022,
+                90.000023
             ],
             "Scale": [
                 1.000000,
@@ -2205,18 +3142,62 @@
             "Components": []
         },
         {
-            "Name": "B_Head",
-            "ID": 493090687,
-            "ParentID": 1090531913,
+            "Name": "Leg5.004",
+            "ID": 1368412201,
+            "ParentID": 763718237,
             "Translation": [
-                10.931564,
-                -0.266266,
-                0.000001
+                0.049231,
+                0.353874,
+                -0.000000
             ],
             "Rotation": [
-                -2.329352,
-                1.626807,
-                -6.576795
+                -89.999969,
+                43.135174,
+                89.999954
+            ],
+            "Scale": [
+                1.000000,
+                1,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg5.004_end",
+            "ID": 1016099729,
+            "ParentID": 1368412201,
+            "Translation": [
+                0,
+                0.020239,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg6.005",
+            "ID": 1285313871,
+            "ParentID": 2069691767,
+            "Translation": [
+                0.870604,
+                0.003702,
+                -1.507930
+            ],
+            "Rotation": [
+                -16.102100,
+                58.997288,
+                103.897873
             ],
             "Scale": [
                 1.000000,
@@ -2227,21 +3208,21 @@
             "Components": []
         },
         {
-            "Name": "B_L_Thigh",
-            "ID": 1281208814,
-            "ParentID": 450729087,
+            "Name": "Leg6.004",
+            "ID": 1203285424,
+            "ParentID": 1285313871,
             "Translation": [
-                -0.000015,
-                0.000031,
-                11.652328
+                -0.048726,
+                0.353874,
+                -0.007033
             ],
             "Rotation": [
-                -173.464798,
-                5.291952,
-                -165.009308
+                -97.623642,
+                -42.587055,
+                -101.188293
             ],
             "Scale": [
-                1.000000,
+                1,
                 1.000000,
                 1
             ],
@@ -2249,18 +3230,40 @@
             "Components": []
         },
         {
-            "Name": "B_L_Calf",
-            "ID": 1401647974,
-            "ParentID": 1281208814,
+            "Name": "Leg6.004_end",
+            "ID": 1547302818,
+            "ParentID": 1203285424,
             "Translation": [
-                59.167973,
-                0.000015,
-                0.000006
+                0,
+                0.020239,
+                0
             ],
             "Rotation": [
-                -0.000458,
-                0.000020,
-                -21.407244
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg1.005",
+            "ID": 1294292336,
+            "ParentID": 2069691767,
+            "Translation": [
+                -0.870604,
+                0.003702,
+                -1.507930
+            ],
+            "Rotation": [
+                -163.897873,
+                58.997303,
+                -103.897896
             ],
             "Scale": [
                 1.000000,
@@ -2271,40 +3274,62 @@
             "Components": []
         },
         {
-            "Name": "B_L_Foot",
-            "ID": 906683483,
-            "ParentID": 1401647974,
+            "Name": "Leg1.004",
+            "ID": 1739298447,
+            "ParentID": 1294292336,
             "Translation": [
-                59.505081,
-                0.000015,
-                -0.000004
+                -0.048726,
+                0.353874,
+                -0.007033
             ],
             "Rotation": [
-                9.745385,
-                2.694160,
-                12.227799
+                -97.623634,
+                -42.587002,
+                -101.188293
             ],
             "Scale": [
                 1.000000,
-                1.000000,
+                1,
                 1.000000
             ],
             "Enabled": true,
             "Components": []
         },
         {
-            "Name": "B_L_Toe0",
-            "ID": 642877519,
-            "ParentID": 906683483,
+            "Name": "Leg1.004_end",
+            "ID": 2043282771,
+            "ParentID": 1739298447,
             "Translation": [
-                14.912970,
-                24.276672,
-                -0.217890
+                0,
+                0.020239,
+                0
             ],
             "Rotation": [
-                0.000010,
-                -0.000013,
-                90.992767
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg2.005",
+            "ID": 434915089,
+            "ParentID": 2069691767,
+            "Translation": [
+                -1.741208,
+                0.003702,
+                -0.000000
+            ],
+            "Rotation": [
+                120.000854,
+                0.000012,
+                -89.999992
             ],
             "Scale": [
                 1.000000,
@@ -2315,18 +3340,18 @@
             "Components": []
         },
         {
-            "Name": "B_R_Thigh",
-            "ID": 1339024346,
-            "ParentID": 450729087,
+            "Name": "Leg2.004",
+            "ID": 788722608,
+            "ParentID": 434915089,
             "Translation": [
-                -0.000015,
-                -0.000015,
-                -11.652331
+                -0.024616,
+                0.353874,
+                0.042635
             ],
             "Rotation": [
-                176.016647,
-                3.910287,
-                -135.731766
+                -50.944035,
+                -19.990822,
+                -22.847256
             ],
             "Scale": [
                 1.000000,
@@ -2337,70 +3362,243 @@
             "Components": []
         },
         {
-            "Name": "B_R_Calf",
-            "ID": 425705362,
-            "ParentID": 1339024346,
+            "Name": "Leg2.004_end",
+            "ID": 1380926150,
+            "ParentID": 788722608,
             "Translation": [
-                59.167976,
-                0.000015,
-                0.000002
+                0,
+                0.020239,
+                0
             ],
             "Rotation": [
-                0.000274,
-                -0.000005,
-                -92.244026
+                0,
+                0,
+                0
             ],
             "Scale": [
-                1.000000,
-                1.000000,
+                1,
+                1,
                 1
             ],
             "Enabled": true,
             "Components": []
         },
         {
-            "Name": "B_R_Foot",
-            "ID": 1804752997,
-            "ParentID": 425705362,
+            "Name": "Leg3.005",
+            "ID": 1852456110,
+            "ParentID": 2069691767,
             "Translation": [
-                59.505081,
-                0.000015,
-                0.000004
+                -0.870604,
+                0.003702,
+                1.507930
             ],
             "Rotation": [
-                -1.189058,
-                2.468434,
-                -0.196419
+                -16.102081,
+                58.997330,
+                -76.102158
             ],
             "Scale": [
                 1.000000,
+                1,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg3.004",
+            "ID": 1292575170,
+            "ParentID": 1852456110,
+            "Translation": [
+                0.048726,
+                0.353874,
+                -0.007033
+            ],
+            "Rotation": [
+                -97.623581,
+                42.587021,
+                101.188232
+            ],
+            "Scale": [
                 1.000000,
+                1,
                 1
             ],
             "Enabled": true,
             "Components": []
         },
         {
-            "Name": "B_R_Toe0",
-            "ID": 2109714110,
-            "ParentID": 1804752997,
+            "Name": "Leg3.004_end",
+            "ID": 1695630699,
+            "ParentID": 1292575170,
             "Translation": [
-                14.912964,
-                24.276688,
-                0.217888
+                0,
+                0.020239,
+                0
             ],
             "Rotation": [
-                -0.000003,
-                0.000006,
-                90.992752
+                0,
+                0,
+                0
             ],
             "Scale": [
-                1.000000,
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg4.005",
+            "ID": 1034107336,
+            "ParentID": 2069691767,
+            "Translation": [
+                0.870605,
+                0.003702,
+                1.507930
+            ],
+            "Rotation": [
+                -163.897842,
+                58.997234,
+                76.102097
+            ],
+            "Scale": [
+                1,
                 1.000000,
                 1.000000
             ],
             "Enabled": true,
             "Components": []
+        },
+        {
+            "Name": "Leg4.004",
+            "ID": 245536426,
+            "ParentID": 1034107336,
+            "Translation": [
+                0.048726,
+                0.353874,
+                -0.007033
+            ],
+            "Rotation": [
+                -97.623581,
+                42.587044,
+                101.188271
+            ],
+            "Scale": [
+                1.000000,
+                1,
+                1.000000
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Leg4.004_end",
+            "ID": 1947984482,
+            "ParentID": 245536426,
+            "Translation": [
+                0,
+                0.020239,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Components": []
+        },
+        {
+            "Name": "Sphere-Bot",
+            "ID": 1032651211,
+            "ParentID": 149481366,
+            "Translation": [
+                0,
+                100,
+                0
+            ],
+            "Rotation": [
+                -14.999975,
+                -0.000046,
+                -180
+            ],
+            "Scale": [
+                100,
+                100,
+                100
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1135204794
+                },
+                {
+                    "ComponentType": 3,
+                    "ComponentID": 252302533
+                }
+            ]
+        },
+        {
+            "Name": "Sphere-Bot1",
+            "ID": 1285901180,
+            "ParentID": 149481366,
+            "Translation": [
+                0,
+                100,
+                0
+            ],
+            "Rotation": [
+                -14.999975,
+                -0.000046,
+                -180
+            ],
+            "Scale": [
+                100,
+                100,
+                100
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 514679588
+                }
+            ]
+        },
+        {
+            "Name": "Sphere-Bot2",
+            "ID": 1742945953,
+            "ParentID": 149481366,
+            "Translation": [
+                0,
+                100,
+                0
+            ],
+            "Rotation": [
+                -14.999975,
+                -0.000046,
+                -180
+            ],
+            "Scale": [
+                100,
+                100,
+                100
+            ],
+            "Enabled": true,
+            "Components": [
+                {
+                    "ComponentType": 2,
+                    "ComponentID": 1844532516
+                }
+            ]
         }
     ]
 } 

@@ -13,8 +13,10 @@ Transform::~Transform() {}
 
 void Transform::RecalculateTransformFromParent() {
 
-	if (owner->parent != nullptr) { owner->worldTransform = owner->parent->worldTransform * transform; }
-	else { owner->worldTransform = transform; }
+	if (owner != nullptr) {
+		if (owner->parent != nullptr) { owner->worldTransform = owner->parent->worldTransform * transform; }
+		else { owner->worldTransform = transform; }
+	}
 
 	transform.Decompose(position, rotation, scale);
 	RecalculateEulerAngles();
