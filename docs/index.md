@@ -2,12 +2,11 @@
 
 NotThatGameEngine is my personal attempt to create a skeletal animation system that is functional is the context of a pseudo-engine. Its reason to be is found in the Enginge subject from CITM's third year of the Videogame Design & Development degree, conducted by our lovely teacher [Marc Garrigó](https://www.linkedin.com/in/mgarrigo/). His engine has been used as reference: [ThorEngine](https://github.com/markitus18/Thor-Engine).
 
-### Markdown
+### Team members
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Me: I did everything. Well, props to hopes & dreams for being there as well, and Thor Engine, because let's face it, having reference makes things easier. A photo of me:
 
-```markdown
-Syntax highlighted code block
+<img src="NotThatGameEngine/docs/Hando.jpg">
 
 # Header 1
 ## Header 2
