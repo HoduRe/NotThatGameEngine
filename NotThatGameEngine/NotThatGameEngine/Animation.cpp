@@ -314,7 +314,7 @@ void Animation::AnimateMesh(Mesh* mesh) {
 
 					if (mesh->normalsSize > 0) {
 
-						newDeviation = skinningMatrixMap[boneID].TransformPos(float3(mesh->normals[vectorVertexIndex]));
+						newDeviation = skinningMatrixMap[boneID].TransformPos(float3(mesh->normals[vectorVertexIndex], mesh->normals[vectorVertexIndex + 1], mesh->normals[vectorVertexIndex + 2]));
 
 						if (vertexBones == 0) {
 
