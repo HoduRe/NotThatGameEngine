@@ -37,9 +37,9 @@ Nonetheless, a list of useful features of the engine:
 
 Engine showcase gifs:
 
-[](https://github.com/ferba93/NotThatGameEngine/blob/master/docs/EngineShowcase1.gif)
+![](https://github.com/ferba93/NotThatGameEngine/blob/master/docs/EngineShowcase1.gif)
 
-[](https://github.com/ferba93/NotThatGameEngine/blob/master/docs/EngineShowcase2.gif)
+![](https://github.com/ferba93/NotThatGameEngine/blob/master/docs/EngineShowcase2.gif)
 
 Animation usage in the editor:
 <iframe src="https://github.com/ferba93/NotThatGameEngine/blob/master/docs/EngineVideo.mp4" frameborder="0" allowfullscreen>
