@@ -43,7 +43,7 @@ Engine showcase gifs:
 
 Animation usage in the editor:
 [![](https://github.com/ferba93/NotThatGameEngine/blob/master/docs/EngineVideo.mp4)]
-[Youtube link](https://youtu.be/F6sp9GHgbM8)
+![Youtube link](https://youtu.be/F6sp9GHgbM8)
 
 ### Links
 
