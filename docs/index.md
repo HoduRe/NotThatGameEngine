@@ -42,6 +42,7 @@ Engine showcase gifs:
 ![](EngineShowcase2.gif)
 
 Animation usage in the editor:
+<video src="/EngineVideo.mp4" controls preload></video>
 <br/>
 [Video demonstration](https://youtu.be/F6sp9GHgbM8)
 <br/>
