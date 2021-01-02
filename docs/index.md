@@ -42,8 +42,7 @@ Engine showcase gifs:
 ![](https://github.com/ferba93/NotThatGameEngine/blob/master/docs/EngineShowcase2.gif)
 
 Animation usage in the editor:
-<iframe src="https://github.com/ferba93/NotThatGameEngine/blob/master/docs/EngineVideo.mp4" frameborder="0" allowfullscreen>
-</iframe>
+![](https://github.com/ferba93/NotThatGameEngine/blob/master/docs/EngineVideo.mp4)
 
 ### Links
 
