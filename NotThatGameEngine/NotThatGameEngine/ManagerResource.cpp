@@ -13,6 +13,7 @@
 #include "Material.h"
 #include "Mesh.h"
 #include "Transform.h"
+#include "Animation.h"
 #include "Camera.h"
 #include "Component.h"
 
@@ -307,7 +308,7 @@ void ResourceManager::LoadResourceByPath(std::string filePath, std::string fileN
 
 		case ResourceEnum::ANIMATION:
 
-			DataLoading::LoadAnimation((char*)buffer, App->editorScene->GetFocus()->animation);
+			DataLoading::LoadAnimation((char*)buffer, (Animation*)component);
 			break;
 
 		case ResourceEnum::UNKNOWN:
@@ -436,6 +437,7 @@ void ResourceManager::ManageGameObjectLoading(GameObject* gameObject) {
 	if (gameObject->transform != nullptr) { gameObject->transform->id = App->idGenerator.Int(); }
 	if (gameObject->mesh != nullptr) { gameObject->mesh->id = App->idGenerator.Int(); }
 	if (gameObject->material != nullptr) { gameObject->material->id = App->idGenerator.Int(); }
+	if (gameObject->animation != nullptr) { gameObject->animation->id = App->idGenerator.Int(); }
 	if (gameObject->camera != nullptr) { gameObject->camera->id = App->idGenerator.Int(); }
 
 	for (uint i = 0; i < gameObject->childs.size(); i++) { ManageGameObjectLoading(gameObject->childs[i]); }
@@ -645,6 +647,13 @@ void ResourceManager::GetComponentIfLoaded(const ResourceEnum* type, Component**
 
 					if (focus->material != nullptr) { *component = focus->material; }
 					else { *component = focus->AddComponent(COMPONENT_TYPE::MATERIAL); }
+
+				}
+
+				else if (*type == ResourceEnum::ANIMATION) {
+
+					if (focus->animation != nullptr) { *component = focus->animation; }
+					else { *component = focus->AddComponent(COMPONENT_TYPE::ANIMATION); }
 
 				}
 
