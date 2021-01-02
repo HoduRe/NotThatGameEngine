@@ -6,7 +6,7 @@ NotThatGameEngine is my personal attempt to create a skeletal animation system t
 
 Me: I did everything. Well, props to hopes & dreams for being there as well, and Thor Engine, because let's face it, having reference makes things easier. A photo of me:
 
-<img src="https://github.com/ferba93/NotThatGameEngine/blob/master/docs/Hando.jpg">
+<img src="Hando.jpg">
 
 ### Skeletical animation
 
@@ -37,9 +37,9 @@ Nonetheless, a list of useful features of the engine:
 
 Engine showcase gifs:
 
-![](https://github.com/ferba93/NotThatGameEngine/blob/master/docs/EngineShowcase1.gif)
+![](/EngineShowcase1.gif)
 
-![](https://github.com/ferba93/NotThatGameEngine/blob/master/docs/EngineShowcase2.gif)
+![](EngineShowcase2.gif)
 
 Animation usage in the editor:
 <br/>
