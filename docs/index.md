@@ -41,8 +41,6 @@ Engine showcase gifs:
 
 ![](EngineShowcase2.gif)
 
-[Video demonstration](https://youtu.be/F6sp9GHgbM8)
-
 ### Links
 
 - [Code repository](https://github.com/ferba93/NotThatGameEngine)
