@@ -2,11 +2,11 @@
 An engine for CITM's Engine project, which focuses on providing a functional system to manage skeletical animations. The specificity comes from the need of using such results for the Project III subject.
 
 ## Creators:
-- [Me (Hodu)](https://github.com/ferba93)<br/>
+- [Me (Hodu)](https://github.com/hodure)<br/>
 - Lots of [hopes and dreams](https://images-na.ssl-images-amazon.com/images/I/91Hv6KacesL.jpg)<br/>
 
 ## Project web:
-- [Web](https://ferba93.github.io/NotThatGameEngine/)<br/>
+- [Web](https://hodure.github.io/NotThatGameEngine/)<br/>
 
 ## Instructions:
 - Camera controls:<br/>
